@@ -1,18 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "./Header";
+import Footer from "./Footer";
 
 const MainPageBody = () => {
-  return (<Header />)
+  return (
+    <Wrapper>
+      <Header />
+      {/* <Footer /> */}
+    </Wrapper>
+  );
 };
 
 export default MainPageBody;
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   width: 100%;
-  padding: ${({ theme }) => theme.padding.large};
+  height: 100%;
+  /* justify-content: space-between; */
+  /* align-items: center; */
+ 
 `;

@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import MainPageBody from '../components/MainPageBody';
+import MainPageBody from "../components/MainPageBody";
 
 export default function App() {
   return (
@@ -12,8 +12,8 @@ export default function App() {
 }
 
 const PageWrapper = styled.div`
-  background-color:  ${({ theme }) => theme.colors.background};
-  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: ${({ theme }) => theme.colors.background};
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-size: 14px;
   line-height: normal;
@@ -21,7 +21,7 @@ const PageWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height:100vh;
+  min-height: 100vh;
 
   .title {
     display: flex;
@@ -31,8 +31,8 @@ const PageWrapper = styled.div`
     font-size: 120px;
     width: 100%;
 
-    @media screen and (max-width: 390px){
+    @media screen and (max-width: 390px) {
       font-size: 80px;
     }
   }
-`
+`;
