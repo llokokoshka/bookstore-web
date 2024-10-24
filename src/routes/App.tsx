@@ -1,15 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// import ContainerOfToDos from '../components/ContainerOfToDos'
+import MainPageBody from '../components/MainPageBody';
 
 export default function App() {
   return (
     <PageWrapper>
-      <h1 className='title' >
-        todos
-      </h1>
-      {/* <ContainerOfToDos /> */}
+      <MainPageBody />
     </PageWrapper>
   );
 }
