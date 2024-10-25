@@ -3,13 +3,15 @@ import styled from "styled-components";
 import Header from "./Header";
 import Footer from "./Footer";
 import Poster from "./Poster";
+import SortMenu from "./SortMenu";
 
 const MainPageBody = () => {
   return (
     <Wrapper>
       <Header />
       <Poster />
-      {/* <Footer /> */}
+      <SortMenu />
+      <Footer />
     </Wrapper>
   );
 };
