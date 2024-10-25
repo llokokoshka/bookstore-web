@@ -4,6 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Poster from "./Poster";
 import SortMenu from "./SortMenu";
+import Autorize from "./Autorize";
 
 const MainPageBody = () => {
   return (
@@ -11,6 +12,7 @@ const MainPageBody = () => {
       <Header />
       <Poster />
       <SortMenu />
+      <Autorize />
       <Footer />
     </Wrapper>
   );

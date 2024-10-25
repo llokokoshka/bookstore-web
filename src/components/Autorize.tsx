@@ -1,30 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 // import logo from "../img/logo.png";
-import poster from "../img/poster-img.png";
-import books from "../img/books-poster.png";
+import fairy from "../img/atz 1.png";
+import castle from "../img/castle.png";
 
-const Poster: React.FC = () => {
+const Autorize: React.FC = () => {
   return (
     <Wrapper>
       <div className="poster">
-        <img src={books} alt="books" className="poster__img" />
         <div className="poster__container">
+          <img src={castle} alt="logo" />
           <div className="container__info-block">
             <div className="info-block__text">
-              <p className="big-title">Build your library with us</p>
-              <p className="normal-title">Buy two books and get one for free</p>
+              <p className="big-title">Authorize now</p>
+              <p className="normal-title">Authorize now and discover the fabulous world of books</p>
             </div>
-            <button className="base-button">Choose a book</button>
+            <button className="base-button">Log In/Sing Up</button>
           </div>
-          <img src={poster} alt="logo" />
         </div>
+        <img src={fairy} alt="books" className="poster__img" />
       </div>
     </Wrapper>
   );
 };
 
-export default Poster;
+export default Autorize;
 
 const Wrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
@@ -37,7 +37,8 @@ const Wrapper = styled.div`
   }
   .poster__img {
     position: absolute;
-    bottom: 0;
+    right: 0;
+    /* padding-top: 135px; */
   }
 
   .poster__container {
@@ -55,7 +56,7 @@ const Wrapper = styled.div`
     align-items: start;
     row-gap: 50px;
   }
-  .info-block__text{
+  .info-block__text {
     display: flex;
     flex-direction: column;
     row-gap: 10px;

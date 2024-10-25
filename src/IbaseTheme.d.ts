@@ -1,7 +1,8 @@
 import 'styled-components';
 
-import { ITheme } from './styles/IbaseTheme';
+import { IbaseTheme } from './styles/IbaseTheme';
 
 declare module 'styled-components' {
-  export interface DefaultTheme extends ITheme {}
+  export interface DefaultTheme extends IbaseTheme {
+  }
 }

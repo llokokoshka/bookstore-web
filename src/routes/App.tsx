@@ -12,7 +12,7 @@ export default function App() {
 }
 
 const PageWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.white};
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-size: 14px;
@@ -26,7 +26,7 @@ const PageWrapper = styled.div`
   .title {
     display: flex;
     justify-content: center;
-    color: ${({ theme }) => theme.colors.primary};
+
     margin-top: 40px;
     font-size: 120px;
     width: 100%;
