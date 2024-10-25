@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import forward from "../img/forward.png";
+import forward from "../../img/forward.png";
 
 const SortMenu: React.FC = () => {
   return (

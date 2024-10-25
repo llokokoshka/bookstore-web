@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 // import logo from "../img/logo.png";
-import fairy from "../img/atz 1.png";
-import castle from "../img/castle.png";
+import fairy from "../../img/atz 1.png";
+import castle from "../../img/castle.png";
 
 const Autorize: React.FC = () => {
   return (

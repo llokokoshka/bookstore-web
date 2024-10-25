@@ -50,4 +50,30 @@ export default createGlobalStyle`
     line-height: 24px;
     text-align: left;
   }
+
+  .input {
+    display: flex;
+    flex-direction: row;
+    height: 64px;
+    width: 100%;
+  }
+  
+  .input__icon {
+    position: absolute;
+    padding: 22px 24px;
+  }
+
+  .input__field {
+    display: flex;
+    background-color: ${({ theme }) => theme.colors.light};
+    border-radius: ${({ theme }) => theme.sizes.base_radius}px;
+    padding-left: 64px;
+    max-width: 630px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.75px;
+    text-align: left;
+  }
 `;

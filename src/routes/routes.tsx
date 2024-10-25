@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import App from './App';
-// import TodosPage from './todosPage';
+import Autorisate from "./Autorisate";
 
 
  const router = createBrowserRouter([
@@ -9,10 +9,10 @@ import App from './App';
       path: "/",
       element: <App />,
     },
-    // {
-    //   path: "/todo/:id",
-    //   element: <TodosPage />,
-    // }
+    {
+      path: "/sign-in",
+      element: <Autorisate />,
+    }
   ]);
 
 export default router;

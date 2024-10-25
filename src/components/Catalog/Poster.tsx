@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 // import logo from "../img/logo.png";
-import poster from "../img/poster-img.png";
-import books from "../img/books-poster.png";
+import poster from "../../img/poster-img.png";
+import books from "../../img/books-poster.png";
 
 const Poster: React.FC = () => {
   return (
