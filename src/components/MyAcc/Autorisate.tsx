@@ -1,23 +1,23 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import Header from "../Header";
-import Footer from "../Footer";
-import LogIn from "./BodyLogIn";
+import Header from '../Header';
+import Footer from '../Footer';
+import LogIn from './BodyLogIn';
 
 const Autorizate: React.FC = () => {
   return (
-    <Wrapper>
+    <StyledWrapper>
       <Header />
       <LogIn />
       <Footer />
-    </Wrapper>
+    </StyledWrapper>
   );
 };
 
 export default Autorizate;
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;

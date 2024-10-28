@@ -1,32 +1,34 @@
-import React from "react";
-import styled from "styled-components";
-// import logo from "../img/logo.png";
-import fairy from "../../img/atz 1.png";
-import castle from "../../img/castle.png";
+import React from 'react';
+import styled from 'styled-components';
+
+import fairy from '../../img/atz 1.png';
+import castle from '../../img/castle.png';
 
 const Autorize: React.FC = () => {
   return (
-    <Wrapper>
+    <StyledWrapper>
       <div className="poster">
         <div className="poster__container">
           <img src={castle} alt="logo" />
           <div className="container__info-block">
             <div className="info-block__text">
-              <p className="big-title">Authorize now</p>
-              <p className="normal-title">Authorize now and discover the fabulous world of books</p>
+              <div className="big-title">Authorize now</div>
+              <div className="normal-title">
+                Authorize now and discover the fabulous world of books
+              </div>
             </div>
             <button className="base-button">Log In/Sing Up</button>
           </div>
         </div>
         <img src={fairy} alt="books" className="poster__img" />
       </div>
-    </Wrapper>
+    </StyledWrapper>
   );
 };
 
 export default Autorize;
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
 
   .poster {

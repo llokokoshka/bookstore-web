@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from 'react-router-dom';
 
 import { store } from './store';
-import GlobalStyles from './styles/global'
+import GlobalStyles from './styles/global';
 import { baseTheme } from './styles/theme';
 import router from './routes/routes';
 

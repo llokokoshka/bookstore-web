@@ -1,34 +1,33 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 // import { useState } from "react";
 
-import man from "../../img/чел 1.png";
-import mail from "../../img/Mail.png";
-import hide from "../../img/Hide.png";
+import man from '../../img/чел 1.png';
+import mail from '../../img/Mail.png';
+import hide from '../../img/Hide.png';
 
 const LogIn: React.FC = () => {
-    function showPassword(){
-        const btn = document.querySelector('.password_btn');
-        const input = document.querySelector('.input__field');
+  function showPassword() {
+    const btn = document.querySelector('.password_btn');
+    const input = document.querySelector('.input__field');
 
-        console.log('btn >>>', btn);
-        console.log('input >>>', btn);
+    console.log('btn >>>', btn);
+    console.log('input >>>', btn);
 
+    btn?.addEventListener('click', () => {
+      btn.classList.toggle('active');
 
-        btn?.addEventListener('click', () => {
-            btn.classList.toggle('active');
-
-            if (input?.getAttribute('type') === 'password'){
-                input.setAttribute('type', 'text');
-            } else input?.setAttribute('type', 'password');
-        });
-    }
+      if (input?.getAttribute('type') === 'password') {
+        input.setAttribute('type', 'text');
+      } else input?.setAttribute('type', 'password');
+    });
+  }
   return (
-    <Wrapper>
+    <StyledWrapper>
       <div className="poster__container">
         <form method="post" className="container__info-block">
           <div className="info-block__text">
-            <p className="big-title">Log In</p>
+            <div className="big-title">Log In</div>
             <div className="input">
               <img src={mail} alt="Email" className="input__icon" />
               <input
@@ -37,14 +36,10 @@ const LogIn: React.FC = () => {
                 className="input__field"
               ></input>
             </div>
-            <p>Enter your email</p>
+            <div>Enter your email</div>
             <div className="input">
               <div className="password_btn active" onClick={showPassword}>
-                <img
-                  src={hide}
-                  alt="Password"
-                  className="input__icon"
-                />
+                <img src={hide} alt="Password" className="input__icon" />
               </div>
               <input
                 type="password"
@@ -54,7 +49,7 @@ const LogIn: React.FC = () => {
                 autoComplete="false"
               ></input>
             </div>
-            <p>Enter your password</p>
+            <div>Enter your password</div>
           </div>
           <button className="base-button" type="submit">
             Log in
@@ -62,13 +57,13 @@ const LogIn: React.FC = () => {
         </form>
         <img src={man} alt="man" />
       </div>
-    </Wrapper>
+    </StyledWrapper>
   );
 };
 
 export default LogIn;
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
 
   .poster {
@@ -81,7 +76,7 @@ const Wrapper = styled.div`
     position: absolute;
     bottom: 0;
   }
-  .password_btn:hover{
+  .password_btn:hover {
     cursor: pointer;
   }
 

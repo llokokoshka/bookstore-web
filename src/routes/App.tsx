@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import MainPageBody from "../components/Catalog/MainPageBody";
+import MainPageBody from '../components/Catalog/MainPageBody';
 
 export default function App() {
   return (
@@ -13,7 +13,7 @@ export default function App() {
 
 const PageWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-size: 14px;
   line-height: normal;

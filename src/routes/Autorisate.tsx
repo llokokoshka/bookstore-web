@@ -1,7 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import Autorizate from "../components/MyAcc/Autorisate";
-
+import React from 'react';
+import styled from 'styled-components';
+import Autorizate from '../components/MyAcc/Autorisate';
 
 export default function Autorisate() {
   return (
@@ -13,7 +12,7 @@ export default function Autorisate() {
 
 const PageWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-size: 14px;
   line-height: normal;
