@@ -1,25 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "../img/footer-logo.png";
-import map from '../img/map.png'
+import map from "../img/map.png";
 
 const Footer: React.FC = () => {
   return (
     <Wrapper>
-      <div>
+      <div className="contacts">
         <img src={logo} alt="logo" />
-        <h5>tranthuy.nute@gmail.com</h5>
-        <h5>(480) 555-0103</h5>
+        <div className="footer-text">
+          <p>tranthuy.nute@gmail.com</p>
+          <p>(480) 555-0103</p>
+        </div>
       </div>
-      <div>
-        <h5>Home Page</h5>
-        <h5>Catalog</h5>
-        <h5>My Account</h5>
-        <h5>Cart</h5>
+      <div className="footer-text">
+        <p>Home Page</p>
+        <p>Catalog</p>
+        <p>My Account</p>
+        <p>Cart</p>
       </div>
-      <div>
-        <h5>6391 Elgin St. Celina, Delaware 10299</h5>
-        <img src={map} alt="map"/>
+      <div className="footer-text">
+        <p>6391 Elgin St. Celina, Delaware 10299</p>
+        <img src={map} alt="map" />
       </div>
     </Wrapper>
   );
@@ -33,8 +35,20 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-  padding: ${({ theme }) => theme.padding.large};
+  background-color: ${({ theme }) => theme.colors.dark};
+  color: ${({ theme }) => theme.colors.light};
+  padding: ${({ theme }) => theme.padding.footer};
+  
+  .contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    row-gap: 40px;
+  }
+  .footer-text {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    row-gap: 5px;
+  }
 `;

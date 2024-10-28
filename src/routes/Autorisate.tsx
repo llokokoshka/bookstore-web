@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import Autorizate from "../components/MyAcc/Autorisate";
 
-import MainPageBody from "../components/Catalog/MainPageBody";
 
-export default function App() {
+export default function Autorisate() {
   return (
     <PageWrapper>
-      <MainPageBody />
+      <Autorizate />
     </PageWrapper>
   );
 }

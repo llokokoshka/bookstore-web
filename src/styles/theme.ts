@@ -29,7 +29,7 @@ export const baseTheme: IbaseTheme = {
   padding: {
     header: "24px 80px",
     body: "24px",
-    footer: "73px 80px",
+    footer: "73px 80px 73px 80px",
     button: "10px 50px",
   },
 
