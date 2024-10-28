@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
-import { useNavigate } from 'react-router-dom';
 
 interface IFormInput {
   email: string;
@@ -41,7 +41,6 @@ const LogIn: React.FC = () => {
           email,
           password,
         });
-        console.log(response.data.access_token);
         return response.data;
       } catch (err) {
         console.error(err);
