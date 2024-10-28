@@ -1,27 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-// import { useState } from "react";
+import { useState } from 'react';
 
 import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 
 const LogIn: React.FC = () => {
-  function showPassword() {
-    const btn = document.querySelector('.password_btn');
-    const input = document.querySelector('.input__field');
+  const [inputType, setInputType] = useState('password');
 
-    console.log('btn >>>', btn);
-    console.log('input >>>', btn);
+  const changeInputTypeHandler = () => {
+    inputType === 'password' ? setInputType('text') : setInputType('password');
+  };
 
-    btn?.addEventListener('click', () => {
-      btn.classList.toggle('active');
-
-      if (input?.getAttribute('type') === 'password') {
-        input.setAttribute('type', 'text');
-      } else input?.setAttribute('type', 'password');
-    });
-  }
   return (
     <StyledWrapper>
       <div className="poster__container">
@@ -38,11 +29,14 @@ const LogIn: React.FC = () => {
             </div>
             <div>Enter your email</div>
             <div className="input">
-              <div className="password_btn active" onClick={showPassword}>
+              <div
+                className="password__btn active"
+                onClick={changeInputTypeHandler}
+              >
                 <img src={hide} alt="Password" className="input__icon" />
               </div>
               <input
-                type="password"
+                type={inputType}
                 placeholder="Password"
                 className="input__field"
                 pattern="[0-9a-fA-F]{4,8}"
