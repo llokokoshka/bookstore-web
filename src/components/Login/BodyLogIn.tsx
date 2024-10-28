@@ -8,6 +8,7 @@ import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
 
 interface IFormInput {
   email: string;
@@ -16,6 +17,7 @@ interface IFormInput {
 
 const LogIn: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -33,7 +35,7 @@ const LogIn: React.FC = () => {
 
   const loginUser = createAsyncThunk(
     '/sign-in',
-    async ({ email, password }: { email: string; password: string }) => {
+    async ({ email, password }: IFormInput) => {
       try {
         const response = await axios.post('/auth/sign-in', {
           email,
@@ -46,6 +48,7 @@ const LogIn: React.FC = () => {
       }
     }
   );
+
   const onSubmit: SubmitHandler<IFormInput> = async (data: {
     email: string;
     password: string;
@@ -53,7 +56,12 @@ const LogIn: React.FC = () => {
     console.log(data.email, data.password);
     try {
       console.log('Валидация прошла успешно!');
-      dispatch(loginUser({ email: data.email, password: data.password }));
+      const user = await dispatch(
+        loginUser({ email: data.email, password: data.password })
+      );
+      if (user.payload) {
+        navigate('/');
+      }
       reset();
     } catch (err) {
       console.warn('При авторизации возникла ошибка: ', err);
@@ -102,7 +110,6 @@ const LogIn: React.FC = () => {
                 type={inputType}
                 placeholder="Password"
                 className="input__field"
-                // pattern="[0-9a-fA-F]{4,8}"
                 autoComplete="false"
                 {...register('password', {
                   required: true,
