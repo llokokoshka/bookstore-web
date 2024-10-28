@@ -8,12 +8,14 @@ import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 
-const LogIn: React.FC = () => {
+const SignUpBody: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const [inputType, setInputType] = useState('password');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordReplay, setPasswordReplay] = useState('');
+  const [inputTypeReplay, setInputTypeReplay] = useState('password');
 
   const changeInputTypeHandler = () => {
     inputType === 'password' ? setInputType('text') : setInputType('password');
@@ -26,12 +28,23 @@ const LogIn: React.FC = () => {
   const changePasswordValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
+  const changePasswordReplayValue = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setPasswordReplay(e.target.value);
+  };
 
-  const loginUser = createAsyncThunk(
-    '/sign-in',
+  const changeInputTypeHandlerReplay = () => {
+    inputType === 'password'
+      ? setInputTypeReplay('text')
+      : setInputTypeReplay('password');
+  };
+
+  const registrateUser = createAsyncThunk(
+    '/sign-up',
     async ({ email, password }: { email: string; password: string }) => {
       try {
-        const response = await axios.post('/auth/sign-in', {
+        const response = await axios.post('/auth/sign-up', {
           email,
           password,
         });
@@ -45,7 +58,7 @@ const LogIn: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(loginUser({ email, password }));
+    dispatch(registrateUser({ email, password }));
   };
 
   return (
@@ -57,7 +70,7 @@ const LogIn: React.FC = () => {
           onSubmit={handleSubmit}
         >
           <div className="info-block__text">
-            <div className="big-title">Log In</div>
+            <div className="big-title">Sign Up</div>
             <div className="input">
               <img src={mail} alt="Email" className="input__icon" />
               <input
@@ -87,6 +100,23 @@ const LogIn: React.FC = () => {
               ></input>
             </div>
             <div>Enter your password</div>
+            <div className="input">
+              <div
+                className="password__btn active"
+                onClick={changeInputTypeHandlerReplay}
+              >
+                <img src={hide} alt="Password" className="input__icon" />
+              </div>
+              <input
+                type={inputTypeReplay}
+                placeholder="Password replay"
+                className="input__field"
+                autoComplete="false"
+                value={passwordReplay}
+                onChange={changePasswordReplayValue}
+              ></input>
+            </div>
+            <div>Repeat your password without errors</div>
           </div>
           <button className="base-button" type="submit">
             Log in
@@ -98,7 +128,7 @@ const LogIn: React.FC = () => {
   );
 };
 
-export default LogIn;
+export default SignUpBody;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
