@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loginUser } from '../actions/authActions';
 import { refreshToken } from '../actions/authActions';
+import { regUser } from '../actions/regActions';
 
 type User = {
   id?: number;
@@ -63,6 +64,22 @@ const authSlice = createSlice({
         localStorage.setItem('refresh', action.payload.refresh_token);
       })
       .addCase(refreshToken.rejected, (state, action) => {
+        state.load = false;
+        state.error = action.payload as string;
+      })
+      .addCase(regUser.pending, (state) => {
+        state.load = true;
+        state.error = null;
+      })
+      .addCase(regUser.fulfilled, (state, action) => {
+        state.load = false;
+        state.access_token = action.payload.access_token;
+        state.refresh_token = action.payload.refresh_token;
+        state.user = action.payload.user;
+        localStorage.setItem('access', action.payload.access_token);
+        localStorage.setItem('refresh', action.payload.refresh_token);
+      })
+      .addCase(regUser.rejected, (state, action) => {
         state.load = false;
         state.error = action.payload as string;
       });

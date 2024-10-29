@@ -1,64 +1,62 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
 
+import { registrationValidationSchema } from '../../schemas/registrationValidationSchema';
+import { regUser } from '../../actions/regActions';
 import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 
-const SignUpBody: React.FC = () => {
+interface IFormInput {
+  email: string;
+  password: string;
+  passwordRep: string;
+}
+interface IFormReg {
+  email: string;
+  password: string;
+}
+
+const SignUp: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IFormInput>({
+    mode: 'onChange',
+    resolver: yupResolver(registrationValidationSchema),
+  });
 
   const [inputType, setInputType] = useState('password');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordReplay, setPasswordReplay] = useState('');
-  const [inputTypeReplay, setInputTypeReplay] = useState('password');
 
   const changeInputTypeHandler = () => {
     inputType === 'password' ? setInputType('text') : setInputType('password');
   };
 
-  const changeEmailValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const changePasswordValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-  const changePasswordReplayValue = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPasswordReplay(e.target.value);
-  };
-
-  const changeInputTypeHandlerReplay = () => {
-    inputType === 'password'
-      ? setInputTypeReplay('text')
-      : setInputTypeReplay('password');
-  };
-
-  const registrateUser = createAsyncThunk(
-    '/sign-up',
-    async ({ email, password }: { email: string; password: string }) => {
-      try {
-        const response = await axios.post('/auth/sign-up', {
-          email,
-          password,
-        });
-        console.log(response);
-        return response.data;
-      } catch (err) {
-        console.error(err);
+  const onSubmit: SubmitHandler<IFormReg> = async (data: {
+    email: string;
+    password: string;
+  }) => {
+    try {
+      console.log('Валидация прошла успешно!');
+      const user = await dispatch(
+        regUser({ email: data.email, password: data.password })
+      );
+      if (user.payload) {
+        console.log('ПОльзователь добавлен!');
+        navigate('/');
       }
+      reset();
+    } catch (err) {
+      console.warn('При регистрации возникла ошибка: ', err);
     }
-  );
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch(registrateUser({ email, password }));
   };
 
   return (
@@ -67,21 +65,25 @@ const SignUpBody: React.FC = () => {
         <form
           method="post"
           className="container__info-block"
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <div className="info-block__text">
-            <div className="big-title">Sign Up</div>
+            <div className="big-title">Log In</div>
             <div className="input">
               <img src={mail} alt="Email" className="input__icon" />
               <input
-                type="text"
+                type="email"
+                id="email"
                 placeholder="Email"
                 className="input__field"
-                value={email}
-                onChange={changeEmailValue}
-              ></input>
+                {...register('email')}
+              />
             </div>
-            <div>Enter your email</div>
+            {errors.email?.type === 'required' && (
+              <div>Email - обязательное поле.</div>
+            )}
+            {errors.email && <div>{errors.email.message}</div>}
+            {!errors.email && <div>Enter your email</div>}
             <div className="input">
               <div
                 className="password__btn active"
@@ -93,33 +95,40 @@ const SignUpBody: React.FC = () => {
                 type={inputType}
                 placeholder="Password"
                 className="input__field"
-                // pattern="[0-9a-fA-F]{4,8}"
                 autoComplete="false"
-                value={password}
-                onChange={changePasswordValue}
+                {...register('password')}
               ></input>
             </div>
-            <div>Enter your password</div>
+            {errors.password?.type === 'required' && (
+              <div>Password - обязательное поле.</div>
+            )}
+            {errors.password && <div>{errors.password.message}</div>}
+            {!errors.password && <div>Enter your password</div>}
             <div className="input">
               <div
                 className="password__btn active"
-                onClick={changeInputTypeHandlerReplay}
+                onClick={changeInputTypeHandler}
               >
                 <img src={hide} alt="Password" className="input__icon" />
               </div>
               <input
-                type={inputTypeReplay}
+                type={inputType}
                 placeholder="Password replay"
                 className="input__field"
                 autoComplete="false"
-                value={passwordReplay}
-                onChange={changePasswordReplayValue}
+                {...register('passwordRep')}
               ></input>
             </div>
-            <div>Repeat your password without errors</div>
+            {errors.passwordRep?.type === 'required' && (
+              <div>Password - обязательное поле.</div>
+            )}
+            {errors.passwordRep && <div>{errors.passwordRep.message}</div>}
+            {!errors.passwordRep && (
+              <div>Repeat your password without errors</div>
+            )}
           </div>
           <button className="base-button" type="submit">
-            Log in
+            Sign up
           </button>
         </form>
         <img src={man} alt="man" />
@@ -128,7 +137,7 @@ const SignUpBody: React.FC = () => {
   );
 };
 
-export default SignUpBody;
+export default SignUp;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
