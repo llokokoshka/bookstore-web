@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
 
+import { loginValidationSchema } from '../../schemas/loginValidationSchema';
 import { loginUser } from '../../actions/authActions';
 import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
@@ -24,6 +26,7 @@ const LogIn: React.FC = () => {
     reset,
   } = useForm<IFormInput>({
     mode: 'onChange',
+    resolver: yupResolver(loginValidationSchema),
   });
 
   const [inputType, setInputType] = useState('password');
@@ -67,13 +70,7 @@ const LogIn: React.FC = () => {
                 id="email"
                 placeholder="Email"
                 className="input__field"
-                {...register('email', {
-                  required: true,
-                  // pattern: {
-                  //   value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  //   message: 'Введите корректный email',
-                  // },
-                })}
+                {...register('email')}
               />
             </div>
             {errors.email?.type === 'required' && (
@@ -93,13 +90,7 @@ const LogIn: React.FC = () => {
                 placeholder="Password"
                 className="input__field"
                 autoComplete="false"
-                {...register('password', {
-                  required: true,
-                  minLength: {
-                    value: 5,
-                    message: 'min length is 5',
-                  },
-                })}
+                {...register('password')}
               ></input>
             </div>
             {errors.password?.type === 'required' && (
