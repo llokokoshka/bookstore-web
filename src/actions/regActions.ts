@@ -1,14 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { requestPackage } from '../axiosDefaul';
-
-interface IFormInput {
-  email: string;
-  password: string;
-}
+import { IFormReg } from '../lib/actionTypes';
 
 export const regUser = createAsyncThunk(
   '/sign-up',
-  async ({ email, password }: IFormInput, thunkAPI) => {
+  async ({ email, password }: IFormReg, thunkAPI) => {
     try {
       const response = await requestPackage.post('/auth/sign-up', {
         email,

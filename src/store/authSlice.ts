@@ -2,21 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { loginUser } from '../actions/authActions';
 import { refreshToken } from '../actions/authActions';
 import { regUser } from '../actions/regActions';
+import { AuthState } from '../lib/actionTypes';
 
-type User = {
-  id?: number;
-  fullName?: string;
-  email?: string;
-  password?: string;
-};
-
-interface AuthState {
-  user: User | null;
-  access_token: string | null;
-  refresh_token: string | null;
-  error: string | null;
-  load: boolean;
-}
 const initialState: AuthState = {
   user: null,
   access_token: localStorage.getItem('access'),

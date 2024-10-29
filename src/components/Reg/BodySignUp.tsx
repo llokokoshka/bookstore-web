@@ -10,16 +10,7 @@ import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
-
-interface IFormInput {
-  email: string;
-  password: string;
-  passwordRep: string;
-}
-interface IFormReg {
-  email: string;
-  password: string;
-}
+import { IFormReg, IFormInput } from '../../lib/actionTypes';
 
 const SignUp: React.FC = () => {
   const dispatch = useAppDispatch();

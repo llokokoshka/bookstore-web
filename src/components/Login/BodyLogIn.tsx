@@ -10,11 +10,7 @@ import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
-
-interface IFormInput {
-  email: string;
-  password: string;
-}
+import { IFormReg } from '../../lib/actionTypes';
 
 const LogIn: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +20,7 @@ const LogIn: React.FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IFormInput>({
+  } = useForm<IFormReg>({
     mode: 'onChange',
     resolver: yupResolver(loginValidationSchema),
   });
@@ -35,7 +31,7 @@ const LogIn: React.FC = () => {
     inputType === 'password' ? setInputType('text') : setInputType('password');
   };
 
-  const onSubmit: SubmitHandler<IFormInput> = async (data: {
+  const onSubmit: SubmitHandler<IFormReg> = async (data: {
     email: string;
     password: string;
   }) => {
