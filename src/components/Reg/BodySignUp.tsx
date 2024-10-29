@@ -59,7 +59,7 @@ const SignUp: React.FC = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="info-block__text">
-            <div className="big-title">Log In</div>
+            <div className="big-title">Sign up</div>
             <div className="input">
               <img src={mail} alt="Email" className="input__icon" />
               <input
@@ -71,9 +71,11 @@ const SignUp: React.FC = () => {
               />
             </div>
             {errors.email?.type === 'required' && (
-              <div>Email - обязательное поле.</div>
+              <div className="error">Email - обязательное поле.</div>
             )}
-            {errors.email && <div>{errors.email.message}</div>}
+            {errors.email && (
+              <div className="error">{errors.email.message}</div>
+            )}
             {!errors.email && <div>Enter your email</div>}
             <div className="input">
               <div
@@ -91,9 +93,11 @@ const SignUp: React.FC = () => {
               ></input>
             </div>
             {errors.password?.type === 'required' && (
-              <div>Password - обязательное поле.</div>
+              <div className="error">Password - обязательное поле.</div>
             )}
-            {errors.password && <div>{errors.password.message}</div>}
+            {errors.password && (
+              <div className="error">{errors.password.message}</div>
+            )}
             {!errors.password && <div>Enter your password</div>}
             <div className="input">
               <div
@@ -111,9 +115,11 @@ const SignUp: React.FC = () => {
               ></input>
             </div>
             {errors.passwordRep?.type === 'required' && (
-              <div>Password - обязательное поле.</div>
+              <div className="error">Password - обязательное поле.</div>
             )}
-            {errors.passwordRep && <div>{errors.passwordRep.message}</div>}
+            {errors.passwordRep && (
+              <div className="error">{errors.passwordRep.message}</div>
+            )}
             {!errors.passwordRep && (
               <div>Repeat your password without errors</div>
             )}
@@ -167,5 +173,8 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+  }
+  .error {
+    color: #ff0000;
   }
 `;

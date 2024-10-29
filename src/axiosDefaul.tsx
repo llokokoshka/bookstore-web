@@ -28,8 +28,9 @@ requestPackage.interceptors.response.use(
     const req = error.config;
     const dispatch = useAppDispatch();
     const refToken = store.getState().auth.refresh_token;
-    if (error.response.status === 401 && refToken) {
+    if (error.response.status === 401 && refToken && !req._retry) {
       try {
+        req._retry = true;
         const token = await dispatch(refreshToken(refToken));
         req.headers.Authorization = `Bearer ${token}`;
         return requestPackage(req);
