@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
+import { loginUser } from '../../actions/authActions';
 import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
@@ -33,26 +32,10 @@ const LogIn: React.FC = () => {
     inputType === 'password' ? setInputType('text') : setInputType('password');
   };
 
-  const loginUser = createAsyncThunk(
-    '/sign-in',
-    async ({ email, password }: IFormInput) => {
-      try {
-        const response = await axios.post('/auth/sign-in', {
-          email,
-          password,
-        });
-        return response.data;
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  );
-
   const onSubmit: SubmitHandler<IFormInput> = async (data: {
     email: string;
     password: string;
   }) => {
-    console.log(data.email, data.password);
     try {
       console.log('Валидация прошла успешно!');
       const user = await dispatch(
@@ -87,7 +70,7 @@ const LogIn: React.FC = () => {
                 {...register('email', {
                   required: true,
                   // pattern: {
-                  //   // value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                  //   value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                   //   message: 'Введите корректный email',
                   // },
                 })}
