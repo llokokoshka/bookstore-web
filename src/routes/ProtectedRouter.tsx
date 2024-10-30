@@ -13,7 +13,6 @@ const ProtectedRouter: React.FC = () => {
     const gettUser = async () => {
       if (localStorageToken && !user) {
         const user = await getUser();
-        console.log(user);
         dispatch(addUser({ user: user }));
       }
     };

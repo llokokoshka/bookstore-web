@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import { refreshToken } from './actions/authActions';
-import { useAppDispatch } from './hooks';
 
 export const requestPackage = axios.create({
   baseURL: 'http://localhost:4000',

@@ -29,7 +29,7 @@ export async function refreshToken(
   refToken: string | null
 ): Promise<string | null> {
   try {
-    const response = await axios.post('/auth/refresh-token', {
+    const response = await requestPackage.post('/auth/refresh-token', {
       refresh_token: refToken,
     });
     const { access_token, refresh_token } = response.data;
