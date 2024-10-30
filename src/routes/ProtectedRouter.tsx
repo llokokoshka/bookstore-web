@@ -18,7 +18,6 @@ const ProtectedRouter: React.FC = () => {
     };
     gettUser();
   }, [user, localStorageToken, dispatch]);
-  console.log(user);
   return localStorageToken ? <Outlet /> : <Navigate to="/sign-in" />;
 };
 

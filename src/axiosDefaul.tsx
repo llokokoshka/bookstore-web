@@ -1,12 +1,13 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { refreshToken } from './actions/authActions';
 
 export const requestPackage = axios.create({
   baseURL: 'http://localhost:4000',
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
-
-requestPackage.defaults.headers.post['Content-Type'] = 'application/json';
 
 requestPackage.interceptors.request.use(
   async (config) => {
@@ -23,24 +24,29 @@ requestPackage.interceptors.request.use(
 
 requestPackage.interceptors.response.use(
   (response) => response,
-  async function (error) {
-    const req = error.config;
-    if (error.response.status === 401 && !req._retry) {
+  async function (error: AxiosError) {
+    const originalRequest = error.config as AxiosError['config'] & {
+      _retry: boolean;
+    };
+    const errResponse = error.response as AxiosError['response'];
+    console.log('orig req: ', originalRequest._retry);
+    if (errResponse?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
       try {
         const refToken = localStorage.getItem('refresh');
-        req._retry = true;
         if (refToken) {
           const token = await refreshToken(refToken);
+
           if (token) {
-            req.headers['Authorization'] = `Bearer ${token}`;
-            return requestPackage(req);
+            originalRequest.headers['Authorization'] = `Bearer ${token}`;
+
+            return requestPackage(originalRequest);
           }
         }
       } catch (err) {
         console.error('Token refresh failed:', err);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        window.location.href = '/login';
         return Promise.reject(err);
       }
     }

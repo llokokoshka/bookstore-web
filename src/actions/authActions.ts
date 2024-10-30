@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { requestPackage } from '../axiosDefaul';
 import { IFormReg } from '../lib/actionTypes';
-import axios from 'axios';
 
 export const loginUser = createAsyncThunk(
   '/sign-in',
@@ -39,7 +38,7 @@ export async function refreshToken(
     localStorage.setItem('refresh', refresh_token);
 
     return access_token;
-  } catch (err: any) {
+  } catch (err) {
     console.error('Ошибка обновления токена');
     return null;
   }
@@ -48,9 +47,8 @@ export async function refreshToken(
 export async function getUser() {
   try {
     const response = await requestPackage.get('/user/me');
-    console.log(response.data);
     return response.data;
-  } catch (err: any) {
+  } catch (err) {
     console.error('Ошибка при получении пользователя');
     return null;
   }
