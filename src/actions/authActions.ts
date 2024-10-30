@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { requestPackage } from '../axiosDefaul';
 import { IFormReg } from '../lib/actionTypes';
+import axios from 'axios';
 
 export const loginUser = createAsyncThunk(
   '/sign-in',
@@ -24,23 +25,33 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const refreshToken = createAsyncThunk(
-  '/refresh-token',
-  async (refreshToken: string, thunkAPI) => {
-    try {
-      const response = await requestPackage.post('/auth/refresh-token', {
-        refreshToken,
-      });
+export async function refreshToken(
+  refToken: string | null
+): Promise<string | null> {
+  try {
+    const response = await axios.post('/auth/refresh-token', {
+      refresh_token: refToken,
+    });
+    const { access_token, refresh_token } = response.data;
+    console.log(response.data);
 
-      const { access_token, refresh_token } = response.data;
+    localStorage.setItem('access', access_token);
+    localStorage.setItem('refresh', refresh_token);
 
-      localStorage.setItem('access', access_token);
-      localStorage.setItem('refresh', refresh_token);
-
-      return response.data;
-    } catch (err: any) {
-      console.error(err);
-      return thunkAPI.rejectWithValue(err.response.data.message);
-    }
+    return access_token;
+  } catch (err: any) {
+    console.error('Ошибка обновления токена');
+    return null;
   }
-);
+}
+
+export async function getUser() {
+  try {
+    const response = await requestPackage.get('/user/me');
+    console.log(response.data);
+    return response.data;
+  } catch (err: any) {
+    console.error('Ошибка при получении пользователя');
+    return null;
+  }
+}

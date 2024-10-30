@@ -41,7 +41,7 @@ const LogIn: React.FC = () => {
         loginUser({ email: data.email, password: data.password })
       );
       if (user.payload) {
-        navigate('/');
+        navigate('/me');
       }
       reset();
     } catch (err) {

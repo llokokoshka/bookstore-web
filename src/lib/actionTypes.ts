@@ -18,8 +18,6 @@ export type User = {
 
 export interface AuthState {
   user: User | null;
-  access_token: string | null;
-  refresh_token: string | null;
   error: string | null;
   load: boolean;
 }

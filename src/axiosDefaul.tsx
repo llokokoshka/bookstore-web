@@ -1,41 +1,48 @@
 import axios from 'axios';
 
-import { store } from './store';
 import { refreshToken } from './actions/authActions';
 import { useAppDispatch } from './hooks';
-import { logout } from './store/authSlice';
 
 export const requestPackage = axios.create({
   baseURL: 'http://localhost:4000',
-  timeout: 1000,
 });
 
-const token = localStorage.getItem('access');
-requestPackage.defaults.headers.common['Authorization'] = `Bearer${token}`;
 requestPackage.defaults.headers.post['Content-Type'] = 'application/json';
 
-requestPackage.interceptors.request.use(async (config) => {
-  const token = store.getState().auth.access_token;
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+requestPackage.interceptors.request.use(
+  async (config) => {
+    const token = localStorage.getItem('access');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  return config;
-});
+);
 
 requestPackage.interceptors.response.use(
   (response) => response,
   async function (error) {
     const req = error.config;
-    const dispatch = useAppDispatch();
-    const refToken = store.getState().auth.refresh_token;
-    if (error.response.status === 401 && refToken && !req._retry) {
+    if (error.response.status === 401 && !req._retry) {
       try {
+        const refToken = localStorage.getItem('refresh');
         req._retry = true;
-        const token = await dispatch(refreshToken(refToken));
-        req.headers.Authorization = `Bearer ${token}`;
-        return requestPackage(req);
+        if (refToken) {
+          const token = await refreshToken(refToken);
+          if (token) {
+            req.headers['Authorization'] = `Bearer ${token}`;
+            return requestPackage(req);
+          }
+        }
       } catch (err) {
-        store.dispatch(logout());
+        console.error('Token refresh failed:', err);
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        window.location.href = '/login';
+        return Promise.reject(err);
       }
     }
     return Promise.reject(error);

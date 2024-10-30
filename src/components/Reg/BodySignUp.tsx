@@ -42,7 +42,7 @@ const SignUp: React.FC = () => {
       );
       if (user.payload) {
         console.log('ПОльзователь добавлен!');
-        navigate('/');
+        navigate('/me');
       }
       reset();
     } catch (err) {
