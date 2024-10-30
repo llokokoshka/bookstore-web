@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
 * {
@@ -76,4 +76,28 @@ export default createGlobalStyle`
     letter-spacing: 0.75px;
     text-align: left;
   }
+
+  .green-title{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: right;
+    color: ${({ theme }) => theme.colors.dark_green};
+  }
+  .base-round-button{
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    top: 385px;
+    left: 317px;
+    gap: 0px;
+    opacity: 0px;
+    background-color: #344966;
+    border-radius: 50%;
+  }
+
+  .base-round-button:hover{
+    cursor: pointer;
+  }
+
 `;
