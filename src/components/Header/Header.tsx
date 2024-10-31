@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import logo from '../img/logo.png';
-import search from '../img/search-icon.png';
+import logo from '../../img/logo.png';
+import search from '../../img/search-icon.png';
 import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {

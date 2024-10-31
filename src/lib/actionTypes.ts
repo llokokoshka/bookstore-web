@@ -8,6 +8,11 @@ export interface IFormReg {
   email: string;
   password: string;
 }
+export interface IFormReduct {
+  fullName: string;
+  email: string;
+  password: string;
+}
 
 export type User = {
   id?: number;
