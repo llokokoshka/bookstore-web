@@ -51,7 +51,6 @@ export async function refTokenF() {
     return response.status;
   }
   const { access_token, refresh_token } = response.data;
-  console.log('refTokenF resp data', response.data);
 
   localStorage.setItem('access', access_token);
   localStorage.setItem('refresh', refresh_token);

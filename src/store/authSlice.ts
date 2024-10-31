@@ -47,7 +47,6 @@ const authSlice = createSlice({
       .addCase(regUser.fulfilled, (state, action) => {
         state.load = false;
         state.user = action.payload.user;
-        console.log(action.payload.user);
         localStorage.setItem('access', action.payload.access_token);
         localStorage.setItem('refresh', action.payload.refresh_token);
       })

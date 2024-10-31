@@ -26,88 +26,85 @@ const Profile: React.FC = () => {
   const changeInputTypeHandler = () => {
     inputType === 'password' ? setInputType('text') : setInputType('password');
   };
-  const { localStorageToken, user } = CheckUser();
-  console.log(user);
+  const { user } = CheckUser();
 
   return (
     <StyledWrapper>
       <div className="container">
-        {user ? (
-          <>
-            <div className="profile-img">
-              <img src={defImg} alt="default img" className="imgg"></img>
-              <button className="base-round-button">
-                <img src={camera} alt="camera" />
-              </button>
-            </div>
-            <form method="post" className="container__info-block">
-              <div className="info">
-                <div className="info__text">
-                  <div className="big-title">Personal information</div>
-                  <div className="green-title">Change information</div>
-                </div>
+        <>
+          <div className="profile-img">
+            <img src={defImg} alt="default img" className="imgg"></img>
+            <button className="base-round-button">
+              <img src={camera} alt="camera" />
+            </button>
+          </div>
+          <form method="post" className="container__info-block">
+            <div className="info">
+              <div className="info__text">
+                <div className="big-title">Personal information</div>
+                <div className="green-title">Change information</div>
+              </div>
 
-                <div className="input">
-                  <img src={man} alt="profile" className="input__icon" />
-                  <input
-                    type="text"
-                    id="text"
-                    placeholder={user.fullName}
-                    className="input__field"
-                    // {...register('email')}
-                  />
-                </div>
-                {/* {errors.email?.type === 'required' && (
+              <div className="input">
+                <img src={man} alt="profile" className="input__icon" />
+                <input
+                  type="text"
+                  id="text"
+                  placeholder={user?.fullName}
+                  className="input__field"
+                  // {...register('email')}
+                />
+              </div>
+              {/* {errors.email?.type === 'required' && (
             <div>Email - обязательное поле.</div>
           )}
           {errors.email && <div>{errors.email.message}</div>}
           {!errors.email && <div>Enter your email</div>} */}
-                <div className="input">
-                  <img src={mail} alt="Email" className="input__icon" />
-                  <input
-                    type="email"
-                    id="email"
-                    placeholder={user.email}
-                    className="input__field"
-                    {...register('email')}
-                  />
-                </div>
-                {errors.email?.type === 'required' && (
-                  <div>Email - обязательное поле.</div>
-                )}
-                {errors.email && <div>{errors.email.message}</div>}
-                {!errors.email && <div>Enter your email</div>}
+              <div className="input">
+                <img src={mail} alt="Email" className="input__icon" />
+                <input
+                  type="email"
+                  id="email"
+                  placeholder={user?.email}
+                  className="input__field"
+                  {...register('email')}
+                />
               </div>
-              <div className="info">
-                <div className="info__text">
-                  <div className="big-title">Password</div>
-                  <div className="green-title">Change password</div>
-                </div>
+              {errors.email?.type === 'required' && (
+                <div>Email - обязательное поле.</div>
+              )}
+              {errors.email && <div>{errors.email.message}</div>}
+              {!errors.email && <div>Enter your email</div>}
+            </div>
+            <div className="info">
+              <div className="info__text">
+                <div className="big-title">Password</div>
+                <div className="green-title">Change password</div>
+              </div>
 
-                <div className="input">
-                  <div
-                    className="password__btn active"
-                    onClick={changeInputTypeHandler}
-                  >
-                    <img src={hide} alt="Password" className="input__icon" />
-                  </div>
-                  <input
-                    type={inputType}
-                    placeholder={user.password}
-                    className="input__field"
-                    autoComplete="false"
-                    {...register('password')}
-                  ></input>
+              <div className="input">
+                <div
+                  className="password__btn active"
+                  onClick={changeInputTypeHandler}
+                >
+                  <img src={hide} alt="Password" className="input__icon" />
                 </div>
-                {errors.password?.type === 'required' && (
-                  <div>Password - обязательное поле.</div>
-                )}
-                {errors.password && <div>{errors.password.message}</div>}
-                {!errors.password && <div>Enter your password</div>}
+                <input
+                  type={inputType}
+                  placeholder={user?.password}
+                  className="input__field"
+                  autoComplete="false"
+                  {...register('password')}
+                ></input>
               </div>
-            </form>
-          </>
-        ) : null}
+              {errors.password?.type === 'required' && (
+                <div>Password - обязательное поле.</div>
+              )}
+              {errors.password && <div>{errors.password.message}</div>}
+              {!errors.password && <div>Enter your password</div>}
+            </div>
+          </form>
+        </>
       </div>
     </StyledWrapper>
   );

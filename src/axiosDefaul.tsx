@@ -30,7 +30,6 @@ axiosInstance.interceptors.response.use(
       _retry: boolean;
     };
     const errResponse = error.response as AxiosError['response'];
-    console.log('err resp ', errResponse?.status);
     if (
       (errResponse?.status === 401 || errResponse?.status === 403) &&
       !originalRequest._retry

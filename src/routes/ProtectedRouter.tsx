@@ -3,8 +3,8 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { CheckUser } from '../actions/authActions';
 
 const ProtectedRouter: React.FC = () => {
-  const { localStorageToken, user } = CheckUser();
-  return localStorageToken ? <Outlet /> : <Navigate to="/sign-in" />;
+  const { localStorageToken } = CheckUser();
+  return localStorageToken ? <Outlet /> : null;
 };
 
 export default ProtectedRouter;

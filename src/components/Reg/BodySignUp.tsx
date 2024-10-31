@@ -36,12 +36,10 @@ const SignUp: React.FC = () => {
     password: string;
   }) => {
     try {
-      console.log('Валидация прошла успешно!');
       const user = await dispatch(
         regUser({ email: data.email, password: data.password })
       );
       if (user.payload) {
-        console.log('ПОльзователь добавлен!');
         navigate('/me');
       }
       reset();
