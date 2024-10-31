@@ -84,12 +84,13 @@ export default createGlobalStyle`
     text-align: right;
     color: ${({ theme }) => theme.colors.dark_green};
   }
+  
   .base-round-button{
     position: absolute;
     width: 48px;
     height: 48px;
-    top: 385px;
-    left: 317px;
+    top: 237px;
+    left: 237px;
     gap: 0px;
     opacity: 0px;
     background-color: #344966;
