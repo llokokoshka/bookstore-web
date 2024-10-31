@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { loginValidationSchema } from '../../schemas/loginValidationSchema';
+import { IFormReg } from '../../lib/actionTypes';
+import { CheckUser } from '../../actions/authActions';
+import defImg from '../../img/deg img User profile.png';
 import man from '../../img/User profile.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
-import defImg from '../../img/deg img User profile.png';
 import camera from '../../img/Camera.png';
-import { useAppSelector } from '../../hooks';
-import { IFormReg } from '../../lib/actionTypes';
 
 const Profile: React.FC = () => {
+  const [inputType, setInputType] = useState('password');
+
   const {
     register,
     formState: { errors },
@@ -22,13 +23,11 @@ const Profile: React.FC = () => {
     resolver: yupResolver(loginValidationSchema),
   });
 
-  const [inputType, setInputType] = useState('password');
-
   const changeInputTypeHandler = () => {
     inputType === 'password' ? setInputType('text') : setInputType('password');
   };
-
-  const user = useAppSelector((state) => state.auth.user);
+  const { localStorageToken, user } = CheckUser();
+  console.log(user);
 
   return (
     <StyledWrapper>
@@ -108,9 +107,7 @@ const Profile: React.FC = () => {
               </div>
             </form>
           </>
-        ) : (
-          <div> Данные пользователя не найдены!</div>
-        )}
+        ) : null}
       </div>
     </StyledWrapper>
   );

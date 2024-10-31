@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loginUser } from '../actions/authActions';
-import { getUser } from '../actions/authActions';
 import { regUser } from '../actions/regActions';
 import { AuthState } from '../lib/actionTypes';
 
