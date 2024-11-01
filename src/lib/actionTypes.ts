@@ -28,3 +28,13 @@ export interface AuthState {
   error: string | null;
   load: boolean;
 }
+
+export type Props = {
+  img: string;
+  typeP: string;
+  id: string;
+  name: string;
+  placeholder: string | undefined;
+  isChangedInfo: boolean;
+  isChangedPass: boolean;
+};

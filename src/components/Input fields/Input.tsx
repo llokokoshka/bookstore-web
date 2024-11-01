@@ -4,17 +4,13 @@ import { useForm } from 'react-hook-form';
 import { IFormReduct } from '../../lib/actionTypes';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import styled from 'styled-components';
-
-type Props = {
-  img: string;
-  typeP: string;
-  id: string;
-  placeholder: string | undefined;
-};
+import { Props } from '../../lib/actionTypes';
 
 const Input: React.FC<Props> = (props) => {
   const [inputType, setInputType] = useState('password');
-  const { img, typeP, id, placeholder } = props;
+  const { img, typeP, id, placeholder, isChangedInfo, isChangedPass } = props;
+  const [inputValue, setInputValue] = useState(placeholder);
+
   const {
     register,
     formState: { errors },
@@ -36,22 +32,34 @@ const Input: React.FC<Props> = (props) => {
       ? register('fullName')
       : {};
 
+  const editValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setInputValue(e.target.value);
+  };
+
   return (
     <StyledWrapper>
-      <div className="input size">
+      <div className="input input__field correct">
         <div
           className="password__btn active"
           onClick={typeP === 'password' ? changeInputTypeHandler : undefined}
         >
           <img src={img} alt={typeP} className="input__icon" />
         </div>
-        <input
-          type={typeP === 'password' ? inputType : typeP}
-          id={id}
-          placeholder={placeholder}
-          className="input__field"
-          {...registerField}
-        />
+        <div className="input__text-block">
+          <div className="input__dark-title input-title">
+            Your {typeP === 'text' ? 'fullName' : typeP}
+          </div>
+          <input
+            type={typeP === 'password' ? inputType : typeP}
+            id={id}
+            value={typeP === 'password' ? '******************' : inputValue}
+            onChange={editValue}
+            className="input__field"
+            {...registerField}
+            disabled={typeP === 'password' ? isChangedPass : isChangedInfo}
+          />
+        </div>
       </div>
       {typeP === 'email' && (
         <>
@@ -103,6 +111,27 @@ export default Input;
 const StyledWrapper = styled.div`
   .size {
     max-width: 522px;
+    height: 64px;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+  .input-title {
+    display: flex;
+    justify-content: left;
+    padding-left: 64px;
+    padding-top: 6px;
+    width: 100%;
+    /* position: absolute; */
+  }
+  .input__text-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 100%;
+    /* position: relative; */
+  }
+  .correct {
+    padding-left: 0px;
   }
 `;
