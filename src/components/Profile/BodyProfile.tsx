@@ -102,7 +102,7 @@ const Profile: React.FC = () => {
         fullName: data.fullName,
         email: data.email,
       });
-      console.log(updUser);
+      console.log('Данные пользователя были обновлены', updUser);
 
       resetInfo();
     } catch (err) {
@@ -124,17 +124,25 @@ const Profile: React.FC = () => {
         passwordNew: data.passwordNew,
         passwordRep: data.passwordRep,
       });
-      console.log(updUserPass);
+      console.log('Пароль был обновлен', updUserPass);
 
       resetPass();
     } catch (err) {
-      console.warn('При обновлении данных возникла ошибка: ', err);
+      console.warn('При обновлении пароля возникла ошибка: ', err);
     }
   };
 
   const handleSubmit = () => {
-    handleSubmitFormInfo((data) => onSubmitFormInfo(data))();
-    handleSubmitFormPass((data) => onSubmitFormPass(data))();
+    if (changeInfo === false) {
+      handleSubmitFormInfo((data) => onSubmitFormInfo(data))();
+    }
+    if (changePass === false) {
+      console.log('Данные пароля отправлются для изменения');
+      handleSubmitFormPass((data) => {
+        console.log(data);
+        onSubmitFormPass(data);
+      })();
+    }
   };
 
   return (
@@ -334,7 +342,11 @@ const Profile: React.FC = () => {
               )}
 
               {passErrors.password ? (
-                <div>{passErrors.password.message}</div>
+                <div
+                  style={{ display: changePass === false ? 'block' : 'none' }}
+                >
+                  {passErrors.password.message}
+                </div>
               ) : (
                 <div
                   style={{ display: changePass === false ? 'block' : 'none' }}
