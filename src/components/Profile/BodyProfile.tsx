@@ -126,7 +126,6 @@ const Profile: React.FC = () => {
       const updUserPass = await axiosInstance.patch('/user/pass', {
         password: data.password,
         passwordNew: data.passwordNew,
-        passwordRep: data.passwordRep,
       });
       console.log('Пароль был обновлен', updUserPass);
       // dispatch(
