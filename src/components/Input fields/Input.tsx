@@ -1,39 +1,21 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { IFormReduct } from '../../lib/actionTypes';
-import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import styled from 'styled-components';
+
 import { Props } from '../../lib/actionTypes';
 
 const Input: React.FC<Props> = (props) => {
   const [inputType, setInputType] = useState('password');
-  const { img, typeP, id, placeholder, isChangedInfo, isChangedPass } = props;
-  const [inputValue, setInputValue] = useState(placeholder);
+  const { img, typeP, value, isChangedInfo, isChangedPass, errors, inpReg } =
+    props;
+  const [inputValue, setInputValue] = useState(
+    typeP === 'password' ? '******************' : value
+  );
 
-  const {
-    register,
-    formState: { errors },
-  } = useForm<IFormReduct>({
-    mode: 'onChange',
-    resolver: yupResolver(profileValidationSchema),
-  });
-
-  const changeInputTypeHandler = () => {
+  const handlerInputType = () => {
     setInputType((type) => (type === 'password' ? 'text' : 'password'));
   };
 
-  const registerField =
-    typeP === 'email'
-      ? register('email')
-      : typeP === 'password'
-      ? register('password')
-      : typeP === 'text'
-      ? register('fullName')
-      : {};
-
   const editValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setInputValue(e.target.value);
   };
 
@@ -42,7 +24,7 @@ const Input: React.FC<Props> = (props) => {
       <div className="input input__field correct">
         <div
           className="password__btn active"
-          onClick={typeP === 'password' ? changeInputTypeHandler : undefined}
+          onClick={typeP === 'password' ? handlerInputType : undefined}
         >
           <img src={img} alt={typeP} className="input__icon" />
         </div>
@@ -52,12 +34,11 @@ const Input: React.FC<Props> = (props) => {
           </div>
           <input
             type={typeP === 'password' ? inputType : typeP}
-            id={id}
-            value={typeP === 'password' ? '******************' : inputValue}
+            value={inputValue || ''}
             onChange={editValue}
             className="input__field"
-            {...registerField}
             disabled={typeP === 'password' ? isChangedPass : isChangedInfo}
+            {...inpReg}
           />
         </div>
       </div>
@@ -89,19 +70,7 @@ const Input: React.FC<Props> = (props) => {
         </>
       )}
 
-      {typeP === 'text' && (
-        <>
-          {errors.fullName?.type === 'required' && (
-            <div>Full Name - обязательное поле.</div>
-          )}
-
-          {errors.fullName ? (
-            <div>{errors.fullName.message}</div>
-          ) : (
-            <div>Enter your full name</div>
-          )}
-        </>
-      )}
+      {typeP === 'text' && <></>}
     </StyledWrapper>
   );
 };
@@ -122,14 +91,12 @@ const StyledWrapper = styled.div`
     padding-left: 64px;
     padding-top: 6px;
     width: 100%;
-    /* position: absolute; */
   }
   .input__text-block {
     display: flex;
     flex-direction: column;
     justify-content: left;
     width: 100%;
-    /* position: relative; */
   }
   .correct {
     padding-left: 0px;

@@ -8,11 +8,16 @@ export interface IFormReg {
   email: string;
   password: string;
 }
-export interface IFormReduct {
+
+export interface IFormInfo {
   fullName: string;
   email: string;
+}
+
+export interface IFormPass {
   password: string;
-  avatar?: string;
+  passwordNew: string;
+  passwordRep: string;
 }
 
 export type User = {
@@ -32,9 +37,9 @@ export interface AuthState {
 export type Props = {
   img: string;
   typeP: string;
-  id: string;
-  name: string;
-  placeholder: string | undefined;
+  inpReg: any;
+  value: string | undefined;
+  errors: any;
   isChangedInfo: boolean;
   isChangedPass: boolean;
 };
