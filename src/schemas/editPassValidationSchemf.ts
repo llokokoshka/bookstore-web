@@ -11,6 +11,6 @@ export const editPassValidationSchema = yup.object({
     .min(5, 'Минимальная длина пароля - 6 символов!'),
   passwordRep: yup
     .string()
-    .oneOf([yup.ref(' passwordNew'), 'Пароли не совпадают!'])
+    .oneOf([yup.ref('passwordNew'), 'Пароли не совпадают!'])
     .required('Повторите пароль!'),
 });

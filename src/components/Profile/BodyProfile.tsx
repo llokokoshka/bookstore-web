@@ -9,7 +9,7 @@ import hide from '../../img/Hide.png';
 import camera from '../../img/Camera.png';
 import { axiosInstance } from '../../axiosDefaul';
 import { useDispatch } from 'react-redux';
-import { setAvatar } from '../../store/authSlice';
+import { setUser } from '../../store/authSlice';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IFormPass, IFormInfo } from '../../lib/actionTypes';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
@@ -17,7 +17,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
 
 const Profile: React.FC = () => {
-  const { user } = CheckUser();
+  let { user } = CheckUser();
   const dirname = `http://localhost:4000/uploads/`;
   const dispatch = useDispatch();
   const [changeInfo, setChangeInfo] = useState(true);
@@ -29,7 +29,7 @@ const Profile: React.FC = () => {
     handleSubmit: handleSubmitFormInfo,
     reset: resetInfo,
     formState: { errors: infoErrors },
-    // setValue: setValueInfo,
+    setValue: setValueInfo,
     // watch: watchInfo,
   } = useForm<IFormInfo>({
     mode: 'onChange',
@@ -81,7 +81,7 @@ const Profile: React.FC = () => {
           },
         });
         const uploadedFile = response.data.data.filename;
-        dispatch(setAvatar(uploadedFile));
+        dispatch(setUser({ avatar: uploadedFile }));
         console.log('Фото успешно загружено! ', uploadedFile, user?.avatar);
       } catch (err) {
         console.error('Ошибка загрузки фото: ', err);
@@ -103,7 +103,11 @@ const Profile: React.FC = () => {
         email: data.email,
       });
       console.log('Данные пользователя были обновлены', updUser);
-
+      dispatch(
+        setUser({ fullName: updUser.data.fullName, email: updUser.data.email })
+      );
+      setValueInfo('fullName', updUser.data.fullName);
+      setValueInfo('email', updUser.data.email);
       resetInfo();
     } catch (err) {
       console.warn('При обновлении данных возникла ошибка: ', err);
@@ -125,6 +129,13 @@ const Profile: React.FC = () => {
         passwordRep: data.passwordRep,
       });
       console.log('Пароль был обновлен', updUserPass);
+      // dispatch(
+      //   setUser({
+      //     password: data.password,
+      //     passwordNew: data.passwordNew,
+      //     passwordRep: data.passwordRep,
+      //   })
+      // );
 
       resetPass();
     } catch (err) {
@@ -287,7 +298,7 @@ const Profile: React.FC = () => {
                   <input
                     type={inputType}
                     className="input__field"
-                    {...registerFormPass('password')}
+                    {...registerFormPass('passwordNew')}
                   />
                 </div>
               </div>
@@ -329,7 +340,7 @@ const Profile: React.FC = () => {
                   <input
                     type={inputType}
                     className="input__field"
-                    {...registerFormPass('password')}
+                    {...registerFormPass('passwordRep')}
                   />
                 </div>
               </div>

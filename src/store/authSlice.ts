@@ -23,9 +23,20 @@ const authSlice = createSlice({
       state.load = false;
       state.user = user;
     },
-    setAvatar: (state, action) => {
+    setUser: (state, action) => {
       if (state.user) {
-        state.user.avatar = action.payload;
+        if (action.payload.avatar) {
+          state.user.avatar = action.payload.avatar;
+        }
+        if (action.payload.password) {
+          state.user.password = action.payload.password;
+        }
+        if (action.payload.fullName) {
+          state.user.fullName = action.payload.fullName;
+        }
+        if (action.payload.email) {
+          state.user.email = action.payload.email;
+        }
       }
     },
   },
@@ -62,6 +73,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, addUser, setAvatar } = authSlice.actions;
+export const { logout, addUser, setUser } = authSlice.actions;
 
 export default authSlice.reducer;
