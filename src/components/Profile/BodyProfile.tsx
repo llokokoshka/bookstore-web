@@ -16,6 +16,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
 import Input from '../Input fields/ProfileInput';
 import { useAppSelector } from '../../hooks';
+import InfoForm from './InfoForm';
 
 const Profile: React.FC = () => {
   const user = useAppSelector((state) => state.auth.user);
