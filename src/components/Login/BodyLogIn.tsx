@@ -40,7 +40,6 @@ const LogIn: React.FC = () => {
       const user = await dispatch(
         loginUser({ email: data.email, password: data.password })
       );
-      console.log(user);
       if (user.payload.user) {
         navigate('/me');
       } else navigate('/sign-in');

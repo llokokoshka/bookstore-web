@@ -101,14 +101,11 @@ export default createGlobalStyle`
   }
   
   .base-round-button{
-    position: absolute;
+    /* position: absolute; */
     width: 48px;
     height: 48px;
-    top: 237px;
-    left: 237px;
-    gap: 0px;
     opacity: 0px;
-    background-color: #344966;
+    background-color: ${({ theme }) => theme.colors.dark_blue};
     border-radius: 50%;
   }
 

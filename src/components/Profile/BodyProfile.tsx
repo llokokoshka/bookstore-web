@@ -16,9 +16,10 @@ import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
 import Input from '../Input fields/Input';
+import { useAppSelector } from '../../hooks';
 
 const Profile: React.FC = () => {
-  let { user } = CheckUser();
+  const user = useAppSelector((state) => state.auth.user);
   const dirname = `http://localhost:4000/uploads/`;
   const dispatch = useDispatch();
   const [changeInfo, setChangeInfo] = useState(true);
@@ -29,7 +30,6 @@ const Profile: React.FC = () => {
     handleSubmit: handleSubmitFormInfo,
     reset: resetInfo,
     formState: { errors: infoErrors },
-    setValue: setValueInfo,
   } = useForm<IFormInfo>({
     mode: 'onChange',
     resolver: yupResolver(profileValidationSchema),
@@ -75,7 +75,7 @@ const Profile: React.FC = () => {
         });
         const uploadedFile = response.data.data.filename;
         dispatch(setUser({ avatar: uploadedFile }));
-        console.log('Фото успешно загружено! ', uploadedFile, user?.avatar);
+        console.log('Фото успешно загружено!');
       } catch (err) {
         console.error('Ошибка загрузки фото: ', err);
         return err;
@@ -91,15 +91,16 @@ const Profile: React.FC = () => {
       console.log('Данные отправлены на сервер!');
 
       const updUser = await axiosInstance.patch('/user/me', {
-        fullName: data.fullName,
-        email: data.email,
+        fullName: data?.fullName,
+        email: data?.email,
       });
       console.log('Данные пользователя были обновлены', updUser);
       dispatch(
-        setUser({ fullName: updUser.data.fullName, email: updUser.data.email })
+        setUser({
+          fullName: updUser.data?.fullName,
+          email: updUser.data?.email,
+        })
       );
-      setValueInfo('fullName', updUser.data.fullName);
-      setValueInfo('email', updUser.data.email);
       resetInfo();
     } catch (err) {
       console.warn('При обновлении данных возникла ошибка: ', err);
@@ -111,7 +112,6 @@ const Profile: React.FC = () => {
     passwordNew: string;
     passwordRep: string;
   }) => {
-    console.log('FormPass data >>>>> ', data);
     try {
       console.log('Данные отправлены на сервер!');
 
@@ -155,7 +155,7 @@ const Profile: React.FC = () => {
             <img src={camera} alt="camera" />
           </label>
         </div>
-        <div>
+        <div className="">
           <form
             className="container__info-block"
             onSubmit={handleSubmitFormInfo(onSubmitFormInfo)}
@@ -308,5 +308,8 @@ const StyledWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 237px;
+    left: 237px;
   }
 `;

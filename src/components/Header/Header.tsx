@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import logo from '../../img/logo.png';
 import search from '../../img/search-icon.png';
 import { Link } from 'react-router-dom';
+import { CheckUser } from '../../actions/authActions';
+import AuthButtons from './authButtons';
 
 const Header: React.FC = () => {
+  const isAuth = CheckUser();
   return (
     <StyledWrapper>
       <img src={logo} alt="logo" />
@@ -19,10 +22,13 @@ const Header: React.FC = () => {
           ></input>
         </div>
       </div>
-
-      <Link className="todo-body__div-button" to={`/sign-in`}>
-        <button className="base-button">Log in/Sign Up</button>
-      </Link>
+      {isAuth.localStorageToken !== null ? (
+        <AuthButtons />
+      ) : (
+        <Link className="todo-body__div-button" to={`/sign-in`}>
+          <button className="base-button">Log in/Sign Up</button>
+        </Link>
+      )}
     </StyledWrapper>
   );
 };
@@ -33,9 +39,11 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  column-gap: 127px;
   align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.padding.header};
+  position: relative;
 
   .header {
     display: flex;

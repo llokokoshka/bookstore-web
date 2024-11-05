@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Props } from '../../lib/actionTypes';
+import { useAppDispatch } from '../../hooks';
+import { setUser } from '../../store/authSlice';
 
 const Input: React.FC<Props> = (props) => {
   const [inputType, setInputType] = useState('password');
   const { img, label, typeP, register, name, value, disable, errors } = props;
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     if (name !== 'password') {
-      const savedValue = localStorage.getItem(name);
-      if (savedValue) {
-        register(name, { value: savedValue });
+      if (value) {
+        register(name, { value: value });
       }
     } else register(name, { value: '******************' });
   });
@@ -21,13 +22,17 @@ const Input: React.FC<Props> = (props) => {
   };
 
   const editValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    localStorage.setItem(name, e.target.value);
+    dispatch(
+      setUser({
+        name: e.target.value,
+      })
+    );
   };
 
   return (
     <StyledWrapper>
       <div
-        className="input input__field correct"
+        className="input input__field correct size"
         style={{
           display:
             disable === false &&
@@ -54,7 +59,7 @@ const Input: React.FC<Props> = (props) => {
             onChange={editValue}
             disabled={disable}
             defaultValue={value}
-            className="input__field"
+            className="input__field pad-inp"
           />
         </div>
       </div>
@@ -137,9 +142,8 @@ export default Input;
 
 const StyledWrapper = styled.div`
   .size {
-    max-width: 522px;
+    width: 522px;
     height: 64px;
-    width: 100%;
     display: flex;
     flex-direction: row;
   }
