@@ -14,7 +14,7 @@ import { IFormPass, IFormInfo } from '../../lib/actionTypes';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
-import Input from '../Input fields/Input';
+import Input from '../Input fields/ProfileInput';
 import { useAppSelector } from '../../hooks';
 
 const Profile: React.FC = () => {
