@@ -1,48 +1,64 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Props } from '../../lib/actionTypes';
 
 const Input: React.FC<Props> = (props) => {
   const [inputType, setInputType] = useState('password');
-  const { img, typeP, value, isChangedInfo, isChangedPass, errors, inpReg } =
-    props;
-  const [inputValue, setInputValue] = useState(
-    typeP === 'password' ? '******************' : value
-  );
+  const { img, label, typeP, register, name, value, disable, errors } = props;
+
+  useEffect(() => {
+    if (name !== 'password') {
+      const savedValue = localStorage.getItem(name);
+      if (savedValue) {
+        register(name, { value: savedValue });
+      }
+    } else register(name, { value: '******************' });
+  });
 
   const handlerInputType = () => {
     setInputType((type) => (type === 'password' ? 'text' : 'password'));
   };
 
   const editValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    localStorage.setItem(name, e.target.value);
   };
 
   return (
     <StyledWrapper>
-      <div className="input input__field correct">
+      <div
+        className="input input__field correct"
+        style={{
+          display:
+            disable === false &&
+            (name === 'passwordNew' || name === 'passwordRep')
+              ? 'block'
+              : name === 'password' || name === 'fullName' || name === 'email'
+              ? 'block'
+              : 'none',
+        }}
+      >
         <div
           className="password__btn active"
-          onClick={typeP === 'password' ? handlerInputType : undefined}
+          onClick={
+            typeP === 'password' && !disable ? handlerInputType : undefined
+          }
         >
           <img src={img} alt={typeP} className="input__icon" />
         </div>
         <div className="input__text-block">
-          <div className="input__dark-title input-title">
-            Your {typeP === 'text' ? 'fullName' : typeP}
-          </div>
+          <div className="input__dark-title input-title">Your {label}</div>
           <input
             type={typeP === 'password' ? inputType : typeP}
-            value={inputValue || ''}
+            {...register(name)}
             onChange={editValue}
+            disabled={disable}
+            defaultValue={value}
             className="input__field"
-            disabled={typeP === 'password' ? isChangedPass : isChangedInfo}
-            {...inpReg}
           />
         </div>
       </div>
-      {typeP === 'email' && (
+      {name === 'email' && (
         <>
           {errors.email?.type === 'required' && (
             <div>Email - обязательное поле.</div>
@@ -56,7 +72,7 @@ const Input: React.FC<Props> = (props) => {
         </>
       )}
 
-      {typeP === 'password' && (
+      {name === 'password' && (
         <>
           {errors.password?.type === 'required' && (
             <div>Password - обязательное поле.</div>
@@ -70,7 +86,49 @@ const Input: React.FC<Props> = (props) => {
         </>
       )}
 
-      {typeP === 'text' && <></>}
+      {name === 'fullName' && (
+        <>
+          {errors.fullName?.type === 'required' && (
+            <div>Full Name - обязательное поле.</div>
+          )}
+          {errors.fullName ? (
+            <div>{errors.fullName.message}</div>
+          ) : (
+            <div>Enter your full name</div>
+          )}
+        </>
+      )}
+      {(name === 'passwordRep' || name === 'passwordNew') && (
+        <>
+          {errors.password?.type === 'required' && (
+            <div
+              style={{
+                display: disable === false ? 'block' : 'none',
+              }}
+            >
+              Password - обязательное поле.
+            </div>
+          )}
+          {errors.password ? (
+            <div
+              style={{
+                display: disable === false ? 'block' : 'none',
+              }}
+            >
+              {errors.password.message}
+            </div>
+          ) : (
+            <div
+              style={{
+                display: disable === false ? 'block' : 'none',
+              }}
+            >
+              {' '}
+              Enter your password
+            </div>
+          )}
+        </>
+      )}
     </StyledWrapper>
   );
 };

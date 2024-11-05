@@ -15,6 +15,7 @@ import { IFormPass, IFormInfo } from '../../lib/actionTypes';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
+import Input from '../Input fields/Input';
 
 const Profile: React.FC = () => {
   let { user } = CheckUser();
@@ -22,7 +23,6 @@ const Profile: React.FC = () => {
   const dispatch = useDispatch();
   const [changeInfo, setChangeInfo] = useState(true);
   const [changePass, setChangePass] = useState(true);
-  const [inputType, setInputType] = useState('password');
 
   const {
     register: registerFormInfo,
@@ -30,13 +30,12 @@ const Profile: React.FC = () => {
     reset: resetInfo,
     formState: { errors: infoErrors },
     setValue: setValueInfo,
-    // watch: watchInfo,
   } = useForm<IFormInfo>({
     mode: 'onChange',
     resolver: yupResolver(profileValidationSchema),
     defaultValues: {
-      fullName: user?.fullName || '',
-      email: user?.email || '',
+      fullName: user?.fullName,
+      email: user?.email,
     },
   });
 
@@ -45,21 +44,15 @@ const Profile: React.FC = () => {
     handleSubmit: handleSubmitFormPass,
     reset: resetPass,
     formState: { errors: passErrors },
-    // setValue: setValuePass,
-    // watch: watchPass,
   } = useForm<IFormPass>({
     mode: 'onChange',
     resolver: yupResolver(editPassValidationSchema),
     defaultValues: {
-      password: '',
+      password: '*************',
       passwordNew: '',
       passwordRep: '',
     },
   });
-
-  const handlerInputType = () => {
-    setInputType((type) => (type === 'password' ? 'text' : 'password'));
-  };
 
   const handleChangeInfo = () => {
     setChangeInfo(!changeInfo);
@@ -94,7 +87,6 @@ const Profile: React.FC = () => {
     fullName?: string;
     email?: string;
   }) => {
-    console.log('FormInfo data >>>>> ', data);
     try {
       console.log('Данные отправлены на сервер!');
 
@@ -128,14 +120,6 @@ const Profile: React.FC = () => {
         passwordNew: data.passwordNew,
       });
       console.log('Пароль был обновлен', updUserPass);
-      // dispatch(
-      //   setUser({
-      //     password: data.password,
-      //     passwordNew: data.passwordNew,
-      //     passwordRep: data.passwordRep,
-      //   })
-      // );
-
       resetPass();
     } catch (err) {
       console.warn('При обновлении пароля возникла ошибка: ', err);
@@ -147,9 +131,7 @@ const Profile: React.FC = () => {
       handleSubmitFormInfo((data) => onSubmitFormInfo(data))();
     }
     if (changePass === false) {
-      console.log('Данные пароля отправлются для изменения');
       handleSubmitFormPass((data) => {
-        console.log(data);
         onSubmitFormPass(data);
       })();
     }
@@ -160,7 +142,6 @@ const Profile: React.FC = () => {
       <div className="container">
         <div className="profile-img">
           <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
-          {/* <form method="post" encType="multipart/form-data"> */}
           <label className="base-round-button lable-nice">
             <input
               type="file"
@@ -173,7 +154,6 @@ const Profile: React.FC = () => {
             />
             <img src={camera} alt="camera" />
           </label>
-          {/* </form> */}
         </div>
         <div>
           <form
@@ -187,56 +167,26 @@ const Profile: React.FC = () => {
                   Change information
                 </div>
               </div>
-              <div className="input input__field correct">
-                <div className="password__btn active">
-                  <img src={man} alt="man" className="input__icon" />
-                </div>
-                <div className="input__text-block">
-                  <div className="input__dark-title input-title">
-                    Your full name
-                  </div>
-                  <input
-                    type="text"
-                    className="input__field"
-                    {...registerFormInfo('fullName')}
-                    disabled={changeInfo}
-                  />
-                </div>
-              </div>
-              {infoErrors.fullName?.type === 'required' && (
-                <div>Full Name - обязательное поле.</div>
-              )}
-
-              {infoErrors.fullName ? (
-                <div>{infoErrors.fullName.message}</div>
-              ) : (
-                <div>Enter your full name</div>
-              )}
-              <div className="input input__field correct">
-                <div className="password__btn active">
-                  <img src={mail} alt="mail" className="input__icon" />
-                </div>
-                <div className="input__text-block">
-                  <div className="input__dark-title input-title">
-                    Your email
-                  </div>
-                  <input
-                    type="email"
-                    className="input__field"
-                    {...registerFormInfo('email')}
-                    disabled={changeInfo}
-                  />
-                </div>
-              </div>
-              {infoErrors.email?.type === 'required' && (
-                <div>Email - обязательное поле.</div>
-              )}
-
-              {infoErrors.email ? (
-                <div>{infoErrors.email.message}</div>
-              ) : (
-                <div>Enter your email</div>
-              )}
+              <Input
+                img={man}
+                label="full name"
+                typeP="text"
+                register={registerFormInfo}
+                name="fullName"
+                value={user?.fullName}
+                disable={changeInfo}
+                errors={infoErrors}
+              />
+              <Input
+                img={mail}
+                label="email"
+                typeP="email"
+                register={registerFormInfo}
+                name="email"
+                value={user?.email}
+                disable={changeInfo}
+                errors={infoErrors}
+              />
             </div>
           </form>
           <form
@@ -250,120 +200,38 @@ const Profile: React.FC = () => {
                   Change password
                 </div>
               </div>
-              <div className="input input__field correct">
-                <div
-                  className="password__btn active"
-                  onClick={handlerInputType}
-                >
-                  <img src={hide} alt="hide" className="input__icon" />
-                </div>
-                <div className="input__text-block">
-                  <div className="input__dark-title input-title">
-                    Your password
-                  </div>
-                  <input
-                    type={inputType}
-                    className="input__field"
-                    {...registerFormPass('password')}
-                    disabled={changePass}
-                  />
-                </div>
-              </div>
-              {passErrors.password?.type === 'required' && (
-                <div>Password - обязательное поле.</div>
-              )}
-
-              {passErrors.password ? (
-                <div>{passErrors.password.message}</div>
-              ) : (
-                <div>Enter your password</div>
-              )}
+              <Input
+                img={hide}
+                label="password"
+                typeP="password"
+                register={registerFormPass}
+                name="password"
+                value="******************"
+                disable={changePass}
+                errors={passErrors}
+              />
             </div>
             <div>
-              <div
-                className="input input__field correct"
-                style={{ display: changePass === false ? 'block' : 'none' }}
-              >
-                <div
-                  className="password__btn active"
-                  onClick={handlerInputType}
-                >
-                  <img src={hide} alt="hide" className="input__icon" />
-                </div>
-                <div className="input__text-block">
-                  <div className="input__dark-title input-title">
-                    Your new password
-                  </div>
-                  <input
-                    type={inputType}
-                    className="input__field"
-                    {...registerFormPass('passwordNew')}
-                  />
-                </div>
-              </div>
-              {passErrors.password?.type === 'required' && (
-                <div
-                  style={{ display: changePass === false ? 'block' : 'none' }}
-                >
-                  Password - обязательное поле.
-                </div>
-              )}
-
-              {passErrors.password ? (
-                <div
-                  style={{ display: changePass === false ? 'block' : 'none' }}
-                >
-                  {passErrors.password.message}
-                </div>
-              ) : (
-                <div
-                  style={{ display: changePass === false ? 'block' : 'none' }}
-                >
-                  Enter your password
-                </div>
-              )}
-              <div
-                className="input input__field correct"
-                style={{ display: changePass === false ? 'block' : 'none' }}
-              >
-                <div
-                  className="password__btn active"
-                  onClick={handlerInputType}
-                >
-                  <img src={hide} alt="hide" className="input__icon" />
-                </div>
-                <div className="input__text-block">
-                  <div className="input__dark-title input-title">
-                    Your password
-                  </div>
-                  <input
-                    type={inputType}
-                    className="input__field"
-                    {...registerFormPass('passwordRep')}
-                  />
-                </div>
-              </div>
-              {passErrors.password?.type === 'required' && (
-                <div
-                  style={{ display: changePass === false ? 'block' : 'none' }}
-                >
-                  Password - обязательное поле.
-                </div>
-              )}
-
-              {passErrors.password ? (
-                <div
-                  style={{ display: changePass === false ? 'block' : 'none' }}
-                >
-                  {passErrors.password.message}
-                </div>
-              ) : (
-                <div
-                  style={{ display: changePass === false ? 'block' : 'none' }}
-                >
-                  Enter your password
-                </div>
-              )}
+              <Input
+                img={hide}
+                label="new password"
+                typeP="password"
+                register={registerFormPass}
+                name="passwordNew"
+                value=""
+                disable={changePass}
+                errors={passErrors}
+              />
+              <Input
+                img={hide}
+                label="copy of new password"
+                typeP="password"
+                register={registerFormPass}
+                name="passwordRep"
+                value=""
+                disable={changePass}
+                errors={passErrors}
+              />
             </div>
           </form>
           <button
@@ -440,28 +308,5 @@ const StyledWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  .size {
-    max-width: 522px;
-    height: 64px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-  }
-  .input-title {
-    display: flex;
-    justify-content: left;
-    padding-left: 64px;
-    padding-top: 6px;
-    width: 100%;
-  }
-  .input__text-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    width: 100%;
-  }
-  .correct {
-    padding-left: 0px;
   }
 `;

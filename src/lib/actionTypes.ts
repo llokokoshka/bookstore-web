@@ -37,10 +37,11 @@ export interface AuthState {
 
 export type Props = {
   img: string;
+  label: string;
   typeP: string;
-  inpReg: any;
+  register: any;
+  name: string;
   value: string | undefined;
+  disable: boolean;
   errors: any;
-  isChangedInfo: boolean;
-  isChangedPass: boolean;
 };
