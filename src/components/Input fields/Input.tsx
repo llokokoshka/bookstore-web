@@ -7,6 +7,7 @@ import { setUser } from '../../store/authSlice';
 
 const Input: React.FC<Props> = (props) => {
   const [inputType, setInputType] = useState('password');
+  let correctPassFlag = true;
   const { img, label, typeP, register, name, value, disable, errors } = props;
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -28,7 +29,12 @@ const Input: React.FC<Props> = (props) => {
       })
     );
   };
-
+  const handlePass = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (name === 'password' && correctPassFlag) {
+      e.target.value = '';
+      correctPassFlag = false;
+    }
+  };
   return (
     <StyledWrapper>
       <div
@@ -57,6 +63,7 @@ const Input: React.FC<Props> = (props) => {
             type={typeP === 'password' ? inputType : typeP}
             {...register(name)}
             onChange={editValue}
+            onFocus={handlePass}
             disabled={disable}
             defaultValue={value}
             className="input__field pad-inp"
@@ -69,11 +76,7 @@ const Input: React.FC<Props> = (props) => {
             <div>Email - обязательное поле.</div>
           )}
 
-          {errors.email ? (
-            <div>{errors.email.message}</div>
-          ) : (
-            <div>Enter your email</div>
-          )}
+          {errors.email ? <div>{errors.email.message}</div> : null}
         </>
       )}
 
@@ -83,11 +86,7 @@ const Input: React.FC<Props> = (props) => {
             <div>Password - обязательное поле.</div>
           )}
 
-          {errors.password ? (
-            <div>{errors.password.message}</div>
-          ) : (
-            <div>Enter your password</div>
-          )}
+          {errors.password ? <div>{errors.password.message}</div> : null}
         </>
       )}
 
@@ -96,16 +95,12 @@ const Input: React.FC<Props> = (props) => {
           {errors.fullName?.type === 'required' && (
             <div>Full Name - обязательное поле.</div>
           )}
-          {errors.fullName ? (
-            <div>{errors.fullName.message}</div>
-          ) : (
-            <div>Enter your full name</div>
-          )}
+          {errors.fullName ? <div>{errors.fullName.message}</div> : null}
         </>
       )}
-      {(name === 'passwordRep' || name === 'passwordNew') && (
+      {name === 'passwordNew' && (
         <>
-          {errors.password?.type === 'required' && (
+          {errors.passwordNew?.type === 'required' && (
             <div
               style={{
                 display: disable === false ? 'block' : 'none',
@@ -114,13 +109,13 @@ const Input: React.FC<Props> = (props) => {
               Password - обязательное поле.
             </div>
           )}
-          {errors.password ? (
+          {errors.passwordNew ? (
             <div
               style={{
                 display: disable === false ? 'block' : 'none',
               }}
             >
-              {errors.password.message}
+              {errors.passwordNew.message}
             </div>
           ) : (
             <div
@@ -128,8 +123,37 @@ const Input: React.FC<Props> = (props) => {
                 display: disable === false ? 'block' : 'none',
               }}
             >
-              {' '}
               Enter your password
+            </div>
+          )}
+        </>
+      )}
+      {name === 'passwordRep' && (
+        <>
+          {errors.passwordRep?.type === 'required' && (
+            <div
+              style={{
+                display: disable === false ? 'block' : 'none',
+              }}
+            >
+              Password - обязательное поле.
+            </div>
+          )}
+          {errors.passwordRep ? (
+            <div
+              style={{
+                display: disable === false ? 'block' : 'none',
+              }}
+            >
+              {errors.passwordRep.message}
+            </div>
+          ) : (
+            <div
+              style={{
+                display: disable === false ? 'block' : 'none',
+              }}
+            >
+              Repeat your password without errors
             </div>
           )}
         </>
@@ -141,11 +165,21 @@ const Input: React.FC<Props> = (props) => {
 export default Input;
 
 const StyledWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 9px;
+
   .size {
     width: 522px;
     height: 64px;
     display: flex;
     flex-direction: row;
+    @media screen and (max-width: 834px) {
+      width: 529px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 290px;
+    }
   }
   .input-title {
     display: flex;
@@ -162,5 +196,11 @@ const StyledWrapper = styled.div`
   }
   .correct {
     padding-left: 0px;
+  }
+
+  .pad-inp {
+    width: 448px;
+    margin-left: 64px;
+    padding-left: 5px;
   }
 `;

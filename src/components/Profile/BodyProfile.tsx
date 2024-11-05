@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import FormData from 'form-data';
 
-import { CheckUser } from '../../actions/authActions';
 import man from '../../img/User profile.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
@@ -139,113 +138,111 @@ const Profile: React.FC = () => {
 
   return (
     <StyledWrapper>
-      <div className="container">
-        <div className="profile-img">
-          <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
-          <label className="base-round-button lable-nice">
-            <input
-              type="file"
-              id="avatar"
-              name="avatar"
-              accept="image/png, image/jpeg, image/jpg"
-              multiple
-              style={{ display: 'none' }}
-              onChange={handleUpdateAvatar}
+      <div className="profile-img">
+        <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
+        <label className="base-round-button lable-nice">
+          <input
+            type="file"
+            id="avatar"
+            name="avatar"
+            accept="image/png, image/jpeg, image/jpg"
+            multiple
+            style={{ display: 'none' }}
+            onChange={handleUpdateAvatar}
+          />
+          <img src={camera} alt="camera" />
+        </label>
+      </div>
+      <div className="inputs">
+        <form
+          className="container__info-block"
+          onSubmit={handleSubmitFormInfo(onSubmitFormInfo)}
+        >
+          <div className="info">
+            <div className="info__text">
+              <div className="normal-title">Personal information</div>
+              <div className="green-title" onClick={handleChangeInfo}>
+                Change information
+              </div>
+            </div>
+            <Input
+              img={man}
+              label="full name"
+              typeP="text"
+              register={registerFormInfo}
+              name="fullName"
+              value={user?.fullName}
+              disable={changeInfo}
+              errors={infoErrors}
             />
-            <img src={camera} alt="camera" />
-          </label>
-        </div>
-        <div className="">
-          <form
-            className="container__info-block"
-            onSubmit={handleSubmitFormInfo(onSubmitFormInfo)}
-          >
-            <div className="info">
-              <div className="info__text">
-                <div className="normal-title">Personal information</div>
-                <div className="green-title" onClick={handleChangeInfo}>
-                  Change information
-                </div>
+            <Input
+              img={mail}
+              label="email"
+              typeP="email"
+              register={registerFormInfo}
+              name="email"
+              value={user?.email}
+              disable={changeInfo}
+              errors={infoErrors}
+            />
+          </div>
+        </form>
+        <form
+          className="info"
+          onSubmit={handleSubmitFormPass(onSubmitFormPass)}
+        >
+          <div className="info">
+            <div className="info__text">
+              <div className="normal-title">Password</div>
+              <div className="green-title" onClick={handleChangePass}>
+                Change password
               </div>
-              <Input
-                img={man}
-                label="full name"
-                typeP="text"
-                register={registerFormInfo}
-                name="fullName"
-                value={user?.fullName}
-                disable={changeInfo}
-                errors={infoErrors}
-              />
-              <Input
-                img={mail}
-                label="email"
-                typeP="email"
-                register={registerFormInfo}
-                name="email"
-                value={user?.email}
-                disable={changeInfo}
-                errors={infoErrors}
-              />
             </div>
-          </form>
-          <form
-            className="container__info-block"
-            onSubmit={handleSubmitFormPass(onSubmitFormPass)}
-          >
-            <div className="info">
-              <div className="info__text">
-                <div className="normal-title">Password</div>
-                <div className="green-title" onClick={handleChangePass}>
-                  Change password
-                </div>
-              </div>
-              <Input
-                img={hide}
-                label="password"
-                typeP="password"
-                register={registerFormPass}
-                name="password"
-                value="******************"
-                disable={changePass}
-                errors={passErrors}
-              />
-            </div>
-            <div>
-              <Input
-                img={hide}
-                label="new password"
-                typeP="password"
-                register={registerFormPass}
-                name="passwordNew"
-                value=""
-                disable={changePass}
-                errors={passErrors}
-              />
-              <Input
-                img={hide}
-                label="copy of new password"
-                typeP="password"
-                register={registerFormPass}
-                name="passwordRep"
-                value=""
-                disable={changePass}
-                errors={passErrors}
-              />
-            </div>
-          </form>
-          <button
-            className="base-button view"
-            type="button"
-            style={{
-              display:
-                changeInfo === false || changePass === false ? 'block' : 'none',
-            }}
-            onClick={handleSubmit}
-          >
-            Confirm
-          </button>
-        </div>
+            <Input
+              img={hide}
+              label="password"
+              typeP="password"
+              register={registerFormPass}
+              name="password"
+              value="******************"
+              disable={changePass}
+              errors={passErrors}
+            />
+          </div>
+          <div className="pass-inputs">
+            <Input
+              img={hide}
+              label="new password"
+              typeP="password"
+              register={registerFormPass}
+              name="passwordNew"
+              value=""
+              disable={changePass}
+              errors={passErrors}
+            />
+            <Input
+              img={hide}
+              label="copy of new password"
+              typeP="password"
+              register={registerFormPass}
+              name="passwordRep"
+              value=""
+              disable={changePass}
+              errors={passErrors}
+            />
+          </div>
+        </form>
+        <button
+          className="base-button view"
+          type="button"
+          style={{
+            display:
+              changeInfo === false || changePass === false ? 'block' : 'none',
+          }}
+          onClick={handleSubmit}
+        >
+          Confirm
+        </button>
       </div>
     </StyledWrapper>
   );
@@ -255,13 +252,31 @@ export default Profile;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  column-gap: 128px;
+  width: 100%;
+  @media screen and (max-width: 320px) {
+    flex-direction: column;
+  }
 
-  .container {
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    column-gap: 128px;
+  .profile-img {
+    position: relative;
+    max-width: 305px;
+    height: auto;
     width: 100%;
+    border-radius: 16px;
+    background-color: ${({ theme }) => theme.colors.light};
+
+    @media screen and (max-width: 834px) {
+      max-width: 255px;
+      max-height: 255px;
+    }
+    @media screen and (max-width: 320px) {
+      max-width: 290px;
+      max-height: 290px;
+    }
   }
 
   .info {
@@ -278,29 +293,25 @@ const StyledWrapper = styled.div`
     justify-content: space-between;
   }
 
-  .profile-img {
-    position: relative;
-    width: 305px;
-    height: 305px;
-    background-color: ${({ theme }) => theme.colors.light};
+  .inputs {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url({defImg});
+    flex-direction: column;
+    row-gap: 40px;
+  }
+
+  .avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 16px;
+
     @media screen and (max-width: 834px) {
       max-width: 255px;
       max-height: 255px;
     }
-  }
-
-  .avatar {
-    max-width: 305px;
-    max-height: 305px;
-    width: 100%;
-    height: 100%;
-    @media screen and (max-width: 834px) {
-      max-width: 255px;
-      max-height: 255px;
+    @media screen and (max-width: 320px) {
+      max-width: 290px;
+      max-height: 290px;
     }
   }
 
@@ -309,7 +320,12 @@ const StyledWrapper = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 237px;
-    left: 237px;
+    top: 77.7%;
+    left: 77.7%;
+  }
+  .pass-inputs {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
   }
 `;
