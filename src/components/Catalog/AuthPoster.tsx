@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import fairy from '../../img/atz 1.png';
 import castle from '../../img/castle.png';
 
-const Autorize: React.FC = () => {
+const AuthPoster: React.FC = () => {
   return (
     <StyledWrapper>
       <div className="poster">
@@ -26,7 +26,7 @@ const Autorize: React.FC = () => {
   );
 };
 
-export default Autorize;
+export default AuthPoster;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};

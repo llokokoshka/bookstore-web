@@ -1,21 +1,21 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import App from '../pages/HomePage';
-import Autorisate from '../pages/Autorisate';
-import Registration from '../pages/Registration';
+import HomePage from '../pages/HomePage';
+import AuthorizationPage from '../pages/AuthorizationPage';
 import ProfilePage from '../pages/Profile';
 import ProtectedRouter from './ProtectedRouter';
+import RegistrationPage from '../pages/Registration';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <HomePage />,
   },
   {
     path: '/sign-in',
-    element: <Autorisate />,
+    element: <AuthorizationPage />,
   },
-  { path: '/sign-up', element: <Registration /> },
+  { path: '/sign-up', element: <RegistrationPage /> },
   {
     element: <ProtectedRouter />,
     children: [{ path: '/me', element: <ProfilePage /> }],

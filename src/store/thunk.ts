@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { IFormReg } from '../lib/actionTypes';
+import { IFormReg } from '../lib/types';
 import { axiosInstance } from '../axiosDefaul';
 import { useAppSelector } from '../hooks';
 
@@ -23,6 +23,28 @@ export const loginUser = createAsyncThunk(
     } catch (err: any) {
       console.error('login user error: ', err);
       return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const regUser = createAsyncThunk(
+  '/sign-up',
+  async ({ email, password }: IFormReg, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post('/auth/sign-up', {
+        email,
+        password,
+      });
+
+      const { access_token, refresh_token } = response.data;
+
+      localStorage.setItem('access', access_token);
+      localStorage.setItem('refresh', refresh_token);
+
+      return response.data;
+    } catch (err: any) {
+      console.error(err);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );

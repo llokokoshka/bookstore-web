@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import MainPageBody from '../components/Catalog/MainPageBody';
 
-export default function App() {
+export default function HomePage() {
   return (
     <PageWrapper>
       <MainPageBody />

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import logo from '../../img/logo.png';
 import search from '../../img/search-icon.png';
-import AuthButtons from './authButtons';
+import AuthButtons from './AuthButtons';
 import { useAppSelector } from '../../hooks';
 
 const Header: React.FC = () => {

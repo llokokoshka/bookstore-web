@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { InputProps } from '../../lib/actionTypes';
+import { InputProps } from '../../lib/types';
 import { useAppDispatch } from '../../hooks';
 import { setUser } from '../../store/authSlice';
 
-const Input: React.FC<InputProps> = (props) => {
+const ProfileInput: React.FC<InputProps> = (props) => {
   const [inputType, setInputType] = useState('password');
   let correctPassFlag = true;
   const { img, label, typeP, register, name, value, disable, errors } = props;
@@ -162,7 +162,7 @@ const Input: React.FC<InputProps> = (props) => {
   );
 };
 
-export default Input;
+export default ProfileInput;
 
 const StyledWrapper = styled.div`
   display: flex;

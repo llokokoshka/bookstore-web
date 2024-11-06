@@ -1,8 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { getUserF, RefTokenF } from './actions/authActions';
-import { addUser } from './store/authSlice';
-import { useAppDispatch } from './hooks';
+
+import { RefTokenF } from './api/authApi';
 
 export const axiosInstance = axios.create({
   baseURL: 'http://localhost:4000',

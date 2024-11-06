@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import hide from '../../img/Hide.png';
 import { axiosInstance } from '../../axiosDefaul';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { IFormPass } from '../../lib/actionTypes';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { IFormPass } from '../../lib/types';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
 import Input from '../Input fields/ProfileInput';
 

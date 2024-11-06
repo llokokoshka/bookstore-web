@@ -2,20 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Header from '../Header/Header';
+import ProfileBody from './BodyProfile';
 import Footer from '../Footer';
-import Profile from './BodyProfile';
 
-const ProfileAll: React.FC = () => {
+const Profile: React.FC = () => {
   return (
     <StyledWrapper>
       <Header />
-      <Profile />
+      <ProfileBody />
       <Footer />
     </StyledWrapper>
   );
 };
 
-export default ProfileAll;
+export default Profile;
 
 const StyledWrapper = styled.div`
   display: flex;

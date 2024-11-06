@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { loginValidationSchema } from '../../schemas/loginValidationSchema';
-import { loginUser } from '../../actions/authActions';
+import { registrationValidationSchema } from '../../schemas/registrationValidationSchema';
+import { regUser } from '../../store/thunk';
 import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
-import { IFormReg } from '../../lib/actionTypes';
+import { IFormReg, IFormInput } from '../../lib/types';
 
-const LogIn: React.FC = () => {
+const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -20,9 +20,9 @@ const LogIn: React.FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IFormReg>({
+  } = useForm<IFormInput>({
     mode: 'onChange',
-    resolver: yupResolver(loginValidationSchema),
+    resolver: yupResolver(registrationValidationSchema),
   });
 
   const [inputType, setInputType] = useState('password');
@@ -36,16 +36,15 @@ const LogIn: React.FC = () => {
     password: string;
   }) => {
     try {
-      console.log('Валидация прошла успешно!');
       const user = await dispatch(
-        loginUser({ email: data.email, password: data.password })
+        regUser({ email: data.email, password: data.password })
       );
-      if (user.payload.user) {
+      if (user.payload) {
         navigate('/me');
-      } else navigate('/sign-in');
+      }
       reset();
     } catch (err) {
-      console.warn('При авторизации возникла ошибка: ', err);
+      console.warn('При регистрации возникла ошибка: ', err);
     }
   };
 
@@ -58,7 +57,7 @@ const LogIn: React.FC = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="info-block__text">
-            <div className="big-title">Log In</div>
+            <div className="big-title">Sign up</div>
             <div className="input">
               <img src={mail} alt="Email" className="input__icon" />
               <input
@@ -70,9 +69,11 @@ const LogIn: React.FC = () => {
               />
             </div>
             {errors.email?.type === 'required' && (
-              <div>Email - обязательное поле.</div>
+              <div className="error">Email - обязательное поле.</div>
             )}
-            {errors.email && <div>{errors.email.message}</div>}
+            {errors.email && (
+              <div className="error">{errors.email.message}</div>
+            )}
             {!errors.email && <div>Enter your email</div>}
             <div className="input">
               <div
@@ -90,13 +91,39 @@ const LogIn: React.FC = () => {
               ></input>
             </div>
             {errors.password?.type === 'required' && (
-              <div>Password - обязательное поле.</div>
+              <div className="error">Password - обязательное поле.</div>
             )}
-            {errors.password && <div>{errors.password.message}</div>}
+            {errors.password && (
+              <div className="error">{errors.password.message}</div>
+            )}
             {!errors.password && <div>Enter your password</div>}
+            <div className="input">
+              <div
+                className="password__btn active"
+                onClick={changeInputTypeHandler}
+              >
+                <img src={hide} alt="Password" className="input__icon" />
+              </div>
+              <input
+                type={inputType}
+                placeholder="Password replay"
+                className="input__field"
+                autoComplete="false"
+                {...register('passwordRep')}
+              ></input>
+            </div>
+            {errors.passwordRep?.type === 'required' && (
+              <div className="error">Password - обязательное поле.</div>
+            )}
+            {errors.passwordRep && (
+              <div className="error">{errors.passwordRep.message}</div>
+            )}
+            {!errors.passwordRep && (
+              <div>Repeat your password without errors</div>
+            )}
           </div>
           <button className="base-button" type="submit">
-            Log in
+            Sign up
           </button>
         </form>
         <img src={man} alt="man" />
@@ -105,7 +132,7 @@ const LogIn: React.FC = () => {
   );
 };
 
-export default LogIn;
+export default RegistrationBody;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
@@ -144,5 +171,8 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+  }
+  .error {
+    color: #ff0000;
   }
 `;

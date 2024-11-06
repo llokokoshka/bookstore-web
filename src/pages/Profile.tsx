@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import ProfileAll from '../components/Profile/Profile';
+import Profile from '../components/Profile/Profile';
 
 export default function ProfilePage() {
   return (
     <PageWrapper>
-      <ProfileAll />
+      <Profile />
     </PageWrapper>
   );
 }

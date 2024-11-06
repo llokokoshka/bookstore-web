@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import FormData from 'form-data';
 
@@ -7,17 +10,14 @@ import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import camera from '../../img/Camera.png';
 import { axiosInstance } from '../../axiosDefaul';
-import { useDispatch } from 'react-redux';
 import { setUser } from '../../store/authSlice';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { IFormPass, IFormInfo } from '../../lib/actionTypes';
+import { IFormPass, IFormInfo } from '../../lib/types';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
-import Input from '../Input fields/ProfileInput';
+import ProfileInput from '../Input fields/ProfileInput';
 import { useAppSelector } from '../../hooks';
 
-const Profile: React.FC = () => {
+const ProfileBody: React.FC = () => {
   const user = useAppSelector((state) => state.auth.user);
   const dirname = `http://localhost:4000/uploads/`;
   const dispatch = useDispatch();
@@ -165,7 +165,7 @@ const Profile: React.FC = () => {
                 Change information
               </div>
             </div>
-            <Input
+            <ProfileInput
               img={man}
               label="full name"
               typeP="text"
@@ -175,7 +175,7 @@ const Profile: React.FC = () => {
               disable={changeInfo}
               errors={infoErrors}
             />
-            <Input
+            <ProfileInput
               img={mail}
               label="email"
               typeP="email"
@@ -198,7 +198,7 @@ const Profile: React.FC = () => {
                 Change password
               </div>
             </div>
-            <Input
+            <ProfileInput
               img={hide}
               label="password"
               typeP="password"
@@ -210,7 +210,7 @@ const Profile: React.FC = () => {
             />
           </div>
           <div className="pass-inputs">
-            <Input
+            <ProfileInput
               img={hide}
               label="new password"
               typeP="password"
@@ -220,7 +220,7 @@ const Profile: React.FC = () => {
               disable={changePass}
               errors={passErrors}
             />
-            <Input
+            <ProfileInput
               img={hide}
               label="copy of new password"
               typeP="password"
@@ -248,7 +248,7 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default ProfileBody;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};

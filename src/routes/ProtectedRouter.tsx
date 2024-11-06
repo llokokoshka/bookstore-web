@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 
-import { getUserF } from '../actions/authActions';
+import { getUserF } from '../api/authApi';
 import { addUser } from '../store/authSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
 

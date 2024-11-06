@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import man from '../../img/User profile.png';
 import mail from '../../img/Mail.png';
-
 import { axiosInstance } from '../../axiosDefaul';
-import { useDispatch } from 'react-redux';
 import { setUser } from '../../store/authSlice';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { IFormInfo } from '../../lib/actionTypes';
+import { IFormInfo } from '../../lib/types';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
-import { yupResolver } from '@hookform/resolvers/yup';
-
 import Input from '../Input fields/ProfileInput';
 import { useAppSelector } from '../../hooks';
 

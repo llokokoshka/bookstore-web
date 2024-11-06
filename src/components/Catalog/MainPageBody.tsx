@@ -5,7 +5,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer';
 import Poster from './Poster';
 import SortMenu from './SortMenu';
-import Autorize from './Autorize';
+import AuthPoster from './AuthPoster';
 
 const MainPageBody = () => {
   return (
@@ -13,7 +13,7 @@ const MainPageBody = () => {
       <Header />
       <Poster />
       <SortMenu />
-      <Autorize />
+      <AuthPoster />
       <Footer />
     </StyledWrapper>
   );

@@ -3,19 +3,19 @@ import styled from 'styled-components';
 
 import Header from '../Header/Header';
 import Footer from '../Footer';
-import SignUpBody from './BodySignUp';
+import AuthorizationBody from './BodyAuthorization';
 
-const SignUp: React.FC = () => {
+const Authorization: React.FC = () => {
   return (
     <StyledWrapper>
       <Header />
-      <SignUpBody />
+      <AuthorizationBody />
       <Footer />
     </StyledWrapper>
   );
 };
 
-export default SignUp;
+export default Authorization;
 
 const StyledWrapper = styled.div`
   display: flex;

@@ -2,20 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Header from '../Header/Header';
+import RegistrationBody from './BodyRegistration';
 import Footer from '../Footer';
-import LogIn from './BodyLogIn';
 
-const Autorizate: React.FC = () => {
+const Registration: React.FC = () => {
   return (
     <StyledWrapper>
       <Header />
-      <LogIn />
+      <RegistrationBody />
       <Footer />
     </StyledWrapper>
   );
 };
 
-export default Autorizate;
+export default Registration;
 
 const StyledWrapper = styled.div`
   display: flex;

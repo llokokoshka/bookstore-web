@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import SignUp from '../components/Reg/SignUp';
+import Registration from '../components/Reg/Registration';
 
-export default function Registration() {
+export default function RegistrationPage() {
   return (
     <PageWrapper>
-      <SignUp />
+      <Registration />
     </PageWrapper>
   );
 }
