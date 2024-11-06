@@ -1,11 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
 import { IFormReg } from '../lib/actionTypes';
 import { axiosInstance } from '../axiosDefaul';
-import axios from 'axios';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { useEffect } from 'react';
-import { addUser } from '../store/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../hooks';
 
 export const loginUser = createAsyncThunk(
   '/sign-in',
@@ -43,13 +41,10 @@ export async function getUserF() {
   }
 }
 
-export async function refTokenF() {
+export async function RefTokenF() {
   const refToken = localStorage.getItem('refresh');
   const response = await axios.post('/auth/refresh-token', { refToken });
 
-  if (response.status === 401) {
-    return response.status;
-  }
   const { access_token, refresh_token } = response.data;
 
   localStorage.setItem('access', access_token);
@@ -62,24 +57,6 @@ export async function refTokenF() {
 export function CheckUser() {
   const localStorageToken = localStorage.getItem('access');
   const user = useAppSelector((state) => state.auth.user);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        if (localStorageToken && !user) {
-          const user = await getUserF();
-          dispatch(addUser({ user }));
-        }
-      } catch (err) {
-        localStorage.removeItem('access');
-        localStorage.removeItem('refresh');
-        navigate('/sign-in');
-        return err;
-      }
-    };
-    getUser();
-  }, [user, localStorageToken, dispatch, navigate]);
   return { localStorageToken, user };
 }

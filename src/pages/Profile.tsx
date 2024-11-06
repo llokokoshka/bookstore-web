@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import SignUp from '../components/Reg/SignUp';
 
-export default function Registration() {
+import ProfileAll from '../components/Profile/Profile';
+
+export default function ProfilePage() {
   return (
     <PageWrapper>
-      <SignUp />
+      <ProfileAll />
     </PageWrapper>
   );
 }

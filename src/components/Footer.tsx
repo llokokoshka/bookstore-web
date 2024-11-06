@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import logo from '../img/footer-logo.png';
 import map from '../img/map.png';
 

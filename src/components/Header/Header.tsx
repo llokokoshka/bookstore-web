@@ -1,13 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import logo from '../../img/logo.png';
 import search from '../../img/search-icon.png';
-import { Link } from 'react-router-dom';
-import { CheckUser } from '../../actions/authActions';
 import AuthButtons from './authButtons';
+import { useAppSelector } from '../../hooks';
 
 const Header: React.FC = () => {
-  const isAuth = CheckUser();
+  const user = useAppSelector((state) => state.auth.user);
   return (
     <StyledWrapper>
       <img src={logo} alt="logo" />
@@ -22,7 +23,7 @@ const Header: React.FC = () => {
           ></input>
         </div>
       </div>
-      {isAuth.localStorageToken !== null ? (
+      {user !== null ? (
         <AuthButtons />
       ) : (
         <Link className="todo-body__div-button" to={`/sign-in`}>

@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import ProfileAll from '../components/Profile/Profile';
 
-export default function ProfilePage() {
+import Autorizate from '../components/Login/Autorisate';
+
+export default function Autorisate() {
   return (
     <PageWrapper>
-      <ProfileAll />
+      <Autorizate />
     </PageWrapper>
   );
 }

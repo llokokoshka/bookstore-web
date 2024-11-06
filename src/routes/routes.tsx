@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import App from './App';
-import Autorisate from './Autorisate';
-import Registration from './Registration';
-import ProfilePage from './Profile';
+import App from '../pages/HomePage';
+import Autorisate from '../pages/Autorisate';
+import Registration from '../pages/Registration';
+import ProfilePage from '../pages/Profile';
 import ProtectedRouter from './ProtectedRouter';
 
 const router = createBrowserRouter([

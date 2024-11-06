@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { axiosInstance } from '../axiosDefaul';
 import { IFormReg } from '../lib/actionTypes';
 

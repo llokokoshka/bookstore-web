@@ -35,7 +35,7 @@ export interface AuthState {
   load: boolean;
 }
 
-export type Props = {
+export type InputProps = {
   img: string;
   label: string;
   typeP: string;

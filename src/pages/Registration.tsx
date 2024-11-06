@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import Autorizate from '../components/Login/Autorisate';
 
-export default function Autorisate() {
+import SignUp from '../components/Reg/SignUp';
+
+export default function Registration() {
   return (
     <PageWrapper>
-      <Autorizate />
+      <SignUp />
     </PageWrapper>
   );
 }

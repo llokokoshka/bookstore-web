@@ -20,6 +20,7 @@ const authSlice = createSlice({
     },
     addUser: (state, action) => {
       const user = action.payload.user;
+      console.log('Добавляем пользователя в стор ', user);
       state.load = false;
       state.user = user;
     },

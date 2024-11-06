@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Props } from '../../lib/actionTypes';
+import { InputProps } from '../../lib/actionTypes';
 import { useAppDispatch } from '../../hooks';
 import { setUser } from '../../store/authSlice';
 
-const Input: React.FC<Props> = (props) => {
+const Input: React.FC<InputProps> = (props) => {
   const [inputType, setInputType] = useState('password');
   let correctPassFlag = true;
   const { img, label, typeP, register, name, value, disable, errors } = props;

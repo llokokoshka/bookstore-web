@@ -1,6 +1,8 @@
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { refTokenF } from './actions/authActions';
+import { getUserF, RefTokenF } from './actions/authActions';
+import { addUser } from './store/authSlice';
+import { useAppDispatch } from './hooks';
 
 export const axiosInstance = axios.create({
   baseURL: 'http://localhost:4000',
@@ -26,6 +28,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async function (error: AxiosError) {
     const navigate = useNavigate();
+
     const originalRequest = error.config as AxiosError['config'] & {
       _retry: boolean;
     };
@@ -36,13 +39,13 @@ axiosInstance.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        refTokenF();
+        RefTokenF();
         return axiosInstance(originalRequest);
       } catch (err) {
         console.error('Token refresh failed:', err);
         localStorage.removeItem('access');
         localStorage.removeItem('refresh');
-        navigate('/sign-in');
+        navigate('/');
         return Promise.reject(err);
       }
     }
