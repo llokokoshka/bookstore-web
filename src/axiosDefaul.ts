@@ -1,17 +1,18 @@
 import axios, { AxiosError } from 'axios';
+import { ERROR_REFRESH_TOKEN } from './constants/errorConstants';
 
+// import { getUserApi } from './store/thunk';
 // import { getUserF } from './api/authApi';
-import { getUserApi } from './store/thunk';
 
 export const axiosInstance = axios.create({
-  baseURL: 'http://localhost:4000',
+  baseURL: process.env.REACT_APP_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 export const axiosToken = axios.create({
-  baseURL: 'http://localhost:4000',
+  baseURL: process.env.REACT_APP_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -58,12 +59,12 @@ axiosInstance.interceptors.response.use(
           'Authorization'
         ] = `Bearer ${access_token}`;
 
-        const user = getUserApi();
-        console.log('user in refresh token function ', user);
+        // const user = getUserApi();
+        // console.log('user in refresh token function ', user);
 
         return axiosInstance(originalRequest);
       } catch (refreshErr) {
-        console.error('Token refresh failed:', refreshErr);
+        console.error(ERROR_REFRESH_TOKEN, refreshErr);
         localStorage.removeItem('access');
         localStorage.removeItem('refresh');
 

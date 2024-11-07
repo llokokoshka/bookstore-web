@@ -77,7 +77,6 @@ const authSlice = createSlice({
       .addCase(getUserApi.fulfilled, (state, action) => {
         state.load = false;
         state.user = action.payload.user;
-        console.log('Данные пользователя в слайсе: ', action.payload);
         localStorage.setItem('access', action.payload.access_token);
         localStorage.setItem('refresh', action.payload.refresh_token);
       })

@@ -19,7 +19,6 @@ export const loginUser = createAsyncThunk(
 
       return response.data;
     } catch (err: any) {
-      console.error('login user error: ', err);
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -50,11 +49,8 @@ export const regUser = createAsyncThunk(
 export const getUserApi = createAsyncThunk('/profile', async () => {
   try {
     const response = await axiosInstance.get('/user/me');
-    console.log(' Данные пользователя из запроса к серверу ', response);
     return response.data;
   } catch (err: any) {
-    console.error('Ошибка при получении пользователя');
-    // err.response.status = 401;
     return err.response.status;
   }
 });

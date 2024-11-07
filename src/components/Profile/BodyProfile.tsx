@@ -16,10 +16,16 @@ import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
 import ProfileInput from '../Input fields/ProfileInput';
 import { useAppSelector } from '../../hooks';
+import { DEFAULT_PASSWORD_STARS } from '../../constants/textConstants';
+import {
+  ERROR_AVATAR_UPLOAD,
+  ERROR_UPDATE_USER_DATA,
+  ERROR_UPDATE_USER_PASSWORD,
+} from '../../constants/errorConstants';
 
 const ProfileBody: React.FC = () => {
   const user = useAppSelector((state) => state.auth.user);
-  const dirname = `http://localhost:4000/uploads/`;
+  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/`;
   const dispatch = useDispatch();
   const [changeInfo, setChangeInfo] = useState(true);
   const [changePass, setChangePass] = useState(true);
@@ -47,7 +53,7 @@ const ProfileBody: React.FC = () => {
     mode: 'onChange',
     resolver: yupResolver(editPassValidationSchema),
     defaultValues: {
-      password: '*************',
+      password: DEFAULT_PASSWORD_STARS,
       passwordNew: '',
       passwordRep: '',
     },
@@ -74,9 +80,8 @@ const ProfileBody: React.FC = () => {
         });
         const uploadedFile = response.data.data.filename;
         dispatch(setUser({ avatar: uploadedFile }));
-        console.log('Фото успешно загружено!');
       } catch (err) {
-        console.error('Ошибка загрузки фото: ', err);
+        console.error(ERROR_AVATAR_UPLOAD, err);
         return err;
       }
     }
@@ -87,13 +92,10 @@ const ProfileBody: React.FC = () => {
     email?: string;
   }) => {
     try {
-      console.log('Данные отправлены на сервер!');
-
       const updUser = await axiosInstance.patch('/user/me', {
         fullName: data?.fullName,
         email: data?.email,
       });
-      console.log('Данные пользователя были обновлены', updUser);
       dispatch(
         setUser({
           fullName: updUser.data?.fullName,
@@ -102,7 +104,7 @@ const ProfileBody: React.FC = () => {
       );
       resetInfo();
     } catch (err) {
-      console.warn('При обновлении данных возникла ошибка: ', err);
+      console.warn(ERROR_UPDATE_USER_DATA, err);
     }
   };
 
@@ -112,16 +114,13 @@ const ProfileBody: React.FC = () => {
     passwordRep: string;
   }) => {
     try {
-      console.log('Данные отправлены на сервер!');
-
-      const updUserPass = await axiosInstance.patch('/user/pass', {
+      await axiosInstance.patch('/user/pass', {
         password: data.password,
         passwordNew: data.passwordNew,
       });
-      console.log('Пароль был обновлен', updUserPass);
       resetPass();
     } catch (err) {
-      console.warn('При обновлении пароля возникла ошибка: ', err);
+      console.warn(ERROR_UPDATE_USER_PASSWORD, err);
     }
   };
 
