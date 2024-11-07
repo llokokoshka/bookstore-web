@@ -44,7 +44,6 @@ axiosInstance.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        console.log('in interceptor');
         const refToken = localStorage.getItem('refresh');
 
         const response = await axiosToken.post('/auth/refresh-token', {
@@ -68,7 +67,7 @@ axiosInstance.interceptors.response.use(
         localStorage.removeItem('access');
         localStorage.removeItem('refresh');
 
-        window.location.href = '/sign-in';
+        window.location.href = '/';
         return Promise.reject(refreshErr);
       }
     }

@@ -3,14 +3,11 @@ import { useDispatch } from 'react-redux';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
-import FormData from 'form-data';
 
 import man from '../../img/User profile.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import camera from '../../img/Camera.png';
-import { axiosInstance } from '../../axiosDefaul';
-import { setUser } from '../../store/authSlice';
 import { IFormPass, IFormInfo } from '../../lib/types';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
@@ -22,13 +19,20 @@ import {
   ERROR_UPDATE_USER_DATA,
   ERROR_UPDATE_USER_PASSWORD,
 } from '../../constants/errorConstants';
+import {
+  SaveFile,
+  UpdateUserData,
+  UpdateUserPassword,
+} from '../../api/userApi';
 
 const ProfileBody: React.FC = () => {
-  const user = useAppSelector((state) => state.auth.user);
-  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/`;
   const dispatch = useDispatch();
   const [changeInfo, setChangeInfo] = useState(true);
   const [changePass, setChangePass] = useState(true);
+
+  const user = useAppSelector((state) => state.auth.user);
+
+  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/`;
 
   const {
     register: registerFormInfo,
@@ -72,14 +76,7 @@ const ProfileBody: React.FC = () => {
       const formData = new FormData();
       formData.append('avatar', e.target.files[0]);
       try {
-        const response = await axiosInstance.post('/files', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Autorization: `Bearer ${localStorage.getItem('access')}`,
-          },
-        });
-        const uploadedFile = response.data.data.filename;
-        dispatch(setUser({ avatar: uploadedFile }));
+        SaveFile(formData, dispatch);
       } catch (err) {
         console.error(ERROR_AVATAR_UPLOAD, err);
         return err;
@@ -92,16 +89,7 @@ const ProfileBody: React.FC = () => {
     email?: string;
   }) => {
     try {
-      const updUser = await axiosInstance.patch('/user/me', {
-        fullName: data?.fullName,
-        email: data?.email,
-      });
-      dispatch(
-        setUser({
-          fullName: updUser.data?.fullName,
-          email: updUser.data?.email,
-        })
-      );
+      UpdateUserData(data, dispatch);
       resetInfo();
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_DATA, err);
@@ -114,10 +102,7 @@ const ProfileBody: React.FC = () => {
     passwordRep: string;
   }) => {
     try {
-      await axiosInstance.patch('/user/pass', {
-        password: data.password,
-        passwordNew: data.passwordNew,
-      });
+      UpdateUserPassword(data);
       resetPass();
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_PASSWORD, err);
