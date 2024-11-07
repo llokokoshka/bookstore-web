@@ -1,38 +1,45 @@
-import React, { useEffect } from 'react';
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
-import { getUserF } from '../api/authApi';
-import { addUser } from '../store/authSlice';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks';
+import { getUserApi } from '../store/thunk';
 
-function CheckUser() {
-  const localStorageToken = localStorage.getItem('access');
-  const user = useAppSelector((state) => state.auth.user);
+export function CheckUser() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        if (localStorageToken && !user) {
-          const user = await getUserF();
-          dispatch(addUser({ user }));
+    const checkUserF = async () => {
+      const accessToken = localStorage.getItem('access');
+
+      if (accessToken && !user) {
+        try {
+          const getUserData = await dispatch(getUserApi());
+          console.log(
+            'Получение данных пользователя для обновления юзера в сторе ',
+            getUserData.payload
+          );
+          return getUserData.payload;
+        } catch (error) {
+          console.error('Ошибка при получении данных пользователя:', error);
+          navigate('/sign-in');
         }
-      } catch (err) {
-        localStorage.removeItem('access');
-        localStorage.removeItem('refresh');
-        navigate('/');
-        return err;
       }
     };
-    getUser();
-  }, [localStorageToken, dispatch, navigate]);
-  return { localStorageToken };
+
+    checkUserF();
+  }, [dispatch, navigate, user]);
+
+  return user;
 }
 
 const ProtectedRouter: React.FC = () => {
-  const { localStorageToken } = CheckUser();
-  return localStorageToken ? <Outlet /> : <Navigate to={'/'} />;
+  CheckUser();
+  const accessToken = localStorage.getItem('access');
+  return accessToken ? <Outlet /> : <Navigate to={'/'} />;
 };
 
 export default ProtectedRouter;

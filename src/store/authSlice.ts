@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { loginUser } from './thunk';
-import { regUser } from './thunk';
+import { getUserApi, loginUser, regUser } from './thunk';
 import { AuthState } from '../lib/types';
 
 const initialState: AuthState = {
@@ -21,7 +20,6 @@ const authSlice = createSlice({
     },
     addUser: (state, action) => {
       const user = action.payload.user;
-      console.log('Добавляем пользователя в стор ', user);
       state.load = false;
       state.user = user;
     },
@@ -69,6 +67,21 @@ const authSlice = createSlice({
         localStorage.setItem('refresh', action.payload.refresh_token);
       })
       .addCase(regUser.rejected, (state, action) => {
+        state.load = false;
+        state.error = action.payload as string;
+      })
+      .addCase(getUserApi.pending, (state) => {
+        state.load = true;
+        state.error = null;
+      })
+      .addCase(getUserApi.fulfilled, (state, action) => {
+        state.load = false;
+        state.user = action.payload.user;
+        console.log('Данные пользователя в слайсе: ', action.payload);
+        localStorage.setItem('access', action.payload.access_token);
+        localStorage.setItem('refresh', action.payload.refresh_token);
+      })
+      .addCase(getUserApi.rejected, (state, action) => {
         state.load = false;
         state.error = action.payload as string;
       });

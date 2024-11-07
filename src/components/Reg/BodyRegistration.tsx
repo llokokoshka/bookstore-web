@@ -40,7 +40,7 @@ const RegistrationBody: React.FC = () => {
         regUser({ email: data.email, password: data.password })
       );
       if (user.payload) {
-        navigate('/me');
+        navigate('/profile');
       }
       reset();
     } catch (err) {

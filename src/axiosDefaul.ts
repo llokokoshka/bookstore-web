@@ -1,9 +1,16 @@
 import axios, { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-import { RefTokenF } from './api/authApi';
+// import { getUserF } from './api/authApi';
+import { getUserApi } from './store/thunk';
 
 export const axiosInstance = axios.create({
+  baseURL: 'http://localhost:4000',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const axiosToken = axios.create({
   baseURL: 'http://localhost:4000',
   headers: {
     'Content-Type': 'application/json',
@@ -26,8 +33,6 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   async function (error: AxiosError) {
-    const navigate = useNavigate();
-
     const originalRequest = error.config as AxiosError['config'] & {
       _retry: boolean;
     };
@@ -38,14 +43,32 @@ axiosInstance.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        RefTokenF();
+        console.log('in interceptor');
+        const refToken = localStorage.getItem('refresh');
+
+        const response = await axiosToken.post('/auth/refresh-token', {
+          refresh_token: refToken,
+        });
+        const { access_token, refresh_token } = response.data;
+
+        localStorage.setItem('access', access_token);
+        localStorage.setItem('refresh', refresh_token);
+
+        axiosInstance.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${access_token}`;
+
+        const user = getUserApi();
+        console.log('user in refresh token function ', user);
+
         return axiosInstance(originalRequest);
-      } catch (err) {
-        console.error('Token refresh failed:', err);
+      } catch (refreshErr) {
+        console.error('Token refresh failed:', refreshErr);
         localStorage.removeItem('access');
         localStorage.removeItem('refresh');
-        navigate('/');
-        return Promise.reject(err);
+
+        window.location.href = '/sign-in';
+        return Promise.reject(refreshErr);
       }
     }
     return Promise.reject(error);

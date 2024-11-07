@@ -41,7 +41,7 @@ const AuthorizationBody: React.FC = () => {
         loginUser({ email: data.email, password: data.password })
       );
       if (user.payload.user) {
-        navigate('/me');
+        navigate('/profile');
       } else navigate('/sign-in');
       reset();
     } catch (err) {
