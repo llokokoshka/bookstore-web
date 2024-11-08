@@ -6,6 +6,7 @@ import Footer from '../Footer';
 import Poster from './Poster';
 import SortMenu from './SortMenu';
 import AuthPoster from './AuthPoster';
+import Book from './Book';
 
 const MainPageBody = () => {
   return (
@@ -13,6 +14,7 @@ const MainPageBody = () => {
       <Header />
       <Poster />
       <SortMenu />
+      <Book img="defImg" name="skmjca" author="string" price={24} />
       <AuthPoster />
       <Footer />
     </StyledWrapper>

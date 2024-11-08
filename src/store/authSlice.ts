@@ -6,7 +6,7 @@ import { AuthState } from '../lib/types';
 const initialState: AuthState = {
   user: null,
   error: null,
-  load: false,
+  loading: true,
 };
 
 const authSlice = createSlice({
@@ -20,7 +20,7 @@ const authSlice = createSlice({
     },
     addUser: (state, action) => {
       const user = action.payload.user;
-      state.load = false;
+      state.loading = false;
       state.user = user;
     },
     setUser: (state, action) => {
@@ -43,45 +43,45 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
-        state.load = true;
+        state.loading = true;
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.load = false;
+        state.loading = false;
         state.user = action.payload.user;
         localStorage.setItem('access', action.payload.access_token);
         localStorage.setItem('refresh', action.payload.refresh_token);
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.load = false;
+        state.loading = false;
         state.error = action.payload as string;
       })
       .addCase(regUser.pending, (state) => {
-        state.load = true;
+        state.loading = true;
         state.error = null;
       })
       .addCase(regUser.fulfilled, (state, action) => {
-        state.load = false;
+        state.loading = false;
         state.user = action.payload.user;
         localStorage.setItem('access', action.payload.access_token);
         localStorage.setItem('refresh', action.payload.refresh_token);
       })
       .addCase(regUser.rejected, (state, action) => {
-        state.load = false;
+        state.loading = false;
         state.error = action.payload as string;
       })
       .addCase(getUserApi.pending, (state) => {
-        state.load = true;
+        state.loading = true;
         state.error = null;
       })
       .addCase(getUserApi.fulfilled, (state, action) => {
-        state.load = false;
+        state.loading = false;
         state.user = action.payload.user;
         localStorage.setItem('access', action.payload.access_token);
         localStorage.setItem('refresh', action.payload.refresh_token);
       })
       .addCase(getUserApi.rejected, (state, action) => {
-        state.load = false;
+        state.loading = false;
         state.error = action.payload as string;
       });
   },

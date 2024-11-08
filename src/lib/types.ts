@@ -32,7 +32,7 @@ export type User = {
 export interface AuthState {
   user: User | null;
   error: string | null;
-  load: boolean;
+  loading: boolean;
 }
 
 export type InputProps = {

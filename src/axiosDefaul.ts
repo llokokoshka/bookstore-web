@@ -1,9 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { ERROR_REFRESH_TOKEN } from './constants/errorConstants';
 
-// import { getUserApi } from './store/thunk';
-// import { getUserF } from './api/authApi';
-
 export const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   headers: {
@@ -57,9 +54,6 @@ axiosInstance.interceptors.response.use(
         axiosInstance.defaults.headers.common[
           'Authorization'
         ] = `Bearer ${access_token}`;
-
-        // const user = getUserApi();
-        // console.log('user in refresh token function ', user);
 
         return axiosInstance(originalRequest);
       } catch (refreshErr) {
