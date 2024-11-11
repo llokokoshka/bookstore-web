@@ -2,26 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Header from '../Header/Header';
+import ProfileBody from './BodyProfile';
 import Footer from '../Footer';
-import Poster from './Poster';
-import SortMenu from './SortMenu';
-import AuthPoster from './AuthPoster';
-import Book from './Book';
 
-const MainPageBody = () => {
+const Profile: React.FC = () => {
   return (
     <StyledWrapper>
       <Header />
-      <Poster />
-      <SortMenu />
-      <Book img="defImg" name="skmjca" author="string" price={24} />
-      <AuthPoster />
+      <ProfileBody />
       <Footer />
     </StyledWrapper>
   );
 };
 
-export default MainPageBody;
+export default Profile;
 
 const StyledWrapper = styled.div`
   display: flex;

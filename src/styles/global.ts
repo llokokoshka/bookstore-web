@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
 * {
@@ -54,6 +54,7 @@ export default createGlobalStyle`
   .input {
     display: flex;
     flex-direction: row;
+    position: relative;
     height: 64px;
     width: 100%;
   }
@@ -76,4 +77,40 @@ export default createGlobalStyle`
     letter-spacing: 0.75px;
     text-align: left;
   }
+
+  .input__dark-title{
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.75px;
+    text-align: left;
+    color: ${({ theme }) => theme.colors.dark_blue};
+  }
+
+  .green-title{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: right;
+    color: ${({ theme }) => theme.colors.dark_green};
+  }
+
+  .green-title:hover{
+    cursor: pointer;
+  }
+  
+  .base-round-button{
+    /* position: absolute; */
+    width: 48px;
+    height: 48px;
+    opacity: 0px;
+    background-color: ${({ theme }) => theme.colors.dark_blue};
+    border-radius: 50%;
+  }
+
+  .base-round-button:hover{
+    cursor: pointer;
+  }
+
 `;

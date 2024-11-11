@@ -3,25 +3,19 @@ import styled from 'styled-components';
 
 import Header from '../Header/Header';
 import Footer from '../Footer';
-import Poster from './Poster';
-import SortMenu from './SortMenu';
-import AuthPoster from './AuthPoster';
-import Book from './Book';
+import AuthorizationBody from './BodyAuthorization';
 
-const MainPageBody = () => {
+const Authorization: React.FC = () => {
   return (
     <StyledWrapper>
       <Header />
-      <Poster />
-      <SortMenu />
-      <Book img="defImg" name="skmjca" author="string" price={24} />
-      <AuthPoster />
+      <AuthorizationBody />
       <Footer />
     </StyledWrapper>
   );
 };
 
-export default MainPageBody;
+export default Authorization;
 
 const StyledWrapper = styled.div`
   display: flex;

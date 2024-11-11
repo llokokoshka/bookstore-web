@@ -1,18 +1,25 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from 'react-router-dom';
 
-import App from './App';
-import Autorisate from "./Autorisate";
+import HomePage from '../pages/HomePage';
+import AuthorizationPage from '../pages/AuthorizationPage';
+import ProfilePage from '../pages/Profile';
+import ProtectedRouter from './ProtectedRouter';
+import RegistrationPage from '../pages/Registration';
 
-
- const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <App />,
-    },
-    {
-      path: "/sign-in",
-      element: <Autorisate />,
-    }
-  ]);
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomePage />,
+  },
+  {
+    path: '/sign-in',
+    element: <AuthorizationPage />,
+  },
+  { path: '/sign-up', element: <RegistrationPage /> },
+  {
+    element: <ProtectedRouter />,
+    children: [{ path: '/profile', element: <ProfilePage /> }],
+  },
+]);
 
 export default router;

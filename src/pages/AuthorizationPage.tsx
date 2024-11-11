@@ -1,19 +1,19 @@
-import React from "react";
-import styled from "styled-components";
-import Autorizate from "../components/MyAcc/Autorisate";
+import React from 'react';
+import styled from 'styled-components';
 
+import Authorization from '../components/Login/Authorization';
 
-export default function Autorisate() {
+export default function AuthorizationPage() {
   return (
     <PageWrapper>
-      <Autorizate />
+      <Authorization />
     </PageWrapper>
   );
 }
 
 const PageWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-size: 14px;
   line-height: normal;
