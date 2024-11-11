@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import book from '../../img/narnia.png';
-
 interface Props {
   img: string;
   name: string;
@@ -11,12 +9,12 @@ interface Props {
 }
 
 const Book: React.FC<Props> = (props) => {
-  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/`;
+  const dirname = `${process.env.REACT_APP_BASE_URL}/books/uploads/`;
 
   return (
     <StyledWrapper>
       <div className="">
-        <img src={book} alt="img" className="avatar"></img>
+        <img src={dirname + props.img} alt="img" className="avatar"></img>
       </div>
       <div className="">
         <div className="normal-title">{props.name}</div>

@@ -54,3 +54,21 @@ export const getUserApi = createAsyncThunk('/profile', async () => {
     return err.response.status;
   }
 });
+
+// export const getBook = createAsyncThunk('/book/:id', async () => {
+//   try {
+//     const response = await axiosInstance.get('/books/:id');
+//     return response.data;
+//   } catch (err: any) {
+//     return err.response.status;
+//   }
+// });
+
+export const getAllBooks = createAsyncThunk('/', async () => {
+  try {
+    const response = await axiosInstance.get('/books');
+    return response.data;
+  } catch (err: any) {
+    return err.response.status;
+  }
+});

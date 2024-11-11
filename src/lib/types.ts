@@ -35,6 +35,34 @@ export interface AuthState {
   loading: boolean;
 }
 
+type author = {
+  id: number;
+  text: string;
+};
+
+type bookGenre = { id: number };
+
+export type Book = {
+  id?: number;
+  name: string;
+  img: string;
+  description?: string;
+  quantity?: number;
+  isBestseller?: boolean;
+  isNew?: boolean;
+  author: author;
+  bookGenres?: [bookGenre];
+  comments?: [string];
+  rates?: [number];
+  covers?: [string];
+};
+
+export interface BookState {
+  books: Book[] | null;
+  error: string | null;
+  loading: boolean;
+}
+
 export type InputProps = {
   img: string;
   label: string;
