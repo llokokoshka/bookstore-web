@@ -11,7 +11,9 @@ const Header: React.FC = () => {
   const user = useAppSelector((state) => state.auth.user);
   return (
     <StyledWrapper>
-      <img src={logo} alt="logo" />
+      <Link to={`/`}>
+        <img src={logo} alt="logo" />
+      </Link>
       <div className="header">
         <div className="base-text">Catalog</div>
         <div className="input">

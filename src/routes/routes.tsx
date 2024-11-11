@@ -5,11 +5,16 @@ import AuthorizationPage from '../pages/AuthorizationPage';
 import ProfilePage from '../pages/Profile';
 import ProtectedRouter from './ProtectedRouter';
 import RegistrationPage from '../pages/Registration';
+import BookPage from '../components/Book Page/BookPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomePage />,
+  },
+  {
+    path: '/:id',
+    element: <BookPage />,
   },
   {
     path: '/sign-in',

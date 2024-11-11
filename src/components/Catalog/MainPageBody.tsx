@@ -14,6 +14,7 @@ import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
 const MainPageBody = () => {
   const dispatch = useAppDispatch();
   const books = useAppSelector((state) => state.books.books);
+  const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
     const getBooksFromServer = async () => {
@@ -33,18 +34,21 @@ const MainPageBody = () => {
       <Header />
       <Poster />
       <SortMenu />
-      {books?.map((book) => {
-        return (
-          <Book
-            key={book.id}
-            img={book.img}
-            name={book.name}
-            author={book.author.text}
-            price={24}
-          />
-        );
-      })}
-      <AuthPoster />
+      <div className="books-wrapp">
+        {books?.map((book) => {
+          return (
+            <Book
+              key={book.id}
+              id={book.id}
+              img={book.img}
+              name={book.name}
+              author={book.author.text}
+              price={24}
+            />
+          );
+        })}
+      </div>
+      {user === null ? <AuthPoster /> : null}
       <Footer />
     </StyledWrapper>
   );
@@ -57,4 +61,11 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+
+  .books-wrapp {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
 `;

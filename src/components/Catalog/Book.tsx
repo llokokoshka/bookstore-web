@@ -1,27 +1,31 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface Props {
   img: string;
+  id: number | undefined;
   name: string;
   author: string;
   price: number;
 }
 
 const Book: React.FC<Props> = (props) => {
-  const dirname = `${process.env.REACT_APP_BASE_URL}/books/uploads/`;
+  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/`;
 
   return (
     <StyledWrapper>
-      <div className="">
-        <img src={dirname + props.img} alt="img" className="avatar"></img>
-      </div>
-      <div className="">
+      <Link to={`/${props.id}`}>
+        <div className="">
+          <img src={dirname + props.img} alt="img" className="avatar"></img>
+        </div>
+
         <div className="normal-title">{props.name}</div>
         <div className="base-text">{props.author}</div>
         <div></div>
-        <button className="base-button">$ {props.price} USD</button>
-      </div>
+      </Link>
+
+      <button className="base-button">$ {props.price} USD</button>
     </StyledWrapper>
   );
 };
