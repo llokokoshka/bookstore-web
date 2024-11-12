@@ -24,9 +24,9 @@ const CheckUserAuth: React.FC = () => {
     checkUserF();
   }, [dispatch, user, accessToken]);
 
-  // if (!isInit) {
-  //   return null;
-  // }
+  if (!isInit) {
+    return null;
+  }
 
   return null;
 };

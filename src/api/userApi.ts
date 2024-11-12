@@ -10,9 +10,11 @@ export async function SaveFile(
     headers: {
       'Content-Type': 'multipart/form-data',
       Autorization: `Bearer ${localStorage.getItem('access')}`,
+      'X-File-Type': 'avatar',
     },
   });
   const uploadedFile = response.data.data.filename;
+  console.log(uploadedFile)
   dispatch(setUser({ avatar: uploadedFile }));
 }
 

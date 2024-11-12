@@ -12,7 +12,7 @@ interface Props {
 }
 
 const BookPageBody: React.FC<Props> = (props) => {
-  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/`;
+  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/books/`;
 
   return (
     <StyledWrapper>

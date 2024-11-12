@@ -32,7 +32,7 @@ const ProfileBody: React.FC = () => {
 
   const user = useAppSelector((state) => state.auth.user);
 
-  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/`;
+  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/avatars/`;
 
   const {
     register: registerFormInfo,
