@@ -1,3 +1,4 @@
+
 export interface IFormInput {
   email: string;
   password: string;
@@ -61,6 +62,12 @@ export interface BookState {
   books: Book[] | null;
   error: string | null;
   loading: boolean;
+}
+export interface FilterState {
+  genres: string[];
+  minPrice: number;
+  maxPrice: number;
+  sortBy: string;
 }
 
 export type InputProps = {

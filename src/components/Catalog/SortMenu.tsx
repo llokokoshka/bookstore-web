@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import forward from '../../img/forward.png';
 
 const SortMenu: React.FC = () => {
+  const [isGenresOpen, setIsGenresOpen] = useState(false);
+  const [genres, setGenres] = useState<string[]>([])
+  let sortItem = 'price';
+  // useEffect(()=>{
+  //   if 
+  // })
   return (
     <StyledWrapper>
       <p className="big-title">Catalog</p>
@@ -17,7 +23,7 @@ const SortMenu: React.FC = () => {
           <img src={forward} alt="arrow" className="arrow" />
         </div>
         <div className="button-container ">
-          <button className="grey-button light">Sort by price </button>
+          <button className="grey-button light">Sort by {sortItem} </button>
           <img src={forward} alt="arrow" className="arrow" />
         </div>
       </div>

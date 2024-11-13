@@ -22,7 +22,7 @@ const bookSlice = createSlice({
       .addCase(getAllBooks.fulfilled, (state, action) => {
         state.loading = false;
         action.payload.map((book: Book) => {
-          return state.books?.push(book);
+          state.books?.push(book);
         });
       })
       .addCase(getAllBooks.rejected, (state, action) => {
