@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { FilterState } from '../lib/types';
+import { FilterState, GenresType } from '../lib/types';
 
 const initialState: FilterState = {
     genres: [],
+    checkedGenres: [],
     minPrice: 0,
     maxPrice: 100000,
     sortBy: 'price',
@@ -13,8 +14,14 @@ const filterSlice = createSlice({
     name: 'filters',
     initialState,
     reducers: {
-        setGenres(state, action: PayloadAction<string[]>) {
+        setGenres(state, action: PayloadAction<GenresType[]>) {
             state.genres = action.payload;
+        },
+        setCheckedGenres(state, action: PayloadAction<GenresType>) {
+            state.checkedGenres.push(action.payload);
+        },
+        deleteCheckedGenres(state, action: PayloadAction<GenresType>) {
+            state.checkedGenres = state.checkedGenres.filter((genre) => genre.id !== action.payload.id);
         },
         setMinPrice(state, action: PayloadAction<number>) {
             state.minPrice = action.payload;
@@ -28,6 +35,6 @@ const filterSlice = createSlice({
     },
 });
 
-// export const {} = bookSlice.actions;
+export const { setGenres, setMinPrice, setMaxPrice, setSortBy, setCheckedGenres, deleteCheckedGenres } = filterSlice.actions;
 
 export default filterSlice.reducer;

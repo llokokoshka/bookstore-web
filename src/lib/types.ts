@@ -63,8 +63,15 @@ export interface BookState {
   error: string | null;
   loading: boolean;
 }
+
+export type GenresType = {
+  id: number;
+  name: string;
+}
+
 export interface FilterState {
-  genres: string[];
+  genres: GenresType[];
+  checkedGenres: GenresType[];
   minPrice: number;
   maxPrice: number;
   sortBy: string;

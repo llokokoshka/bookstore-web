@@ -2,29 +2,58 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import forward from '../../img/forward.png';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { axiosInstance } from '../../axiosDefaul';
+import { setGenres } from '../../store/filterSlice';
+import GenresPopup from '../Popups/GenresPopup';
+import PricePopup from '../Popups/PricePopup';
+import SortPopup from '../Popups/SortPopup';
 
 const SortMenu: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const {genres, sortBy} = useAppSelector((state)=>state.filters)
+
   const [isGenresOpen, setIsGenresOpen] = useState(false);
-  const [genres, setGenres] = useState<string[]>([])
-  let sortItem = 'price';
-  // useEffect(()=>{
-  //   if 
-  // })
+  const [isPriceOpen, setIsPriceOpen] = useState(false);
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  
+  useEffect(()=>{
+    if (isGenresOpen && genres.length === 0){
+      axiosInstance.get('/genres')
+      .then(response => dispatch(setGenres(response.data)))
+      .catch(error => console.error('Error get genres: ', error))
+    }
+  },[isGenresOpen, genres, dispatch]);
+
+  const handlerGenresOpen = ()=> {
+    setIsGenresOpen(!isGenresOpen);
+  }
+  const handlerPriceOpen = ()=> {
+    setIsPriceOpen(!isPriceOpen);
+  }
+
+  const handlerSortOpen = ()=> {
+    setIsSortOpen(!isSortOpen);
+  }
+
   return (
     <StyledWrapper>
       <p className="big-title">Catalog</p>
       <div className="all-buttons">
-        <div className="button-container">
+        <div className="button-container" onClick={handlerGenresOpen}>
           <button className="grey-button">Genre</button>
           <img src={forward} alt="arrow" className="arrow" />
+        {isGenresOpen && <GenresPopup />}
         </div>
-        <div className="button-container">
+        <div className="button-container" onClick={handlerPriceOpen}>
           <button className="grey-button">Price</button>
           <img src={forward} alt="arrow" className="arrow" />
+        {isPriceOpen && <PricePopup />}
         </div>
-        <div className="button-container ">
-          <button className="grey-button light">Sort by {sortItem} </button>
+        <div className="button-container " onClick={handlerSortOpen}>
+          <button className="grey-button light">Sort by {sortBy} </button>
           <img src={forward} alt="arrow" className="arrow" />
+        {isSortOpen && <SortPopup />}
         </div>
       </div>
     </StyledWrapper>
