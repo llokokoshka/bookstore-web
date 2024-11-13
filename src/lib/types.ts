@@ -59,7 +59,7 @@ export type Book = {
 };
 
 export interface BookState {
-  books: Book[] | null;
+  books: Book[];
   error: string | null;
   loading: boolean;
 }

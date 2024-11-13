@@ -57,7 +57,7 @@ export const getUserApi = createAsyncThunk('/profile', async () => {
 
 export const getAllBooks = createAsyncThunk('/', async () => {
   try {
-    const response = await axiosInstance.get('/books/');
+    const response = await axiosInstance.get('/books/paginate?page=1&take=4');
     return response.data;
   } catch (err: any) {
     return err.response.status;

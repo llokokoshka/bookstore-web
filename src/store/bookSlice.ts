@@ -12,7 +12,18 @@ const initialState: BookState = {
 const bookSlice = createSlice({
   name: 'books',
   initialState,
-  reducers: {},
+  reducers: {
+    filteredBooks(state, action) {
+      // console.log(action.payload.data);
+      for (let i = 0; i < action.payload.data.length; i++) {
+        state.books = state.books.filter((book) => book.id !== action.payload.data[i].id);
+      }
+      // if (action.payload.data.length === 1) {
+      // } else {
+
+      // }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllBooks.pending, (state) => {
@@ -21,7 +32,7 @@ const bookSlice = createSlice({
       })
       .addCase(getAllBooks.fulfilled, (state, action) => {
         state.loading = false;
-        action.payload.map((book: Book) => {
+        action.payload.data.map((book: Book) => {
           return state.books?.push(book);
         });
       })
@@ -32,6 +43,6 @@ const bookSlice = createSlice({
   },
 });
 
-// export const {} = bookSlice.actions;
+export const { filteredBooks } = bookSlice.actions;
 
 export default bookSlice.reducer;

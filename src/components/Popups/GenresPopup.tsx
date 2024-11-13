@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { GenresType } from '../../lib/types';
 import { deleteCheckedGenres, setCheckedGenres } from '../../store/filterSlice';
+import { axiosInstance } from '../../axiosDefaul';
+import { filteredBooks } from '../../store/bookSlice';
 
 const GenresPopup: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -13,8 +15,16 @@ const GenresPopup: React.FC = () => {
     const findGenre = CheckedGenres.find((checkG) => checkG.id === genre.id);
     if (!findGenre) {
       dispatch(setCheckedGenres(genre));
+      axiosInstance
+        .get(`/books/paginate?page=1&take=4&genres=${genre.id}`)
+        .then((response) => dispatch(filteredBooks(response.data)))
+        .catch((error) => console.error('Error get genres: ', error));
     } else {
       dispatch(deleteCheckedGenres(genre));
+      axiosInstance
+        .get(`/books/paginate?page=1&take=4`)
+        .then((response) => dispatch(filteredBooks(response.data)))
+        .catch((error) => console.error('Error get genres: ', error));
     }
   };
 
