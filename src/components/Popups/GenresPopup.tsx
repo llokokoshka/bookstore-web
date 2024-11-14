@@ -12,23 +12,26 @@ const GenresPopup: React.FC = () => {
   const AllGenres = useAppSelector((state) => state.filters.genres);
   const CheckedGenres = useAppSelector((state) => state.filters.checkedGenres);
 
-  console.log('Checked genres >>> ', CheckedGenres);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleGenreSelect = async (genre: GenresType) => {
     const findGenre = CheckedGenres.find((checkG) => checkG.id === genre.id);
+
     if (!findGenre) {
       dispatch(setCheckedGenres(genre));
       const genres = searchParams.getAll('genre');
+
       if (!genres.includes(genre.id.toString())) {
-        genres.push(genre.id.toString());
+        genres.push(...genres, genre.id.toString());
+
         console.log('>>>>>>>> ', Object.fromEntries(searchParams.entries()));
+        console.log('new arr with genres >>>>', genres);
         setSearchParams({
           ...Object.fromEntries(searchParams.entries()),
-          genre: genres[0],
+          genre: genres,
         });
       }
+
       const pageNum = searchParams.get('page');
       const minPrice = searchParams.get('minPrice');
       const maxPrice = searchParams.get('maxPrice');
@@ -47,7 +50,9 @@ const GenresPopup: React.FC = () => {
       const genres = searchParams
         .getAll('genre')
         .filter((g) => g !== genre.id.toString());
+
       setSearchParams({ genre: genres });
+
       const pageNum = searchParams.get('page');
       const minPrice = searchParams.get('minPrice');
       const maxPrice = searchParams.get('maxPrice');
