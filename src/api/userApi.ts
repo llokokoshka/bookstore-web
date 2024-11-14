@@ -1,4 +1,5 @@
 import { Dispatch, UnknownAction } from '@reduxjs/toolkit';
+
 import { axiosInstance } from '../axiosDefaul';
 import { setUser } from '../store/authSlice';
 
@@ -14,7 +15,7 @@ export async function SaveFile(
     },
   });
   const uploadedFile = response.data.data.filename;
-  console.log(uploadedFile)
+  console.log(uploadedFile);
   dispatch(setUser({ avatar: uploadedFile }));
 }
 

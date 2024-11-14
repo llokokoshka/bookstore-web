@@ -8,26 +8,37 @@ import SortMenu from './SortMenu';
 import AuthPoster from './AuthPoster';
 import Book from './Book';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAllBooks } from '../../store/thunk';
+import { getBooks } from '../../store/thunk';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
+import { useSearchParams } from 'react-router-dom';
 
 const MainPageBody = () => {
   const dispatch = useAppDispatch();
   const books = useAppSelector((state) => state.books.books);
   const user = useAppSelector((state) => state.auth.user);
+  const page = useAppSelector((state) => state.filters.page);
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
+    setSearchParams({ page: `${page}` });
+
     const getBooksFromServer = async () => {
-      if (books && books[0] === undefined) {
+      if (books === null) {
         try {
-          await dispatch(getAllBooks());
+          const pageNum = searchParams.get('page');
+          await dispatch(
+            getBooks({
+              pageNum: pageNum,
+            })
+          );
         } catch (error) {
           console.error(ERROR_GET_BOOKS_DATA, error);
         }
       }
     };
     getBooksFromServer();
-  }, [dispatch, books]);
+  }, [dispatch, books, setSearchParams, page, searchParams]);
 
   return (
     <StyledWrapper>

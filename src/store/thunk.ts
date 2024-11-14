@@ -55,11 +55,54 @@ export const getUserApi = createAsyncThunk('/profile', async () => {
   }
 });
 
-export const getAllBooks = createAsyncThunk('/', async () => {
-  try {
-    const response = await axiosInstance.get('/books/paginate?page=1&take=4');
-    return response.data;
-  } catch (err: any) {
-    return err.response.status;
+export const getBooks = createAsyncThunk(
+  `/`,
+  async (data: {
+    pageNum?: string | null;
+    genres?: string[] | null;
+    minPrice?: string | null;
+    maxPrice?: string | null;
+    sortBy?: string | null;
+  }) => {
+    try {
+      const { pageNum, genres, minPrice, maxPrice, sortBy } = data;
+
+      const allGenres = genres?.join(',');
+      console.log('Genres in thun >>>> ', allGenres);
+      if (genres && minPrice && maxPrice && sortBy) {
+        const response = await axiosInstance.get(
+          `/books/paginate?page=${pageNum}&take=12&genres=${allGenres}&minPrice=${minPrice}&maxPrice=${maxPrice}&sortBy=${sortBy}`
+        );
+        return response.data;
+      }
+
+      if (genres && minPrice && maxPrice) {
+        const response = await axiosInstance.get(
+          `/books/paginate?page=${pageNum}&take=12&genres=${allGenres}&minPrice=${minPrice}&maxPrice=${maxPrice}`
+        );
+        return response.data;
+      }
+
+      if (genres && minPrice) {
+        const response = await axiosInstance.get(
+          `/books/paginate?page=${pageNum}&take=12&genres=${allGenres}&minPrice=${minPrice}`
+        );
+        return response.data;
+      }
+
+      if (genres) {
+        const response = await axiosInstance.get(
+          `/books/paginate?page=${pageNum}&take=12&genres=${allGenres}`
+        );
+        return response.data;
+      }
+
+      const response = await axiosInstance.get(
+        `/books/paginate?page=${pageNum}&take=12`
+      );
+      return response.data;
+    } catch (err: any) {
+      return err.response.status;
+    }
   }
-});
+);
