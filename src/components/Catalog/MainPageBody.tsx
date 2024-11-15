@@ -11,28 +11,22 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getBooks } from '../../store/thunk';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
 import { useSearchParams } from 'react-router-dom';
-import { setCheckedGenres } from '../../store/filterSlice';
 
 const MainPageBody = () => {
   const dispatch = useAppDispatch();
   const books = useAppSelector((state) => state.books.books);
   const user = useAppSelector((state) => state.auth.user);
   const page = useAppSelector((state) => state.filters.page);
-  const CheckedGenres = useAppSelector(
-    (state) => state.filters.checkedGenresId
-  );
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    console.log('Point 3 >>>');
-    const oldParamsInURL = Object.fromEntries(searchParams.entries());
-    const getCurrentURL = searchParams.getAll('genre');
-
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
       page: `${page}`,
     });
+    const genres = searchParams.getAll('genre');
+    console.log(genres);
 
     const getBooksFromServer = async () => {
       if (books === null) {
@@ -41,6 +35,7 @@ const MainPageBody = () => {
           await dispatch(
             getBooks({
               pageNum: pageNum,
+              genres: genres.toString(),
             })
           );
         } catch (error) {

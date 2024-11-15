@@ -68,29 +68,33 @@ const GenresPopup: React.FC = () => {
         .split(',')
         .map(Number)
         .filter((g) => g !== genre.id);
+
       console.log(genres);
 
       console.log('Point 2, genres delete unchecked param >>>', genres);
-      const oldParamsInURL = Object.fromEntries(searchParams.entries());
-      const strForParamsWithGenres = genres?.join(',');
-
-      setSearchParams({
-        ...oldParamsInURL,
-        genre: strForParamsWithGenres,
-      });
 
       const pageNum = searchParams.get('page');
       const minPrice = searchParams.get('minPrice');
       const maxPrice = searchParams.get('maxPrice');
       const sortBy = searchParams.get('sortBy');
 
+      const updatedParams: Record<string, string> = {};
+
+      if (genres.length > 0) updatedParams.genre = genres.join(',');
+      if (pageNum) updatedParams.page = pageNum;
+      if (minPrice) updatedParams.minPrice = minPrice;
+      if (maxPrice) updatedParams.maxPrice = maxPrice;
+      if (sortBy) updatedParams.sortBy = sortBy;
+
+      setSearchParams(updatedParams);
+
       await dispatch(
         getBooks({
-          pageNum: pageNum,
-          genres: genres.toString(),
-          minPrice: minPrice,
-          maxPrice: maxPrice,
-          sortBy: sortBy,
+          pageNum: pageNum || null,
+          genres: genres.join(',').toString() || null,
+          minPrice: minPrice || null,
+          maxPrice: maxPrice || null,
+          sortBy: sortBy || null,
         })
       );
     }
