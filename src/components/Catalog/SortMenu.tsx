@@ -11,30 +11,31 @@ import SortPopup from '../Popups/SortPopup';
 
 const SortMenu: React.FC = () => {
   const dispatch = useAppDispatch();
-  const {genres, sortBy} = useAppSelector((state)=>state.filters)
+  const { genres, sortBy } = useAppSelector((state) => state.filters);
 
   const [isGenresOpen, setIsGenresOpen] = useState(false);
   const [isPriceOpen, setIsPriceOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
-  
-  useEffect(()=>{
-    if (isGenresOpen && genres.length === 0){
-      axiosInstance.get('/genres')
-      .then(response => dispatch(setGenres(response.data)))
-      .catch(error => console.error('Error get genres: ', error))
+
+  useEffect(() => {
+    if (isGenresOpen && genres.length === 0) {
+      axiosInstance
+        .get('/genres')
+        .then((response) => dispatch(setGenres(response.data)))
+        .catch((error) => console.error('Error get genres: ', error));
     }
-  },[isGenresOpen, genres, dispatch]);
+  }, [isGenresOpen, genres, dispatch]);
 
-  const handlerGenresOpen = ()=> {
+  const handlerGenresOpen = () => {
     setIsGenresOpen(!isGenresOpen);
-  }
-  const handlerPriceOpen = ()=> {
+  };
+  const handlerPriceOpen = () => {
     setIsPriceOpen(!isPriceOpen);
-  }
+  };
 
-  const handlerSortOpen = ()=> {
+  const handlerSortOpen = () => {
     setIsSortOpen(!isSortOpen);
-  }
+  };
 
   return (
     <StyledWrapper>
@@ -43,17 +44,17 @@ const SortMenu: React.FC = () => {
         <div className="button-container" onClick={handlerGenresOpen}>
           <button className="grey-button">Genre</button>
           <img src={forward} alt="arrow" className="arrow" />
-        {isGenresOpen && <GenresPopup />}
+          {isGenresOpen && <GenresPopup />}
         </div>
         <div className="button-container" onClick={handlerPriceOpen}>
           <button className="grey-button">Price</button>
           <img src={forward} alt="arrow" className="arrow" />
-        {isPriceOpen && <PricePopup />}
+          {isPriceOpen && <PricePopup />}
         </div>
         <div className="button-container " onClick={handlerSortOpen}>
           <button className="grey-button light">Sort by {sortBy} </button>
           <img src={forward} alt="arrow" className="arrow" />
-        {isSortOpen && <SortPopup />}
+          {isSortOpen && <SortPopup />}
         </div>
       </div>
     </StyledWrapper>

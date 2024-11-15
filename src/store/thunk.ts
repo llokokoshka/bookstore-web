@@ -59,7 +59,7 @@ export const getBooks = createAsyncThunk(
   `/`,
   async (data: {
     pageNum?: string | null;
-    genres?: string[] | null;
+    genres?: string | null;
     minPrice?: string | null;
     maxPrice?: string | null;
     sortBy?: string | null;
@@ -67,32 +67,32 @@ export const getBooks = createAsyncThunk(
     try {
       const { pageNum, genres, minPrice, maxPrice, sortBy } = data;
 
-      const allGenres = genres?.join(',');
-      console.log('Genres in thun >>>> ', allGenres);
+      // const allGenres = genres?.join(',');
+      // console.log('Genres in thun >>>> ', allGenres);
       if (genres && minPrice && maxPrice && sortBy) {
         const response = await axiosInstance.get(
-          `/books/paginate?page=${pageNum}&take=12&genres=${allGenres}&minPrice=${minPrice}&maxPrice=${maxPrice}&sortBy=${sortBy}`
+          `/books/paginate?page=${pageNum}&take=12&genres=${genres}&minPrice=${minPrice}&maxPrice=${maxPrice}&sortBy=${sortBy}`
         );
         return response.data;
       }
 
       if (genres && minPrice && maxPrice) {
         const response = await axiosInstance.get(
-          `/books/paginate?page=${pageNum}&take=12&genres=${allGenres}&minPrice=${minPrice}&maxPrice=${maxPrice}`
+          `/books/paginate?page=${pageNum}&take=12&genres=${genres}&minPrice=${minPrice}&maxPrice=${maxPrice}`
         );
         return response.data;
       }
 
       if (genres && minPrice) {
         const response = await axiosInstance.get(
-          `/books/paginate?page=${pageNum}&take=12&genres=${allGenres}&minPrice=${minPrice}`
+          `/books/paginate?page=${pageNum}&take=12&genres=${genres}&minPrice=${minPrice}`
         );
         return response.data;
       }
 
       if (genres) {
         const response = await axiosInstance.get(
-          `/books/paginate?page=${pageNum}&take=12&genres=${allGenres}`
+          `/books/paginate?page=${pageNum}&take=12&genres=${genres}`
         );
         return response.data;
       }

@@ -5,7 +5,7 @@ import { FilterState, GenresType } from '../lib/types';
 const initialState: FilterState = {
   page: 1,
   genres: [],
-  checkedGenres: [],
+  checkedGenresId: [],
   minPrice: 0,
   maxPrice: 100000,
   sortBy: 'price',
@@ -21,13 +21,14 @@ const filterSlice = createSlice({
     setGenres(state, action: PayloadAction<GenresType[]>) {
       state.genres = action.payload;
     },
-    setCheckedGenres(state, action: PayloadAction<GenresType>) {
-      state.checkedGenres.push(action.payload);
+    setCheckedGenres(state, action: PayloadAction<number>) {
+      state.checkedGenresId.push(action.payload);
     },
-    deleteCheckedGenres(state, action: PayloadAction<GenresType>) {
-      state.checkedGenres = state.checkedGenres.filter(
-        (genre) => genre.id !== action.payload.id
+    deleteCheckedGenres(state, action: PayloadAction<number>) {
+      const newSortArray = state.checkedGenresId.filter(
+        (id) => id !== action.payload
       );
+      state.checkedGenresId = newSortArray;
     },
     setMinPrice(state, action: PayloadAction<number>) {
       state.minPrice = action.payload;

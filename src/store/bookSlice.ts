@@ -21,7 +21,6 @@ const bookSlice = createSlice({
       })
       .addCase(getBooks.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload.data);
         state.books = action.payload.data;
       })
       .addCase(getBooks.rejected, (state, action) => {

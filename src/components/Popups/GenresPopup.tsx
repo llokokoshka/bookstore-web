@@ -10,25 +10,36 @@ import { getBooks } from '../../store/thunk';
 const GenresPopup: React.FC = () => {
   const dispatch = useAppDispatch();
   const AllGenres = useAppSelector((state) => state.filters.genres);
-  const CheckedGenres = useAppSelector((state) => state.filters.checkedGenres);
+  const CheckedGenresIDs = useAppSelector(
+    (state) => state.filters.checkedGenresId
+  );
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleGenreSelect = async (genre: GenresType) => {
-    const findGenre = CheckedGenres.find((checkG) => checkG.id === genre.id);
+    const findGenre = CheckedGenresIDs.find((id) => id === genre.id);
+    console.log('find genre >>> ', findGenre);
+    console.log('CheckedGenresIDs', CheckedGenresIDs);
 
     if (!findGenre) {
-      dispatch(setCheckedGenres(genre));
+      dispatch(setCheckedGenres(genre.id));
+
       const genres = searchParams.getAll('genre');
+      console.log('genres: ', genres);
 
       if (!genres.includes(genre.id.toString())) {
-        genres.push(...genres, genre.id.toString());
+        genres.push(genre.id.toString());
 
-        console.log('>>>>>>>> ', Object.fromEntries(searchParams.entries()));
-        console.log('new arr with genres >>>>', genres);
+        console.log('Point 1, genres with new item >>>', genres);
+
+        const oldParamsInURL = Object.fromEntries(searchParams.entries());
+        const strForParamsWithGenres = genres?.join(',');
+
+        console.log('oldParamsInURL >>> ', oldParamsInURL);
+
         setSearchParams({
-          ...Object.fromEntries(searchParams.entries()),
-          genre: genres,
+          ...oldParamsInURL,
+          genre: strForParamsWithGenres,
         });
       }
 
@@ -36,31 +47,47 @@ const GenresPopup: React.FC = () => {
       const minPrice = searchParams.get('minPrice');
       const maxPrice = searchParams.get('maxPrice');
       const sortBy = searchParams.get('sortBy');
+      const allGenres = genres?.join(',');
+
       await dispatch(
         getBooks({
           pageNum: pageNum,
-          genres: genres,
+          genres: allGenres,
           minPrice: minPrice,
           maxPrice: maxPrice,
           sortBy: sortBy,
         })
       );
     } else {
-      dispatch(deleteCheckedGenres(genre));
-      const genres = searchParams
-        .getAll('genre')
-        .filter((g) => g !== genre.id.toString());
+      dispatch(deleteCheckedGenres(genre.id));
 
-      setSearchParams({ genre: genres });
+      console.log('after delete ', CheckedGenresIDs);
+
+      const genres = searchParams
+        .getAll('genre')[0]
+        .split(',')
+        .map(Number)
+        .filter((g) => g !== genre.id);
+      console.log(genres);
+
+      console.log('Point 2, genres delete unchecked param >>>', genres);
+      const oldParamsInURL = Object.fromEntries(searchParams.entries());
+      const strForParamsWithGenres = genres?.join(',');
+
+      setSearchParams({
+        ...oldParamsInURL,
+        genre: strForParamsWithGenres,
+      });
 
       const pageNum = searchParams.get('page');
       const minPrice = searchParams.get('minPrice');
       const maxPrice = searchParams.get('maxPrice');
       const sortBy = searchParams.get('sortBy');
+
       await dispatch(
         getBooks({
           pageNum: pageNum,
-          genres: genres,
+          genres: genres.toString(),
           minPrice: minPrice,
           maxPrice: maxPrice,
           sortBy: sortBy,
@@ -75,7 +102,7 @@ const GenresPopup: React.FC = () => {
         <div key={genre.id}>
           <input
             type="checkbox"
-            checked={CheckedGenres.includes(genre)}
+            checked={CheckedGenresIDs.includes(genre.id)}
             onChange={() => handleGenreSelect(genre)}
           />
           <label>{genre.name}</label>

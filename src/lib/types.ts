@@ -68,10 +68,14 @@ export type GenresType = {
   name: string;
 };
 
+// export type GenresTypesID = {
+//   id: number;
+// };
+
 export interface FilterState {
   page: number;
   genres: GenresType[];
-  checkedGenres: GenresType[];
+  checkedGenresId: number[];
   minPrice: number;
   maxPrice: number;
   sortBy: string;
