@@ -1,44 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SetURLSearchParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { GenresType } from '../../lib/types';
 import { deleteCheckedGenres, setCheckedGenres } from '../../store/filterSlice';
-import { getBooks } from '../../store/thunk';
-import { AppDispatch } from '../../store';
-
-const setQueryParams = async (
-  dispatch: AppDispatch,
-  searchParams: URLSearchParams,
-  setSearchParams: SetURLSearchParams,
-  genres: string[] | number[]
-) => {
-  const pageNum = searchParams.get('page');
-  const minPrice = searchParams.get('minPrice');
-  const maxPrice = searchParams.get('maxPrice');
-  const sortBy = searchParams.get('sortBy');
-
-  const updatedParams: Record<string, string> = {};
-
-  if (pageNum) updatedParams.page = pageNum;
-  if (genres.length > 0) updatedParams.genre = genres.join(',');
-  if (minPrice) updatedParams.minPrice = minPrice;
-  if (maxPrice) updatedParams.maxPrice = maxPrice;
-  if (sortBy) updatedParams.sortBy = sortBy;
-
-  setSearchParams(updatedParams);
-
-  await dispatch(
-    getBooks({
-      pageNum: pageNum || null,
-      genres: genres.join(',').toString() || null,
-      minPrice: minPrice || null,
-      maxPrice: maxPrice || null,
-      sortBy: sortBy || null,
-    })
-  );
-};
+import { setQueryParams } from '../../api/urlApi';
 
 const GenresPopup: React.FC = () => {
   const dispatch = useAppDispatch();
