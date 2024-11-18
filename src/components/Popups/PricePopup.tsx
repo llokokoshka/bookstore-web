@@ -3,32 +3,70 @@ import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import ReactSlider from 'react-slider';
 import { setMaxPrice, setMinPrice } from '../../store/filterSlice';
+import { useSearchParams } from 'react-router-dom';
+import { setQueryParams } from '../../api/urlApi';
 
 const PricePopup: React.FC = () => {
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const minPrice = useAppSelector((state) => state.filters.minPrice);
   const maxPrice = useAppSelector((state) => state.filters.maxPrice);
 
-  const handleSliderChange = (values: [number, number]) => {
-    dispatch(setMinPrice(values[0]));
-    dispatch(setMaxPrice(values[1]));
+  const handleSliderChangeMax = (value: string) => {
+    setQueryParams({
+      dispatch: dispatch,
+      searchParams: searchParams,
+      setSearchParams: setSearchParams,
+      maxPriceParam: value,
+    });
+    dispatch(setMaxPrice(Number(value)));
+  };
+
+  const handleSliderChangeMin = (value: string) => {
+    setQueryParams({
+      dispatch: dispatch,
+      searchParams: searchParams,
+      setSearchParams: setSearchParams,
+      minPriceParam: value,
+    });
+    dispatch(setMinPrice(Number(value)));
   };
 
   return (
     <StyledWrapper>
-      <label>
+      {minPrice}
+      <input
+        type="range"
+        id="lower"
+        value={minPrice}
+        onChange={(e) => handleSliderChangeMin(e.target.value)}
+        min="0"
+        max="100"
+        step="5"
+      />
+      {maxPrice}
+      <input
+        type="range"
+        id="upper"
+        value={maxPrice}
+        onChange={(e) => handleSliderChangeMax(e.target.value)}
+        min="0"
+        max="100"
+        step="5"
+      />
+      {/* <label>
         Price Range: {minPrice} - {maxPrice}
       </label>
       <ReactSlider
         className="horizontal-slider"
         thumbClassName="example-thumb"
         trackClassName="example-track"
-        min={0}
-        max={100}
+        min={minPrice}
+        max={maxPrice}
         value={[minPrice, maxPrice]}
         onChange={handleSliderChange}
         renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-      />
+      /> */}
     </StyledWrapper>
   );
 };

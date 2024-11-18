@@ -9,6 +9,8 @@ interface IQueryParams {
   setSearchParams: SetURLSearchParams;
   genres?: string[] | number[] | undefined;
   sortByOption?: string;
+  minPriceParam?: string;
+  maxPriceParam?: string;
 }
 
 export const setQueryParams = async (props: IQueryParams) => {
@@ -22,8 +24,8 @@ export const setQueryParams = async (props: IQueryParams) => {
   if (pageNum) updatedParams.page = pageNum;
   if (props.genres && props.genres.length > 0)
     updatedParams.genre = props.genres.join(',');
-  if (minPrice) updatedParams.minPrice = minPrice;
-  if (maxPrice) updatedParams.maxPrice = maxPrice;
+  if (props.minPriceParam) updatedParams.minPrice = props.minPriceParam;
+  if (props.maxPriceParam) updatedParams.maxPrice = props.maxPriceParam;
   if (props.sortByOption) updatedParams.sortBy = props.sortByOption;
 
   props.setSearchParams(updatedParams);

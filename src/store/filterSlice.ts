@@ -7,7 +7,7 @@ const initialState: FilterState = {
   genres: [],
   checkedGenresId: [],
   minPrice: 0,
-  maxPrice: 100000,
+  maxPrice: 100,
   sortBy: 'price',
 };
 
