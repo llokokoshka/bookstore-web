@@ -3,34 +3,37 @@ import { SetURLSearchParams } from 'react-router-dom';
 import { AppDispatch } from '../store';
 import { getBooks } from '../store/thunk';
 
-export const setQueryParams = async (
-  dispatch: AppDispatch,
-  searchParams: URLSearchParams,
-  setSearchParams: SetURLSearchParams,
-  genres: string[] | number[]
-) => {
-  const pageNum = searchParams.get('page');
-  const minPrice = searchParams.get('minPrice');
-  const maxPrice = searchParams.get('maxPrice');
-  const sortBy = searchParams.get('sortBy');
+interface IQueryParams {
+  dispatch: AppDispatch;
+  searchParams: URLSearchParams;
+  setSearchParams: SetURLSearchParams;
+  genres?: string[] | number[] | undefined;
+  sortByOption?: string;
+}
+
+export const setQueryParams = async (props: IQueryParams) => {
+  const pageNum = props.searchParams.get('page');
+  const minPrice = props.searchParams.get('minPrice');
+  const maxPrice = props.searchParams.get('maxPrice');
+  const sortBy = props.searchParams.get('sortBy');
 
   const updatedParams: Record<string, string> = {};
 
   if (pageNum) updatedParams.page = pageNum;
-  if (genres.length > 0) updatedParams.genre = genres.join(',');
+  if (props.genres && props.genres.length > 0)
+    updatedParams.genre = props.genres.join(',');
   if (minPrice) updatedParams.minPrice = minPrice;
   if (maxPrice) updatedParams.maxPrice = maxPrice;
-  if (sortBy) updatedParams.sortBy = sortBy;
+  if (props.sortByOption) updatedParams.sortBy = props.sortByOption;
 
-  setSearchParams(updatedParams);
-
-  await dispatch(
+  props.setSearchParams(updatedParams);
+  props.dispatch(
     getBooks({
-      pageNum: pageNum || null,
-      genres: genres.join(',').toString() || null,
-      minPrice: minPrice || null,
-      maxPrice: maxPrice || null,
-      sortBy: sortBy || null,
+      pageNum: updatedParams?.page || pageNum || null,
+      genres: props.genres?.join(',').toString() || null,
+      minPrice: updatedParams?.minPrice || minPrice || null,
+      maxPrice: updatedParams?.maxPrice || maxPrice || null,
+      sortBy: updatedParams?.sortBy || sortBy || null,
     })
   );
 };

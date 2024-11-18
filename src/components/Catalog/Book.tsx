@@ -25,7 +25,7 @@ const Book: React.FC<Props> = (props) => {
         <div></div>
       </Link>
 
-      <button className="base-button">$ {props.price} USD</button>
+      <button className="base-button correct">$ {props.price} USD</button>
     </StyledWrapper>
   );
 };
@@ -67,5 +67,13 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+  }
+  .correct {
+    width: 305px;
+    height: 48px;
+    top: 615px;
+    padding: 10px 50px 10px 50px;
+    gap: 0px;
+    border-radius: 16px;
   }
 `;

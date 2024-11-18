@@ -27,7 +27,12 @@ const GenresPopup: React.FC = () => {
       if (!genres.includes(genre.id.toString())) {
         genres.push(genre.id.toString());
       }
-      setQueryParams(dispatch, searchParams, setSearchParams, genres);
+      setQueryParams({
+        dispatch: dispatch,
+        searchParams: searchParams,
+        setSearchParams: setSearchParams,
+        genres: genres,
+      });
     } else {
       dispatch(deleteCheckedGenres(genre.id));
 
@@ -37,7 +42,12 @@ const GenresPopup: React.FC = () => {
         .map(Number)
         .filter((g) => g !== genre.id);
 
-      setQueryParams(dispatch, searchParams, setSearchParams, genres);
+      setQueryParams({
+        dispatch: dispatch,
+        searchParams: searchParams,
+        setSearchParams: setSearchParams,
+        genres: genres,
+      });
     }
   };
 

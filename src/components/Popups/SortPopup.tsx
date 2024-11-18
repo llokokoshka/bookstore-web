@@ -2,9 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setSortBy } from '../../store/filterSlice';
+import { useSearchParams } from 'react-router-dom';
+import { setQueryParams } from '../../api/urlApi';
 
 const SortPopup: React.FC = () => {
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const sortBy = useAppSelector((state) => state.filters.sortBy);
   const sortOptions = [
     'Price',
@@ -13,13 +17,23 @@ const SortPopup: React.FC = () => {
     'Rating',
     'Date of issue',
   ];
+  const handleSortOption = async (sortOption: string) => {
+    console.log(sortOption);
+    setQueryParams({
+      dispatch: dispatch,
+      searchParams: searchParams,
+      setSearchParams: setSearchParams,
+      sortByOption: sortOption,
+    });
+    dispatch(setSortBy(sortOption));
+  };
 
   return (
     <StyledWrapper>
       {sortOptions.map((option) => (
         <div
           key={option}
-          onClick={() => dispatch(setSortBy(option))}
+          onClick={() => handleSortOption(option)}
           style={{ fontWeight: sortBy === option ? 'bold' : 'normal' }}
         >
           {option}

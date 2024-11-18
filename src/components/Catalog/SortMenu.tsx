@@ -29,6 +29,7 @@ const SortMenu: React.FC = () => {
   const handlerGenresOpen = () => {
     setIsGenresOpen(!isGenresOpen);
   };
+
   const handlerPriceOpen = () => {
     setIsPriceOpen(!isPriceOpen);
   };
