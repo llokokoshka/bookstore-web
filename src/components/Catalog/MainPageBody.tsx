@@ -11,7 +11,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getBooks } from '../../store/thunk';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
 import { useSearchParams } from 'react-router-dom';
-import { setCheckedGenres } from '../../store/filterSlice';
+import {
+  setCheckedGenres,
+  setMaxPrice,
+  setMinPrice,
+  setSortBy,
+} from '../../store/filterSlice';
 
 const MainPageBody = () => {
   const dispatch = useAppDispatch();
@@ -28,12 +33,28 @@ const MainPageBody = () => {
     });
 
     let genres: number[] = [];
+    let minPriceParam: string | null;
+    let maxPriceParam: string | null;
+    let sortByParam: string;
 
     if (searchParams.getAll('genre')[0]) {
       genres = searchParams.getAll('genre')[0]?.split(',').map(Number);
       for (let genre of genres) {
         dispatch(setCheckedGenres(genre));
       }
+    }
+    if (searchParams.get('minPrice')) {
+      minPriceParam = searchParams.get('minPrice');
+      dispatch(setMinPrice(Number(minPriceParam)));
+    }
+    if (searchParams.get('maxPrice')) {
+      maxPriceParam = searchParams.get('minPrice');
+      dispatch(setMaxPrice(Number(maxPriceParam)));
+    }
+
+    if (searchParams.get('sortBy')) {
+      sortByParam = searchParams.getAll('sortBy').toString();
+      dispatch(setSortBy(sortByParam));
     }
 
     const getBooksFromServer = async () => {
@@ -44,6 +65,9 @@ const MainPageBody = () => {
             getBooks({
               pageNum: pageNum,
               genres: genres.toString() || null,
+              minPrice: minPriceParam,
+              maxPrice: maxPriceParam,
+              sortBy: sortByParam,
             })
           );
         } catch (error) {
