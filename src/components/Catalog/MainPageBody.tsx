@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Header from '../Header/Header';
@@ -7,14 +8,18 @@ import Poster from './Poster';
 import SortMenu from './SortMenu';
 import AuthPoster from './AuthPoster';
 import Book from './Book';
+import rightArr from '../../img/right arrow.png';
+import leftArr from '../../img/left arrow.png';
+import emtyRow from '../../img/Ellipse.png';
+import fullRow from '../../img/Ellipse full.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getBooks } from '../../store/thunk';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
-import { useSearchParams } from 'react-router-dom';
 import {
   setCheckedGenres,
   setMaxPrice,
   setMinPrice,
+  setPage,
   setSortBy,
 } from '../../store/filterSlice';
 
@@ -25,6 +30,9 @@ const MainPageBody = () => {
   const page = useAppSelector((state) => state.filters.page);
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [hasPrevPage, setHasPrevPage] = useState(false);
+  const [colPages, setColPages] = useState(0);
 
   useEffect(() => {
     setSearchParams({
@@ -60,16 +68,19 @@ const MainPageBody = () => {
     const getBooksFromServer = async () => {
       if (books === null) {
         try {
-          const pageNum = searchParams.get('page');
-          await dispatch(
+          // const pageNum = searchParams.get('page');
+          const info = await dispatch(
             getBooks({
-              pageNum: pageNum,
+              pageNum: page.toString(),
               genres: genres.toString() || null,
               minPrice: minPriceParam,
               maxPrice: maxPriceParam,
               sortBy: sortByParam,
             })
           );
+          setColPages(info.payload.meta.pageCount);
+          setHasNextPage(info.payload.meta.hasNextPage);
+          setHasPrevPage(info.payload.meta.hasPreviousPage);
         } catch (error) {
           console.error(ERROR_GET_BOOKS_DATA, error);
         }
@@ -77,6 +88,13 @@ const MainPageBody = () => {
     };
     getBooksFromServer();
   }, [dispatch, books, setSearchParams, page, searchParams]);
+
+  const handlePagePrev = () => {
+    setPage(page - 1);
+  };
+  const handlePageNext = () => {
+    setPage(page + 1);
+  };
 
   return (
     <StyledWrapper>
@@ -92,10 +110,38 @@ const MainPageBody = () => {
               img={book.img}
               name={book.name}
               author={book.author.text}
-              price={24}
+              price={
+                book.cover?.hardcover_amount && book.cover?.hardcover_amount > 0
+                  ? book.cover?.hardcover_price
+                  : book.cover?.paperback_price
+              }
             />
           );
         })}
+      </div>
+      <div className="navigate">
+        {hasPrevPage ? (
+          <div onClick={handlePagePrev}>
+            <img src={leftArr} alt="left arr"></img>
+          </div>
+        ) : null}
+        {colPages === 1 ? (
+          <img src={fullRow} alt="dot" />
+        ) : colPages === 2 ? (
+          <>
+            <img src={fullRow} alt="dot" /> <img src={emtyRow} alt="dot" />
+          </>
+        ) : colPages === 3 || colPages > 3 ? (
+          <>
+            <img src={fullRow} alt="dot" />
+            <img src={emtyRow} alt="dot" /> <img src={emtyRow} alt="dot" />
+          </>
+        ) : null}
+        {hasNextPage ? (
+          <div className="arr" onClick={handlePageNext}>
+            <img src={rightArr} alt="right arr"></img>{' '}
+          </div>
+        ) : null}
       </div>
       {user === null ? <AuthPoster /> : null}
       <Footer />
@@ -116,5 +162,15 @@ const StyledWrapper = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
+  }
+
+  .navigate {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .arr:hover {
+    cursor: pointer;
   }
 `;

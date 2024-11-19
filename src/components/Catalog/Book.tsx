@@ -7,12 +7,15 @@ interface Props {
   id: number | undefined;
   name: string;
   author: string;
-  price: number;
+  price: number | undefined;
 }
 
 const Book: React.FC<Props> = (props) => {
   const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/books/`;
 
+  if (props.price === undefined) {
+    props.price = 0;
+  }
   return (
     <StyledWrapper>
       <Link to={`/${props.id}`}>

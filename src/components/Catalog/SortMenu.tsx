@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import forward from '../../img/forward.png';
+import forward from '../../img/right arrow.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { axiosInstance } from '../../axiosDefaul';
 import { setGenres } from '../../store/filterSlice';

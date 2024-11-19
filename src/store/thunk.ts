@@ -82,9 +82,31 @@ export const getBooks = createAsyncThunk(
       }
 
       const response = await axiosInstance.get(strOfSearch);
+
       return response.data;
     } catch (err: any) {
       return err.response.status;
+    }
+  }
+);
+type dataType = {
+  data: string;
+  bookId: number;
+  userId: number;
+};
+export const addComment = createAsyncThunk(
+  '/',
+  async ({ data, bookId, userId }: dataType, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post('/comments', {
+        data,
+        bookId,
+        userId,
+      });
+
+      return response.data;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
     }
   }
 );

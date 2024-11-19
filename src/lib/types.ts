@@ -42,6 +42,25 @@ type author = {
 
 type bookGenre = { id: number };
 
+export type coverType = {
+  id: number;
+  paperback_price: number;
+  paperback_amount: number;
+  hardcover_price: number;
+  hardcover_amount: number;
+};
+
+export type commentsType = {
+  id: number;
+  text: string;
+  dateOfCreate: Date;
+  user: {
+    id: number;
+    fullName: string;
+    avatar: string;
+  };
+};
+
 export type Book = {
   id?: number;
   name: string;
@@ -52,10 +71,20 @@ export type Book = {
   isNew?: boolean;
   author: author;
   bookGenres?: [bookGenre];
-  comments?: [string];
+  comments?: [commentsType];
   rates?: [number];
-  covers?: [string];
+  cover?: coverType | undefined;
 };
+
+export interface PropsBookPageBody {
+  id: number | undefined;
+  img: string | undefined;
+  name: string | undefined;
+  author: string | undefined;
+  description: string | undefined;
+  cover: coverType | undefined;
+  comments: [commentsType] | undefined;
+}
 
 export interface BookState {
   books: Book[] | null;
