@@ -1,29 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { PropsBookPageBody } from '../../lib/types';
 import Comment from './Comment';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addComment } from '../../store/thunk';
+import { addComment, getComments } from '../../store/thunk';
 
 const BookPageBody: React.FC<PropsBookPageBody> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}/uploads/books/`;
-  const dirnameUserImg = `${process.env.REACT_APP_BASE_URL}/uploads/avatars/`;
   const dispatch = useAppDispatch();
 
   const [inputValue, setInputValue] = useState<string>();
   const user = useAppSelector((state) => state.auth.user);
+  const comments = useAppSelector((state) => state.comments.comments);
+
+  // useEffect(() => {
+  //   if (props.id) {
+  //     dispatch(getComments(props.id));
+  //   }
+  // }, [props.id, dispatch]);
 
   const handleAddComment = async () => {
     if (inputValue && props.id && user && user.id) {
       try {
-        console.log('here');
         const response = await dispatch(
           addComment({
-            data: inputValue,
+            text: inputValue,
             bookId: props.id,
             userId: user.id,
           })
         );
+        setInputValue('');
         console.log(response);
         return response;
       } catch (err) {
