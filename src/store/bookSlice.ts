@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { BookState } from '../lib/types';
-import { getBooks } from './thunk';
+import { addOrUpdateRating, getBookRating, getBooks } from './thunk';
 
 const initialState: BookState = {
   books: null,
@@ -26,6 +26,28 @@ const bookSlice = createSlice({
       .addCase(getBooks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(getBookRating.fulfilled, (state, action) => {
+        if (state.books) {
+          const updatedBooks = state.books.map((book) => {
+            if (book.id === action.payload.bookId) {
+              return { ...book, rates: { rating: action.payload.rating } };
+            }
+            return book;
+          });
+          state.books = updatedBooks;
+        }
+      })
+      .addCase(addOrUpdateRating.fulfilled, (state, action) => {
+        if (state.books) {
+          const updatedBooks = state.books.map((book) => {
+            if (book.id === action.payload.bookId) {
+              return { ...book, rates: { rating: action.payload.rating } }; 
+            }
+            return book;
+          });
+          state.books = updatedBooks;
+        }
       });
   },
 });

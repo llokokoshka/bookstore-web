@@ -68,7 +68,6 @@ const MainPageBody = () => {
     const getBooksFromServer = async () => {
       if (books === null) {
         try {
-          // const pageNum = searchParams.get('page');
           const info = await dispatch(
             getBooks({
               pageNum: page.toString(),

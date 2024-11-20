@@ -72,7 +72,7 @@ export type Book = {
   author: author;
   bookGenres?: [bookGenre];
   comments?: [commentsType];
-  rates?: [number];
+  rates?: { rating: number };
   cover?: coverType | undefined;
 };
 

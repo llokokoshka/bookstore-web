@@ -123,3 +123,20 @@ export const getComments = createAsyncThunk(
     }
   }
 );
+
+export const getBookRating = createAsyncThunk(
+  'books/fetchBookRating',
+  async (bookId: number) => {
+    const response = await axiosInstance.get(`/books/${bookId}/rating`);
+    return { bookId, rating: response.data };
+  }
+);
+
+export const addOrUpdateRating = createAsyncThunk(
+  'books/addOrUpdateRating',
+  async ({ bookId, userId, value }: { bookId: number; userId: number; value: number }) => {
+    await axiosInstance.post(`/books/${bookId}/rate`, { userId, value });
+    const response = await axiosInstance.get(`/books/${bookId}/rating`);
+    return { bookId, rating: response.data };
+  }
+);

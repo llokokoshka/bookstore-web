@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { PropsBookPageBody } from '../../lib/types';
 import Comment from './Comment';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addComment, getComments } from '../../store/thunk';
+import { addComment } from '../../store/thunk';
+import Rating from './Rating';
 
 const BookPageBody: React.FC<PropsBookPageBody> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}/uploads/books/`;
@@ -54,6 +55,10 @@ const BookPageBody: React.FC<PropsBookPageBody> = (props) => {
             <div className="base-text">{props.description}</div>
           </div>
         </div>
+      </div>
+
+      <div className="rating-block">
+        {props.id ? <Rating bookId={props.id} userId={user?.id ?? 0} /> : null}
       </div>
       <div>
         {props.comments?.map((comment) => (

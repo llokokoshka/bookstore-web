@@ -2,12 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { addComment, getComments } from './thunk';
 
-
 interface commentsState {
     comments: any[];
     loading: boolean;
     error: string | null;
-
 }
 
 const initialState: commentsState = {
