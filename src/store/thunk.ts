@@ -134,9 +134,61 @@ export const getBookRating = createAsyncThunk(
 
 export const addOrUpdateRating = createAsyncThunk(
   'books/addOrUpdateRating',
-  async ({ bookId, userId, value }: { bookId: number; userId: number; value: number }) => {
+  async ({
+    bookId,
+    userId,
+    value,
+  }: {
+    bookId: number;
+    userId: number;
+    value: number;
+  }) => {
     await axiosInstance.post(`/books/${bookId}/rate`, { userId, value });
     const response = await axiosInstance.get(`/books/${bookId}/rating`);
     return { bookId, rating: response.data };
+  }
+);
+
+export const getCart = createAsyncThunk('cart/getCart', async () => {
+  const response = await axiosInstance.get(`user/cart`);
+  return response.data;
+});
+
+export const addCartItem = createAsyncThunk(
+  'cart/addItemInCart',
+  async (bookId: number, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post('user/cart/item', { bookId });
+
+      return response.data;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const upAmountCartItem = createAsyncThunk(
+  'cart/upAmountCartItem',
+  async (ItemId: number, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(`user/cart/${ItemId}/plus`);
+
+      return response.data;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const downAmountCartItem = createAsyncThunk(
+  'cart/downAmountCartItem',
+  async (ItemId: number, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(`user/cart/${ItemId}/minus`);
+
+      return response.data;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
+    }
   }
 );
