@@ -9,7 +9,7 @@ import like from '../../img/Heart.png';
 const AuthButtons: React.FC = () => {
   return (
     <StyledWrapper>
-      <RoundButtons url={`/profile`} img={cart} />
+      <RoundButtons url={`/cart`} img={cart} />
       <RoundButtons url={`/profile`} img={like} />
       <RoundButtons url={`/profile`} img={profile} />
     </StyledWrapper>

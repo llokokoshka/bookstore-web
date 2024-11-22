@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
 
 import Header from '../Header/Header';
 import Footer from '../Footer';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import CartPageBody from './CartPageBody';
+import { getCart } from '../../store/thunk';
 
 const CartPage: React.FC = () => {
-  let { id } = useParams();
-  const userId = Number(id);
+  const BooksInCart = useAppSelector((state) => state.cart.cart);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!BooksInCart) {
+      try {
+        dispatch(getCart());
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }, [BooksInCart, dispatch]);
 
   return (
     <StyledWrapper>
       <Header />
-
+      <CartPageBody />
       <Footer />
     </StyledWrapper>
   );

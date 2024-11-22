@@ -17,16 +17,18 @@ const BookPage: React.FC = () => {
   return (
     <StyledWrapper>
       <Header />
-      <BookPageBody
-        key={bookId}
-        id={bookId}
-        img={book?.img}
-        name={book?.name}
-        author={book?.author.text}
-        description={book?.description}
-        cover={book?.cover}
-        comments={book?.comments}
-      />
+      {book ? (
+        <BookPageBody
+          key={bookId}
+          id={bookId}
+          img={book.img}
+          name={book.name}
+          author={book.author.text}
+          description={book.description}
+          cover={book.cover}
+          comments={book.comments}
+        />
+      ) : null}
       <Footer />
     </StyledWrapper>
   );

@@ -6,6 +6,7 @@ import ProfilePage from '../pages/Profile';
 import ProtectedRouter from './ProtectedRouter';
 import RegistrationPage from '../pages/Registration';
 import BookPage from '../components/Book Page/BookPage';
+import CartPage from '../components/Cart/CartPage';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,10 @@ const router = createBrowserRouter([
   { path: '/sign-up', element: <RegistrationPage /> },
   {
     element: <ProtectedRouter />,
-    children: [{ path: '/profile', element: <ProfilePage /> }],
+    children: [
+      { path: '/profile', element: <ProfilePage /> },
+      { path: '/cart', element: <CartPage /> },
+    ],
   },
 ]);
 

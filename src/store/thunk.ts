@@ -159,7 +159,6 @@ export const addCartItem = createAsyncThunk(
   async (bookId: number, thunkAPI) => {
     try {
       const response = await axiosInstance.post('user/cart/item', { bookId });
-
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
@@ -171,8 +170,7 @@ export const upAmountCartItem = createAsyncThunk(
   'cart/upAmountCartItem',
   async (ItemId: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(`user/cart/${ItemId}/plus`);
-
+      const response = await axiosInstance.patch(`user/cart/${ItemId}/plus`);
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
@@ -184,8 +182,19 @@ export const downAmountCartItem = createAsyncThunk(
   'cart/downAmountCartItem',
   async (ItemId: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(`user/cart/${ItemId}/minus`);
+      const response = await axiosInstance.patch(`user/cart/${ItemId}/minus`);
+      return response.data;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 
+export const deleteCartItem = createAsyncThunk(
+  'cart/deleteItemInCart',
+  async (ItemId: number, thunkAPI) => {
+    try {
+      const response = await axiosInstance.delete(`user/cart/${ItemId}`);
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);

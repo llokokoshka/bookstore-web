@@ -62,10 +62,10 @@ export type commentsType = {
 };
 
 export type Book = {
-  id?: number;
+  id: number;
   name: string;
   img: string;
-  description?: string;
+  description: string;
   quantity?: number;
   isBestseller?: boolean;
   isNew?: boolean;
@@ -73,17 +73,24 @@ export type Book = {
   bookGenres?: [bookGenre];
   comments?: [commentsType];
   rates?: { rating: number };
-  cover?: coverType | undefined;
+  cover: coverType;
 };
 
 export interface PropsBookPageBody {
-  id: number | undefined;
-  img: string | undefined;
-  name: string | undefined;
-  author: string | undefined;
-  description: string | undefined;
-  cover: coverType | undefined;
+  id: number;
+  img: string;
+  name: string;
+  author: string;
+  description: string;
+  cover: coverType;
   comments: [commentsType] | undefined;
+}
+
+export interface PropsBookInCart {
+  id: number;
+  price: number;
+  quantity: number;
+  book: Book;
 }
 
 export interface BookState {
@@ -96,10 +103,6 @@ export type GenresType = {
   id: number;
   name: string;
 };
-
-// export type GenresTypesID = {
-//   id: number;
-// };
 
 export interface FilterState {
   page: number;
@@ -120,3 +123,23 @@ export type InputProps = {
   disable: boolean;
   errors: any;
 };
+
+export type cartItemType = {
+  id: number;
+  total_price: number;
+  quantity: number;
+  book: Book;
+};
+
+export type cartType = {
+  id: number;
+  total_price: number;
+  cartItems: cartItemType[];
+};
+
+export interface commentsState {
+  cart: cartType | null;
+  normalizeCart: any;
+  loading: boolean;
+  error: string | null;
+}
