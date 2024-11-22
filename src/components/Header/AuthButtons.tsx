@@ -10,7 +10,7 @@ const AuthButtons: React.FC = () => {
   return (
     <StyledWrapper>
       <RoundButtons url={`/cart`} img={cart} />
-      <RoundButtons url={`/profile`} img={like} />
+      <RoundButtons url={`/favorite`} img={like} />
       <RoundButtons url={`/profile`} img={profile} />
     </StyledWrapper>
   );

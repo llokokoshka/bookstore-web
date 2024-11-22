@@ -19,7 +19,6 @@ const FavoritePageBody: React.FC = () => {
           />
         );
       })}
-      <div className="big-title">Total: {BooksInCart?.total_price}</div>
     </StyledWrapper>
   );
 };

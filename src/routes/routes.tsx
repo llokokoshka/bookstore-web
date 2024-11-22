@@ -7,6 +7,7 @@ import ProtectedRouter from './ProtectedRouter';
 import RegistrationPage from '../pages/Registration';
 import BookPage from '../components/Book Page/BookPage';
 import CartPage from '../components/Cart/CartPage';
+import FavoritePage from '../components/Favorites/FavoritesPage';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/profile', element: <ProfilePage /> },
       { path: '/cart', element: <CartPage /> },
+      { path: '/favorite', element: <FavoritePage /> },
     ],
   },
 ]);

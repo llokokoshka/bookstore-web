@@ -2,30 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { PropsBookInCart } from '../../lib/types';
 
-import plus from '../../img/plus.png';
-import minus from '../../img/minus.png';
 import rubbish from '../../img/Delete.png';
 import { useAppDispatch } from '../../hooks';
-import {
-  deleteCartItem,
-  downAmountCartItem,
-  upAmountCartItem,
-} from '../../store/thunk';
+import { deleteCartItem } from '../../store/thunk';
 
 const BookInFavorite: React.FC<PropsBookInCart> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}/uploads/books/`;
   const { img, name, author } = props.book;
   const dispatch = useAppDispatch();
-  const handleMinusQuantity = async () => {
-    if (props.quantity === 1) {
-      await dispatch(deleteCartItem(props.id));
-    } else {
-      await dispatch(downAmountCartItem(props.id));
-    }
-  };
-  const handlePlusQuantity = async () => {
-    await dispatch(upAmountCartItem(props.id));
-  };
+
   const handleDeleteItem = async () => {
     await dispatch(deleteCartItem(props.id));
   };
@@ -35,24 +20,12 @@ const BookInFavorite: React.FC<PropsBookInCart> = (props) => {
       <div className="info-block">
         <div className="big-title">{name}</div>
         <div className="normal-title">{author.text}</div>
-        <div className="amount">
-          <div className="amount-block">
-            <div className="amount-bitton" onClick={handleMinusQuantity}>
-              <img src={minus} alt="img" className="button-img"></img>
-            </div>
-            <div>{props.quantity}</div>
-            <div className="amount-bitton" onClick={handlePlusQuantity}>
-              <img src={plus} alt="img" className="button-img"></img>
-            </div>
-          </div>
-          <img
-            src={rubbish}
-            alt="img"
-            className="icon-img"
-            onClick={handleDeleteItem}
-          ></img>
-        </div>
-        <div>{props.price}</div>
+        <img
+          src={rubbish}
+          alt="img"
+          className="icon-img"
+          onClick={handleDeleteItem}
+        ></img>
       </div>
     </StyledWrapper>
   );
