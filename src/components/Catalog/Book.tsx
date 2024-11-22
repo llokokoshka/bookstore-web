@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useAppDispatch } from '../../hooks';
+import { addCartItem } from '../../store/thunk';
 
 interface Props {
   img: string;
@@ -8,11 +10,16 @@ interface Props {
   name: string;
   author: string;
   price: number | undefined;
+  isInCart: boolean;
 }
 
 const Book: React.FC<Props> = (props) => {
   const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/books/`;
+  const dispatch = useAppDispatch();
 
+  const addBookInCart = () => {
+    if (props.id) dispatch(addCartItem(props.id));
+  };
   if (props.price === undefined) {
     props.price = 0;
   }
@@ -27,8 +34,13 @@ const Book: React.FC<Props> = (props) => {
         <div className="base-text">{props.author}</div>
         <div></div>
       </Link>
-
-      <button className="base-button correct">$ {props.price} USD</button>
+      {props.isInCart ? (
+        <button className="cart-button">Item in cart</button>
+      ) : (
+        <button className="base-button correct" onClick={addBookInCart}>
+          $ {props.price} USD
+        </button>
+      )}
     </StyledWrapper>
   );
 };
@@ -78,5 +90,25 @@ const StyledWrapper = styled.div`
     padding: 10px 50px 10px 50px;
     gap: 0px;
     border-radius: 16px;
+  }
+
+  .cart-button {
+    width: 231px;
+    height: 44px;
+    top: 8px;
+    left: 1056px;
+    padding: ${({ theme }) => theme.padding.button};
+    gap: 10px;
+    border-radius: ${({ theme }) => theme.sizes.base_radius}px;
+    border-color: #344966;
+    opacity: 0px;
+    color: #344966;
+    background-color: white;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.75px;
+    text-align: center;
+    z-index: 5;
   }
 `;

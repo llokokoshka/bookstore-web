@@ -12,7 +12,6 @@ const BookPage: React.FC = () => {
   const bookId = Number(id);
   const getBooks = useAppSelector((state) => state.books.books);
   const book = getBooks?.find((book) => book.id === bookId);
-  console.log(book);
 
   return (
     <StyledWrapper>

@@ -13,7 +13,7 @@ import leftArr from '../../img/left arrow.png';
 import emtyRow from '../../img/Ellipse.png';
 import fullRow from '../../img/Ellipse full.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getBooks } from '../../store/thunk';
+import { getBooks, getCart } from '../../store/thunk';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
 import {
   setCheckedGenres,
@@ -28,11 +28,22 @@ const MainPageBody = () => {
   const books = useAppSelector((state) => state.books.books);
   const user = useAppSelector((state) => state.auth.user);
   const page = useAppSelector((state) => state.filters.page);
+  const booksInCart = useAppSelector((state) => state.cart.normalizeCart);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [hasNextPage, setHasNextPage] = useState(false);
   const [hasPrevPage, setHasPrevPage] = useState(false);
   const [colPages, setColPages] = useState(0);
+
+  useEffect(() => {
+    if (Object.keys(booksInCart).length === 0) {
+      try {
+        dispatch(getCart());
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }, [booksInCart, dispatch]);
 
   useEffect(() => {
     setSearchParams({
@@ -102,6 +113,10 @@ const MainPageBody = () => {
       <SortMenu />
       <div className="books-wrapp">
         {books?.map((book) => {
+          let inCart = false;
+          if (booksInCart && booksInCart[book.id]) {
+            inCart = true;
+          }
           return (
             <Book
               key={book.id}
@@ -114,6 +129,7 @@ const MainPageBody = () => {
                   ? book.cover?.hardcover_price
                   : book.cover?.paperback_price
               }
+              isInCart={inCart}
             />
           );
         })}

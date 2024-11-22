@@ -4,7 +4,6 @@ import { commentsType } from '../../lib/types';
 
 const Comment: React.FC<commentsType> = (props) => {
   const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/avatars/`;
-  console.log(props);
   return (
     <StyledWrapper>
       <img

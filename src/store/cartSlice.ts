@@ -11,7 +11,7 @@ import { cartItemType, commentsState } from '../lib/types';
 
 const initialState: commentsState = {
   cart: null,
-  normalizeCart: null,
+  normalizeCart: {},
   error: null,
   loading: false,
 };
@@ -35,7 +35,7 @@ const cartSlice = createSlice({
           result[current.book.id] = current;
           return result;
         }, {});
-        state.normalizeCart = booksInCart;
+        if (booksInCart) state.normalizeCart = booksInCart;
       })
       .addCase(getCart.rejected, (state, action) => {
         state.loading = false;
@@ -47,6 +47,10 @@ const cartSlice = createSlice({
       })
       .addCase(addCartItem.fulfilled, (state, action) => {
         state.loading = false;
+        if (state.normalizeCart !== null) {
+          state.normalizeCart[action.payload.book.id] = action.payload;
+        }
+        console.log(action.payload);
         state.cart?.cartItems.push(action.payload);
       })
       .addCase(addCartItem.rejected, (state, action) => {
@@ -112,13 +116,16 @@ const cartSlice = createSlice({
         const itemIndex = state.cart?.cartItems.findIndex(
           (item) => item.id === action.payload
         );
-        console.log(itemIndex);
         if (itemIndex !== -1 && state.cart && itemIndex !== undefined) {
           const sum = state.cart.cartItems[itemIndex].total_price;
+          const idBook = state.cart.cartItems[itemIndex].book.id;
           state.cart.cartItems = state.cart.cartItems.filter((item) => {
             return item.id !== action.payload;
           });
           state.cart.total_price -= sum;
+          if (state.normalizeCart && state.normalizeCart[idBook]) {
+            delete state.normalizeCart[idBook];
+          }
         } else {
           console.error('Item not found in cart:', action.payload);
         }

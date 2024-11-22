@@ -139,7 +139,7 @@ export type cartType = {
 
 export interface commentsState {
   cart: cartType | null;
-  normalizeCart: any;
+  normalizeCart: Record<number, cartItemType>;
   loading: boolean;
   error: string | null;
 }
