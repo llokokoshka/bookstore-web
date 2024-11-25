@@ -93,6 +93,11 @@ export interface PropsBookInCart {
   book: Book;
 }
 
+export interface PropsFavorite {
+  id: number;
+  book: Book;
+}
+
 export interface BookState {
   books: Book[] | null;
   error: string | null;
@@ -137,9 +142,26 @@ export type cartType = {
   cartItems: cartItemType[];
 };
 
-export interface commentsState {
+export interface cartState {
   cart: cartType | null;
   normalizeCart: Record<number, cartItemType>;
+  loading: boolean;
+  error: string | null;
+}
+
+export type favoriteItemType = {
+  id: number;
+  book: Book;
+};
+
+export type favoriteType = {
+  id: number;
+  favoritesItems: favoriteItemType[];
+};
+
+export interface favoriteState {
+  favorites: favoriteType | null;
+  normalizeFavorites: Record<number, favoriteItemType>;
   loading: boolean;
   error: string | null;
 }

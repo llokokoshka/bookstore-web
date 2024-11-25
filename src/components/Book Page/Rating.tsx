@@ -19,7 +19,7 @@ const Rating: React.FC<{ bookId: number; userId: number }> = ({
 
   const handleRating = (value: number) => {
     setUserRating(value);
-    dispatch(addOrUpdateRating({ bookId, userId, value }));
+    dispatch(addOrUpdateRating({ bookId, value }));
   };
 
   return (

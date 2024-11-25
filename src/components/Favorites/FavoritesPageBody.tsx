@@ -4,20 +4,12 @@ import { useAppSelector } from '../../hooks';
 import BookInFavorite from './BookInFavorite';
 
 const FavoritePageBody: React.FC = () => {
-  const BooksInCart = useAppSelector((state) => state.cart.cart);
+  const Favorites = useAppSelector((state) => state.favorite.favorites);
 
   return (
     <StyledWrapper>
-      {BooksInCart?.cartItems?.map((item) => {
-        return (
-          <BookInFavorite
-            key={item.id}
-            id={item.id}
-            price={item.total_price}
-            quantity={item.quantity}
-            book={item.book}
-          />
-        );
+      {Favorites?.favoritesItems?.map((item) => {
+        return <BookInFavorite key={item.id} id={item.id} book={item.book} />;
       })}
     </StyledWrapper>
   );

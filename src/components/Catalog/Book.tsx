@@ -1,8 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useAppDispatch } from '../../hooks';
-import { addCartItem } from '../../store/thunk';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {
+  addCartItem,
+  addFavoriteItem,
+  deleteFavoriteItem,
+} from '../../store/thunk';
+import heart from '../../img/Heart.png';
+import fullHeart from '../../img/fullHeart.png';
 
 interface Props {
   img: string;
@@ -11,25 +18,59 @@ interface Props {
   author: string;
   price: number | undefined;
   isInCart: boolean;
+  isInFavorites: boolean;
 }
 
 const Book: React.FC<Props> = (props) => {
   const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/books/`;
+  const booksInFavorites = useAppSelector(
+    (state) => state.favorite.normalizeFavorites
+  );
+  const Favorites = useAppSelector((state) => state.favorite.favorites);
+
   const dispatch = useAppDispatch();
 
   const addBookInCart = () => {
     if (props.id) dispatch(addCartItem(props.id));
   };
+
   if (props.price === undefined) {
     props.price = 0;
   }
+
+  const handleAddInFavorites = async () => {
+    if (booksInFavorites && props.id && !booksInFavorites[props.id]) {
+      await dispatch(addFavoriteItem(props.id));
+    } else if (booksInFavorites && props.id && booksInFavorites[props.id]) {
+      const bookInFav = Favorites?.favoritesItems.find(
+        (item) => item.book.id === props.id
+      );
+      console.log(bookInFav);
+      if (bookInFav) await dispatch(deleteFavoriteItem(bookInFav?.id));
+    }
+  };
+
   return (
     <StyledWrapper>
-      <Link to={`/${props.id}`}>
-        <div className="">
-          <img src={dirname + props.img} alt="img" className="avatar"></img>
-        </div>
+      <div className="book">
+        {props.isInFavorites ? (
+          <div className="book_favorite-button" onClick={handleAddInFavorites}>
+            <img src={fullHeart} alt="fullHeart"></img>
+          </div>
+        ) : (
+          <div
+            className="book_favorite-button opacity"
+            onClick={handleAddInFavorites}
+          >
+            <img src={heart} alt="heart"></img>
+          </div>
+        )}
 
+        <Link to={`/${props.id}`}>
+          <img src={dirname + props.img} alt="img" className="avatar"></img>
+        </Link>
+      </div>
+      <Link to={`/${props.id}`}>
         <div className="normal-title">{props.name}</div>
         <div className="base-text">{props.author}</div>
         <div></div>
@@ -52,6 +93,9 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
+  .avatar {
+    z-index: 4;
+  }
   .poster {
     background-color: ${({ theme }) => theme.colors.light};
     display: flex;
@@ -110,5 +154,28 @@ const StyledWrapper = styled.div`
     letter-spacing: 0.75px;
     text-align: center;
     z-index: 5;
+  }
+  .book {
+    position: relative;
+  }
+  .book_favorite-button {
+    position: absolute;
+    background-color: ${({ theme }) => theme.colors.dark_blue};
+    border-radius: 25px;
+    width: 48px;
+    height: 48px;
+    top: 20px;
+    left: 20px;
+    gap: 0px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .opacity {
+    opacity: 50%;
+  }
+  .opacity:hover {
+    opacity: 100%;
   }
 `;

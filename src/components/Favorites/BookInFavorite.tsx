@@ -1,18 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PropsBookInCart } from '../../lib/types';
+import { PropsFavorite } from '../../lib/types';
 
 import rubbish from '../../img/Delete.png';
 import { useAppDispatch } from '../../hooks';
-import { deleteCartItem } from '../../store/thunk';
+import { deleteFavoriteItem } from '../../store/thunk';
 
-const BookInFavorite: React.FC<PropsBookInCart> = (props) => {
+const BookInFavorite: React.FC<PropsFavorite> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}/uploads/books/`;
   const { img, name, author } = props.book;
   const dispatch = useAppDispatch();
 
   const handleDeleteItem = async () => {
-    await dispatch(deleteCartItem(props.id));
+    await dispatch(deleteFavoriteItem(props.id));
   };
   return (
     <StyledWrapper>

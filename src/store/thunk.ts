@@ -66,7 +66,7 @@ export const getBooks = createAsyncThunk(
   }) => {
     try {
       const { pageNum, genres, minPrice, maxPrice, sortBy } = data;
-      let strOfSearch = `/books/paginate?page=${pageNum}&take=12`;
+      let strOfSearch = `/books/?page=${pageNum}&take=12`;
 
       if (genres) {
         strOfSearch += `&genres=${genres}`;
@@ -99,10 +99,8 @@ export const addComment = createAsyncThunk(
   'comments/addComment',
   async ({ text, bookId, userId }: dataType, thunkAPI) => {
     try {
-      const response = await axiosInstance.post('/comments', {
+      const response = await axiosInstance.post(`books/${bookId}/comment`, {
         text,
-        bookId,
-        userId,
       });
 
       return response.data;
@@ -116,7 +114,7 @@ export const getComments = createAsyncThunk(
   'comments/getComments',
   async (bookId: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.get(`/comments/${bookId}`);
+      const response = await axiosInstance.get(`books/${bookId}/comment`);
       return response.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -134,16 +132,8 @@ export const getBookRating = createAsyncThunk(
 
 export const addOrUpdateRating = createAsyncThunk(
   'books/addOrUpdateRating',
-  async ({
-    bookId,
-    userId,
-    value,
-  }: {
-    bookId: number;
-    userId: number;
-    value: number;
-  }) => {
-    await axiosInstance.post(`/books/${bookId}/rate`, { userId, value });
+  async ({ bookId, value }: { bookId: number; value: number }) => {
+    await axiosInstance.post(`/books/${bookId}/rating`, { value });
     const response = await axiosInstance.get(`/books/${bookId}/rating`);
     return { bookId, rating: response.data };
   }
@@ -170,7 +160,10 @@ export const upAmountCartItem = createAsyncThunk(
   'cart/upAmountCartItem',
   async (ItemId: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.patch(`user/cart/${ItemId}/plus`);
+      const action = true;
+      const response = await axiosInstance.patch(`user/cart/item/${ItemId}`, {
+        action,
+      });
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
@@ -182,7 +175,10 @@ export const downAmountCartItem = createAsyncThunk(
   'cart/downAmountCartItem',
   async (ItemId: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.patch(`user/cart/${ItemId}/minus`);
+      const action = false;
+      const response = await axiosInstance.patch(`user/cart/item/${ItemId}`, {
+        action,
+      });
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
@@ -194,7 +190,46 @@ export const deleteCartItem = createAsyncThunk(
   'cart/deleteItemInCart',
   async (ItemId: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.delete(`user/cart/${ItemId}`);
+      const response = await axiosInstance.delete(`user/cart/item/${ItemId}`);
+      return response.data;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const getFavorite = createAsyncThunk(
+  'favorite/getFavorite',
+  async () => {
+    const response = await axiosInstance.get(`user/favorites`);
+    console.log(response.data);
+
+    return response.data;
+  }
+);
+
+export const addFavoriteItem = createAsyncThunk(
+  'favorite/addItemInFavorite',
+  async (bookId: number, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post('user/favorites/item', {
+        bookId,
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const deleteFavoriteItem = createAsyncThunk(
+  'favorite/deleteItemFromFavorite',
+  async (ItemId: number, thunkAPI) => {
+    try {
+      const response = await axiosInstance.delete(
+        `user/favorites/item/${ItemId}`
+      );
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);

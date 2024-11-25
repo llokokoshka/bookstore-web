@@ -5,6 +5,7 @@ import bookReducer from './bookSlice';
 import filterReducer from './filterSlice';
 import commentsReducer from './commentsSlice';
 import cartReducer from './cartSlice';
+import favoritesReducer from './favoritesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     filters: filterReducer,
     comments: commentsReducer,
     cart: cartReducer,
+    favorite: favoritesReducer,
   },
 });
 

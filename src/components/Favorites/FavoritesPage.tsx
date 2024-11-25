@@ -4,22 +4,22 @@ import styled from 'styled-components';
 import Header from '../Header/Header';
 import Footer from '../Footer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCart } from '../../store/thunk';
+import { getFavorite } from '../../store/thunk';
 import FavoritePageBody from './FavoritesPageBody';
 
 const FavoritePage: React.FC = () => {
-  const BooksInCart = useAppSelector((state) => state.cart.cart);
+  const Favorites = useAppSelector((state) => state.favorite.favorites);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!BooksInCart) {
+    if (!Favorites) {
       try {
-        dispatch(getCart());
+        dispatch(getFavorite());
       } catch (err) {
         console.error(err);
       }
     }
-  }, [BooksInCart, dispatch]);
+  }, [Favorites, dispatch]);
 
   return (
     <StyledWrapper>

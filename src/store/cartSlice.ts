@@ -7,9 +7,9 @@ import {
   getCart,
   upAmountCartItem,
 } from './thunk';
-import { cartItemType, commentsState } from '../lib/types';
+import { cartItemType, cartState } from '../lib/types';
 
-const initialState: commentsState = {
+const initialState: cartState = {
   cart: null,
   normalizeCart: {},
   error: null,

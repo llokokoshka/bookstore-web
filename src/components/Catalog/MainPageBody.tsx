@@ -29,6 +29,9 @@ const MainPageBody = () => {
   const user = useAppSelector((state) => state.auth.user);
   const page = useAppSelector((state) => state.filters.page);
   const booksInCart = useAppSelector((state) => state.cart.normalizeCart);
+  const booksInFavorites = useAppSelector(
+    (state) => state.favorite.normalizeFavorites
+  );
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [hasNextPage, setHasNextPage] = useState(false);
@@ -114,8 +117,12 @@ const MainPageBody = () => {
       <div className="books-wrapp">
         {books?.map((book) => {
           let inCart = false;
+          let inFavorites = false;
           if (booksInCart && booksInCart[book.id]) {
             inCart = true;
+          }
+          if (booksInFavorites && booksInFavorites[book.id]) {
+            inFavorites = true;
           }
           return (
             <Book
@@ -130,6 +137,7 @@ const MainPageBody = () => {
                   : book.cover?.paperback_price
               }
               isInCart={inCart}
+              isInFavorites={inFavorites}
             />
           );
         })}
