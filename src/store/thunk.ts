@@ -202,8 +202,6 @@ export const getFavorite = createAsyncThunk(
   'favorite/getFavorite',
   async () => {
     const response = await axiosInstance.get(`user/favorites`);
-    console.log(response.data);
-
     return response.data;
   }
 );

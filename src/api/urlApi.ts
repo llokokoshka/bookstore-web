@@ -7,6 +7,7 @@ interface IQueryParams {
   dispatch: AppDispatch;
   searchParams: URLSearchParams;
   setSearchParams: SetURLSearchParams;
+  pageNum?: string;
   genres?: string[] | number[] | undefined;
   sortByOption?: string;
   minPriceParam?: string;
@@ -21,7 +22,7 @@ export const setQueryParams = async (props: IQueryParams) => {
 
   const updatedParams: Record<string, string> = {};
 
-  if (pageNum) updatedParams.page = pageNum;
+  if (props.pageNum) updatedParams.page = props.pageNum;
   if (props.genres && props.genres.length > 0)
     updatedParams.genre = props.genres.join(',');
   if (props.minPriceParam) updatedParams.minPrice = props.minPriceParam;

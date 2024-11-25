@@ -13,7 +13,7 @@ import leftArr from '../../img/left arrow.png';
 import emtyRow from '../../img/Ellipse.png';
 import fullRow from '../../img/Ellipse full.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getBooks, getCart } from '../../store/thunk';
+import { getBooks, getCart, getFavorite } from '../../store/thunk';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
 import {
   setCheckedGenres,
@@ -22,6 +22,7 @@ import {
   setPage,
   setSortBy,
 } from '../../store/filterSlice';
+import { setQueryParams } from '../../api/urlApi';
 
 const MainPageBody = () => {
   const dispatch = useAppDispatch();
@@ -39,14 +40,21 @@ const MainPageBody = () => {
   const [colPages, setColPages] = useState(0);
 
   useEffect(() => {
-    if (Object.keys(booksInCart).length === 0) {
+    if (user && Object.keys(booksInCart).length === 0) {
       try {
         dispatch(getCart());
       } catch (err) {
         console.error(err);
       }
     }
-  }, [booksInCart, dispatch]);
+    if (user && Object.keys(booksInFavorites).length === 0) {
+      try {
+        dispatch(getFavorite());
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }, [user, dispatch]);
 
   useEffect(() => {
     setSearchParams({
@@ -103,10 +111,22 @@ const MainPageBody = () => {
   }, [dispatch, books, setSearchParams, page, searchParams]);
 
   const handlePagePrev = () => {
-    setPage(page - 1);
+    dispatch(setPage(page - 1));
+    setQueryParams({
+      dispatch: dispatch,
+      searchParams: searchParams,
+      setSearchParams: setSearchParams,
+      pageNum: (page - 1).toString(),
+    });
   };
   const handlePageNext = () => {
-    setPage(page + 1);
+    dispatch(setPage(page + 1));
+    setQueryParams({
+      dispatch: dispatch,
+      searchParams: searchParams,
+      setSearchParams: setSearchParams,
+      pageNum: (page + 1).toString(),
+    });
   };
 
   return (
