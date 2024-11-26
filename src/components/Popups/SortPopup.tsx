@@ -32,6 +32,7 @@ const SortPopup: React.FC = () => {
     <StyledWrapper>
       {sortOptions.map((option) => (
         <div
+          className="base-text"
           key={option}
           onClick={() => handleSortOption(option)}
           style={{ fontWeight: sortBy === option ? 'bold' : 'normal' }}
@@ -50,10 +51,10 @@ const StyledWrapper = styled.div`
   background: ${({ theme }) => theme.colors.light};
   width: 197px;
   height: 226px;
-  top: 724px;
-  right: 80px;
-  padding: 16px 15px 16px 15px;
+  top: 78px;
+  padding: 15px;
   gap: 12px;
-  border-radius: 16px 0px 0px 0px;
+  border-radius: 16px;
   opacity: 0px;
+  z-index: 6;
 `;

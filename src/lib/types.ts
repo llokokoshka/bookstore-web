@@ -19,6 +19,11 @@ export interface IFormPass {
   passwordNew: string;
   passwordRep: string;
 }
+type Rating = {
+  id: number;
+  value: string;
+  book: Book;
+};
 
 export type User = {
   id?: number;
@@ -27,6 +32,7 @@ export type User = {
   password?: string;
   passwordNew?: string;
   avatar?: string;
+  rating: Rating[];
 };
 
 export interface AuthState {
@@ -93,6 +99,16 @@ export interface PropsBookInCart {
   book: Book;
 }
 
+export interface BookProps {
+  img: string;
+  id: number | undefined;
+  name: string;
+  author: string;
+  price: number | undefined;
+  isInCart: boolean;
+  isInFavorites: boolean;
+}
+
 export interface PropsFavorite {
   id: number;
   book: Book;
@@ -100,6 +116,13 @@ export interface PropsFavorite {
 
 export interface BookState {
   books: Book[] | null;
+  meta: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    itemCount: number;
+    page: number;
+    pageCount: number;
+  } | null;
   error: string | null;
   loading: boolean;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { PropsBookPageBody } from '../../lib/types';
 import Comment from './Comment';
@@ -12,13 +12,6 @@ const BookPageBody: React.FC<PropsBookPageBody> = (props) => {
 
   const [inputValue, setInputValue] = useState<string>();
   const user = useAppSelector((state) => state.auth.user);
-  const comments = useAppSelector((state) => state.comments.comments);
-
-  // useEffect(() => {
-  //   if (props.id) {
-  //     dispatch(getComments(props.id));
-  //   }
-  // }, [props.id, dispatch]);
 
   const handleAddComment = async () => {
     if (inputValue && props.id && user && user.id) {
@@ -58,7 +51,7 @@ const BookPageBody: React.FC<PropsBookPageBody> = (props) => {
       </div>
 
       <div className="rating-block">
-        {props.id ? <Rating bookId={props.id} userId={user?.id ?? 0} /> : null}
+        {props.id ? <Rating bookId={props.id} isUserRAte={true} /> : null}
       </div>
       <div>
         {props.comments?.map((comment) => (

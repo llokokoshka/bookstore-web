@@ -16,7 +16,6 @@ const filterSlice = createSlice({
   initialState,
   reducers: {
     setPage(state, action: PayloadAction<number>) {
-      console.log('payload ', action.payload);
       state.page = action.payload;
     },
     setGenres(state, action: PayloadAction<GenresType[]>) {

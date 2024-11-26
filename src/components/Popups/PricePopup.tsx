@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import ReactSlider from 'react-slider';
 import { setMaxPrice, setMinPrice } from '../../store/filterSlice';
 import { useSearchParams } from 'react-router-dom';
 import { setQueryParams } from '../../api/urlApi';
@@ -12,16 +11,6 @@ const PricePopup: React.FC = () => {
   const minPrice = useAppSelector((state) => state.filters.minPrice);
   const maxPrice = useAppSelector((state) => state.filters.maxPrice);
 
-  const handleSliderChangeMax = (value: string) => {
-    setQueryParams({
-      dispatch: dispatch,
-      searchParams: searchParams,
-      setSearchParams: setSearchParams,
-      maxPriceParam: value,
-    });
-    dispatch(setMaxPrice(Number(value)));
-  };
-
   const handleSliderChangeMin = (value: string) => {
     setQueryParams({
       dispatch: dispatch,
@@ -30,6 +19,16 @@ const PricePopup: React.FC = () => {
       minPriceParam: value,
     });
     dispatch(setMinPrice(Number(value)));
+  };
+
+  const handleSliderChangeMax = (value: string) => {
+    setQueryParams({
+      dispatch: dispatch,
+      searchParams: searchParams,
+      setSearchParams: setSearchParams,
+      maxPriceParam: value,
+    });
+    dispatch(setMaxPrice(Number(value)));
   };
 
   return (
@@ -54,19 +53,6 @@ const PricePopup: React.FC = () => {
         max="100"
         step="5"
       />
-      {/* <label>
-        Price Range: {minPrice} - {maxPrice}
-      </label>
-      <ReactSlider
-        className="horizontal-slider"
-        thumbClassName="example-thumb"
-        trackClassName="example-track"
-        min={minPrice}
-        max={maxPrice}
-        value={[minPrice, maxPrice]}
-        onChange={handleSliderChange}
-        renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-      /> */}
     </StyledWrapper>
   );
 };
@@ -78,12 +64,13 @@ const StyledWrapper = styled.div`
   background: ${({ theme }) => theme.colors.light};
   width: 413px;
   height: 151px;
-  top: 724px;
-  right: 80px;
-  padding: 15px 0px 0px 0px;
+  top: 74px;
+  /* right: 80px; */
+  padding: 15px;
   gap: 10px;
-  border-radius: 16px 0px 0px 0px;
+  border-radius: 16px;
   opacity: 0px;
+  z-index: 6;
 
   .horizontal-slider {
     width: 100%;

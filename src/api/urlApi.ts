@@ -32,7 +32,7 @@ export const setQueryParams = async (props: IQueryParams) => {
   props.setSearchParams(updatedParams);
   props.dispatch(
     getBooks({
-      pageNum: updatedParams?.page || pageNum || null,
+      pageNum: updatedParams?.page || pageNum || '1',
       genres: props.genres?.join(',').toString() || null,
       minPrice: updatedParams?.minPrice || minPrice || null,
       maxPrice: updatedParams?.maxPrice || maxPrice || null,

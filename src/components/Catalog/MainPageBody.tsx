@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -28,16 +28,19 @@ const MainPageBody = () => {
   const dispatch = useAppDispatch();
   const books = useAppSelector((state) => state.books.books);
   const user = useAppSelector((state) => state.auth.user);
-  const page = useAppSelector((state) => state.filters.page);
   const booksInCart = useAppSelector((state) => state.cart.normalizeCart);
   const booksInFavorites = useAppSelector(
     (state) => state.favorite.normalizeFavorites
   );
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [hasNextPage, setHasNextPage] = useState(false);
-  const [hasPrevPage, setHasPrevPage] = useState(false);
-  const [colPages, setColPages] = useState(0);
+
+  const page = useAppSelector((state) => state.books.meta?.page);
+  const hasNextPage = useAppSelector((state) => state.books.meta?.hasNextPage);
+  const hasPrevPage = useAppSelector(
+    (state) => state.books.meta?.hasPreviousPage
+  );
+  const colPages = useAppSelector((state) => state.books.meta?.pageCount);
 
   useEffect(() => {
     if (user && Object.keys(booksInCart).length === 0) {
@@ -59,9 +62,8 @@ const MainPageBody = () => {
   useEffect(() => {
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
-      page: `${page}`,
     });
-
+    let pageNumber: string | null;
     let genres: number[] = [];
     let minPriceParam: string | null;
     let maxPriceParam: string | null;
@@ -73,6 +75,12 @@ const MainPageBody = () => {
         dispatch(setCheckedGenres(genre));
       }
     }
+
+    if (searchParams.get('page')) {
+      pageNumber = searchParams.get('page');
+      dispatch(setPage(Number(pageNumber)));
+    }
+
     if (searchParams.get('minPrice')) {
       minPriceParam = searchParams.get('minPrice');
       dispatch(setMinPrice(Number(minPriceParam)));
@@ -90,18 +98,15 @@ const MainPageBody = () => {
     const getBooksFromServer = async () => {
       if (books === null) {
         try {
-          const info = await dispatch(
+          await dispatch(
             getBooks({
-              pageNum: page.toString(),
+              pageNum: pageNumber,
               genres: genres.toString() || null,
               minPrice: minPriceParam,
               maxPrice: maxPriceParam,
               sortBy: sortByParam,
             })
           );
-          setColPages(info.payload.meta.pageCount);
-          setHasNextPage(info.payload.meta.hasNextPage);
-          setHasPrevPage(info.payload.meta.hasPreviousPage);
         } catch (error) {
           console.error(ERROR_GET_BOOKS_DATA, error);
         }
@@ -111,22 +116,26 @@ const MainPageBody = () => {
   }, [dispatch, books, setSearchParams, page, searchParams]);
 
   const handlePagePrev = () => {
-    dispatch(setPage(page - 1));
-    setQueryParams({
-      dispatch: dispatch,
-      searchParams: searchParams,
-      setSearchParams: setSearchParams,
-      pageNum: (page - 1).toString(),
-    });
+    if (hasPrevPage && page) {
+      dispatch(setPage(page - 1));
+      setQueryParams({
+        dispatch: dispatch,
+        searchParams: searchParams,
+        setSearchParams: setSearchParams,
+        pageNum: (page - 1).toString(),
+      });
+    }
   };
   const handlePageNext = () => {
-    dispatch(setPage(page + 1));
-    setQueryParams({
-      dispatch: dispatch,
-      searchParams: searchParams,
-      setSearchParams: setSearchParams,
-      pageNum: (page + 1).toString(),
-    });
+    if (hasNextPage && page) {
+      dispatch(setPage(page + 1));
+      setQueryParams({
+        dispatch: dispatch,
+        searchParams: searchParams,
+        setSearchParams: setSearchParams,
+        pageNum: (page + 1).toString(),
+      });
+    }
   };
 
   return (
@@ -164,7 +173,7 @@ const MainPageBody = () => {
       </div>
       <div className="navigate">
         {hasPrevPage ? (
-          <div onClick={handlePagePrev}>
+          <div className="arr" onClick={handlePagePrev}>
             <img src={leftArr} alt="left arr"></img>
           </div>
         ) : null}
@@ -174,7 +183,7 @@ const MainPageBody = () => {
           <>
             <img src={fullRow} alt="dot" /> <img src={emtyRow} alt="dot" />
           </>
-        ) : colPages === 3 || colPages > 3 ? (
+        ) : colPages && (colPages === 3 || colPages > 3) ? (
           <>
             <img src={fullRow} alt="dot" />
             <img src={emtyRow} alt="dot" /> <img src={emtyRow} alt="dot" />
@@ -203,7 +212,11 @@ const StyledWrapper = styled.div`
   .books-wrapp {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     flex-wrap: wrap;
+    padding: ${({ theme }) => theme.padding.header};
+
+    column-gap: 20px;
     width: 100%;
   }
 

@@ -26,7 +26,7 @@ const SortMenu: React.FC = () => {
     }
   }, [isGenresOpen, genres, dispatch]);
 
-  const handlerGenresOpen = () => {
+  const handlerGenresOpen = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsGenresOpen(!isGenresOpen);
   };
 
@@ -42,19 +42,27 @@ const SortMenu: React.FC = () => {
     <StyledWrapper>
       <p className="big-title">Catalog</p>
       <div className="all-buttons">
-        <div className="button-container" onClick={handlerGenresOpen}>
-          <button className="grey-button">Genre</button>
-          <img src={forward} alt="arrow" className="arrow" />
+        <div className="button-container">
+          <div onClick={handlerGenresOpen}>
+            <button className="grey-button">Genre</button>
+            <img src={forward} alt="arrow" className="arrow" />
+          </div>
           {isGenresOpen && <GenresPopup />}
         </div>
-        <div className="button-container" onClick={handlerPriceOpen}>
-          <button className="grey-button">Price</button>
-          <img src={forward} alt="arrow" className="arrow" />
+        <div className="button-container">
+          <div onClick={handlerPriceOpen}>
+            <button className="grey-button">Price</button>
+            <img src={forward} alt="arrow" className="arrow" />
+          </div>
           {isPriceOpen && <PricePopup />}
         </div>
-        <div className="button-container " onClick={handlerSortOpen}>
-          <button className="grey-button light">Sort by {sortBy} </button>
-          <img src={forward} alt="arrow" className="arrow" />
+        <div className="button-container ">
+          <div onClick={handlerSortOpen}>
+            <button className="grey-button light">
+              Sort by {sortBy.toLowerCase()}{' '}
+            </button>
+            <img src={forward} alt="arrow" className="arrow" />
+          </div>
           {isSortOpen && <SortPopup />}
         </div>
       </div>
@@ -79,6 +87,7 @@ const StyledWrapper = styled.div`
   }
   .button-container {
     display: flex;
+    position: relative;
   }
   .button-container:hover {
     cursor: pointer;

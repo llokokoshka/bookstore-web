@@ -66,7 +66,12 @@ export const getBooks = createAsyncThunk(
   }) => {
     try {
       const { pageNum, genres, minPrice, maxPrice, sortBy } = data;
-      let strOfSearch = `/books/?page=${pageNum}&take=12`;
+      let strOfSearch;
+      if (pageNum === undefined || pageNum === null) {
+        strOfSearch = `/books/?page=1&take=12`;
+      } else {
+        strOfSearch = `/books/?page=${pageNum}&take=12`;
+      }
 
       if (genres) {
         strOfSearch += `&genres=${genres}`;
@@ -82,7 +87,6 @@ export const getBooks = createAsyncThunk(
       }
 
       const response = await axiosInstance.get(strOfSearch);
-
       return response.data;
     } catch (err: any) {
       return err.response.status;

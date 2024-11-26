@@ -60,7 +60,7 @@ const GenresPopup: React.FC = () => {
             checked={CheckedGenresIDs.includes(genre.id)}
             onChange={() => handleGenreSelect(genre)}
           />
-          <label>{genre.name}</label>
+          <label className="base-text">{genre.name}</label>
         </div>
       ))}
     </StyledWrapper>
@@ -71,5 +71,13 @@ export default GenresPopup;
 
 const StyledWrapper = styled.div`
   position: absolute;
-  background: white;
+  background-color: ${({ theme }) => theme.colors.light};
+  padding: 15px;
+  border-radius: 16px;
+  width: 305px;
+  height: 740px;
+  top: 74px;
+  gap: 0px;
+  opacity: 0px;
+  z-index: 10;
 `;
