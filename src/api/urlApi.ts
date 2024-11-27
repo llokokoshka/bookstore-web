@@ -9,12 +9,29 @@ export const setQueryParams = async (props: IQueryParams) => {
 
   const updatedParams: Record<string, string> = {};
 
-  if (props.pageNum) updatedParams.page = props.pageNum;
-  if (props.genres && props.genres.length > 0)
+  if (props.pageNum) {
+    updatedParams.page = props.pageNum;
+  } else if (pageNum) {
+    updatedParams.page = pageNum;
+  }
+  if (props.genres && props.genres.length > 0) {
     updatedParams.genre = props.genres.join(',');
-  if (props.minPriceParam) updatedParams.minPrice = props.minPriceParam;
-  if (props.maxPriceParam) updatedParams.maxPrice = props.maxPriceParam;
-  if (props.sortByOption) updatedParams.sortBy = props.sortByOption;
+  }
+  if (props.minPriceParam) {
+    updatedParams.minPrice = props.minPriceParam;
+  } else if (minPrice) {
+    updatedParams.minPrice = minPrice;
+  }
+  if (props.maxPriceParam) {
+    updatedParams.maxPrice = props.maxPriceParam;
+  } else if (maxPrice) {
+    updatedParams.maxPrice = maxPrice;
+  }
+  if (props.sortByOption) {
+    updatedParams.sortBy = props.sortByOption;
+  } else if (sortBy) {
+    updatedParams.sortBy = sortBy;
+  }
 
   props.setSearchParams(updatedParams);
   props.dispatch(

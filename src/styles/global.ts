@@ -8,6 +8,7 @@ export default createGlobalStyle`
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
   }
+
   .base-button {
     width: 231px;
     height: 44px;
@@ -31,25 +32,13 @@ export default createGlobalStyle`
     cursor: pointer;
   }
 
-  .title {
-    display: flex;
-    justify-content: center;
-
-    margin-top: 40px;
-    font-size: 120px;
-    width: 100%;
-
-    @media screen and (max-width: 390px) {
-      font-size: 80px;
-    }
-  }
-
   .big-title{
     font-size: 40px;
     font-weight: 700;
     line-height: 60px;
     text-align: left;
   }
+  
   .normal-title{
     font-size: 20px;
     font-weight: 400;
