@@ -74,6 +74,7 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
   }
+
   .amount-bitton {
     display: flex;
     justify-content: center;

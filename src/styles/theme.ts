@@ -12,7 +12,7 @@ export const baseTheme: IbaseTheme = {
     dark_green: '#8D9F4F',
     black: '#000000',
   },
-  // in px
+
   sizes: {
     desctop: 550,
     mobile: 260,
@@ -24,6 +24,7 @@ export const baseTheme: IbaseTheme = {
   border: {
     grey: '1px solid #f5f5f5',
     red: '1px solid #b83f45',
+    blue: '1px solid #344966',
   },
 
   padding: {

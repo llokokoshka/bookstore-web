@@ -53,7 +53,6 @@ const StyledWrapper = styled.div`
     flex-direction: row;
     width: 739px;
     align-items: center;
-    /* justify-content: space-between; */
     column-gap: 43px;
   }
 `;

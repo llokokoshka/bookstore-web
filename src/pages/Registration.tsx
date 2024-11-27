@@ -22,17 +22,4 @@ const PageWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   min-height: 100vh;
-
-  .title {
-    display: flex;
-    justify-content: center;
-
-    margin-top: 40px;
-    font-size: 120px;
-    width: 100%;
-
-    @media screen and (max-width: 390px) {
-      font-size: 80px;
-    }
-  }
 `;

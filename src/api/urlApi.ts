@@ -1,18 +1,5 @@
-import { SetURLSearchParams } from 'react-router-dom';
-
-import { AppDispatch } from '../store';
 import { getBooks } from '../store/thunk';
-
-interface IQueryParams {
-  dispatch: AppDispatch;
-  searchParams: URLSearchParams;
-  setSearchParams: SetURLSearchParams;
-  pageNum?: string;
-  genres?: string[] | number[] | undefined;
-  sortByOption?: string;
-  minPriceParam?: string;
-  maxPriceParam?: string;
-}
+import { IQueryParams } from '../lib/types';
 
 export const setQueryParams = async (props: IQueryParams) => {
   const pageNum = props.searchParams.get('page');

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { IFormReg } from '../lib/types';
+import { addCommentThunkType, IFormReg } from '../lib/types';
 import { axiosInstance } from '../axiosDefaul';
 
 export const loginUser = createAsyncThunk(
@@ -93,20 +93,14 @@ export const getBooks = createAsyncThunk(
     }
   }
 );
-type dataType = {
-  text: string;
-  bookId: number;
-  userId: number;
-};
 
 export const addComment = createAsyncThunk(
   'comments/addComment',
-  async ({ text, bookId, userId }: dataType, thunkAPI) => {
+  async ({ text, bookId }: addCommentThunkType, thunkAPI) => {
     try {
       const response = await axiosInstance.post(`books/${bookId}/comment`, {
         text,
       });
-
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);

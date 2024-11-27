@@ -1,3 +1,6 @@
+import { SetURLSearchParams } from 'react-router-dom';
+import { AppDispatch } from '../store';
+
 export interface IFormInput {
   email: string;
   password: string;
@@ -89,7 +92,7 @@ export interface PropsBookPageBody {
   author: string;
   description: string;
   cover: coverType;
-  comments: [commentsType] | undefined;
+  comments: commentsType[] | undefined;
 }
 
 export interface PropsBookInCart {
@@ -141,6 +144,12 @@ export interface FilterState {
   sortBy: string;
 }
 
+export interface commentsState {
+  comments: commentsType[];
+  loading: boolean;
+  error: string | null;
+}
+
 export type InputProps = {
   img: string;
   label: string;
@@ -187,4 +196,20 @@ export interface favoriteState {
   normalizeFavorites: Record<number, favoriteItemType>;
   loading: boolean;
   error: string | null;
+}
+
+export type addCommentThunkType = {
+  text: string;
+  bookId: number;
+};
+
+export interface IQueryParams {
+  dispatch: AppDispatch;
+  searchParams: URLSearchParams;
+  setSearchParams: SetURLSearchParams;
+  pageNum?: string;
+  genres?: string[] | number[] | undefined;
+  sortByOption?: string;
+  minPriceParam?: string;
+  maxPriceParam?: string;
 }

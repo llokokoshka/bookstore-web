@@ -47,38 +47,8 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
   }
-  .amount-bitton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: ${({ theme }) => theme.colors.light};
-    width: 32px;
-    height: 32px;
-    gap: 0px;
-    border-radius: 22px;
-    opacity: 0px;
-  }
-
-  .amount-bitton:hover {
-    cursor: pointer;
-  }
-  .amount {
-    display: flex;
-    flex-direction: row;
-    column-gap: 58px;
-  }
-  .amount-block {
-    display: flex;
-    flex-direction: row;
-    column-gap: 14px;
-  }
 
   .icon-img :hover {
     cursor: pointer;
-  }
-
-  .button-img {
-    width: 8px;
-    height: auto;
   }
 `;

@@ -128,14 +128,14 @@ const StyledWrapper = styled.div`
   }
 
   .cart-button {
-    width: 231px;
+    width: 305px;
     height: 44px;
     top: 8px;
     left: 1056px;
     padding: ${({ theme }) => theme.padding.button};
     gap: 10px;
     border-radius: ${({ theme }) => theme.sizes.base_radius}px;
-    border-color: #344966;
+    border: ${({ theme }) => theme.border.blue};
     opacity: 0px;
     color: #344966;
     background-color: white;
@@ -145,6 +145,9 @@ const StyledWrapper = styled.div`
     letter-spacing: 0.75px;
     text-align: center;
     z-index: 5;
+  }
+  .cart-button:hover {
+    /* cursor: pointer; */
   }
 
   .correct {

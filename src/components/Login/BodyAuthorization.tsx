@@ -110,20 +110,6 @@ export default AuthorizationBody;
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
 
-  .poster {
-    display: flex;
-    width: 100%;
-    position: relative;
-  }
-
-  .poster__img {
-    position: absolute;
-    bottom: 0;
-  }
-  .password_btn:hover {
-    cursor: pointer;
-  }
-
   .poster__container {
     display: flex;
     flex-direction: row;

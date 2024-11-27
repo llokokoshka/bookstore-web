@@ -31,6 +31,19 @@ export default createGlobalStyle`
     cursor: pointer;
   }
 
+  .title {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 40px;
+    font-size: 120px;
+    width: 100%;
+
+    @media screen and (max-width: 390px) {
+      font-size: 80px;
+    }
+  }
+
   .big-title{
     font-size: 40px;
     font-weight: 700;
@@ -101,7 +114,6 @@ export default createGlobalStyle`
   }
   
   .base-round-button{
-    /* position: absolute; */
     width: 48px;
     height: 48px;
     opacity: 0px;
@@ -112,5 +124,4 @@ export default createGlobalStyle`
   .base-round-button:hover{
     cursor: pointer;
   }
-
 `;

@@ -20,7 +20,6 @@ const BookPageBody: React.FC<PropsBookPageBody> = (props) => {
           addComment({
             text: inputValue,
             bookId: props.id,
-            userId: user.id,
           })
         );
         setInputValue('');
