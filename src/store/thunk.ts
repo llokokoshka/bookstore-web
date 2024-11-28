@@ -4,7 +4,7 @@ import { addCommentThunkType, IFormReg } from '../lib/types';
 import { axiosInstance } from '../axiosDefaul';
 
 export const loginUser = createAsyncThunk(
-  '/sign-in',
+  'sign-in',
   async ({ email, password }: IFormReg, thunkAPI) => {
     try {
       const response = await axiosInstance.post('/auth/sign-in', {
@@ -25,7 +25,7 @@ export const loginUser = createAsyncThunk(
 );
 
 export const regUser = createAsyncThunk(
-  '/sign-up',
+  'sign-up',
   async ({ email, password }: IFormReg, thunkAPI) => {
     try {
       const response = await axiosInstance.post('/auth/sign-up', {
@@ -46,7 +46,7 @@ export const regUser = createAsyncThunk(
   }
 );
 
-export const getUserApi = createAsyncThunk('/profile', async () => {
+export const getUserApi = createAsyncThunk('profile', async () => {
   try {
     const response = await axiosInstance.get('/user/me');
     return response.data;
@@ -56,7 +56,7 @@ export const getUserApi = createAsyncThunk('/profile', async () => {
 });
 
 export const getBooks = createAsyncThunk(
-  `/`,
+  `getBooks`,
   async (data: {
     pageNum?: string | null;
     genres?: string | null;

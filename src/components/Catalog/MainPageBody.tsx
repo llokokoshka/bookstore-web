@@ -83,10 +83,13 @@ const MainPageBody = () => {
 
     if (searchParams.get('minPrice')) {
       minPriceParam = searchParams.get('minPrice');
+      console.log('2');
       dispatch(setMinPrice(Number(minPriceParam)));
     }
+
     if (searchParams.get('maxPrice')) {
-      maxPriceParam = searchParams.get('minPrice');
+      maxPriceParam = searchParams.get('maxPrice');
+      console.log('here!!!');
       dispatch(setMaxPrice(Number(maxPriceParam)));
     }
 
@@ -113,7 +116,7 @@ const MainPageBody = () => {
       }
     };
     getBooksFromServer();
-  }, [dispatch, books, setSearchParams, page, searchParams]);
+  }, [dispatch, page, searchParams]);
 
   const handlePagePrev = () => {
     if (hasPrevPage && page) {

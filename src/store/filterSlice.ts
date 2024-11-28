@@ -34,6 +34,7 @@ const filterSlice = createSlice({
       state.minPrice = action.payload;
     },
     setMaxPrice(state, action: PayloadAction<number>) {
+      console.log('max price in store ', action.payload);
       state.maxPrice = action.payload;
     },
     setSortBy(state, action: PayloadAction<string>) {
