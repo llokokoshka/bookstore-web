@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import forward from '../../img/right arrow.png';
+import openForward from '../../img/Forward down.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { axiosInstance } from '../../axiosDefaul';
 import { setGenres } from '../../store/filterSlice';
@@ -45,14 +46,22 @@ const SortMenu: React.FC = () => {
         <div className="button-container">
           <div onClick={handlerGenresOpen}>
             <button className="grey-button">Genre</button>
-            <img src={forward} alt="arrow" className="arrow" />
+            {isGenresOpen ? (
+              <img src={openForward} alt="arrow" className="arrow" />
+            ) : (
+              <img src={forward} alt="arrow" className="arrow" />
+            )}
           </div>
           {isGenresOpen && <GenresPopup />}
         </div>
         <div className="button-container">
           <div onClick={handlerPriceOpen}>
             <button className="grey-button">Price</button>
-            <img src={forward} alt="arrow" className="arrow" />
+            {isPriceOpen ? (
+              <img src={openForward} alt="arrow" className="arrow" />
+            ) : (
+              <img src={forward} alt="arrow" className="arrow" />
+            )}
           </div>
           {isPriceOpen && <PricePopup />}
         </div>
@@ -61,7 +70,11 @@ const SortMenu: React.FC = () => {
             <button className="grey-button light">
               Sort by {sortBy.toLowerCase()}{' '}
             </button>
-            <img src={forward} alt="arrow" className="arrow" />
+            {isSortOpen ? (
+              <img src={openForward} alt="arrow" className="arrow" />
+            ) : (
+              <img src={forward} alt="arrow" className="arrow" />
+            )}
           </div>
           {isSortOpen && <SortPopup />}
         </div>
@@ -85,15 +98,18 @@ const StyledWrapper = styled.div`
     flex-direction: row;
     column-gap: 20px;
   }
+
   .button-container {
     display: flex;
     position: relative;
   }
+
   .button-container:hover {
     cursor: pointer;
   }
 
   .grey-button {
+    position: relative;
     background-color: ${({ theme }) => theme.colors.light};
     width: 196px;
     height: 48px;
@@ -109,8 +125,11 @@ const StyledWrapper = styled.div`
 
   .arrow {
     position: absolute;
-    padding: 12px 8px 12px 164px;
+    padding: 12px 30px 12px 0px;
+    right: -24px;
+    z-index: 10;
   }
+
   .light {
     background-color: white;
   }

@@ -74,7 +74,7 @@ const StyledWrapper = styled.div`
   .pol-img {
     position: absolute;
     left: 11px;
-    top: -10px;
+    top: -11px;
     z-index: 6;
   }
   .main-block {
