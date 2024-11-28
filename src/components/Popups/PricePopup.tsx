@@ -6,6 +6,7 @@ import ReactSlider from 'react-slider';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setMaxPrice, setMinPrice } from '../../store/filterSlice';
 import { setQueryParams } from '../../api/urlApi';
+import poligon from '../../img/Polygon 4.png';
 
 const PricePopup: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -34,27 +35,31 @@ const PricePopup: React.FC = () => {
 
   return (
     <StyledWrapper>
-      <ReactSlider
-        className="horizontal-slider"
-        thumbClassName="thumb"
-        // trackClassName="track"
-        defaultValue={value}
-        ariaLabel={['Lower thumb', 'Upper thumb']}
-        ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
-        renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-        renderTrack={(props, state) => (
-          <div
-            {...props}
-            className={`${state.index === 1 ? 'track track-active' : 'track'}`}
-          />
-        )}
-        pearling
-        minDistance={10}
-        onAfterChange={handleChange}
-      />
-      <div className="price-pop">
-        <div>{value[0]},00$</div>
-        <div>{value[1]},00$</div>
+      <img src={poligon} alt="aa" className="pol-img" />
+      <div className="main-block">
+        <ReactSlider
+          className="horizontal-slider"
+          thumbClassName="thumb"
+          defaultValue={value}
+          ariaLabel={['Lower thumb', 'Upper thumb']}
+          ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
+          renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+          renderTrack={(props, state) => (
+            <div
+              {...props}
+              className={`${
+                state.index === 1 ? 'track track-active' : 'track'
+              }`}
+            />
+          )}
+          pearling
+          minDistance={10}
+          onAfterChange={handleChange}
+        />
+        <div className="price-pop">
+          <div>{value[0]},00$</div>
+          <div>{value[1]},00$</div>
+        </div>
       </div>
     </StyledWrapper>
   );
@@ -64,15 +69,24 @@ export default PricePopup;
 
 const StyledWrapper = styled.div`
   position: absolute;
-  background: ${({ theme }) => theme.colors.light};
-  width: 413px;
-  height: 151px;
   top: 74px;
-  padding: 15px;
-  gap: 10px;
-  border-radius: 16px;
-  opacity: 0px;
-  z-index: 6;
+
+  .pol-img {
+    position: absolute;
+    left: 11px;
+    top: -10px;
+    z-index: 6;
+  }
+  .main-block {
+    position: absolute;
+    background: ${({ theme }) => theme.colors.light};
+    width: 413px;
+    height: 151px;
+    padding: 40px 18px;
+    border-radius: 16px;
+    opacity: 0px;
+    z-index: 6;
+  }
 
   .thumb {
     display: flex;
@@ -113,9 +127,4 @@ const StyledWrapper = styled.div`
     padding-top: 37px;
     width: 379px;
   }
-`;
-const StyledTrack = styled.div<{ index: number }>`
-  top: 0;
-  bottom: 0;
-  background: ${(props) => (props.index === 1 ? '#BFCC94' : '#d6d8e7')};
 `;
