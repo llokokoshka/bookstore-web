@@ -2,12 +2,13 @@ import { Dispatch, UnknownAction } from '@reduxjs/toolkit';
 
 import { axiosInstance } from '../axiosDefaul';
 import { setUser } from '../store/authSlice';
+import { ApiPath } from '../constants/textConstants';
 
 export async function SaveFile(
   formData: FormData,
   dispatch: Dispatch<UnknownAction>
 ) {
-  const response = await axiosInstance.post('/files', formData, {
+  const response = await axiosInstance.post(ApiPath.files, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
       Autorization: `Bearer ${localStorage.getItem('access')}`,
@@ -26,7 +27,7 @@ export async function UpdateUserData(
   },
   dispatch: Dispatch<UnknownAction>
 ) {
-  const updUser = await axiosInstance.patch('/user/me', {
+  const updUser = await axiosInstance.patch(ApiPath.user.me, {
     fullName: data?.fullName,
     email: data?.email,
   });
@@ -43,7 +44,7 @@ export async function UpdateUserPassword(data: {
   passwordNew: string;
   passwordRep: string;
 }) {
-  await axiosInstance.patch('/user/pass', {
+  await axiosInstance.patch(ApiPath.user.userPass, {
     password: data.password,
     passwordNew: data.passwordNew,
   });

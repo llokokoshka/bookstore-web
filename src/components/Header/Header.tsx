@@ -6,12 +6,13 @@ import logo from '../../img/logo.png';
 import search from '../../img/search-icon.png';
 import AuthButtons from './AuthButtons';
 import { useAppSelector } from '../../hooks';
+import { AppPages } from '../../constants/textConstants';
 
 const Header: React.FC = () => {
   const user = useAppSelector((state) => state.auth.user);
   return (
     <StyledWrapper>
-      <Link to={`/`}>
+      <Link to={AppPages.base}>
         <img src={logo} alt="logo" />
       </Link>
       <div className="header">
@@ -25,7 +26,7 @@ const Header: React.FC = () => {
           ></input>
         </div>
       </div>
-      {user !== null ? (
+      {user !== null && user !== undefined ? (
         <AuthButtons />
       ) : (
         <Link className="todo-body__div-button" to={`/sign-in`}>

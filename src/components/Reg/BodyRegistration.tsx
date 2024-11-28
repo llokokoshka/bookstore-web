@@ -11,6 +11,7 @@ import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 import { IFormReg, IFormInput } from '../../lib/types';
+import { AppPages } from '../../constants/textConstants';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -40,7 +41,7 @@ const RegistrationBody: React.FC = () => {
         regUser({ email: data.email, password: data.password })
       );
       if (user.payload) {
-        navigate('/profile');
+        navigate(AppPages.profile);
       }
       reset();
     } catch (err) {

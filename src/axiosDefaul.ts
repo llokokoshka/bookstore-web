@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { ERROR_REFRESH_TOKEN } from './constants/errorConstants';
+import { ApiPath } from './constants/textConstants';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -35,18 +36,25 @@ axiosInstance.interceptors.response.use(
       _retry: boolean;
     };
     const errResponse = error.response as AxiosError['response'];
+    const refToken = localStorage.getItem('refresh');
     if (
       (errResponse?.status === 401 || errResponse?.status === 403) &&
-      !originalRequest._retry
+      !originalRequest._retry &&
+      refToken !== 'undefined' &&
+      refToken !== null
     ) {
       originalRequest._retry = true;
       try {
-        const refToken = localStorage.getItem('refresh');
+        console.log('here');
 
-        const response = await axiosToken.post('/auth/refresh-token', {
+        const response = await axiosToken.post(ApiPath.refreshToken, {
           refresh_token: refToken,
         });
         const { access_token, refresh_token } = response.data;
+        if (access_token === 'undefined') {
+          localStorage.removeItem('access');
+          localStorage.removeItem('refresh');
+        }
 
         localStorage.setItem('access', access_token);
         localStorage.setItem('refresh', refresh_token);
@@ -61,7 +69,6 @@ axiosInstance.interceptors.response.use(
         localStorage.removeItem('access');
         localStorage.removeItem('refresh');
 
-        window.location.href = '/';
         return Promise.reject(refreshErr);
       }
     }

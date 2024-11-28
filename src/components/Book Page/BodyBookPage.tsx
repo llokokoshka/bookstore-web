@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
 import { PropsBookPageBody } from '../../lib/types';
 import Comment from './Comment';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addComment } from '../../store/thunk';
 import Rating from './Rating';
+import { ApiPath } from '../../constants/textConstants';
 
 const BookPageBody: React.FC<PropsBookPageBody> = (props) => {
-  const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}/uploads/books/`;
+  const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const dispatch = useAppDispatch();
 
   const [inputValue, setInputValue] = useState<string>();

@@ -11,6 +11,7 @@ import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 import { IFormReg } from '../../lib/types';
+import { AppPages } from '../../constants/textConstants';
 
 const AuthorizationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -41,8 +42,8 @@ const AuthorizationBody: React.FC = () => {
         loginUser({ email: data.email, password: data.password })
       );
       if (user.payload.user) {
-        navigate('/profile');
-      } else navigate('/sign-in');
+        navigate(AppPages.profile);
+      } else navigate(AppPages.login);
       reset();
     } catch (err) {
       console.warn('При авторизации возникла ошибка: ', err);

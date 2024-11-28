@@ -9,6 +9,7 @@ import { setGenres } from '../../store/filterSlice';
 import GenresPopup from '../Popups/GenresPopup';
 import PricePopup from '../Popups/PricePopup';
 import SortPopup from '../Popups/SortPopup';
+import { ApiPath } from '../../constants/textConstants';
 
 const SortMenu: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +22,7 @@ const SortMenu: React.FC = () => {
   useEffect(() => {
     if (isGenresOpen && genres.length === 0) {
       axiosInstance
-        .get('/genres')
+        .get(ApiPath.genres)
         .then((response) => dispatch(setGenres(response.data)))
         .catch((error) => console.error('Error get genres: ', error));
     }

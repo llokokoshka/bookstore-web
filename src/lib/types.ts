@@ -177,6 +177,7 @@ export type cartType = {
 export interface cartState {
   cart: cartType | null;
   normalizeCart: Record<number, cartItemType>;
+  numberOfItemsInCart: number;
   loading: boolean;
   error: string | null;
 }

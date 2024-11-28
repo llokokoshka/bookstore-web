@@ -5,9 +5,10 @@ import { PropsFavorite } from '../../lib/types';
 import rubbish from '../../img/Delete.png';
 import { useAppDispatch } from '../../hooks';
 import { deleteFavoriteItem } from '../../store/thunk';
+import { ApiPath } from '../../constants/textConstants';
 
 const BookInFavorite: React.FC<PropsFavorite> = (props) => {
-  const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}/uploads/books/`;
+  const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const { img, name, author } = props.book;
   const dispatch = useAppDispatch();
 

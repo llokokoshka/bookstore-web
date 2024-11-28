@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { commentsType } from '../../lib/types';
+import { ApiPath } from '../../constants/textConstants';
 
 const Comment: React.FC<commentsType> = (props) => {
-  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/avatars/`;
+  const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
   return (
     <StyledWrapper>
       <img

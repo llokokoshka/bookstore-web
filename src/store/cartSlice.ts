@@ -12,6 +12,7 @@ import { cartItemType, cartState } from '../lib/types';
 const initialState: cartState = {
   cart: null,
   normalizeCart: {},
+  numberOfItemsInCart: 0,
   error: null,
   loading: false,
 };
@@ -51,6 +52,7 @@ const cartSlice = createSlice({
           state.normalizeCart[action.payload.book.id] = action.payload;
         }
         console.log(action.payload);
+        state.numberOfItemsInCart += 1;
         state.cart?.cartItems.push(action.payload);
       })
       .addCase(addCartItem.rejected, (state, action) => {
@@ -74,6 +76,7 @@ const cartSlice = createSlice({
           state.cart.cartItems[itemIndex].total_price =
             action.payload.total_price;
           state.cart.total_price += addPrice;
+          state.numberOfItemsInCart += 1;
         } else {
           console.error('Item not found in cart:', action.payload.id);
         }
@@ -99,6 +102,7 @@ const cartSlice = createSlice({
           state.cart.cartItems[itemIndex].total_price =
             action.payload.total_price;
           state.cart.total_price -= lessPrice;
+          state.numberOfItemsInCart -= 1;
         } else {
           console.error('Item not found in cart:', action.payload.id);
         }
@@ -118,11 +122,13 @@ const cartSlice = createSlice({
         );
         if (itemIndex !== -1 && state.cart && itemIndex !== undefined) {
           const sum = state.cart.cartItems[itemIndex].total_price;
+          const colOfItemsInCart = state.cart.cartItems[itemIndex].quantity;
           const idBook = state.cart.cartItems[itemIndex].book.id;
           state.cart.cartItems = state.cart.cartItems.filter((item) => {
             return item.id !== action.payload;
           });
           state.cart.total_price -= sum;
+          state.numberOfItemsInCart -= colOfItemsInCart;
           if (state.normalizeCart && state.normalizeCart[idBook]) {
             delete state.normalizeCart[idBook];
           }

@@ -13,7 +13,7 @@ import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
 import ProfileInput from '../Input fields/ProfileInput';
 import { useAppSelector } from '../../hooks';
-import { DEFAULT_PASSWORD_STARS } from '../../constants/textConstants';
+import { ApiPath, DEFAULT_PASSWORD_STARS } from '../../constants/textConstants';
 import {
   ERROR_AVATAR_UPLOAD,
   ERROR_UPDATE_USER_DATA,
@@ -32,7 +32,7 @@ const ProfileBody: React.FC = () => {
 
   const user = useAppSelector((state) => state.auth.user);
 
-  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/avatars/`;
+  const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
 
   const {
     register: registerFormInfo,

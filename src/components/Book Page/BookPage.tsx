@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 import Header from '../Header/Header';
 import BookPageBody from './BodyBookPage';
 import Footer from '../Footer';
-import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 
 const BookPage: React.FC = () => {

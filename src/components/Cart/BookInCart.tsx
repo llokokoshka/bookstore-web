@@ -11,9 +11,10 @@ import {
   downAmountCartItem,
   upAmountCartItem,
 } from '../../store/thunk';
+import { ApiPath } from '../../constants/textConstants';
 
 const BookInCart: React.FC<PropsBookInCart> = (props) => {
-  const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}/uploads/books/`;
+  const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const { img, name, author } = props.book;
   const dispatch = useAppDispatch();
   const handleMinusQuantity = async () => {

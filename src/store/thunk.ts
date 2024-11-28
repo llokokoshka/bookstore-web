@@ -2,12 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { addCommentThunkType, IFormReg } from '../lib/types';
 import { axiosInstance } from '../axiosDefaul';
+import { ApiPath, AppPages } from '../constants/textConstants';
 
 export const loginUser = createAsyncThunk(
-  'sign-in',
+  AppPages.login,
   async ({ email, password }: IFormReg, thunkAPI) => {
     try {
-      const response = await axiosInstance.post('/auth/sign-in', {
+      const response = await axiosInstance.post(ApiPath.login, {
         email,
         password,
       });
@@ -25,10 +26,10 @@ export const loginUser = createAsyncThunk(
 );
 
 export const regUser = createAsyncThunk(
-  'sign-up',
+  AppPages.registration,
   async ({ email, password }: IFormReg, thunkAPI) => {
     try {
-      const response = await axiosInstance.post('/auth/sign-up', {
+      const response = await axiosInstance.post(ApiPath.registration, {
         email,
         password,
       });
@@ -46,7 +47,21 @@ export const regUser = createAsyncThunk(
   }
 );
 
-export const getUserApi = createAsyncThunk('profile', async () => {
+export const getUserApi = createAsyncThunk(AppPages.profile, async () => {
+  try {
+    const response = await axiosInstance.get(ApiPath.user.me);
+    return response.data;
+  } catch (err: any) {
+    return err.response.status;
+  }
+});
+
+/**
+ * export const getUserApi = createAsyncThunk<
+  { name: string },
+  {chtoto: 'asdsa'},
+  { state: RootState }
+>('profile', async (arg, { getState, rejectWithValue, dispatch }) => {
   try {
     const response = await axiosInstance.get('/user/me');
     return response.data;
@@ -54,6 +69,7 @@ export const getUserApi = createAsyncThunk('profile', async () => {
     return err.response.status;
   }
 });
+ */
 
 export const getBooks = createAsyncThunk(
   `getBooks`,
@@ -98,9 +114,12 @@ export const addComment = createAsyncThunk(
   'comments/addComment',
   async ({ text, bookId }: addCommentThunkType, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(`books/${bookId}/comment`, {
-        text,
-      });
+      const response = await axiosInstance.post(
+        ApiPath.getBookCommentWithIdUrl(bookId),
+        {
+          text,
+        }
+      );
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
@@ -112,7 +131,9 @@ export const getComments = createAsyncThunk(
   'comments/getComments',
   async (bookId: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.get(`books/${bookId}/comment`);
+      const response = await axiosInstance.get(
+        ApiPath.getBookCommentWithIdUrl(bookId)
+      );
       return response.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -123,7 +144,9 @@ export const getComments = createAsyncThunk(
 export const getBookRating = createAsyncThunk(
   'books/fetchBookRating',
   async (bookId: number) => {
-    const response = await axiosInstance.get(`/books/${bookId}/rating`);
+    const response = await axiosInstance.get(
+      ApiPath.getBookRatingWithIdUrl(bookId)
+    );
     return { bookId, rating: response.data };
   }
 );
@@ -131,14 +154,16 @@ export const getBookRating = createAsyncThunk(
 export const addOrUpdateRating = createAsyncThunk(
   'books/addOrUpdateRating',
   async ({ bookId, value }: { bookId: number; value: number }) => {
-    await axiosInstance.post(`/books/${bookId}/rating`, { value });
-    const response = await axiosInstance.get(`/books/${bookId}/rating`);
+    await axiosInstance.post(ApiPath.getBookRatingWithIdUrl(bookId), { value });
+    const response = await axiosInstance.get(
+      ApiPath.getBookRatingWithIdUrl(bookId)
+    );
     return { bookId, rating: response.data };
   }
 );
 
 export const getCart = createAsyncThunk('cart/getCart', async () => {
-  const response = await axiosInstance.get(`user/cart`);
+  const response = await axiosInstance.get(ApiPath.user.cart.allItems);
   return response.data;
 });
 
@@ -146,7 +171,9 @@ export const addCartItem = createAsyncThunk(
   'cart/addItemInCart',
   async (bookId: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.post('user/cart/item', { bookId });
+      const response = await axiosInstance.post(ApiPath.user.cart.item, {
+        bookId,
+      });
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
@@ -159,9 +186,12 @@ export const upAmountCartItem = createAsyncThunk(
   async (ItemId: number, thunkAPI) => {
     try {
       const action = true;
-      const response = await axiosInstance.patch(`user/cart/item/${ItemId}`, {
-        action,
-      });
+      const response = await axiosInstance.patch(
+        ApiPath.user.cart.getItemWithIdUrl(ItemId),
+        {
+          action,
+        }
+      );
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
@@ -174,9 +204,12 @@ export const downAmountCartItem = createAsyncThunk(
   async (ItemId: number, thunkAPI) => {
     try {
       const action = false;
-      const response = await axiosInstance.patch(`user/cart/item/${ItemId}`, {
-        action,
-      });
+      const response = await axiosInstance.patch(
+        ApiPath.user.cart.getItemWithIdUrl(ItemId),
+        {
+          action,
+        }
+      );
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
@@ -188,7 +221,9 @@ export const deleteCartItem = createAsyncThunk(
   'cart/deleteItemInCart',
   async (ItemId: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.delete(`user/cart/item/${ItemId}`);
+      const response = await axiosInstance.delete(
+        ApiPath.user.cart.getItemWithIdUrl(ItemId)
+      );
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
@@ -199,7 +234,9 @@ export const deleteCartItem = createAsyncThunk(
 export const getFavorite = createAsyncThunk(
   'favorite/getFavorite',
   async () => {
-    const response = await axiosInstance.get(`user/favorites`);
+    const response = await axiosInstance.get(
+      ApiPath.user.favorites.allFavorites
+    );
     return response.data;
   }
 );
@@ -208,7 +245,7 @@ export const addFavoriteItem = createAsyncThunk(
   'favorite/addItemInFavorite',
   async (bookId: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.post('user/favorites/item', {
+      const response = await axiosInstance.post(ApiPath.user.favorites.item, {
         bookId,
       });
       console.log(response.data);
@@ -224,7 +261,7 @@ export const deleteFavoriteItem = createAsyncThunk(
   async (ItemId: number, thunkAPI) => {
     try {
       const response = await axiosInstance.delete(
-        `user/favorites/item/${ItemId}`
+        ApiPath.user.favorites.getItemWithIdUrl(ItemId)
       );
       return response.data;
     } catch (err: any) {
