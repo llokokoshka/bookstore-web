@@ -36,16 +36,26 @@ const PricePopup: React.FC = () => {
     <StyledWrapper>
       <ReactSlider
         className="horizontal-slider"
-        thumbClassName="example-thumb"
-        trackClassName="example-track"
+        thumbClassName="thumb"
+        // trackClassName="track"
         defaultValue={value}
         ariaLabel={['Lower thumb', 'Upper thumb']}
         ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
         renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+        renderTrack={(props, state) => (
+          <div
+            {...props}
+            className={`${state.index === 1 ? 'track track-active' : 'track'}`}
+          />
+        )}
         pearling
         minDistance={10}
         onAfterChange={handleChange}
       />
+      <div className="price-pop">
+        <div>{value[0]},00$</div>
+        <div>{value[1]},00$</div>
+      </div>
     </StyledWrapper>
   );
 };
@@ -64,14 +74,48 @@ const StyledWrapper = styled.div`
   opacity: 0px;
   z-index: 6;
 
-  .example-thumb {
-    background-color: ${({ theme }) => theme.colors.green};
+  .thumb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 32px;
+    height: 32px;
+    left: 54px;
+    gap: 0px;
+    border-radius: 40px;
+    border: ${({ theme }) => theme.border.green};
+    opacity: 0px;
   }
-  .example-track {
-    background-color: ${({ theme }) => theme.colors.dark_green};
+
+  .track {
+    height: 12px;
+    top: 10px;
+    gap: 0px;
+    border-radius: 40px;
+    opacity: 0px;
+    background-color: #d6d8e7;
   }
+
+  .track-active {
+    background-color: #bfcc94;
+  }
+
   .horizontal-slider {
-    background-color: ${({ theme }) => theme.colors.light_grey};
-    color: ${({ theme }) => theme.colors.light_grey};
+    color: ${({ theme }) => theme.colors.dark_blue};
   }
+
+  .price-pop {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 37px;
+    width: 379px;
+  }
+`;
+const StyledTrack = styled.div<{ index: number }>`
+  top: 0;
+  bottom: 0;
+  background: ${(props) => (props.index === 1 ? '#BFCC94' : '#d6d8e7')};
 `;

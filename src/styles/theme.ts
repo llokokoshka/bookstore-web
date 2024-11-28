@@ -25,6 +25,7 @@ export const baseTheme: IbaseTheme = {
     grey: '1px solid #f5f5f5',
     red: '1px solid #b83f45',
     blue: '1px solid #344966',
+    green: '2px solid #BFCC94',
   },
 
   padding: {

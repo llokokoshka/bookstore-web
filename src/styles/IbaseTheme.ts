@@ -23,6 +23,7 @@ export interface IbaseTheme {
     grey: string;
     red: string;
     blue: string;
+    green: string;
   };
 
   padding: {
