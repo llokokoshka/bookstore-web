@@ -134,8 +134,27 @@ export interface IBook {
   meta: MetaType | null;
 }
 
+export interface ICatalog {
+  data: number[] | null;
+  meta: MetaType | null;
+}
+
 export interface IBookState {
   books: BookType[] | null;
+  error: string | null;
+  loading: boolean;
+}
+
+export interface IBookItemState {
+  book: BookType | null;
+  comments?: CommentsType[];
+  rates?: { rating: number };
+  error: string | null;
+  loading: boolean;
+}
+
+export interface ICatalogState {
+  books: number[] | null;
   meta: MetaType | null;
   error: string | null;
   loading: boolean;

@@ -1,16 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import authReducer from './authSlice';
-import bookReducer from './bookSlice';
+import catalogReducer from './catalogSlice';
 import filterReducer from './filterSlice';
 import commentsReducer from './commentsSlice';
 import cartReducer from './cartSlice';
 import favoritesReducer from './favoritesSlice';
+import booksEntitiesReducer from './booksEntitiesSlice';
+import bookReducer from './bookItemSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    books: bookReducer,
+    booksEntities: booksEntitiesReducer,
+    catalog: catalogReducer,
+    book: bookReducer,
     filters: filterReducer,
     comments: commentsReducer,
     cart: cartReducer,

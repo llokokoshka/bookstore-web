@@ -2,13 +2,16 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   AddCommentThunkType,
+  CommentsType,
   IBook,
+  ICatalog,
   IFormReg,
   IUserResponseData,
   QueryParamsType,
 } from '../lib/types';
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath, AppPages } from '../constants/textConstants';
+import { addOrUpdBook } from './booksEntitiesSlice';
 
 export const loginUser = createAsyncThunk<IUserResponseData, IFormReg>(
   AppPages.login,
@@ -73,21 +76,6 @@ export const getUserApi = createAsyncThunk<IUserResponseData>(
   }
 );
 
-/**
- * export const getUserApi = createAsyncThunk<
-  { name: string },
-  {chtoto: 'asdsa'},
-  { state: RootState }
->('profile', async (arg, { getState, rejectWithValue, dispatch }) => {
-  try {
-    const response = await axiosInstance.get('/user/me');
-    return response.data;
-  } catch (err: any) {
-    return err.response.status;
-  }
-});
- */
-
 export const getBooks = createAsyncThunk<IBook, QueryParamsType>(
   `getBooks`,
   async (data, thunkAPI) => {
@@ -121,11 +109,62 @@ export const getBooks = createAsyncThunk<IBook, QueryParamsType>(
   }
 );
 
-export const addComment = createAsyncThunk(
-  'comments/addComment',
-  async ({ text, bookId }: AddCommentThunkType, thunkAPI) => {
+export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
+  `getCatalog`,
+  async (data, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(
+      let strOfSearch;
+      const { pageNum, genres, minPrice, maxPrice, sortBy } = data;
+
+      if (pageNum === undefined || pageNum === null) {
+        strOfSearch = `/books/?page=1&take=12`;
+      } else {
+        strOfSearch = `/books/?page=${pageNum}&take=12`;
+      }
+
+      if (genres) {
+        strOfSearch += `&genres=${genres}`;
+      }
+      if (minPrice) {
+        strOfSearch += `&minPrice=${minPrice}`;
+      }
+      if (maxPrice) {
+        strOfSearch += `&maxPrice=${maxPrice}`;
+      }
+      if (sortBy) {
+        strOfSearch += `&sortBy=${sortBy}`;
+      }
+
+      const response = await axiosInstance.get<IBook>(strOfSearch);
+      const arrayWithBooks = response.data.data;
+
+      const newArrWithBookIds = arrayWithBooks
+        ? arrayWithBooks.map((book) => {
+            return book.id;
+          })
+        : null;
+
+      if (arrayWithBooks) {
+        thunkAPI.dispatch(addOrUpdBook(arrayWithBooks));
+      }
+
+      const newDataForCatalog: ICatalog = {
+        data: newArrWithBookIds,
+        meta: response.data.meta,
+      };
+
+      return newDataForCatalog;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const addComment = createAsyncThunk<CommentsType[], AddCommentThunkType>(
+  'comments/addComment',
+  async ({ text, bookId }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post<CommentsType[]>(
         ApiPath.getBookCommentWithIdUrl(bookId),
         {
           text,
@@ -138,11 +177,11 @@ export const addComment = createAsyncThunk(
   }
 );
 
-export const getComments = createAsyncThunk(
+export const getComments = createAsyncThunk<CommentsType[], number>(
   'comments/getComments',
   async (bookId: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.get(
+      const response = await axiosInstance.get<CommentsType[]>(
         ApiPath.getBookCommentWithIdUrl(bookId)
       );
       return response.data;
@@ -152,15 +191,18 @@ export const getComments = createAsyncThunk(
   }
 );
 
-export const getBookRating = createAsyncThunk(
-  'books/fetchBookRating',
-  async (bookId: number) => {
-    const response = await axiosInstance.get(
-      ApiPath.getBookRatingWithIdUrl(bookId)
-    );
-    return { bookId, rating: response.data };
-  }
-);
+export const getBookRating = createAsyncThunk<
+  {
+    bookId: number;
+    rating: number;
+  },
+  number
+>('books/fetchBookRating', async (bookId) => {
+  const response = await axiosInstance.get(
+    ApiPath.getBookRatingWithIdUrl(bookId)
+  );
+  return { bookId, rating: response.data };
+});
 
 export const addOrUpdateRating = createAsyncThunk(
   'books/addOrUpdateRating',

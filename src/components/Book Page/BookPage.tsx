@@ -10,7 +10,7 @@ import { useAppSelector } from '../../hooks';
 const BookPage: React.FC = () => {
   let { id } = useParams();
   const bookId = Number(id);
-  const getBooks = useAppSelector((state) => state.books.books);
+  const getBooks = useAppSelector((state) => state.booksEntities.books);
   const book = getBooks?.find((book) => book.id === bookId);
 
   return (

@@ -26,7 +26,7 @@ import { setQueryParams } from '../../api/urlApi';
 
 const MainPageBody = () => {
   const dispatch = useAppDispatch();
-  const books = useAppSelector((state) => state.books.books);
+  const books = useAppSelector((state) => state.booksEntities.books);
   const user = useAppSelector((state) => state.auth.user);
   const booksInCart = useAppSelector((state) => state.cart.normalizeCart);
   const booksInFavorites = useAppSelector(
@@ -35,12 +35,14 @@ const MainPageBody = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const page = useAppSelector((state) => state.books.meta?.page);
-  const hasNextPage = useAppSelector((state) => state.books.meta?.hasNextPage);
-  const hasPrevPage = useAppSelector(
-    (state) => state.books.meta?.hasPreviousPage
+  const page = useAppSelector((state) => state.catalog.meta?.page);
+  const hasNextPage = useAppSelector(
+    (state) => state.catalog.meta?.hasNextPage
   );
-  const colPages = useAppSelector((state) => state.books.meta?.pageCount);
+  const hasPrevPage = useAppSelector(
+    (state) => state.catalog.meta?.hasPreviousPage
+  );
+  const colPages = useAppSelector((state) => state.catalog.meta?.pageCount);
 
   useEffect(() => {
     if (user && Object.keys(booksInCart).length === 0) {
