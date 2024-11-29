@@ -11,6 +11,7 @@ import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 import { IFormReg, IFormInput } from '../../lib/types';
+import { AppPages } from '../../constants/textConstants';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,11 +37,11 @@ const RegistrationBody: React.FC = () => {
     password: string;
   }) => {
     try {
-      const user = await dispatch(
+      const responseData = await dispatch(
         regUser({ email: data.email, password: data.password })
-      );
-      if (user.payload) {
-        navigate('/profile');
+      ).unwrap();
+      if (responseData.user) {
+        navigate(AppPages.profile);
       }
       reset();
     } catch (err) {
@@ -136,20 +137,6 @@ export default RegistrationBody;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
-
-  .poster {
-    display: flex;
-    width: 100%;
-    position: relative;
-  }
-
-  .poster__img {
-    position: absolute;
-    bottom: 0;
-  }
-  .password_btn:hover {
-    cursor: pointer;
-  }
 
   .poster__container {
     display: flex;

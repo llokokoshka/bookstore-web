@@ -11,6 +11,7 @@ import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 import { IFormReg } from '../../lib/types';
+import { AppPages } from '../../constants/textConstants';
 
 const AuthorizationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,13 +37,13 @@ const AuthorizationBody: React.FC = () => {
     password: string;
   }) => {
     try {
-      console.log('Валидация прошла успешно!');
-      const user = await dispatch(
+      const responseData = await dispatch(
         loginUser({ email: data.email, password: data.password })
-      );
-      if (user.payload.user) {
-        navigate('/profile');
-      } else navigate('/sign-in');
+      ).unwrap();
+
+      if (responseData.user) {
+        navigate(AppPages.profile);
+      } else navigate(AppPages.login);
       reset();
     } catch (err) {
       console.warn('При авторизации возникла ошибка: ', err);
@@ -109,20 +110,6 @@ export default AuthorizationBody;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
-
-  .poster {
-    display: flex;
-    width: 100%;
-    position: relative;
-  }
-
-  .poster__img {
-    position: absolute;
-    bottom: 0;
-  }
-  .password_btn:hover {
-    cursor: pointer;
-  }
 
   .poster__container {
     display: flex;

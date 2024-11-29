@@ -1,29 +1,80 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import book from '../../img/narnia.png';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {
+  addCartItem,
+  addFavoriteItem,
+  deleteFavoriteItem,
+} from '../../store/thunk';
+import heart from '../../img/Heart.png';
+import fullHeart from '../../img/fullHeart.png';
+import { IBookProps } from '../../lib/types';
+import Rating from '../Book Page/Rating';
+import { ApiPath } from '../../constants/textConstants';
 
-interface Props {
-  img: string;
-  name: string;
-  author: string;
-  price: number;
-}
+const Book: React.FC<IBookProps> = (props) => {
+  const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
+  const booksInFavorites = useAppSelector(
+    (state) => state.favorite.normalizeFavorites
+  );
+  const Favorites = useAppSelector((state) => state.favorite.favorites);
+  const dispatch = useAppDispatch();
 
-const Book: React.FC<Props> = (props) => {
-  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/`;
+  const addBookInCart = () => {
+    if (props.id) dispatch(addCartItem(props.id));
+  };
+
+  if (props.price === undefined) {
+    props.price = 0;
+  }
+
+  const handleAddInFavorites = async () => {
+    if (booksInFavorites && props.id && !booksInFavorites[props.id]) {
+      await dispatch(addFavoriteItem(props.id));
+    } else if (booksInFavorites && props.id && booksInFavorites[props.id]) {
+      const bookInFav = Favorites?.favoritesItems.find(
+        (item) => item.book.id === props.id
+      );
+      if (bookInFav) await dispatch(deleteFavoriteItem(bookInFav?.id));
+    }
+  };
 
   return (
     <StyledWrapper>
-      <div className="">
-        <img src={book} alt="img" className="avatar"></img>
+      <div className="book">
+        {props.isInFavorites ? (
+          <div className="book_favorite-button" onClick={handleAddInFavorites}>
+            <img src={fullHeart} alt="fullHeart"></img>
+          </div>
+        ) : (
+          <div
+            className="book_favorite-button opacity"
+            onClick={handleAddInFavorites}
+          >
+            <img src={heart} alt="heart"></img>
+          </div>
+        )}
+
+        <Link to={`/${props.id}`}>
+          <img src={dirname + props.img} alt="img" className="book-cover"></img>
+        </Link>
       </div>
-      <div className="">
+      <Link to={`/${props.id}`}>
         <div className="normal-title">{props.name}</div>
         <div className="base-text">{props.author}</div>
         <div></div>
-        <button className="base-button">$ {props.price} USD</button>
-      </div>
+      </Link>
+      {props.id ? <Rating bookId={props?.id} isUserRAte={false} /> : null}
+
+      {props.isInCart ? (
+        <button className="cart-button">Item in cart</button>
+      ) : (
+        <button className="base-button correct" onClick={addBookInCart}>
+          $ {props.price} USD
+        </button>
+      )}
     </StyledWrapper>
   );
 };
@@ -31,39 +82,80 @@ const Book: React.FC<Props> = (props) => {
 export default Book;
 
 const StyledWrapper = styled.div`
-  padding: ${({ theme }) => theme.padding.header};
   display: flex;
   flex-direction: column;
+  width: 305px;
+  height: 663px;
+  top: 748px;
+  left: 80px;
+  gap: 0px;
+  opacity: 0px;
 
-  .poster {
-    background-color: ${({ theme }) => theme.colors.light};
-    display: flex;
-    width: 100%;
+  .book {
     position: relative;
-  }
-  .poster__img {
-    position: absolute;
-    bottom: 0;
-  }
-
-  .poster__container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
     width: 100%;
-    padding: 0 108px 0 98px;
+    height: auto;
   }
 
-  .container__info-block {
+  .book_favorite-button {
+    position: absolute;
+    background-color: ${({ theme }) => theme.colors.dark_blue};
+    border-radius: 25px;
+    width: 48px;
+    height: 48px;
+    top: 20px;
+    left: 20px;
+    gap: 0px;
+    z-index: 5;
     display: flex;
-    flex-direction: column;
-    align-items: start;
-    row-gap: 50px;
+    align-items: center;
+    justify-content: center;
   }
-  .info-block__text {
-    display: flex;
-    flex-direction: column;
-    row-gap: 10px;
+
+  .book-cover {
+    width: 305px;
+    height: 448px;
+    gap: 0px;
+    border-radius: 16px;
+    opacity: 0px;
+  }
+
+  .opacity {
+    opacity: 50%;
+  }
+  .opacity:hover {
+    opacity: 100%;
+  }
+
+  .cart-button {
+    width: 305px;
+    height: 44px;
+    top: 8px;
+    left: 1056px;
+    padding: ${({ theme }) => theme.padding.button};
+    gap: 10px;
+    border-radius: ${({ theme }) => theme.sizes.base_radius}px;
+    border: ${({ theme }) => theme.border.blue};
+    opacity: 0px;
+    color: #344966;
+    background-color: white;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.75px;
+    text-align: center;
+    z-index: 5;
+  }
+  .cart-button:hover {
+    /* cursor: pointer; */
+  }
+
+  .correct {
+    width: 305px;
+    height: 48px;
+    top: 615px;
+    padding: 10px 50px 10px 50px;
+    gap: 0px;
+    border-radius: 16px;
   }
 `;

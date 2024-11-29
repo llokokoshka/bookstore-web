@@ -8,6 +8,7 @@ export default createGlobalStyle`
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
   }
+
   .base-button {
     width: 231px;
     height: 44px;
@@ -37,6 +38,7 @@ export default createGlobalStyle`
     line-height: 60px;
     text-align: left;
   }
+  
   .normal-title{
     font-size: 20px;
     font-weight: 400;
@@ -101,7 +103,6 @@ export default createGlobalStyle`
   }
   
   .base-round-button{
-    /* position: absolute; */
     width: 48px;
     height: 48px;
     opacity: 0px;
@@ -112,5 +113,4 @@ export default createGlobalStyle`
   .base-round-button:hover{
     cursor: pointer;
   }
-
 `;
