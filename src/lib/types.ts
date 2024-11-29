@@ -1,15 +1,42 @@
 import { SetURLSearchParams } from 'react-router-dom';
 import { AppDispatch } from '../store';
 
-export interface IFormInput {
-  email: string;
-  password: string;
-  passwordRep: string;
+type Rating = {
+  id: number;
+  value: string;
+  book: BookType;
+};
+
+type Author = {
+  id: number;
+  text: string;
+};
+
+type BookGenre = { id: number };
+
+export type UserType = {
+  id?: number;
+  fullName?: string;
+  email?: string;
+  password?: string;
+  passwordNew?: string;
+  avatar?: string;
+  rating: Rating[];
+};
+
+export interface IUserResponseData {
+  access_token: string;
+  refresh_token: string;
+  user: UserType;
 }
 
 export interface IFormReg {
   email: string;
   password: string;
+}
+
+export interface IFormInput extends IFormReg {
+  passwordRep: string;
 }
 
 export interface IFormInfo {
@@ -22,36 +49,14 @@ export interface IFormPass {
   passwordNew: string;
   passwordRep: string;
 }
-type Rating = {
-  id: number;
-  value: string;
-  book: Book;
-};
 
-export type User = {
-  id?: number;
-  fullName?: string;
-  email?: string;
-  password?: string;
-  passwordNew?: string;
-  avatar?: string;
-  rating: Rating[];
-};
-
-export interface AuthState {
-  user: User | null;
+export interface IAuthState {
+  user: UserType | null;
   error: string | null;
   loading: boolean;
 }
 
-type author = {
-  id: number;
-  text: string;
-};
-
-type bookGenre = { id: number };
-
-export type coverType = {
+export type CoverType = {
   id: number;
   paperback_price: number;
   paperback_amount: number;
@@ -59,7 +64,7 @@ export type coverType = {
   hardcover_amount: number;
 };
 
-export type commentsType = {
+export type CommentsType = {
   id: number;
   text: string;
   dateOfCreate: Date;
@@ -70,7 +75,7 @@ export type commentsType = {
   };
 };
 
-export type Book = {
+export type BookType = {
   id: number;
   name: string;
   img: string;
@@ -78,31 +83,31 @@ export type Book = {
   quantity?: number;
   isBestseller?: boolean;
   isNew?: boolean;
-  author: author;
-  bookGenres?: [bookGenre];
-  comments?: [commentsType];
+  author: Author;
+  bookGenres?: BookGenre[];
+  comments?: CommentsType[];
   rates?: { rating: number };
-  cover: coverType;
+  cover: CoverType;
 };
 
-export interface PropsBookPageBody {
+export interface IPropsBookPageBody {
   id: number;
   img: string;
   name: string;
   author: string;
   description: string;
-  cover: coverType;
-  comments: commentsType[] | undefined;
+  cover: CoverType;
+  comments: CommentsType[] | undefined;
 }
 
-export interface PropsBookInCart {
+export interface IPropsBookInCart {
   id: number;
   price: number;
   quantity: number;
-  book: Book;
+  book: BookType;
 }
 
-export interface BookProps {
+export interface IBookProps {
   img: string;
   id: number | undefined;
   name: string;
@@ -112,20 +117,26 @@ export interface BookProps {
   isInFavorites: boolean;
 }
 
-export interface PropsFavorite {
+export interface IPropsFavorite {
   id: number;
-  book: Book;
+  book: BookType;
 }
 
-export interface BookState {
-  books: Book[] | null;
-  meta: {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    itemCount: number;
-    page: number;
-    pageCount: number;
-  } | null;
+type MetaType = {
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  itemCount: number;
+  page: number;
+  pageCount: number;
+};
+export interface IBook {
+  data: BookType[] | null;
+  meta: MetaType | null;
+}
+
+export interface IBookState {
+  books: BookType[] | null;
+  meta: MetaType | null;
   error: string | null;
   loading: boolean;
 }
@@ -135,7 +146,7 @@ export type GenresType = {
   name: string;
 };
 
-export interface FilterState {
+export interface IFilterState {
   page: number;
   genres: GenresType[];
   checkedGenresId: number[];
@@ -144,13 +155,13 @@ export interface FilterState {
   sortBy: string;
 }
 
-export interface commentsState {
-  comments: commentsType[];
+export interface ICommentsState {
+  comments: CommentsType[];
   loading: boolean;
   error: string | null;
 }
 
-export type InputProps = {
+export type InputPropsType = {
   img: string;
   label: string;
   typeP: string;
@@ -161,47 +172,55 @@ export type InputProps = {
   errors: any;
 };
 
-export type cartItemType = {
+export type CartItemType = {
   id: number;
   total_price: number;
   quantity: number;
-  book: Book;
+  book: BookType;
 };
 
-export type cartType = {
+export type CartType = {
   id: number;
   total_price: number;
-  cartItems: cartItemType[];
+  cartItems: CartItemType[];
 };
 
-export interface cartState {
-  cart: cartType | null;
-  normalizeCart: Record<number, cartItemType>;
+export interface ICartState {
+  cart: CartType | null;
+  normalizeCart: Record<number, CartItemType>;
   numberOfItemsInCart: number;
   loading: boolean;
   error: string | null;
 }
 
-export type favoriteItemType = {
+export type FavoriteItemType = {
   id: number;
-  book: Book;
+  book: BookType;
 };
 
-export type favoriteType = {
+export type FavoriteType = {
   id: number;
-  favoritesItems: favoriteItemType[];
+  favoritesItems: FavoriteItemType[];
 };
 
-export interface favoriteState {
-  favorites: favoriteType | null;
-  normalizeFavorites: Record<number, favoriteItemType>;
+export interface IFavoriteState {
+  favorites: FavoriteType | null;
+  normalizeFavorites: Record<number, FavoriteItemType>;
   loading: boolean;
   error: string | null;
 }
 
-export type addCommentThunkType = {
+export type AddCommentThunkType = {
   text: string;
   bookId: number;
+};
+
+export type QueryParamsType = {
+  pageNum?: string | null;
+  genres?: string | null;
+  minPrice?: string | null;
+  maxPrice?: string | null;
+  sortBy?: string | null;
 };
 
 export interface IQueryParams {

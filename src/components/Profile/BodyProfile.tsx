@@ -20,9 +20,9 @@ import {
   ERROR_UPDATE_USER_PASSWORD,
 } from '../../constants/errorConstants';
 import {
-  SaveFile,
-  UpdateUserData,
-  UpdateUserPassword,
+  saveFile,
+  updateUserData,
+  updateUserPassword,
 } from '../../api/userApi';
 
 const ProfileBody: React.FC = () => {
@@ -76,7 +76,7 @@ const ProfileBody: React.FC = () => {
       const formData = new FormData();
       formData.append('avatar', e.target.files[0]);
       try {
-        SaveFile(formData, dispatch);
+        saveFile(formData, dispatch);
       } catch (err) {
         console.error(ERROR_AVATAR_UPLOAD, err);
         return err;
@@ -89,7 +89,7 @@ const ProfileBody: React.FC = () => {
     email?: string;
   }) => {
     try {
-      UpdateUserData(data, dispatch);
+      updateUserData(data, dispatch);
       resetInfo();
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_DATA, err);
@@ -102,7 +102,7 @@ const ProfileBody: React.FC = () => {
     passwordRep: string;
   }) => {
     try {
-      UpdateUserPassword(data);
+      updateUserPassword(data);
       resetPass();
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_PASSWORD, err);

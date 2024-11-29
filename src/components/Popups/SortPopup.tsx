@@ -18,7 +18,6 @@ const SortPopup: React.FC = () => {
     'Date of issue',
   ];
   const handleSortOption = async (sortOption: string) => {
-    console.log(sortOption);
     setQueryParams({
       dispatch: dispatch,
       searchParams: searchParams,

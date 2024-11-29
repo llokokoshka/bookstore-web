@@ -1,17 +1,26 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { addCommentThunkType, IFormReg } from '../lib/types';
+import {
+  AddCommentThunkType,
+  IBook,
+  IFormReg,
+  IUserResponseData,
+  QueryParamsType,
+} from '../lib/types';
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath, AppPages } from '../constants/textConstants';
 
-export const loginUser = createAsyncThunk(
+export const loginUser = createAsyncThunk<IUserResponseData, IFormReg>(
   AppPages.login,
-  async ({ email, password }: IFormReg, thunkAPI) => {
+  async ({ email, password }, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(ApiPath.login, {
-        email,
-        password,
-      });
+      const response = await axiosInstance.post<IUserResponseData>(
+        ApiPath.login,
+        {
+          email,
+          password,
+        }
+      );
 
       const { access_token, refresh_token } = response.data;
 
@@ -25,14 +34,17 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const regUser = createAsyncThunk(
+export const regUser = createAsyncThunk<IUserResponseData, IFormReg>(
   AppPages.registration,
-  async ({ email, password }: IFormReg, thunkAPI) => {
+  async ({ email, password }, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(ApiPath.registration, {
-        email,
-        password,
-      });
+      const response = await axiosInstance.post<IUserResponseData>(
+        ApiPath.registration,
+        {
+          email,
+          password,
+        }
+      );
 
       const { access_token, refresh_token } = response.data;
 
@@ -47,14 +59,19 @@ export const regUser = createAsyncThunk(
   }
 );
 
-export const getUserApi = createAsyncThunk(AppPages.profile, async () => {
-  try {
-    const response = await axiosInstance.get(ApiPath.user.me);
-    return response.data;
-  } catch (err: any) {
-    return err.response.status;
+export const getUserApi = createAsyncThunk<IUserResponseData>(
+  AppPages.profile,
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get<IUserResponseData>(
+        ApiPath.user.me
+      );
+      return response.data;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
+    }
   }
-});
+);
 
 /**
  * export const getUserApi = createAsyncThunk<
@@ -71,15 +88,9 @@ export const getUserApi = createAsyncThunk(AppPages.profile, async () => {
 });
  */
 
-export const getBooks = createAsyncThunk(
+export const getBooks = createAsyncThunk<IBook, QueryParamsType>(
   `getBooks`,
-  async (data: {
-    pageNum?: string | null;
-    genres?: string | null;
-    minPrice?: string | null;
-    maxPrice?: string | null;
-    sortBy?: string | null;
-  }) => {
+  async (data, thunkAPI) => {
     try {
       const { pageNum, genres, minPrice, maxPrice, sortBy } = data;
       let strOfSearch;
@@ -105,14 +116,14 @@ export const getBooks = createAsyncThunk(
       const response = await axiosInstance.get(strOfSearch);
       return response.data;
     } catch (err: any) {
-      return err.response.status;
+      return thunkAPI.rejectWithValue(err);
     }
   }
 );
 
 export const addComment = createAsyncThunk(
   'comments/addComment',
-  async ({ text, bookId }: addCommentThunkType, thunkAPI) => {
+  async ({ text, bookId }: AddCommentThunkType, thunkAPI) => {
     try {
       const response = await axiosInstance.post(
         ApiPath.getBookCommentWithIdUrl(bookId),
@@ -248,7 +259,6 @@ export const addFavoriteItem = createAsyncThunk(
       const response = await axiosInstance.post(ApiPath.user.favorites.item, {
         bookId,
       });
-      console.log(response.data);
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);

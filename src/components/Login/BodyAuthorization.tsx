@@ -37,11 +37,11 @@ const AuthorizationBody: React.FC = () => {
     password: string;
   }) => {
     try {
-      console.log('Валидация прошла успешно!');
-      const user = await dispatch(
+      const responseData = await dispatch(
         loginUser({ email: data.email, password: data.password })
-      );
-      if (user.payload.user) {
+      ).unwrap();
+
+      if (responseData.user) {
         navigate(AppPages.profile);
       } else navigate(AppPages.login);
       reset();

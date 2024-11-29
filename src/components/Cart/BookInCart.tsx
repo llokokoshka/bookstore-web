@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PropsBookInCart } from '../../lib/types';
+import { IPropsBookInCart } from '../../lib/types';
 
 import plus from '../../img/plus.png';
 import minus from '../../img/minus.png';
@@ -13,7 +13,7 @@ import {
 } from '../../store/thunk';
 import { ApiPath } from '../../constants/textConstants';
 
-const BookInCart: React.FC<PropsBookInCart> = (props) => {
+const BookInCart: React.FC<IPropsBookInCart> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const { img, name, author } = props.book;
   const dispatch = useAppDispatch();

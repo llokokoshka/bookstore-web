@@ -20,7 +20,6 @@ const PricePopup: React.FC = () => {
     if (!Array.isArray(newValue)) {
       return;
     }
-    console.log('get new values: ', newValue);
     setValue(newValue);
     dispatch(setMinPrice(newValue[0]));
     dispatch(setMaxPrice(newValue[1]));

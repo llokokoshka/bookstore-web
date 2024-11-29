@@ -7,9 +7,9 @@ import {
   getCart,
   upAmountCartItem,
 } from './thunk';
-import { cartItemType, cartState } from '../lib/types';
+import { CartItemType, ICartState } from '../lib/types';
 
-const initialState: cartState = {
+const initialState: ICartState = {
   cart: null,
   normalizeCart: {},
   numberOfItemsInCart: 0,
@@ -31,7 +31,7 @@ const cartSlice = createSlice({
         state.loading = false;
         state.cart = action.payload;
         const booksInCart = state.cart?.cartItems.reduce<
-          Record<number, cartItemType>
+          Record<number, CartItemType>
         >((result, current) => {
           result[current.book.id] = current;
           return result;
@@ -51,7 +51,6 @@ const cartSlice = createSlice({
         if (state.normalizeCart !== null) {
           state.normalizeCart[action.payload.book.id] = action.payload;
         }
-        console.log(action.payload);
         state.numberOfItemsInCart += 1;
         state.cart?.cartItems.push(action.payload);
       })

@@ -83,13 +83,11 @@ const MainPageBody = () => {
 
     if (searchParams.get('minPrice')) {
       minPriceParam = searchParams.get('minPrice');
-      console.log('2');
       dispatch(setMinPrice(Number(minPriceParam)));
     }
 
     if (searchParams.get('maxPrice')) {
       maxPriceParam = searchParams.get('maxPrice');
-      console.log('here!!!');
       dispatch(setMaxPrice(Number(maxPriceParam)));
     }
 

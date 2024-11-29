@@ -4,7 +4,7 @@ import { axiosInstance } from '../axiosDefaul';
 import { setUser } from '../store/authSlice';
 import { ApiPath } from '../constants/textConstants';
 
-export async function SaveFile(
+export async function saveFile(
   formData: FormData,
   dispatch: Dispatch<UnknownAction>
 ) {
@@ -16,11 +16,10 @@ export async function SaveFile(
     },
   });
   const uploadedFile = response.data.data.filename;
-  console.log(uploadedFile);
   dispatch(setUser({ avatar: uploadedFile }));
 }
 
-export async function UpdateUserData(
+export async function updateUserData(
   data: {
     fullName?: string;
     email?: string;
@@ -31,7 +30,7 @@ export async function UpdateUserData(
     fullName: data?.fullName,
     email: data?.email,
   });
-  dispatch(
+  dispatch( ///убрать
     setUser({
       fullName: updUser.data?.fullName,
       email: updUser.data?.email,
@@ -39,7 +38,7 @@ export async function UpdateUserData(
   );
 }
 
-export async function UpdateUserPassword(data: {
+export async function updateUserPassword(data: {
   password: string;
   passwordNew: string;
   passwordRep: string;

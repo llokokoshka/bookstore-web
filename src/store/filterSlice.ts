@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { FilterState, GenresType } from '../lib/types';
+import { IFilterState, GenresType } from '../lib/types';
 
-const initialState: FilterState = {
+const initialState: IFilterState = {
   page: 1,
   genres: [],
   checkedGenresId: [],
@@ -34,7 +34,6 @@ const filterSlice = createSlice({
       state.minPrice = action.payload;
     },
     setMaxPrice(state, action: PayloadAction<number>) {
-      console.log('max price in store ', action.payload);
       state.maxPrice = action.payload;
     },
     setSortBy(state, action: PayloadAction<string>) {

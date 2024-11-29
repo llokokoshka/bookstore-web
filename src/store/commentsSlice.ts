@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { addComment, getComments } from './thunk';
-import { commentsState } from '../lib/types';
+import { ICommentsState } from '../lib/types';
 
-const initialState: commentsState = {
+const initialState: ICommentsState = {
   comments: [],
   error: null,
   loading: false,
@@ -22,13 +22,13 @@ const commentsSlice = createSlice({
       .addCase(getComments.fulfilled, (state, action) => {
         state.loading = false;
         state.comments = action.payload;
-        console.log(state.comments);
       })
       .addCase(getComments.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
       .addCase(addComment.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.comments.push(action.payload);
       });
   },

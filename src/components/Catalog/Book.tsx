@@ -10,11 +10,11 @@ import {
 } from '../../store/thunk';
 import heart from '../../img/Heart.png';
 import fullHeart from '../../img/fullHeart.png';
-import { BookProps } from '../../lib/types';
+import { IBookProps } from '../../lib/types';
 import Rating from '../Book Page/Rating';
 import { ApiPath } from '../../constants/textConstants';
 
-const Book: React.FC<BookProps> = (props) => {
+const Book: React.FC<IBookProps> = (props) => {
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const booksInFavorites = useAppSelector(
     (state) => state.favorite.normalizeFavorites
@@ -37,7 +37,6 @@ const Book: React.FC<BookProps> = (props) => {
       const bookInFav = Favorites?.favoritesItems.find(
         (item) => item.book.id === props.id
       );
-      console.log(bookInFav);
       if (bookInFav) await dispatch(deleteFavoriteItem(bookInFav?.id));
     }
   };

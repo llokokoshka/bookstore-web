@@ -37,10 +37,10 @@ const RegistrationBody: React.FC = () => {
     password: string;
   }) => {
     try {
-      const user = await dispatch(
+      const responseData = await dispatch(
         regUser({ email: data.email, password: data.password })
-      );
-      if (user.payload) {
+      ).unwrap();
+      if (responseData.user) {
         navigate(AppPages.profile);
       }
       reset();

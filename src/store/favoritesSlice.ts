@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { addFavoriteItem, deleteFavoriteItem, getFavorite } from './thunk';
-import { favoriteItemType, favoriteState } from '../lib/types';
+import { FavoriteItemType, IFavoriteState } from '../lib/types';
 
-const initialState: favoriteState = {
+const initialState: IFavoriteState = {
   favorites: null,
   normalizeFavorites: {},
   error: null,
@@ -24,7 +24,7 @@ const favoritesSlice = createSlice({
         state.loading = false;
         state.favorites = action.payload;
         const booksInCart = state.favorites?.favoritesItems.reduce<
-          Record<number, favoriteItemType>
+          Record<number, FavoriteItemType>
         >((result, current) => {
           result[current.book.id] = current;
           return result;
@@ -72,7 +72,7 @@ const favoritesSlice = createSlice({
             delete state.normalizeFavorites[idFavorite];
           }
         } else {
-          console.error('Item not found in cart:', action.payload);
+          console.error('Item not found in favorite:', action.payload);
         }
       })
       .addCase(deleteFavoriteItem.rejected, (state, action) => {

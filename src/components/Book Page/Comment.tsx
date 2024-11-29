@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { commentsType } from '../../lib/types';
+import { CommentsType } from '../../lib/types';
 import { ApiPath } from '../../constants/textConstants';
 
-const Comment: React.FC<commentsType> = (props) => {
+const Comment: React.FC<CommentsType> = (props) => {
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
   return (
     <StyledWrapper>

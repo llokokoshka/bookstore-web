@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { BookState } from '../lib/types';
+import { IBookState } from '../lib/types';
 import { addOrUpdateRating, getBookRating, getBooks } from './thunk';
 
-const initialState: BookState = {
+const initialState: IBookState = {
   books: null,
   meta: {
     hasNextPage: false,
