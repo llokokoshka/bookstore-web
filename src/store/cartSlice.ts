@@ -127,7 +127,9 @@ const cartSlice = createSlice({
             return item.id !== action.payload;
           });
           state.cart.total_price -= sum;
-          state.numberOfItemsInCart -= colOfItemsInCart;
+          if (state.numberOfItemsInCart > 0) {
+            state.numberOfItemsInCart -= colOfItemsInCart;
+          }
           if (state.normalizeCart && state.normalizeCart[idBook]) {
             delete state.normalizeCart[idBook];
           }

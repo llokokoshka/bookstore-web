@@ -66,7 +66,7 @@ const Book: React.FC<IBookProps> = (props) => {
         <div className="base-text">{props.author}</div>
         <div></div>
       </Link>
-      {props.id ? <Rating bookId={props?.id} isUserRAte={false} /> : null}
+      {props.id ? <Rating bookId={props.id} isUserRAte={false} /> : null}
 
       {props.isInCart ? (
         <button className="cart-button">Item in cart</button>

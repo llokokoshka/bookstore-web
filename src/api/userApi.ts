@@ -1,13 +1,7 @@
-import { Dispatch, UnknownAction } from '@reduxjs/toolkit';
-
 import { axiosInstance } from '../axiosDefaul';
-import { setUser } from '../store/authSlice';
 import { ApiPath } from '../constants/textConstants';
 
-export async function saveFile(
-  formData: FormData,
-  dispatch: Dispatch<UnknownAction>
-) {
+export async function saveFile(formData: FormData) {
   const response = await axiosInstance.post(ApiPath.files, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -16,26 +10,18 @@ export async function saveFile(
     },
   });
   const uploadedFile = response.data.data.filename;
-  dispatch(setUser({ avatar: uploadedFile }));
+  return uploadedFile;
 }
 
-export async function updateUserData(
-  data: {
-    fullName?: string;
-    email?: string;
-  },
-  dispatch: Dispatch<UnknownAction>
-) {
+export async function updateUserData(data: {
+  fullName?: string;
+  email?: string;
+}) {
   const updUser = await axiosInstance.patch(ApiPath.user.me, {
     fullName: data?.fullName,
     email: data?.email,
   });
-  dispatch( ///убрать
-    setUser({
-      fullName: updUser.data?.fullName,
-      email: updUser.data?.email,
-    })
-  );
+  return updUser;
 }
 
 export async function updateUserPassword(data: {

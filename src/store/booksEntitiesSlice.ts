@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { BookType, IBookState } from '../lib/types';
-import { addComment, addOrUpdateRating } from './thunk';
+import { addComment, addOrUpdateRating, getBookRating } from './thunk';
 
 const initialState: IBookState = {
   books: null,
@@ -23,29 +23,76 @@ const bookEntititesSlice = createSlice({
             ...state.books[exBookIndex],
             ...newBook,
           };
+        } else if (state.books) {
+          state.books.push(newBook);
         } else {
-          state.books?.push(newBook);
+          state.books = [newBook];
         }
       });
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addOrUpdateRating.fulfilled, (state, action) => {
+      .addCase(addComment.fulfilled, (state, action) => {
         if (state.books) {
-          const updatedBooks = state.books.map((book) => {
-            if (book.id === action.payload.bookId) {
-              return { ...book, rates: { rating: action.payload.rating } };
-            }
-            return book;
-          });
-          state.books = updatedBooks;
+          const indexOfBook = state.books.findIndex(
+            (book) => book.id === action.payload.bookId
+          );
+          if (
+            indexOfBook !== -1 &&
+            indexOfBook &&
+            state.books[indexOfBook].comments !== undefined
+          ) {
+            state.books[indexOfBook].comments = {
+              ...state.books[indexOfBook].comments,
+              ...action.payload,
+            };
+          } else if (indexOfBook !== -1 && indexOfBook) {
+            state.books[indexOfBook].comments = [action.payload];
+          }
         }
       })
-      .addCase(addComment.fulfilled, (state, action) => {
-        console.log('need done that !!!', action.payload);
-        // state.books;
-        // state.books?.comments.push(action.payload);
+      .addCase(addOrUpdateRating.fulfilled, (state, action) => {
+        if (state.books) {
+          const indexOfBook = state.books.findIndex(
+            (book) => book.id === action.payload.bookId
+          );
+          if (
+            indexOfBook !== -1 &&
+            indexOfBook &&
+            state.books[indexOfBook].rates &&
+            state.books[indexOfBook].rates !== undefined
+          ) {
+            state.books[indexOfBook].rates = {
+              ...state.books[indexOfBook].rates,
+              ...action.payload.rating,
+            };
+            state.books[indexOfBook].totalRate = action.payload.avarageRating;
+          } else if (indexOfBook !== -1 && indexOfBook) {
+            state.books[indexOfBook].rates = action.payload.rating;
+            state.books[indexOfBook].totalRate = action.payload.avarageRating;
+          }
+        }
+      })
+      .addCase(getBookRating.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getBookRating.fulfilled, (state, action) => {
+        state.loading = false;
+        if (state.books !== null) {
+          const indexOfBook = state.books.findIndex(
+            (book) => book.id === action.payload.bookId
+          );
+          if (indexOfBook && indexOfBook === action.payload.bookId) {
+            state.books[indexOfBook].totalRate = action.payload.rate;
+            console.log(state.books[indexOfBook].totalRate);
+          }
+        }
+      })
+      .addCase(getBookRating.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });

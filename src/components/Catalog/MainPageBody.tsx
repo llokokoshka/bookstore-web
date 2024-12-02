@@ -13,7 +13,12 @@ import leftArr from '../../img/left arrow.png';
 import emtyRow from '../../img/Ellipse.png';
 import fullRow from '../../img/Ellipse full.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getBooks, getCart, getFavorite } from '../../store/thunk';
+import {
+  getCatalog,
+  getCart,
+  getFavorite,
+  getBookRating,
+} from '../../store/thunk';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
 import {
   setCheckedGenres,
@@ -27,6 +32,7 @@ import { setQueryParams } from '../../api/urlApi';
 const MainPageBody = () => {
   const dispatch = useAppDispatch();
   const books = useAppSelector((state) => state.booksEntities.books);
+  const catalog = useAppSelector((state) => state.catalog.books);
   const user = useAppSelector((state) => state.auth.user);
   const booksInCart = useAppSelector((state) => state.cart.normalizeCart);
   const booksInFavorites = useAppSelector(
@@ -43,23 +49,6 @@ const MainPageBody = () => {
     (state) => state.catalog.meta?.hasPreviousPage
   );
   const colPages = useAppSelector((state) => state.catalog.meta?.pageCount);
-
-  useEffect(() => {
-    if (user && Object.keys(booksInCart).length === 0) {
-      try {
-        dispatch(getCart());
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    if (user && Object.keys(booksInFavorites).length === 0) {
-      try {
-        dispatch(getFavorite());
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  }, [user, dispatch]);
 
   useEffect(() => {
     setSearchParams({
@@ -101,8 +90,8 @@ const MainPageBody = () => {
     const getBooksFromServer = async () => {
       if (books === null) {
         try {
-          await dispatch(
-            getBooks({
+          const a = await dispatch(
+            getCatalog({
               pageNum: pageNumber,
               genres: genres.toString() || null,
               minPrice: minPriceParam,
@@ -117,6 +106,22 @@ const MainPageBody = () => {
     };
     getBooksFromServer();
   }, [dispatch, page, searchParams]);
+  useEffect(() => {
+    if (user && Object.keys(booksInCart).length === 0) {
+      try {
+        dispatch(getCart());
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (user && Object.keys(booksInFavorites).length === 0) {
+      try {
+        dispatch(getFavorite());
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }, [user, dispatch]);
 
   const handlePagePrev = () => {
     if (hasPrevPage && page) {
@@ -147,30 +152,36 @@ const MainPageBody = () => {
       <Poster />
       <SortMenu />
       <div className="books-wrapp">
-        {books?.map((book) => {
+        {catalog?.map((id) => {
           let inCart = false;
           let inFavorites = false;
-          if (booksInCart && booksInCart[book.id]) {
+          if (booksInCart && booksInCart[id]) {
             inCart = true;
           }
-          if (booksInFavorites && booksInFavorites[book.id]) {
+          if (booksInFavorites && booksInFavorites[id]) {
             inFavorites = true;
           }
+          const currentBook = books?.find((book) => book.id === id);
           return (
-            <Book
-              key={book.id}
-              id={book.id}
-              img={book.img}
-              name={book.name}
-              author={book.author.text}
-              price={
-                book.cover?.hardcover_amount && book.cover?.hardcover_amount > 0
-                  ? book.cover?.hardcover_price
-                  : book.cover?.paperback_price
-              }
-              isInCart={inCart}
-              isInFavorites={inFavorites}
-            />
+            <>
+              {currentBook ? (
+                <Book
+                  key={currentBook.id}
+                  id={currentBook.id}
+                  img={currentBook.img}
+                  name={currentBook.name}
+                  author={currentBook.author.text}
+                  price={
+                    currentBook.cover?.hardcover_amount &&
+                    currentBook.cover?.hardcover_amount > 0
+                      ? currentBook.cover?.hardcover_price
+                      : currentBook.cover?.paperback_price
+                  }
+                  isInCart={inCart}
+                  isInFavorites={inFavorites}
+                />
+              ) : null}
+            </>
           );
         })}
       </div>

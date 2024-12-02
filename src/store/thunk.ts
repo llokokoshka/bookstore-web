@@ -3,11 +3,19 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AddCommentThunkType,
   CommentsType,
+  RatingThunkType,
   IBook,
   ICatalog,
   IFormReg,
   IUserResponseData,
   QueryParamsType,
+  RatingResThunkType,
+  IUserRating,
+  CartType,
+  CartItemType,
+  FavoriteType,
+  FavoriteItemType,
+  IUserRatingWithTotalRate,
 } from '../lib/types';
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath, AppPages } from '../constants/textConstants';
@@ -76,36 +84,13 @@ export const getUserApi = createAsyncThunk<IUserResponseData>(
   }
 );
 
-export const getBooks = createAsyncThunk<IBook, QueryParamsType>(
-  `getBooks`,
-  async (data, thunkAPI) => {
-    try {
-      const { pageNum, genres, minPrice, maxPrice, sortBy } = data;
-      let strOfSearch;
-      if (pageNum === undefined || pageNum === null) {
-        strOfSearch = `/books/?page=1&take=12`;
-      } else {
-        strOfSearch = `/books/?page=${pageNum}&take=12`;
-      }
-
-      if (genres) {
-        strOfSearch += `&genres=${genres}`;
-      }
-      if (minPrice) {
-        strOfSearch += `&minPrice=${minPrice}`;
-      }
-      if (maxPrice) {
-        strOfSearch += `&maxPrice=${maxPrice}`;
-      }
-      if (sortBy) {
-        strOfSearch += `&sortBy=${sortBy}`;
-      }
-
-      const response = await axiosInstance.get(strOfSearch);
-      return response.data;
-    } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
-    }
+export const getBookRating = createAsyncThunk<RatingThunkType, number>(
+  'books/fetchBookRating',
+  async (bookId) => {
+    const response = await axiosInstance.get<RatingThunkType>(
+      ApiPath.getBookRatingWithIdUrl(bookId)
+    );
+    return response.data;
   }
 );
 
@@ -137,16 +122,15 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
 
       const response = await axiosInstance.get<IBook>(strOfSearch);
       const arrayWithBooks = response.data.data;
-
-      const newArrWithBookIds = arrayWithBooks
-        ? arrayWithBooks.map((book) => {
-            return book.id;
-          })
-        : null;
-
       if (arrayWithBooks) {
         thunkAPI.dispatch(addOrUpdBook(arrayWithBooks));
       }
+      const newArrWithBookIds = arrayWithBooks
+        ? arrayWithBooks.map((book) => {
+            getBookRating(book.id);
+            return book.id;
+          })
+        : null;
 
       const newDataForCatalog: ICatalog = {
         data: newArrWithBookIds,
@@ -160,11 +144,11 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
   }
 );
 
-export const addComment = createAsyncThunk<CommentsType[], AddCommentThunkType>(
+export const addComment = createAsyncThunk<CommentsType, AddCommentThunkType>(
   'comments/addComment',
   async ({ text, bookId }, thunkAPI) => {
     try {
-      const response = await axiosInstance.post<CommentsType[]>(
+      const response = await axiosInstance.post<CommentsType>(
         ApiPath.getBookCommentWithIdUrl(bookId),
         {
           text,
@@ -191,42 +175,52 @@ export const getComments = createAsyncThunk<CommentsType[], number>(
   }
 );
 
-export const getBookRating = createAsyncThunk<
-  {
-    bookId: number;
-    rating: number;
-  },
-  number
->('books/fetchBookRating', async (bookId) => {
-  const response = await axiosInstance.get(
+export const addOrUpdateRating = createAsyncThunk<
+  { bookId: number; rating: IUserRating; avarageRating: number },
+  RatingThunkType
+>('books/addOrUpdateRating', async ({ bookId, rate }) => {
+  const rating = await axiosInstance.post<RatingResThunkType>(
+    ApiPath.getBookRatingWithIdUrl(bookId),
+    { rate }
+  );
+  const response = await axiosInstance.get<RatingThunkType>(
     ApiPath.getBookRatingWithIdUrl(bookId)
   );
-  return { bookId, rating: response.data };
+
+  return {
+    bookId,
+    rating: rating.data.rating,
+    avarageRating: response.data.rate,
+  };
 });
 
-export const addOrUpdateRating = createAsyncThunk(
-  'books/addOrUpdateRating',
-  async ({ bookId, value }: { bookId: number; value: number }) => {
-    await axiosInstance.post(ApiPath.getBookRatingWithIdUrl(bookId), { value });
-    const response = await axiosInstance.get(
-      ApiPath.getBookRatingWithIdUrl(bookId)
+export const getCart = createAsyncThunk<CartType>(
+  'cart/getCart',
+  async (_, thunkAPI) => {
+    const response = await axiosInstance.get<CartType>(
+      ApiPath.user.cart.allItems
     );
-    return { bookId, rating: response.data };
+    const booksInCart = response.data.cartItems.map((item) => {
+      return item.book;
+    });
+
+    thunkAPI.dispatch(addOrUpdBook(booksInCart));
+    return response.data;
   }
 );
 
-export const getCart = createAsyncThunk('cart/getCart', async () => {
-  const response = await axiosInstance.get(ApiPath.user.cart.allItems);
-  return response.data;
-});
-
-export const addCartItem = createAsyncThunk(
+export const addCartItem = createAsyncThunk<CartItemType, number>(
   'cart/addItemInCart',
-  async (bookId: number, thunkAPI) => {
+  async (bookId, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(ApiPath.user.cart.item, {
-        bookId,
-      });
+      const response = await axiosInstance.post<CartItemType>(
+        ApiPath.user.cart.item,
+        {
+          bookId,
+        }
+      );
+
+      thunkAPI.dispatch(addOrUpdBook([response.data.book]));
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
@@ -284,23 +278,32 @@ export const deleteCartItem = createAsyncThunk(
   }
 );
 
-export const getFavorite = createAsyncThunk(
+export const getFavorite = createAsyncThunk<FavoriteType>(
   'favorite/getFavorite',
-  async () => {
-    const response = await axiosInstance.get(
+  async (_, thunkAPI) => {
+    const response = await axiosInstance.get<FavoriteType>(
       ApiPath.user.favorites.allFavorites
     );
+    const booksInFav = response.data.favoritesItems.map((item) => {
+      return item.book;
+    });
+
+    thunkAPI.dispatch(addOrUpdBook(booksInFav));
     return response.data;
   }
 );
 
-export const addFavoriteItem = createAsyncThunk(
+export const addFavoriteItem = createAsyncThunk<FavoriteItemType, number>(
   'favorite/addItemInFavorite',
-  async (bookId: number, thunkAPI) => {
+  async (bookId, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(ApiPath.user.favorites.item, {
-        bookId,
-      });
+      const response = await axiosInstance.post<FavoriteItemType>(
+        ApiPath.user.favorites.item,
+        {
+          bookId,
+        }
+      );
+      thunkAPI.dispatch(addOrUpdBook([response.data.book]));
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);

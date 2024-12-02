@@ -25,7 +25,6 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
           })
         );
         setInputValue('');
-        console.log(response);
         return response;
       } catch (err) {
         console.error(err);

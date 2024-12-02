@@ -1,4 +1,4 @@
-import { getBooks } from '../store/thunk';
+import { getCatalog } from '../store/thunk';
 import { IQueryParams } from '../lib/types';
 
 export const setQueryParams = async (props: IQueryParams) => {
@@ -35,7 +35,7 @@ export const setQueryParams = async (props: IQueryParams) => {
 
   props.setSearchParams(updatedParams);
   props.dispatch(
-    getBooks({
+    getCatalog({
       pageNum: updatedParams?.page || pageNum || '1',
       genres: props.genres?.join(',').toString() || null,
       minPrice: updatedParams?.minPrice || minPrice || null,

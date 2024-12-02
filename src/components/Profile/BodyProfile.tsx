@@ -24,6 +24,7 @@ import {
   updateUserData,
   updateUserPassword,
 } from '../../api/userApi';
+import { setUser } from '../../store/authSlice';
 
 const ProfileBody: React.FC = () => {
   const dispatch = useDispatch();
@@ -76,7 +77,8 @@ const ProfileBody: React.FC = () => {
       const formData = new FormData();
       formData.append('avatar', e.target.files[0]);
       try {
-        saveFile(formData, dispatch);
+        const data = await saveFile(formData);
+        dispatch(setUser({ avatar: data }));
       } catch (err) {
         console.error(ERROR_AVATAR_UPLOAD, err);
         return err;
@@ -89,7 +91,13 @@ const ProfileBody: React.FC = () => {
     email?: string;
   }) => {
     try {
-      updateUserData(data, dispatch);
+      const updUser = await updateUserData(data);
+      dispatch(
+        setUser({
+          fullName: updUser.data?.fullName,
+          email: updUser.data?.email,
+        })
+      );
       resetInfo();
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_DATA, err);

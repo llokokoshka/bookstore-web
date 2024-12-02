@@ -1,11 +1,18 @@
 import { SetURLSearchParams } from 'react-router-dom';
 import { AppDispatch } from '../store';
 
-type Rating = {
+export interface IUserRating {
   id: number;
-  value: string;
+  value: number;
+}
+
+export interface IUserRatingWithTotalRate extends IUserRating {
+  avarageRating: number;
+}
+
+interface RatingBook extends IUserRating {
   book: BookType;
-};
+}
 
 type Author = {
   id: number;
@@ -21,7 +28,7 @@ export type UserType = {
   password?: string;
   passwordNew?: string;
   avatar?: string;
-  rating: Rating[];
+  rating: RatingBook[];
 };
 
 export interface IUserResponseData {
@@ -71,8 +78,10 @@ export type CommentsType = {
   user: {
     id: number;
     fullName: string;
+    email?: string;
     avatar: string;
   };
+  bookId?: number;
 };
 
 export type BookType = {
@@ -84,9 +93,10 @@ export type BookType = {
   isBestseller?: boolean;
   isNew?: boolean;
   author: Author;
-  bookGenres?: BookGenre[];
-  comments?: CommentsType[];
-  rates?: { rating: number };
+  bookGenres: BookGenre[] | [];
+  comments: CommentsType[] | [];
+  rates: IUserRating | null;
+  totalRate: number | null;
   cover: CoverType;
 };
 
@@ -147,8 +157,6 @@ export interface IBookState {
 
 export interface IBookItemState {
   book: BookType | null;
-  comments?: CommentsType[];
-  rates?: { rating: number };
   error: string | null;
   loading: boolean;
 }
@@ -232,6 +240,16 @@ export interface IFavoriteState {
 export type AddCommentThunkType = {
   text: string;
   bookId: number;
+};
+
+export type RatingThunkType = {
+  bookId: number;
+  rate: number;
+};
+
+export type RatingResThunkType = {
+  bookId: number;
+  rating: IUserRating;
 };
 
 export type QueryParamsType = {
