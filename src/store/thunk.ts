@@ -124,12 +124,28 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
       const arrayWithBooks = response.data.data;
       if (arrayWithBooks) {
         thunkAPI.dispatch(addOrUpdBook(arrayWithBooks));
+
+        const ratings = await Promise.all(
+          arrayWithBooks.map((book) =>
+            axiosInstance
+              .get<RatingThunkType>(ApiPath.getBookRatingWithIdUrl(book.id))
+              .then((res) => ({
+                bookId: book.id,
+                rate: res.data.rate,
+              }))
+          )
+        );
+        const booksWithRatings = arrayWithBooks.map((book) => {
+          const rating = ratings.find((r) => r.bookId === book.id)?.rate || 0;
+          return { ...book, totalRate: rating };
+        });
+        thunkAPI.dispatch(addOrUpdBook(booksWithRatings));
       }
+
       const newArrWithBookIds = arrayWithBooks
         ? arrayWithBooks.map((book) => {
-            getBookRating(book.id);
-            return book.id;
-          })
+          return book.id;
+        })
         : null;
 
       const newDataForCatalog: ICatalog = {
