@@ -13,12 +13,7 @@ import leftArr from '../../img/left arrow.png';
 import emtyRow from '../../img/Ellipse.png';
 import fullRow from '../../img/Ellipse full.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  getCatalog,
-  getCart,
-  getFavorite,
-  getBookRating,
-} from '../../store/thunk';
+import { getCatalog, getCart, getFavorite } from '../../store/thunk';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
 import {
   setCheckedGenres,
@@ -88,7 +83,7 @@ const MainPageBody = () => {
     }
 
     const getBooksFromServer = async () => {
-      if (books === null) {
+      if (books === null || catalog === null) {
         try {
           const a = await dispatch(
             getCatalog({
@@ -106,6 +101,7 @@ const MainPageBody = () => {
     };
     getBooksFromServer();
   }, [dispatch, page, searchParams]);
+
   useEffect(() => {
     if (user && Object.keys(booksInCart).length === 0) {
       try {

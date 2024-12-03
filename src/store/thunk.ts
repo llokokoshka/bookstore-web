@@ -16,6 +16,7 @@ import {
   FavoriteType,
   FavoriteItemType,
   IUserRatingWithTotalRate,
+  BookType,
 } from '../lib/types';
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath, AppPages } from '../constants/textConstants';
@@ -94,6 +95,22 @@ export const getBookRating = createAsyncThunk<RatingThunkType, number>(
   }
 );
 
+export const getBookById = createAsyncThunk<BookType, number>(
+  'books/getBook',
+  async (bookId, thunkAPI) => {
+    try {
+      let response = await axiosInstance.get<{
+        book: BookType;
+        totalRate: number;
+      }>(ApiPath.getBookByIdWithIdUrl(bookId));
+      response.data.book.totalRate = response.data.totalRate;
+      return response.data.book;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
   `getCatalog`,
   async (data, thunkAPI) => {
@@ -144,8 +161,8 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
 
       const newArrWithBookIds = arrayWithBooks
         ? arrayWithBooks.map((book) => {
-          return book.id;
-        })
+            return book.id;
+          })
         : null;
 
       const newDataForCatalog: ICatalog = {

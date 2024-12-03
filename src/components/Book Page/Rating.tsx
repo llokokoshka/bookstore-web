@@ -20,9 +20,9 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
 
   const bookRating = book?.totalRate;
 
-  // if (bookRating) {
-  //   fullStars = Math.round(bookRating);
-  // }
+  if (bookRating) {
+    fullStars = Math.round(bookRating);
+  }
   const userRates = useAppSelector((state) => state.auth.user?.rating);
 
   const isUserRateThisBook = userRates?.find(
@@ -50,7 +50,7 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
         {isUserRAte ? (
           <>
             <img src={fullStar} alt="star"></img>
-            {/* <h3> {bookRating || 'Not Rated'}</h3> */}
+            <h3> {bookRating || 'Not Rated'}</h3>
           </>
         ) : null}
         <div className="rating">
@@ -78,7 +78,7 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
                   )}
                 </div>
               ))}
-              {/* <h3> {bookRating || 'Not Rated'}</h3> */}
+              <h3> {bookRating || 'Not Rated'}</h3>
             </>
           )}
         </div>

@@ -1,22 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 
 import Header from '../Header/Header';
 import BookPageBody from './BodyBookPage';
 import Footer from '../Footer';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getBookById } from '../../store/thunk';
 
 const BookPage: React.FC = () => {
+  const dispatch = useAppDispatch();
   let { id } = useParams();
   const bookId = Number(id);
   const getBooks = useAppSelector((state) => state.booksEntities.books);
-  const book = getBooks?.find((book) => book.id === bookId);
 
+  useEffect(() => {
+    if (!getBooks) {
+      dispatch(getBookById(bookId));
+    }
+  }, [bookId, dispatch]);
+
+  const book = getBooks?.find((book) => book.id === bookId);
   return (
     <StyledWrapper>
       <Header />
-      {book ? (
+      {book && getBooks ? (
         <BookPageBody
           key={bookId}
           id={bookId}

@@ -1,7 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { BookType, IBookState } from '../lib/types';
-import { addComment, addOrUpdateRating, getBookRating } from './thunk';
+import {
+  addComment,
+  addOrUpdateRating,
+  getBookById,
+  getBookRating,
+} from './thunk';
 
 const initialState: IBookState = {
   books: null,
@@ -84,13 +89,27 @@ const bookEntititesSlice = createSlice({
           const indexOfBook = state.books.findIndex(
             (book) => book.id === action.payload.bookId
           );
-          if (indexOfBook && indexOfBook === action.payload.bookId) {
+          if (
+            (indexOfBook === 0 || indexOfBook) &&
+            indexOfBook === action.payload.bookId
+          ) {
             state.books[indexOfBook].totalRate = action.payload.rate;
-            console.log(state.books[indexOfBook].totalRate);
           }
         }
       })
       .addCase(getBookRating.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(getBookById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getBookById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.books = [action.payload];
+      })
+      .addCase(getBookById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

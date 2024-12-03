@@ -50,4 +50,8 @@ export const ApiPath = {
   getBookRatingWithIdUrl(id: string | number) {
     return this.bookRating.replace(':bookId', `${id}`);
   },
+  getBook: `books/:bookId`,
+  getBookByIdWithIdUrl(id: string | number) {
+    return this.getBook.replace(':bookId', `${id}`);
+  },
 } as const;
