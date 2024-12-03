@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from 'react';
 
 import { useAppDispatch } from '../hooks';
-import { getUserApi } from '../store/thunk';
+import { getUser } from '../store/thunk';
 import { ERROR_GET_USER_DATA } from '../constants/errorConstants';
 
 const CheckUserAuth: React.FC<PropsWithChildren> = (props) => {
@@ -16,7 +16,7 @@ const CheckUserAuth: React.FC<PropsWithChildren> = (props) => {
         setIsInit(true);
       }
       try {
-        await dispatch(getUserApi()).unwrap();
+        await dispatch(getUser()).unwrap();
       } catch (error) {
         console.error(ERROR_GET_USER_DATA, error);
       } finally {

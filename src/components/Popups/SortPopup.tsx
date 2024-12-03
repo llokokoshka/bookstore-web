@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setSortBy } from '../../store/filterSlice';
 import { useSearchParams } from 'react-router-dom';
-import { setQueryParams } from '../../api/urlApi';
+import { setQueryParams } from '../../utils/urlUtil';
 
 const SortPopup: React.FC = () => {
   const dispatch = useAppDispatch();

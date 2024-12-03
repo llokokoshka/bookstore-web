@@ -22,7 +22,7 @@ import {
   setPage,
   setSortBy,
 } from '../../store/filterSlice';
-import { setQueryParams } from '../../api/urlApi';
+import { setQueryParams } from '../../utils/urlUtil';
 
 const MainPageBody = () => {
   const dispatch = useAppDispatch();
@@ -85,7 +85,7 @@ const MainPageBody = () => {
     const getBooksFromServer = async () => {
       if (books === null || catalog === null) {
         try {
-          const a = await dispatch(
+          await dispatch(
             getCatalog({
               pageNum: pageNumber,
               genres: genres.toString() || null,

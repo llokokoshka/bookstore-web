@@ -5,7 +5,7 @@ import ReactSlider from 'react-slider';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setMaxPrice, setMinPrice } from '../../store/filterSlice';
-import { setQueryParams } from '../../api/urlApi';
+import { setQueryParams } from '../../utils/urlUtil';
 import poligon from '../../img/Polygon 4.png';
 
 const PricePopup: React.FC = () => {

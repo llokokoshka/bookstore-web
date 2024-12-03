@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { GenresType } from '../../lib/types';
 import { deleteCheckedGenres, setCheckedGenres } from '../../store/filterSlice';
-import { setQueryParams } from '../../api/urlApi';
+import { setQueryParams } from '../../utils/urlUtil';
 
 const GenresPopup: React.FC = () => {
   const dispatch = useAppDispatch();
