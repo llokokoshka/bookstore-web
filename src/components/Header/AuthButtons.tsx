@@ -13,8 +13,8 @@ const AuthButtons: React.FC = () => {
   return (
     <StyledWrapper>
       <div className="cart-button">
+        <div className="cart-button_item">{itemsInCArt}</div>
         <RoundButtons url={AppPages.cart} img={cart} />
-        <div>{itemsInCArt}</div>
       </div>
       <RoundButtons url={AppPages.favorite} img={like} />
       <RoundButtons url={AppPages.profile} img={profile} />
@@ -30,5 +30,28 @@ const StyledWrapper = styled.div`
   column-gap: 27px;
 
   .cart-button {
+    position: relative;
+  }
+
+  .cart-button_item {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${({ theme }) => theme.colors.green};
+    width: 23px;
+    height: 23px;
+    top: -6px;
+    left: 33px;
+    gap: 0px;
+    opacity: 0px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: ${({ theme }) => theme.colors.dark_blue};
   }
 `;

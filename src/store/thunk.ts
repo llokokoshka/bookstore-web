@@ -14,6 +14,8 @@ import {
   FavoriteType,
   FavoriteItemType,
   BookType,
+  CartNormalizeType,
+  CartItemNormalizeType,
 } from '../lib/types';
 import { AppPages } from '../constants/textConstants';
 import { addOrUpdBook } from './booksEntitiesSlice';
@@ -206,7 +208,7 @@ export const addOrUpdateRating = createAsyncThunk<
   };
 });
 
-export const getCart = createAsyncThunk<CartType>(
+export const getCart = createAsyncThunk<CartNormalizeType>(
   'cart/getCart',
   async (_, thunkAPI) => {
     const data = await getCartApi();
@@ -214,51 +216,73 @@ export const getCart = createAsyncThunk<CartType>(
     const booksInCart = data.cartItems.map((item) => {
       return item.book;
     });
-
     thunkAPI.dispatch(addOrUpdBook(booksInCart));
-    return data;
+    const arrayWithCartItems = data.cartItems;
+    const newArrWithBookIds = arrayWithCartItems
+      ? arrayWithCartItems.map((item) => {
+          const bookId = item.book.id;
+          return { ...item, book: bookId };
+        })
+      : null;
+    const newData = {
+      ...data,
+      cartItems: newArrWithBookIds ? newArrWithBookIds : [],
+    };
+    return newData;
   }
 );
 
-export const addCartItem = createAsyncThunk<CartItemType, number>(
+export const addCartItem = createAsyncThunk<CartItemNormalizeType, number>(
   'cart/addItemInCart',
   async (bookId, thunkAPI) => {
     try {
       const data = await addCartItemApi(bookId);
 
       thunkAPI.dispatch(addOrUpdBook([data.book]));
-      return data;
+      const newData = {
+        ...data,
+        book: data.book.id,
+      };
+      return newData;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
     }
   }
 );
 
-export const upAmountCartItem = createAsyncThunk(
+export const upAmountCartItem = createAsyncThunk<CartItemNormalizeType, number>(
   'cart/upAmountCartItem',
-  async (ItemId: number, thunkAPI) => {
+  async (ItemId, thunkAPI) => {
     try {
       const action = true;
       const data = await changeAmountItemInCartApi(ItemId, action);
-      return data;
+      const newData = {
+        ...data,
+        book: data.book.id,
+      };
+      return newData;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
     }
   }
 );
 
-export const downAmountCartItem = createAsyncThunk(
-  'cart/downAmountCartItem',
-  async (ItemId: number, thunkAPI) => {
-    try {
-      const action = false;
-      const data = await changeAmountItemInCartApi(ItemId, action);
-      return data;
-    } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
-    }
+export const downAmountCartItem = createAsyncThunk<
+  CartItemNormalizeType,
+  number
+>('cart/downAmountCartItem', async (ItemId, thunkAPI) => {
+  try {
+    const action = false;
+    const data = await changeAmountItemInCartApi(ItemId, action);
+    const newData = {
+      ...data,
+      book: data.book.id,
+    };
+    return newData;
+  } catch (err: any) {
+    return thunkAPI.rejectWithValue(err);
   }
-);
+});
 
 export const deleteCartItem = createAsyncThunk(
   'cart/deleteItemInCart',

@@ -69,11 +69,9 @@ export async function changeAmountItemInCartApi(
   ItemId: number,
   action: boolean
 ) {
-  const response = await axiosInstance.patch(
+  const response = await axiosInstance.patch<CartItemType>(
     ApiPath.user.cart.getItemWithIdUrl(ItemId),
-    {
-      action,
-    }
+    { action }
   );
   return response.data;
 }

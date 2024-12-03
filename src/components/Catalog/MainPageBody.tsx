@@ -151,7 +151,7 @@ const MainPageBody = () => {
         {catalog?.map((id) => {
           let inCart = false;
           let inFavorites = false;
-          if (booksInCart && booksInCart[id]) {
+          if (booksInCart && booksInCart.find((book) => book === id)) {
             inCart = true;
           }
           if (booksInFavorites && booksInFavorites[id]) {

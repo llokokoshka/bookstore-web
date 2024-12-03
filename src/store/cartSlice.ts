@@ -7,11 +7,11 @@ import {
   getCart,
   upAmountCartItem,
 } from './thunk';
-import { CartItemType, ICartState } from '../lib/types';
+import { ICartState } from '../lib/types';
 
 const initialState: ICartState = {
   cart: null,
-  normalizeCart: {},
+  normalizeCart: [],
   numberOfItemsInCart: 0,
   error: null,
   loading: false,
@@ -30,12 +30,12 @@ const cartSlice = createSlice({
       .addCase(getCart.fulfilled, (state, action) => {
         state.loading = false;
         state.cart = action.payload;
-        const booksInCart = state.cart?.cartItems.reduce<
-          Record<number, CartItemType>
-        >((result, current) => {
-          result[current.book.id] = current;
-          return result;
-        }, {});
+        state.numberOfItemsInCart = action.payload.cartItems.length;
+
+        const booksInCart = state.cart?.cartItems.map((item) => {
+          return item.book;
+        });
+
         if (booksInCart) state.normalizeCart = booksInCart;
       })
       .addCase(getCart.rejected, (state, action) => {
@@ -48,11 +48,11 @@ const cartSlice = createSlice({
       })
       .addCase(addCartItem.fulfilled, (state, action) => {
         state.loading = false;
-        if (state.normalizeCart !== null) {
-          state.normalizeCart[action.payload.book.id] = action.payload;
+        if (state.normalizeCart.length > 0) {
+          state.normalizeCart.push(action.payload.book);
         }
-        state.numberOfItemsInCart += 1;
         state.cart?.cartItems.push(action.payload);
+        state.numberOfItemsInCart += 1;
       })
       .addCase(addCartItem.rejected, (state, action) => {
         state.loading = false;
@@ -122,7 +122,7 @@ const cartSlice = createSlice({
         if (itemIndex !== -1 && state.cart && itemIndex !== undefined) {
           const sum = state.cart.cartItems[itemIndex].total_price;
           const colOfItemsInCart = state.cart.cartItems[itemIndex].quantity;
-          const idBook = state.cart.cartItems[itemIndex].book.id;
+          const idBook = state.cart.cartItems[itemIndex].book;
           state.cart.cartItems = state.cart.cartItems.filter((item) => {
             return item.id !== action.payload;
           });
@@ -130,7 +130,8 @@ const cartSlice = createSlice({
           if (state.numberOfItemsInCart > 0) {
             state.numberOfItemsInCart -= colOfItemsInCart;
           }
-          if (state.normalizeCart && state.normalizeCart[idBook]) {
+          if (state.cart.cartItems && state.cart.cartItems[idBook]) {
+            delete state.cart.cartItems[idBook];
             delete state.normalizeCart[idBook];
           }
         } else {

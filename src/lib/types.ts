@@ -114,7 +114,7 @@ export interface IPropsBookInCart {
   id: number;
   price: number;
   quantity: number;
-  book: BookType;
+  book?: BookType;
 }
 
 export interface IBookProps {
@@ -212,9 +212,22 @@ export type CartType = {
   cartItems: CartItemType[];
 };
 
+export type CartItemNormalizeType = {
+  id: number;
+  total_price: number;
+  quantity: number;
+  book: number;
+};
+
+export type CartNormalizeType = {
+  id: number;
+  total_price: number;
+  cartItems: CartItemNormalizeType[];
+};
+
 export interface ICartState {
-  cart: CartType | null;
-  normalizeCart: Record<number, CartItemType>;
+  cart: CartNormalizeType | null;
+  normalizeCart: number[];
   numberOfItemsInCart: number;
   loading: boolean;
   error: string | null;

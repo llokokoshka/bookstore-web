@@ -6,17 +6,19 @@ import { useAppSelector } from '../../hooks';
 
 const CartPageBody: React.FC = () => {
   const BooksInCart = useAppSelector((state) => state.cart.cart);
+  const books = useAppSelector((state) => state.booksEntities.books);
 
   return (
     <StyledWrapper>
       {BooksInCart?.cartItems?.map((item) => {
+        const Book = books?.find((book) => book.id === item.book);
         return (
           <BookInCart
             key={item.id}
             id={item.id}
             price={item.total_price}
             quantity={item.quantity}
-            book={item.book}
+            book={Book}
           />
         );
       })}

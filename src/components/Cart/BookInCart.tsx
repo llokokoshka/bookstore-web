@@ -15,7 +15,12 @@ import { ApiPath } from '../../constants/textConstants';
 
 const BookInCart: React.FC<IPropsBookInCart> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
-  const { img, name, author } = props.book;
+  let bookImg, bookName, bookAuthor;
+  if (props.book) {
+    bookImg = props.book.img;
+    bookName = props.book.name;
+    bookAuthor = props.book.author;
+  }
   const dispatch = useAppDispatch();
   const handleMinusQuantity = async () => {
     if (props.quantity === 1) {
@@ -32,10 +37,10 @@ const BookInCart: React.FC<IPropsBookInCart> = (props) => {
   };
   return (
     <StyledWrapper>
-      <img src={dirnameBookImg + img} alt="img" className="img-book"></img>
+      <img src={dirnameBookImg + bookImg} alt="img" className="img-book"></img>
       <div className="info-block">
-        <div className="big-title">{name}</div>
-        <div className="normal-title">{author.text}</div>
+        <div className="big-title">{bookName}</div>
+        <div className="normal-title">{bookAuthor?.text}</div>
         <div className="amount">
           <div className="amount-block">
             <div className="amount-bitton" onClick={handleMinusQuantity}>
