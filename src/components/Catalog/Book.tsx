@@ -29,29 +29,39 @@ const Book: React.FC<IBookProps> = (props) => {
   if (props.price === undefined) {
     props.price = 0;
   }
-
-  const handleAddInFavorites = async () => {
-    if (booksInFavorites && props.id && !booksInFavorites[props.id]) {
+  let isFav = props.isInFavorites;
+  const handleFavorites = async () => {
+    if (
+      booksInFavorites &&
+      props.id &&
+      !booksInFavorites.find((book) => book === props.id)
+    ) {
       await dispatch(addFavoriteItem(props.id));
-    } else if (booksInFavorites && props.id && booksInFavorites[props.id]) {
+      isFav = true;
+    } else if (
+      booksInFavorites &&
+      props.id &&
+      booksInFavorites.find((book) => book === props.id)
+    ) {
       const bookInFav = Favorites?.favoritesItems.find(
-        (item) => item.book.id === props.id
+        (item) => item.book === props.id
       );
       if (bookInFav) await dispatch(deleteFavoriteItem(bookInFav?.id));
+      isFav = false;
     }
   };
 
   return (
     <StyledWrapper>
       <div className="book">
-        {props.isInFavorites ? (
-          <div className="book_favorite-button" onClick={handleAddInFavorites}>
+        {isFav ? (
+          <div className="book_favorite-button" onClick={handleFavorites}>
             <img src={fullHeart} alt="fullHeart"></img>
           </div>
         ) : (
           <div
             className="book_favorite-button opacity"
-            onClick={handleAddInFavorites}
+            onClick={handleFavorites}
           >
             <img src={heart} alt="heart"></img>
           </div>

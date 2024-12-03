@@ -154,7 +154,10 @@ const MainPageBody = () => {
           if (booksInCart && booksInCart.find((book) => book === id)) {
             inCart = true;
           }
-          if (booksInFavorites && booksInFavorites[id]) {
+          if (
+            booksInFavorites &&
+            booksInFavorites.find((book) => book === id)
+          ) {
             inFavorites = true;
           }
           const currentBook = books?.find((book) => book.id === id);

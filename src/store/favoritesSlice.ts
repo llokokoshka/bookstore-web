@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { addFavoriteItem, deleteFavoriteItem, getFavorite } from './thunk';
-import { FavoriteItemType, IFavoriteState } from '../lib/types';
+import { IFavoriteState } from '../lib/types';
 
 const initialState: IFavoriteState = {
   favorites: null,
-  normalizeFavorites: {},
+  normalizeFavorites: [],
   error: null,
   loading: false,
 };
@@ -23,13 +23,11 @@ const favoritesSlice = createSlice({
       .addCase(getFavorite.fulfilled, (state, action) => {
         state.loading = false;
         state.favorites = action.payload;
-        const booksInCart = state.favorites?.favoritesItems.reduce<
-          Record<number, FavoriteItemType>
-        >((result, current) => {
-          result[current.book.id] = current;
-          return result;
-        }, {});
-        if (booksInCart) state.normalizeFavorites = booksInCart;
+        const booksInFav = state.favorites?.favoritesItems.map((item) => {
+          return item.book;
+        });
+
+        if (booksInFav) state.normalizeFavorites = booksInFav;
       })
       .addCase(getFavorite.rejected, (state, action) => {
         state.loading = false;
@@ -41,8 +39,10 @@ const favoritesSlice = createSlice({
       })
       .addCase(addFavoriteItem.fulfilled, (state, action) => {
         state.loading = false;
-        if (state.normalizeFavorites !== null) {
-          state.normalizeFavorites[action.payload.book.id] = action.payload;
+        if (state.normalizeFavorites.length > 0) {
+          state.normalizeFavorites.push(action.payload.book);
+        } else {
+          state.normalizeFavorites = [action.payload.book];
         }
         state.favorites?.favoritesItems.push(action.payload);
       })
@@ -60,16 +60,18 @@ const favoritesSlice = createSlice({
           (item) => item.id === action.payload
         );
         if (itemIndex !== -1 && state.favorites && itemIndex !== undefined) {
-          const idFavorite = state.favorites.favoritesItems[itemIndex].book.id;
+          const idFavorite = state.favorites.favoritesItems[itemIndex].book;
           state.favorites.favoritesItems =
             state.favorites.favoritesItems.filter((item) => {
               return item.id !== action.payload;
             });
           if (
             state.normalizeFavorites &&
-            state.normalizeFavorites[idFavorite]
+            state.normalizeFavorites.find((item) => item === idFavorite)
           ) {
-            delete state.normalizeFavorites[idFavorite];
+            delete state.normalizeFavorites[
+              state.normalizeFavorites.findIndex((item) => item === idFavorite)
+            ];
           }
         } else {
           console.error('Item not found in favorite:', action.payload);

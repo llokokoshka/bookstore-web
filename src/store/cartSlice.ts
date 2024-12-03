@@ -50,8 +50,16 @@ const cartSlice = createSlice({
         state.loading = false;
         if (state.normalizeCart.length > 0) {
           state.normalizeCart.push(action.payload.book);
+        } else {
+          state.normalizeCart = [action.payload.book];
         }
         state.cart?.cartItems.push(action.payload);
+        if (
+          state.cart &&
+          (state.cart.total_price || state.cart.total_price === 0)
+        ) {
+          state.cart.total_price += action.payload.total_price;
+        }
         state.numberOfItemsInCart += 1;
       })
       .addCase(addCartItem.rejected, (state, action) => {
@@ -130,9 +138,13 @@ const cartSlice = createSlice({
           if (state.numberOfItemsInCart > 0) {
             state.numberOfItemsInCart -= colOfItemsInCart;
           }
-          if (state.cart.cartItems && state.cart.cartItems[idBook]) {
-            delete state.cart.cartItems[idBook];
-            delete state.normalizeCart[idBook];
+          if (
+            state.normalizeCart &&
+            state.normalizeCart.find((item) => item === idBook)
+          ) {
+            delete state.normalizeCart[
+              state.normalizeCart.findIndex((item) => item === idBook)
+            ];
           }
         } else {
           console.error('Item not found in cart:', action.payload);

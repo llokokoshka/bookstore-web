@@ -6,11 +6,12 @@ import BookInFavorite from './BookInFavorite';
 
 const FavoritePageBody: React.FC = () => {
   const Favorites = useAppSelector((state) => state.favorite.favorites);
-
+  const books = useAppSelector((state) => state.booksEntities.books);
   return (
     <StyledWrapper>
       {Favorites?.favoritesItems?.map((item) => {
-        return <BookInFavorite key={item.id} id={item.id} book={item.book} />;
+        const Book = books?.find((book) => book.id === item.book);
+        return <BookInFavorite key={item.id} id={item.id} book={Book} />;
       })}
     </StyledWrapper>
   );

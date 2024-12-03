@@ -129,7 +129,7 @@ export interface IBookProps {
 
 export interface IPropsFavorite {
   id: number;
-  book: BookType;
+  book: BookType | undefined;
 }
 
 type MetaType = {
@@ -237,15 +237,24 @@ export type FavoriteItemType = {
   id: number;
   book: BookType;
 };
+export type FavoriteItemNormalizeType = {
+  id: number;
+  book: number;
+};
 
 export type FavoriteType = {
   id: number;
   favoritesItems: FavoriteItemType[];
 };
 
+export type FavoriteNormalizeType = {
+  id: number;
+  favoritesItems: FavoriteItemNormalizeType[];
+};
+
 export interface IFavoriteState {
-  favorites: FavoriteType | null;
-  normalizeFavorites: Record<number, FavoriteItemType>;
+  favorites: FavoriteNormalizeType | null;
+  normalizeFavorites: number[];
   loading: boolean;
   error: string | null;
 }

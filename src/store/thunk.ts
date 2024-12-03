@@ -16,6 +16,8 @@ import {
   BookType,
   CartNormalizeType,
   CartItemNormalizeType,
+  FavoriteNormalizeType,
+  FavoriteItemNormalizeType,
 } from '../lib/types';
 import { AppPages } from '../constants/textConstants';
 import { addOrUpdBook } from './booksEntitiesSlice';
@@ -296,7 +298,7 @@ export const deleteCartItem = createAsyncThunk(
   }
 );
 
-export const getFavorite = createAsyncThunk<FavoriteType>(
+export const getFavorite = createAsyncThunk<FavoriteNormalizeType>(
   'favorite/getFavorite',
   async (_, thunkAPI) => {
     const data = await getFavoriteApi();
@@ -305,22 +307,41 @@ export const getFavorite = createAsyncThunk<FavoriteType>(
     });
 
     thunkAPI.dispatch(addOrUpdBook(booksInFav));
-    return data;
+
+    const arrayWithFavItems = data.favoritesItems;
+
+    const newArrWithBookIds = arrayWithFavItems
+      ? arrayWithFavItems.map((item) => {
+          const bookId = item.book.id;
+          return { ...item, book: bookId };
+        })
+      : null;
+
+    const newData = {
+      ...data,
+      favoritesItems: newArrWithBookIds ? newArrWithBookIds : [],
+    };
+
+    return newData;
   }
 );
 
-export const addFavoriteItem = createAsyncThunk<FavoriteItemType, number>(
-  'favorite/addItemInFavorite',
-  async (bookId, thunkAPI) => {
-    try {
-      const data = await addFavoriteItemApi(bookId);
-      thunkAPI.dispatch(addOrUpdBook([data.book]));
-      return data;
-    } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
-    }
+export const addFavoriteItem = createAsyncThunk<
+  FavoriteItemNormalizeType,
+  number
+>('favorite/addItemInFavorite', async (bookId, thunkAPI) => {
+  try {
+    const data = await addFavoriteItemApi(bookId);
+    thunkAPI.dispatch(addOrUpdBook([data.book]));
+    const newData = {
+      ...data,
+      book: data.book.id,
+    };
+    return newData;
+  } catch (err: any) {
+    return thunkAPI.rejectWithValue(err);
   }
-);
+});
 
 export const deleteFavoriteItem = createAsyncThunk(
   'favorite/deleteItemFromFavorite',
