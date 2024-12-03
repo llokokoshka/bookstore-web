@@ -238,6 +238,8 @@ const StyledWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    column-gap: 30px;
+    margin-bottom: 152px;
   }
   .arr:hover {
     cursor: pointer;

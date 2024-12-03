@@ -65,7 +65,7 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
                   )}
                 </div>
               ))}
-              <h3> {userRating || 'Not Rated'}</h3>
+              <h3 className="rate"> {userRating || 'Not Rated'}</h3>
             </>
           ) : (
             <>
@@ -78,7 +78,7 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
                   )}
                 </div>
               ))}
-              <h3> {bookRating || 'Not Rated'}</h3>
+              <h3 className="rate"> {bookRating || 'Not Rated'}</h3>
             </>
           )}
         </div>
@@ -94,6 +94,23 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     width: 298px;
+  }
+
+  .rate {
+    width: 25px;
+    height: 24px;
+    top: 561px;
+    left: 274px;
+    gap: 0px;
+    opacity: 0px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #b9bac3;
   }
 `;

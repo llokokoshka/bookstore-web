@@ -26,13 +26,13 @@ const BookInFavorite: React.FC<IPropsFavorite> = (props) => {
       <div className="info-block">
         <div className="big-title">{bookName}</div>
         <div className="normal-title">{bookAuthor?.text}</div>
-        <img
-          src={rubbish}
-          alt="img"
-          className="icon-img"
-          onClick={handleDeleteItem}
-        ></img>
       </div>
+      <img
+        src={rubbish}
+        alt="img"
+        className="icon-img"
+        onClick={handleDeleteItem}
+      ></img>
     </StyledWrapper>
   );
 };
@@ -53,8 +53,12 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
   }
-
-  .icon-img :hover {
+  .icon-img {
+    margin-top: 30px;
+    width: 48px;
+    height: 48px;
+  }
+  .icon-img:hover {
     cursor: pointer;
   }
 `;

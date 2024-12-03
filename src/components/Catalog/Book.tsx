@@ -145,7 +145,7 @@ const StyledWrapper = styled.div`
     padding: ${({ theme }) => theme.padding.button};
     gap: 10px;
     border-radius: ${({ theme }) => theme.sizes.base_radius}px;
-    border: ${({ theme }) => theme.border.blue};
+    border: 1px solid #344966;
     opacity: 0px;
     color: #344966;
     background-color: white;
