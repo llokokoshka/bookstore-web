@@ -36,7 +36,7 @@ const BookPage: React.FC = () => {
           description={book.description}
           cover={book.cover}
           comments={book.comments}
-          isFav={Boolean(isInFav)}
+          isFav={isInFav === undefined ? false : true}
         />
       ) : null}
       <Footer />

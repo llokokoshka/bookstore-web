@@ -124,7 +124,7 @@ const StyledWrapper = styled.div`
   .book_favorite-button {
     position: absolute;
     background-color: ${({ theme }) => theme.colors.dark_blue};
-    border-radius: 25px;
+    border-radius: 50%;
     width: 48px;
     height: 48px;
     top: 20px;
@@ -133,6 +133,10 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .book_favorite-button:hover {
+    cursor: pointer;
   }
 
   .book-cover {

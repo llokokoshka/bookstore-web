@@ -1,4 +1,3 @@
-import React from 'react';
 import { addFavoriteItem, deleteFavoriteItem } from '../store/thunk';
 import { FavoriteNormalizeType } from '../lib/types';
 import { AppDispatch } from '../store';

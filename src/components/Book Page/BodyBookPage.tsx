@@ -15,8 +15,10 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const dispatch = useAppDispatch();
   const [inputValue, setInputValue] = useState<string>();
-  const user = useAppSelector((state) => state.auth.user);
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const [isFav, setIsFav] = useState(props.isFav);
+
+  const user = useAppSelector((state) => state.auth.user);
   const booksInFavorites = useAppSelector(
     (state) => state.favorite.normalizeFavorites
   );
@@ -50,10 +52,14 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
     setIsFav(result);
   };
 
+  const toggleDescription = () => {
+    setIsDescriptionExpanded(!isDescriptionExpanded);
+  };
+
   return (
     <StyledWrapper>
       <div className="book-information">
-        <div>
+        <div className="book-cover">
           {props.isFav ? (
             <div className="book_favorite-button" onClick={useHandleFav}>
               <img src={fullHeart} alt="fullHeart"></img>
@@ -83,30 +89,50 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
           </div>
           <div className="description">
             <div className="normal-title">Description</div>
-            <div className="base-text param">{props.description}</div>
+            <div
+              className={`base-text param ${
+                isDescriptionExpanded ? 'expanded' : ''
+              }`}
+            >
+              {props.description}
+            </div>
+            {!isDescriptionExpanded && props.description.length > 800 && (
+              <span className="show-more" onClick={toggleDescription}>
+                ... See more
+              </span>
+            )}
+            {isDescriptionExpanded && (
+              <span className="show-more" onClick={toggleDescription}>
+                See less
+              </span>
+            )}
           </div>
-          <div>
-            <p>Paperback</p>
-            {props.cover.paperback_amount > 0 ? (
-              <button className="base-button">
-                ${props.cover.paperback_price}USD
-              </button>
-            ) : (
-              <button className="base-button not-aviable"></button>
-            )}
-            <p>Hardcover</p>
-            {props.cover.hardcover_amount > 0 ? (
-              <button className="base-button">
-                ${props.cover.hardcover_price}USD
-              </button>
-            ) : (
-              <button className="base-button not-aviable"></button>
-            )}
+          <div className="book-buttons">
+            <div>
+              <p>Paperback</p>
+              {props.cover.paperback_amount > 0 ? (
+                <button className="base-button">
+                  ${props.cover.paperback_price} USD
+                </button>
+              ) : (
+                <button className="base-button not-aviable"></button>
+              )}
+            </div>
+            <div>
+              <p>Hardcover</p>
+              {props.cover.hardcover_amount > 0 ? (
+                <button className="base-button">
+                  ${props.cover.hardcover_price} USD
+                </button>
+              ) : (
+                <button className="base-button opacity"></button>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      <div>
+      <div className="comments-block">
         {props.comments?.map((comment) => (
           <Comment
             key={comment.id}
@@ -118,7 +144,7 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
         ))}
       </div>
       {user ? (
-        <form onSubmit={handleAddComment}>
+        <form onSubmit={handleAddComment} className="form">
           <input
             type="text"
             placeholder="Share a comment"
@@ -126,7 +152,7 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           ></input>
-          <button className="base-button" type="submit">
+          <button className="base-button width" type="submit">
             Post a comment
           </button>
         </form>
@@ -148,12 +174,17 @@ const StyledWrapper = styled.div`
     width: 738px;
     height: 128px;
     padding-left: 20px;
+    border-radius: 16px;
+  }
+  .book-cover {
+    position: relative;
   }
 
   .book-information {
     display: flex;
     flex-direction: row;
     column-gap: 128px;
+    height: auto;
   }
   .img-book {
     width: 522px;
@@ -164,24 +195,78 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 30px;
+    max-width: 630px;
+    width: 100%;
+    height: auto;
+  }
+  .comments-block {
+    display: flex;
+    flex-direction: column-reverse;
+    row-gap: 10px;
   }
   .book_favorite-button {
     position: absolute;
     background-color: ${({ theme }) => theme.colors.dark_blue};
-    border-radius: 25px;
-    width: 48px;
-    height: 48px;
-    top: 20px;
-    left: 20px;
+    border-radius: 50%;
+    width: 59px;
+    height: 59px;
+    top: 30px;
+    left: 433px;
     z-index: 5;
     display: flex;
     align-items: center;
     justify-content: center;
   }
+
+  .book_favorite-button:hover {
+    cursor: pointer;
+  }
+
+  .width {
+    width: 276px;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+  }
   .description {
     display: flex;
     flex-direction: column;
     row-gap: 19px;
+  }
+
+  .description .base-text {
+    max-height: 264px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .description .base-text.expanded {
+    max-height: none;
+    overflow: visible;
+    text-overflow: unset;
+    white-space: normal;
+  }
+
+  .show-more {
+    display: flex;
+    justify-content: end;
+    color: ${({ theme }) => theme.colors.dark};
+    cursor: pointer;
+  }
+
+  .show-more:hover {
+    text-decoration: underline;
+  }
+
+  .book-buttons {
+    display: flex;
+    flex-direction: row;
+    max-width: 541px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
   }
   .param {
     max-width: 630px;
@@ -189,7 +274,10 @@ const StyledWrapper = styled.div`
     width: 100%;
     height: 100%;
   }
-  .not-aviable {
+  .opacity {
     opacity: 50%;
+  }
+  .opacity:hover {
+    opacity: 100%;
   }
 `;

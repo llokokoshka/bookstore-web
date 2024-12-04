@@ -51,42 +51,42 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
 
   return (
     <StyledWrapper>
+      <>
+        {isUserRAte ? (
+          <div className="rating">
+            <img src={fullStar} alt="star"></img>
+            <h3 className="rate"> {niceViewOfBookRating || '0.0'}</h3>
+          </div>
+        ) : null}
+      </>
       <div className="rating">
         {isUserRAte ? (
           <>
-            <img src={fullStar} alt="star"></img>
-            <h3> {niceViewOfBookRating || '0.0'}</h3>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <div key={star} onClick={() => handleRating(star)}>
+                {userRating && star <= userRating ? (
+                  <img src={fullStar} alt="fullStar" />
+                ) : (
+                  <img src={starImg} alt="star" />
+                )}
+              </div>
+            ))}
+            <h3 className="rate"> {userRating || '<- Rate this book'}</h3>
           </>
-        ) : null}
-        <div className="rating">
-          {isUserRAte ? (
-            <>
-              {[1, 2, 3, 4, 5].map((star) => (
-                <div key={star} onClick={() => handleRating(star)}>
-                  {userRating && star <= userRating ? (
-                    <img src={fullStar} alt="fullStar" />
-                  ) : (
-                    <img src={starImg} alt="star" />
-                  )}
-                </div>
-              ))}
-              <h3 className="rate"> {userRating || 'Not Rated'}</h3>
-            </>
-          ) : (
-            <>
-              {[1, 2, 3, 4, 5].map((star) => (
-                <div key={star} onClick={() => handleRating(star)}>
-                  {fullStars && star <= fullStars ? (
-                    <img src={fullStar} alt="fullStar" />
-                  ) : (
-                    <img src={starImg} alt="star" />
-                  )}
-                </div>
-              ))}
-              <h3 className="rate"> {niceViewOfBookRating || '0.0'}</h3>
-            </>
-          )}
-        </div>
+        ) : (
+          <>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <div key={star} onClick={() => handleRating(star)}>
+                {fullStars && star <= fullStars ? (
+                  <img src={fullStar} alt="fullStar" />
+                ) : (
+                  <img src={starImg} alt="star" />
+                )}
+              </div>
+            ))}
+            <h3 className="rate"> {niceViewOfBookRating || '0.0'}</h3>
+          </>
+        )}
       </div>
     </StyledWrapper>
   );
@@ -95,21 +95,27 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
 export default Rating;
 
 const StyledWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* column-gap: 40px; */
+  max-width: 504px;
+  width: 100%;
+
   .rating {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 298px;
+    column-gap: 15px;
   }
 
   .rate {
-    width: 25px;
+    /* width: 25px; */
     height: 24px;
     top: 561px;
     left: 274px;
-    gap: 0px;
-    opacity: 0px;
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;

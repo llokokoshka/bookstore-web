@@ -5,11 +5,16 @@ import RoundButtons from './RoundButton';
 import profile from '../../img/User profile button.png';
 import cart from '../../img/Cart.png';
 import like from '../../img/Heart.png';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
+import { getCart } from '../../store/thunk';
 
 const AuthButtons: React.FC = () => {
+  const dispatch = useAppDispatch();
   const itemsInCArt = useAppSelector((state) => state.cart.numberOfItemsInCart);
+  if (!itemsInCArt) {
+    dispatch(getCart());
+  }
   return (
     <StyledWrapper>
       <div className="cart-button">
