@@ -59,7 +59,11 @@ const favoritesSlice = createSlice({
         const itemIndex = state.favorites?.favoritesItems.findIndex(
           (item) => item.id === action.payload
         );
-        if (itemIndex !== -1 && state.favorites && itemIndex !== undefined) {
+        if (
+          itemIndex !== -1 &&
+          state.favorites &&
+          (itemIndex || itemIndex === 0)
+        ) {
           const idFavorite = state.favorites.favoritesItems[itemIndex].book;
           state.favorites.favoritesItems =
             state.favorites.favoritesItems.filter((item) => {

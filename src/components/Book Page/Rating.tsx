@@ -19,9 +19,14 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
   );
 
   const bookRating = book?.totalRate;
-
+  let niceViewOfBookRating = `0.0`;
   if (bookRating) {
     fullStars = Math.round(bookRating);
+  }
+  if (Number.isInteger(bookRating)) {
+    niceViewOfBookRating = `${bookRating}.0`;
+  } else {
+    niceViewOfBookRating = `${bookRating}`;
   }
   const userRates = useAppSelector((state) => state.auth.user?.rating);
 
@@ -50,7 +55,7 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
         {isUserRAte ? (
           <>
             <img src={fullStar} alt="star"></img>
-            <h3> {bookRating || 'Not Rated'}</h3>
+            <h3> {niceViewOfBookRating || '0.0'}</h3>
           </>
         ) : null}
         <div className="rating">
@@ -78,7 +83,7 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
                   )}
                 </div>
               ))}
-              <h3 className="rate"> {bookRating || 'Not Rated'}</h3>
+              <h3 className="rate"> {niceViewOfBookRating || '0.0'}</h3>
             </>
           )}
         </div>

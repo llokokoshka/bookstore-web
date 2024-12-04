@@ -108,6 +108,7 @@ export interface IPropsBookPageBody {
   description: string;
   cover: CoverType;
   comments: CommentsType[] | undefined;
+  isFav: boolean;
 }
 
 export interface IPropsBookInCart {

@@ -13,6 +13,7 @@ const BookPage: React.FC = () => {
   let { id } = useParams();
   const bookId = Number(id);
   const getBooks = useAppSelector((state) => state.booksEntities.books);
+  const getFav = useAppSelector((state) => state.favorite.normalizeFavorites);
 
   useEffect(() => {
     if (!getBooks) {
@@ -21,6 +22,7 @@ const BookPage: React.FC = () => {
   }, [bookId, dispatch]);
 
   const book = getBooks?.find((book) => book.id === bookId);
+  const isInFav = getFav.find((id) => id === book?.id);
   return (
     <StyledWrapper>
       <Header />
@@ -34,6 +36,7 @@ const BookPage: React.FC = () => {
           description={book.description}
           cover={book.cover}
           comments={book.comments}
+          isFav={Boolean(isInFav)}
         />
       ) : null}
       <Footer />

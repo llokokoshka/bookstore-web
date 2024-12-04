@@ -75,7 +75,7 @@ const cartSlice = createSlice({
         const itemIndex = state.cart?.cartItems.findIndex(
           (item) => item.id === action.payload.id
         );
-        if (itemIndex !== -1 && state.cart && itemIndex !== undefined) {
+        if (itemIndex !== -1 && state.cart && (itemIndex || itemIndex === 0)) {
           state.cart.cartItems[itemIndex].quantity = action.payload.quantity;
           const addPrice =
             action.payload.total_price -
@@ -101,7 +101,7 @@ const cartSlice = createSlice({
         const itemIndex = state.cart?.cartItems.findIndex(
           (item) => item.id === action.payload.id
         );
-        if (itemIndex !== -1 && state.cart && itemIndex !== undefined) {
+        if (itemIndex !== -1 && state.cart && (itemIndex || itemIndex === 0)) {
           state.cart.cartItems[itemIndex].quantity = action.payload.quantity;
           const lessPrice =
             state.cart.cartItems[itemIndex].total_price -
@@ -127,7 +127,7 @@ const cartSlice = createSlice({
         const itemIndex = state.cart?.cartItems.findIndex(
           (item) => item.id === action.payload
         );
-        if (itemIndex !== -1 && state.cart && itemIndex !== undefined) {
+        if (itemIndex !== -1 && state.cart && (itemIndex || itemIndex === 0)) {
           const sum = state.cart.cartItems[itemIndex].total_price;
           const colOfItemsInCart = state.cart.cartItems[itemIndex].quantity;
           const idBook = state.cart.cartItems[itemIndex].book;

@@ -1,21 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  addCartItem,
-  addFavoriteItem,
-  deleteFavoriteItem,
-} from '../../store/thunk';
 import heart from '../../img/Heart.png';
 import fullHeart from '../../img/fullHeart.png';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addCartItem } from '../../store/thunk';
 import { IBookProps } from '../../lib/types';
 import Rating from '../Book Page/Rating';
 import { ApiPath } from '../../constants/textConstants';
+import { handleFavorites } from '../../utils/favoriteUtil';
 
 const Book: React.FC<IBookProps> = (props) => {
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
+  const [isFav, setIsFav] = useState(props.isInFavorites);
   const booksInFavorites = useAppSelector(
     (state) => state.favorite.normalizeFavorites
   );
@@ -29,40 +27,27 @@ const Book: React.FC<IBookProps> = (props) => {
   if (props.price === undefined) {
     props.price = 0;
   }
-  let isFav = props.isInFavorites;
-  const handleFavorites = async () => {
-    if (
-      booksInFavorites &&
-      props.id &&
-      !booksInFavorites.find((book) => book === props.id)
-    ) {
-      await dispatch(addFavoriteItem(props.id));
-      isFav = true;
-    } else if (
-      booksInFavorites &&
-      props.id &&
-      booksInFavorites.find((book) => book === props.id)
-    ) {
-      const bookInFav = Favorites?.favoritesItems.find(
-        (item) => item.book === props.id
-      );
-      if (bookInFav) await dispatch(deleteFavoriteItem(bookInFav?.id));
-      isFav = false;
-    }
+
+  const useHandleFav = async () => {
+    const result = await handleFavorites(
+      props.id,
+      dispatch,
+      booksInFavorites,
+      Favorites,
+      isFav
+    );
+    setIsFav(result);
   };
 
   return (
     <StyledWrapper>
       <div className="book">
         {isFav ? (
-          <div className="book_favorite-button" onClick={handleFavorites}>
+          <div className="book_favorite-button" onClick={useHandleFav}>
             <img src={fullHeart} alt="fullHeart"></img>
           </div>
         ) : (
-          <div
-            className="book_favorite-button opacity"
-            onClick={handleFavorites}
-          >
+          <div className="book_favorite-button opacity" onClick={useHandleFav}>
             <img src={heart} alt="heart"></img>
           </div>
         )}
@@ -71,12 +56,14 @@ const Book: React.FC<IBookProps> = (props) => {
           <img src={dirname + props.img} alt="img" className="book-cover"></img>
         </Link>
       </div>
-      <Link to={`/${props.id}`}>
-        <div className="normal-title">{props.name}</div>
-        <div className="base-text">{props.author}</div>
-        <div></div>
-      </Link>
-      {props.id ? <Rating bookId={props.id} isUserRAte={false} /> : null}
+      <div className="book-info">
+        <Link to={`/${props.id}`} className="book-info_text">
+          <div className="text_title">{props.name}</div>
+          <div className="text_base">{props.author}</div>
+          <div></div>
+        </Link>
+        {props.id ? <Rating bookId={props.id} isUserRAte={false} /> : null}
+      </div>
 
       {props.isInCart ? (
         <button className="cart-button">Item in cart</button>
@@ -98,9 +85,36 @@ const StyledWrapper = styled.div`
   height: 663px;
   top: 748px;
   left: 80px;
-  gap: 0px;
-  opacity: 0px;
+  row-gap: 30px;
 
+  .book-info_text {
+    text-decoration: none;
+  }
+  .text_title {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: ${({ theme }) => theme.colors.dark_blue};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .text_base {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: ${({ theme }) => theme.colors.dark_grey};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .book {
     position: relative;
     width: 100%;
@@ -115,7 +129,6 @@ const StyledWrapper = styled.div`
     height: 48px;
     top: 20px;
     left: 20px;
-    gap: 0px;
     z-index: 5;
     display: flex;
     align-items: center;
@@ -125,9 +138,14 @@ const StyledWrapper = styled.div`
   .book-cover {
     width: 305px;
     height: 448px;
-    gap: 0px;
     border-radius: 16px;
-    opacity: 0px;
+  }
+
+  .book-info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    width: 299px;
   }
 
   .opacity {
@@ -146,7 +164,6 @@ const StyledWrapper = styled.div`
     gap: 10px;
     border-radius: ${({ theme }) => theme.sizes.base_radius}px;
     border: 1px solid #344966;
-    opacity: 0px;
     color: #344966;
     background-color: white;
     font-size: 16px;
@@ -164,8 +181,7 @@ const StyledWrapper = styled.div`
     width: 305px;
     height: 48px;
     top: 615px;
-    padding: 10px 50px 10px 50px;
-    gap: 0px;
+    padding: 10px 50px;
     border-radius: 16px;
   }
 `;

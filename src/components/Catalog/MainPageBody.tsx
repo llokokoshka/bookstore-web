@@ -230,6 +230,7 @@ const StyledWrapper = styled.div`
     padding: ${({ theme }) => theme.padding.header};
 
     column-gap: 20px;
+    row-gap: 80px;
     width: 100%;
   }
 

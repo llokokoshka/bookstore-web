@@ -23,7 +23,11 @@ const bookEntititesSlice = createSlice({
         const exBookIndex = state.books?.findIndex(
           (book) => book.id === newBook.id
         );
-        if (exBookIndex !== -1 && state.books && exBookIndex) {
+        if (
+          exBookIndex !== -1 &&
+          state.books &&
+          (exBookIndex || exBookIndex === 0)
+        ) {
           state.books[exBookIndex] = {
             ...state.books[exBookIndex],
             ...newBook,
@@ -45,14 +49,14 @@ const bookEntititesSlice = createSlice({
           );
           if (
             indexOfBook !== -1 &&
-            indexOfBook &&
+            (indexOfBook || indexOfBook === 0) &&
             state.books[indexOfBook].comments !== undefined
           ) {
             state.books[indexOfBook].comments = {
               ...state.books[indexOfBook].comments,
               ...action.payload,
             };
-          } else if (indexOfBook !== -1 && indexOfBook) {
+          } else if (indexOfBook !== -1 && (indexOfBook || indexOfBook === 0)) {
             state.books[indexOfBook].comments = [action.payload];
           }
         }
@@ -64,7 +68,7 @@ const bookEntititesSlice = createSlice({
           );
           if (
             indexOfBook !== -1 &&
-            indexOfBook &&
+            (indexOfBook || indexOfBook === 0) &&
             state.books[indexOfBook].rates &&
             state.books[indexOfBook].rates !== undefined
           ) {
@@ -73,7 +77,7 @@ const bookEntititesSlice = createSlice({
               ...action.payload.rating,
             };
             state.books[indexOfBook].totalRate = action.payload.avarageRating;
-          } else if (indexOfBook !== -1 && indexOfBook) {
+          } else if (indexOfBook !== -1 && (indexOfBook || indexOfBook === 0)) {
             state.books[indexOfBook].rates = action.payload.rating;
             state.books[indexOfBook].totalRate = action.payload.avarageRating;
           }
