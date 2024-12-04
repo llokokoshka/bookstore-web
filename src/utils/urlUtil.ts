@@ -6,6 +6,7 @@ export const setQueryParams = async (props: IQueryParams) => {
   const minPrice = props.searchParams.get('minPrice');
   const maxPrice = props.searchParams.get('maxPrice');
   const sortBy = props.searchParams.get('sortBy');
+  const genres = props.searchParams.getAll('genre');
 
   const updatedParams: Record<string, string> = {};
 
@@ -16,6 +17,8 @@ export const setQueryParams = async (props: IQueryParams) => {
   }
   if (props.genres && props.genres.length > 0) {
     updatedParams.genre = props.genres.join(',');
+  } else if (genres) {
+    updatedParams.genre = genres.join(',');
   }
   if (props.minPriceParam) {
     updatedParams.minPrice = props.minPriceParam;
@@ -37,7 +40,10 @@ export const setQueryParams = async (props: IQueryParams) => {
   props.dispatch(
     getCatalog({
       pageNum: updatedParams?.page || pageNum || '1',
-      genres: props.genres?.join(',').toString() || null,
+      genres:
+        props.genres?.join(',').toString() ||
+        genres.join(',').toString() ||
+        null,
       minPrice: updatedParams?.minPrice || minPrice || null,
       maxPrice: updatedParams?.maxPrice || maxPrice || null,
       sortBy: updatedParams?.sortBy || sortBy || null,

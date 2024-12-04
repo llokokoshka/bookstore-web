@@ -24,7 +24,10 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
   );
   const Favorites = useAppSelector((state) => state.favorite.favorites);
 
-  const handleAddComment = async () => {
+  const handleAddComment = async (e: React.FormEvent) => {
+    // if (e.target instanceof HTMLFormElement) {
+    //   e.preventDefault();
+    // }
     if (inputValue && props.id && user && user.id) {
       try {
         const response = await dispatch(

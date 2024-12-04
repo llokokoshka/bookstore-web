@@ -19,7 +19,6 @@ const Book: React.FC<IBookProps> = (props) => {
   );
   const Favorites = useAppSelector((state) => state.favorite.favorites);
   const dispatch = useAppDispatch();
-
   const addBookInCart = () => {
     if (props.id) dispatch(addCartItem(props.id));
   };

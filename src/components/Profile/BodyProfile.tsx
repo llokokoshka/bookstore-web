@@ -24,7 +24,7 @@ import {
   updateUserData,
   updateUserPassword,
 } from '../../api/userApi';
-import { setUser } from '../../store/authSlice';
+import { logout, setUser } from '../../store/authSlice';
 
 const ProfileBody: React.FC = () => {
   const dispatch = useDispatch();
@@ -127,24 +127,33 @@ const ProfileBody: React.FC = () => {
       })();
     }
   };
+  const exit = () => {
+    dispatch(logout());
+  };
 
   return (
     <StyledWrapper>
-      <div className="profile-img">
-        <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
-        <label className="base-round-button lable-nice">
-          <input
-            type="file"
-            id="avatar"
-            name="avatar"
-            accept="image/png, image/jpeg, image/jpg"
-            multiple
-            style={{ display: 'none' }}
-            onChange={handleUpdateAvatar}
-          />
-          <img src={camera} alt="camera" />
-        </label>
+      <div>
+        <div className="profile-img">
+          <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
+          <label className="base-round-button lable-nice">
+            <input
+              type="file"
+              id="avatar"
+              name="avatar"
+              accept="image/png, image/jpeg, image/jpg"
+              multiple
+              style={{ display: 'none' }}
+              onChange={handleUpdateAvatar}
+            />
+            <img src={camera} alt="camera" />
+          </label>
+        </div>
+        <button className="base-button" onClick={exit}>
+          Logout
+        </button>
       </div>
+
       <div className="inputs">
         <form
           className="container__info-block"
