@@ -54,4 +54,5 @@ export const ApiPath = {
   getBookByIdWithIdUrl(id: string | number) {
     return this.getBook.replace(':bookId', `${id}`);
   },
+  recommended: `books/recommended`,
 } as const;

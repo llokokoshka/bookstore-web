@@ -4,6 +4,7 @@ import {
   BookType,
   CommentsType,
   IBook,
+  IRecommendedThunk,
   RatingResThunkType,
   RatingThunkType,
 } from '../lib/types';
@@ -68,4 +69,11 @@ export async function getAvarageRatingApi(bookId: number) {
     ApiPath.getBookRatingWithIdUrl(bookId)
   );
   return response.data.rate;
+}
+
+export async function getRecommendedApi() {
+  const response = await axiosInstance.get<IRecommendedThunk>(
+    ApiPath.recommended
+  );
+  return response.data;
 }

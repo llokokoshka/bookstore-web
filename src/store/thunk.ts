@@ -14,6 +14,7 @@ import {
   CartItemNormalizeType,
   FavoriteNormalizeType,
   FavoriteItemNormalizeType,
+  IRecommendedThunk,
 } from '../lib/types';
 import { AppPages } from '../constants/textConstants';
 import { addOrUpdBook } from './booksEntitiesSlice';
@@ -37,6 +38,7 @@ import {
   getBookRatingApi,
   getCatalogApi,
   getRatingApi,
+  getRecommendedApi,
 } from '../api/bookApi';
 
 export const loginUser = createAsyncThunk<IUserResponseData, IFormReg>(
@@ -163,6 +165,19 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
 
       return newDataForCatalog;
     } catch (err: any) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const getRecommended = createAsyncThunk<IRecommendedThunk>(
+  'books/recommended',
+  async (_, thunkAPI) => {
+    try {
+      const data = await getRecommendedApi();
+      thunkAPI.dispatch(addOrUpdBook(data.books));
+      return data;
+    } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }
   }

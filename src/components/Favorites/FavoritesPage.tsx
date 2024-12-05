@@ -12,6 +12,10 @@ const FavoritePage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (!Favorites) {
       try {
         dispatch(getFavorite());

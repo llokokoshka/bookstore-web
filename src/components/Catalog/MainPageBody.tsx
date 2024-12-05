@@ -46,6 +46,10 @@ const MainPageBody = () => {
   const colPages = useAppSelector((state) => state.catalog.meta?.pageCount);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
     });

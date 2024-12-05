@@ -12,6 +12,10 @@ const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (!BooksInCart) {
       try {
         dispatch(getCart());

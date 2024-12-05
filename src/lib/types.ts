@@ -269,6 +269,16 @@ export type RatingThunkType = {
   bookId: number;
   rate: number;
 };
+export interface IRecommendedThunk {
+  newArrayWithBookIds: number[];
+  books: BookType[];
+}
+
+export interface IRecommendedState {
+  recommended: number[];
+  error: string | null;
+  loading: boolean;
+}
 
 export type RatingResThunkType = {
   bookId: number;
