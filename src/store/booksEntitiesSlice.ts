@@ -42,24 +42,38 @@ const bookEntititesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(addComment.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(addComment.fulfilled, (state, action) => {
+        console.log(state.books);
         if (state.books) {
-          const indexOfBook = state.books.findIndex(
+          const indexOfBookinArray = state.books.findIndex(
             (book) => book.id === action.payload.bookId
           );
           if (
-            indexOfBook !== -1 &&
-            (indexOfBook || indexOfBook === 0) &&
-            state.books[indexOfBook].comments !== undefined
+            indexOfBookinArray !== -1 &&
+            (indexOfBookinArray || indexOfBookinArray === 0)
           ) {
-            state.books[indexOfBook].comments = {
-              ...state.books[indexOfBook].comments,
+            console.log(
+              state.books.find((book) => book.id === indexOfBookinArray)
+            );
+            state.books[indexOfBookinArray].comments = {
+              ...state.books[indexOfBookinArray].comments,
               ...action.payload,
             };
-          } else if (indexOfBook !== -1 && (indexOfBook || indexOfBook === 0)) {
-            state.books[indexOfBook].comments = [action.payload];
+          } else if (
+            indexOfBookinArray !== -1 &&
+            (indexOfBookinArray || indexOfBookinArray === 0)
+          ) {
+            state.books[indexOfBookinArray].comments = [action.payload];
           }
         }
+      })
+      .addCase(addComment.rejected, (state, action) => {
+        state.loading = true;
+        state.error = action.payload as string;
       })
       .addCase(addOrUpdateRating.fulfilled, (state, action) => {
         if (state.books) {

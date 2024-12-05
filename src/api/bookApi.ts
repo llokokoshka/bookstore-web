@@ -77,3 +77,8 @@ export async function getRecommendedApi() {
   );
   return response.data;
 }
+
+export async function getSearchedApi() {
+  const response = await axiosInstance.get<IRecommendedThunk>(ApiPath.searched);
+  return response.data;
+}

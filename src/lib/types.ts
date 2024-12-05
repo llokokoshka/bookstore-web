@@ -181,6 +181,7 @@ export interface IFilterState {
   minPrice: number;
   maxPrice: number;
   sortBy: string;
+  query: string;
 }
 
 export interface ICommentsState {
@@ -280,6 +281,12 @@ export interface IRecommendedState {
   loading: boolean;
 }
 
+export interface ISearchedState {
+  searched: number[];
+  error: string | null;
+  loading: boolean;
+}
+
 export type RatingResThunkType = {
   bookId: number;
   rating: IUserRating;
@@ -291,6 +298,7 @@ export type QueryParamsType = {
   minPrice?: string | null;
   maxPrice?: string | null;
   sortBy?: string | null;
+  search?: string | null;
 };
 
 export interface IQueryParams {
@@ -302,4 +310,5 @@ export interface IQueryParams {
   sortByOption?: string;
   minPriceParam?: string;
   maxPriceParam?: string;
+  search?: string;
 }

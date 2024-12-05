@@ -1,15 +1,35 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import logo from '../../img/logo.png';
 import search from '../../img/search-icon.png';
 import AuthButtons from './AuthButtons';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
+import { setSearcheParam } from '../../store/filterSlice';
+import { setQueryParams } from '../../utils/urlUtil';
 
 const Header: React.FC = () => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
+  const [searchInput, setSearchInput] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const setSearch = () => {
+    if (searchInput.length > 0) {
+      dispatch(setSearcheParam(searchInput));
+      setQueryParams({
+        dispatch: dispatch,
+        searchParams: searchParams,
+        setSearchParams: setSearchParams,
+        search: searchInput,
+      });
+    } else {
+      searchParams.delete('search');
+    }
+  };
+
   return (
     <StyledWrapper>
       <Link to={AppPages.base}>
@@ -23,6 +43,9 @@ const Header: React.FC = () => {
             type="text"
             placeholder="Search"
             className="input__field"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            onKeyUp={(e) => (e.code === 'Enter' ? setSearch() : null)}
           ></input>
         </div>
       </div>

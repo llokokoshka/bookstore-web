@@ -7,6 +7,7 @@ export const setQueryParams = async (props: IQueryParams) => {
   const maxPrice = props.searchParams.get('maxPrice');
   const sortBy = props.searchParams.get('sortBy');
   const genres = props.searchParams.getAll('genre');
+  const search = props.searchParams.get('search');
 
   const updatedParams: Record<string, string> = {};
 
@@ -15,9 +16,9 @@ export const setQueryParams = async (props: IQueryParams) => {
   } else if (pageNum) {
     updatedParams.page = pageNum;
   }
-  if (props.genres && props.genres.length > 0) {
+  if (props.genres && props.genres.length !== 0) {
     updatedParams.genre = props.genres.join(',');
-  } else if (genres) {
+  } else if (genres && genres.length !== 0) {
     updatedParams.genre = genres.join(',');
   }
   if (props.minPriceParam) {
@@ -36,6 +37,12 @@ export const setQueryParams = async (props: IQueryParams) => {
     updatedParams.sortBy = sortBy;
   }
 
+  if (props.search) {
+    updatedParams.search = props.search;
+  } else if (search) {
+    updatedParams.search = search;
+  }
+
   props.setSearchParams(updatedParams);
   props.dispatch(
     getCatalog({
@@ -47,6 +54,7 @@ export const setQueryParams = async (props: IQueryParams) => {
       minPrice: updatedParams?.minPrice || minPrice || null,
       maxPrice: updatedParams?.maxPrice || maxPrice || null,
       sortBy: updatedParams?.sortBy || sortBy || null,
+      search: updatedParams?.search || search || null,
     })
   );
 };

@@ -9,6 +9,7 @@ const initialState: IFilterState = {
   minPrice: 0,
   maxPrice: 100,
   sortBy: 'price',
+  query: '',
 };
 
 const filterSlice = createSlice({
@@ -39,6 +40,9 @@ const filterSlice = createSlice({
     setSortBy(state, action: PayloadAction<string>) {
       state.sortBy = action.payload;
     },
+    setSearcheParam(state, action: PayloadAction<string>) {
+      state.query = action.payload;
+    },
   },
 });
 
@@ -50,6 +54,7 @@ export const {
   setSortBy,
   setCheckedGenres,
   deleteCheckedGenres,
+  setSearcheParam,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

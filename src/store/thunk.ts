@@ -1,3 +1,4 @@
+//@ts-ignore
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
@@ -39,6 +40,7 @@ import {
   getCatalogApi,
   getRatingApi,
   getRecommendedApi,
+  getSearchedApi,
 } from '../api/bookApi';
 
 export const loginUser = createAsyncThunk<IUserResponseData, IFormReg>(
@@ -115,7 +117,7 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
   async (data, thunkAPI) => {
     try {
       let strOfSearch;
-      const { pageNum, genres, minPrice, maxPrice, sortBy } = data;
+      const { pageNum, genres, minPrice, maxPrice, sortBy, search } = data;
 
       if (pageNum === undefined || pageNum === null) {
         strOfSearch = `/books/?page=1&take=12`;
@@ -134,6 +136,10 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
       }
       if (sortBy) {
         strOfSearch += `&sortBy=${sortBy}`;
+      }
+
+      if (search) {
+        strOfSearch += `&search=${search}`;
       }
       const catalog = await getCatalogApi(strOfSearch);
 
@@ -169,6 +175,18 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
     }
   }
 );
+export const getSearched = createAsyncThunk<IRecommendedThunk>(
+  'books/searched',
+  async (_, thunkAPI) => {
+    try {
+      const data = await getSearchedApi();
+      thunkAPI.dispatch(addOrUpdBook(data.books));
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 
 export const getRecommended = createAsyncThunk<IRecommendedThunk>(
   'books/recommended',
@@ -188,6 +206,7 @@ export const addComment = createAsyncThunk<CommentsType, AddCommentThunkType>(
   async ({ text, bookId }, thunkAPI) => {
     try {
       const data = await addCommentApi(bookId, text);
+
       return data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);

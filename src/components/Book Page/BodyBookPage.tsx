@@ -4,17 +4,20 @@ import styled from 'styled-components';
 import { IPropsBookPageBody } from '../../lib/types';
 import Comment from './Comment';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addComment } from '../../store/thunk';
+import { addComment, getBookById } from '../../store/thunk';
 import Rating from './Rating';
 import { ApiPath } from '../../constants/textConstants';
 import heart from '../../img/Heart.png';
 import fullHeart from '../../img/fullHeart.png';
 import { handleFavorites } from '../../utils/favoriteUtil';
+import { useParams } from 'react-router-dom';
 
 const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const dispatch = useAppDispatch();
-  const [inputValue, setInputValue] = useState<string>();
+  let { id } = useParams();
+  const bookId = Number(id);
+  const [inputValue, setInputValue] = useState<string>('');
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const [isFav, setIsFav] = useState(props.isFav);
 
@@ -24,18 +27,19 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
   );
   const Favorites = useAppSelector((state) => state.favorite.favorites);
 
-  const handleAddComment = async (e: React.FormEvent) => {
-    // if (e.target instanceof HTMLFormElement) {
-    //   e.preventDefault();
-    // }
-    if (inputValue && props.id && user && user.id) {
+  const handleAddComment = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (inputValue?.length > 0 && props.id && user && user.id) {
       try {
+        if (!props.id) {
+          dispatch(getBookById(bookId));
+        }
         const response = await dispatch(
           addComment({
             text: inputValue,
             bookId: props.id,
           })
-        );
+        ).unwrap();
         setInputValue('');
         return response;
       } catch (err) {

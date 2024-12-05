@@ -18,7 +18,6 @@ const GenresPopup: React.FC = () => {
 
   const handleGenreSelect = async (genre: GenresType) => {
     const findGenre = CheckedGenresIDs.find((id) => id === genre.id);
-
     if (!findGenre) {
       dispatch(setCheckedGenres(genre.id));
 
@@ -35,13 +34,14 @@ const GenresPopup: React.FC = () => {
       });
     } else {
       dispatch(deleteCheckedGenres(genre.id));
-
       const genres = searchParams
         .getAll('genre')[0]
         .split(',')
         .map(Number)
         .filter((g) => g !== genre.id);
-
+      if (genres.length === 0) {
+        searchParams.delete('genre');
+      }
       setQueryParams({
         dispatch: dispatch,
         searchParams: searchParams,

@@ -23,6 +23,12 @@ const PricePopup: React.FC = () => {
     setValue(newValue);
     dispatch(setMinPrice(newValue[0]));
     dispatch(setMaxPrice(newValue[1]));
+    if (newValue[0] === 0) {
+      searchParams.delete('minPrice');
+    }
+    if (newValue[1] === 100) {
+      searchParams.delete('maxPrice');
+    }
     setQueryParams({
       dispatch: dispatch,
       searchParams: searchParams,

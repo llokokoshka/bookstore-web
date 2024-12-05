@@ -13,13 +13,19 @@ import leftArr from '../../img/left arrow.png';
 import emtyRow from '../../img/Ellipse.png';
 import fullRow from '../../img/Ellipse full.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCatalog, getCart, getFavorite } from '../../store/thunk';
+import {
+  getCatalog,
+  getCart,
+  getFavorite,
+  getSearched,
+} from '../../store/thunk';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
 import {
   setCheckedGenres,
   setMaxPrice,
   setMinPrice,
   setPage,
+  setSearcheParam,
   setSortBy,
 } from '../../store/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
@@ -53,37 +59,36 @@ const MainPageBody = () => {
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
     });
-    let pageNumber: string | null;
-    let genres: number[] = [];
-    let minPriceParam: string | null;
-    let maxPriceParam: string | null;
-    let sortByParam: string;
+    let pageNumber = searchParams.get('page');
+    let genres = searchParams.getAll('genre')[0]?.split(',').map(Number);
+    let minPriceParam = searchParams.get('minPrice');
+    let maxPriceParam = searchParams.get('maxPrice');
+    let sortByParam = searchParams.getAll('sortBy').toString();
+    let search = searchParams.get('search');
 
-    if (searchParams.getAll('genre')[0]) {
-      genres = searchParams.getAll('genre')[0]?.split(',').map(Number);
+    if (genres && genres.length !== 0) {
       for (let genre of genres) {
         dispatch(setCheckedGenres(genre));
       }
     }
 
-    if (searchParams.get('page')) {
-      pageNumber = searchParams.get('page');
+    if (pageNumber) {
       dispatch(setPage(Number(pageNumber)));
     }
 
-    if (searchParams.get('minPrice')) {
-      minPriceParam = searchParams.get('minPrice');
+    if (minPriceParam) {
       dispatch(setMinPrice(Number(minPriceParam)));
     }
 
-    if (searchParams.get('maxPrice')) {
-      maxPriceParam = searchParams.get('maxPrice');
+    if (maxPriceParam) {
       dispatch(setMaxPrice(Number(maxPriceParam)));
     }
-
-    if (searchParams.get('sortBy')) {
-      sortByParam = searchParams.getAll('sortBy').toString();
+    if (sortByParam) {
       dispatch(setSortBy(sortByParam));
+    }
+
+    if (search) {
+      dispatch(setSearcheParam(search));
     }
 
     const getBooksFromServer = async () => {
@@ -92,12 +97,13 @@ const MainPageBody = () => {
           await dispatch(
             getCatalog({
               pageNum: pageNumber,
-              genres: genres.toString() || null,
+              genres: genres ? genres.toString() : null,
               minPrice: minPriceParam,
               maxPrice: maxPriceParam,
               sortBy: sortByParam,
             })
           );
+          await dispatch(getSearched());
         } catch (error) {
           console.error(ERROR_GET_BOOKS_DATA, error);
         }
