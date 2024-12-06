@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { InputPropsType } from '../../lib/types';
 import { useAppDispatch } from '../../hooks';
-import { setUser } from '../../store/authSlice';
+import { setUser } from '../../store/auth/authSlice';
 
 const ProfileInput: React.FC<InputPropsType> = (props) => {
   const [inputType, setInputType] = useState('password');

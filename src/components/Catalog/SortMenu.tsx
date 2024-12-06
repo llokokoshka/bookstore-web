@@ -4,12 +4,10 @@ import styled from 'styled-components';
 import forward from '../../img/right arrow.png';
 import openForward from '../../img/Forward down.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { axiosInstance } from '../../axiosDefaul';
-import { setGenres } from '../../store/filterSlice';
 import GenresPopup from '../Popups/GenresPopup';
 import PricePopup from '../Popups/PricePopup';
 import SortPopup from '../Popups/SortPopup';
-import { ApiPath } from '../../constants/textConstants';
+import { getGenres } from '../../store/booksEntities/booksEntitiesThunk';
 
 const SortMenu: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,10 +19,7 @@ const SortMenu: React.FC = () => {
 
   useEffect(() => {
     if (isGenresOpen && genres.length === 0) {
-      axiosInstance
-        .get(ApiPath.genres)
-        .then((response) => dispatch(setGenres(response.data)))
-        .catch((error) => console.error('Error get genres: ', error));
+      dispatch(getGenres());
     }
   }, [isGenresOpen, genres, dispatch]);
 

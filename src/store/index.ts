@@ -1,13 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import authReducer from './authSlice';
-import booksEntitiesReducer from './booksEntitiesSlice';
-import catalogReducer from './catalogSlice';
-import filterReducer from './filterSlice';
-import cartReducer from './cartSlice';
-import favoritesReducer from './favoritesSlice';
-import recommendedReducer from './recommendedSlice';
-import searchReducer from './searchSlice';
+import authReducer from './auth/authSlice';
+import booksEntitiesReducer from './booksEntities/booksEntitiesSlice';
+import catalogReducer from './catalog/catalogSlice';
+import filterReducer from './filter/filterSlice';
+import cartReducer from './cart/cartSlice';
+import favoritesReducer from './favorites/favoritesSlice';
+import recommendedReducer from './recommended/recommendedSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,7 +17,6 @@ export const store = configureStore({
     cart: cartReducer,
     favorite: favoritesReducer,
     recommended: recommendedReducer,
-    search: searchReducer,
   },
 });
 

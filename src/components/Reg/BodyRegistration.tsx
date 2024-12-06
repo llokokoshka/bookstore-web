@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { registrationValidationSchema } from '../../schemas/registrationValidationSchema';
-import { regUser } from '../../store/thunk';
 import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 import { IFormReg, IFormInput } from '../../lib/types';
 import { AppPages } from '../../constants/textConstants';
+import { regUser } from '../../store/auth/authThunk';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();

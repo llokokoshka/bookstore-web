@@ -3,6 +3,7 @@ import { ApiPath } from '../constants/textConstants';
 import {
   BookType,
   CommentsType,
+  GenresType,
   IBook,
   IRecommendedThunk,
   RatingResThunkType,
@@ -76,5 +77,10 @@ export async function getRecommendedApi() {
   const response = await axiosInstance.get<IRecommendedThunk>(
     ApiPath.recommended
   );
+  return response.data;
+}
+
+export async function getGenresApi() {
+  const response = await axiosInstance.get<GenresType[]>(ApiPath.genres);
   return response.data;
 }

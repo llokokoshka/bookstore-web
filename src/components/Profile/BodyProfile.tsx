@@ -24,7 +24,7 @@ import {
   updateUserData,
   updateUserPassword,
 } from '../../api/userApi';
-import { logout, setUser } from '../../store/authSlice';
+import { setUser, logout } from '../../store/auth/authSlice';
 
 const ProfileBody: React.FC = () => {
   const dispatch = useDispatch();

@@ -6,13 +6,12 @@ import Header from '../Header/Header';
 import BookPageBody from './BodyBookPage';
 import Footer from '../Footer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  getBookById,
-  getCart,
-  getFavorite,
-  getRecommended,
-} from '../../store/thunk';
+
 import Recommendations from './Recomendations';
+import { getBookById } from '../../store/booksEntities/booksEntitiesThunk';
+import { getCart } from '../../store/cart/cartThunk';
+import { getFavorite } from '../../store/favorites/favoritesThunk';
+import { getRecommended } from '../../store/recommended/recommendedThunk';
 
 const BookPage: React.FC = () => {
   const dispatch = useAppDispatch();

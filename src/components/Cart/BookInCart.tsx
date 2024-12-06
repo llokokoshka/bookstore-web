@@ -6,12 +6,13 @@ import plus from '../../img/plus.png';
 import minus from '../../img/minus.png';
 import rubbish from '../../img/Delete.png';
 import { useAppDispatch } from '../../hooks';
+
+import { ApiPath } from '../../constants/textConstants';
 import {
   deleteCartItem,
   downAmountCartItem,
   upAmountCartItem,
-} from '../../store/thunk';
-import { ApiPath } from '../../constants/textConstants';
+} from '../../store/cart/cartThunk';
 
 const BookInCart: React.FC<IPropsBookInCart> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;

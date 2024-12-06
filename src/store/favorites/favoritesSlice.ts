@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { addFavoriteItem, deleteFavoriteItem, getFavorite } from './thunk';
-import { IFavoriteState } from '../lib/types';
+import { IFavoriteState } from '../../lib/types';
+import {
+  getFavorite,
+  addFavoriteItem,
+  deleteFavoriteItem,
+} from './favoritesThunk';
 
 const initialState: IFavoriteState = {
   favorites: null,

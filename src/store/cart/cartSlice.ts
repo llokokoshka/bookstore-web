@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { ICartState } from '../../lib/types';
 import {
-  addCartItem,
-  deleteCartItem,
-  downAmountCartItem,
   getCart,
+  addCartItem,
   upAmountCartItem,
-} from './thunk';
-import { ICartState } from '../lib/types';
+  downAmountCartItem,
+  deleteCartItem,
+} from './cartThunk';
 
 const initialState: ICartState = {
   cart: null,

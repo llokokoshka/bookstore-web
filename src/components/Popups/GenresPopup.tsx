@@ -4,7 +4,10 @@ import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { GenresType } from '../../lib/types';
-import { deleteCheckedGenres, setCheckedGenres } from '../../store/filterSlice';
+import {
+  deleteCheckedGenres,
+  setCheckedGenres,
+} from '../../store/filter/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
 
 const GenresPopup: React.FC = () => {

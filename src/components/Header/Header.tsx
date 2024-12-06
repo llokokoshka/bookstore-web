@@ -7,7 +7,7 @@ import search from '../../img/search-icon.png';
 import AuthButtons from './AuthButtons';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
-import { setSearcheParam } from '../../store/filterSlice';
+import { setSearcheParam } from '../../store/filter/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
 
 const Header: React.FC = () => {

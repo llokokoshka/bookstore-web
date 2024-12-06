@@ -4,13 +4,16 @@ import styled from 'styled-components';
 import { BookType } from '../../lib/types';
 import Comment from './Comment';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addComment, getBookById } from '../../store/thunk';
 import Rating from './Rating';
 import { ApiPath } from '../../constants/textConstants';
 import heart from '../../img/Heart.png';
 import fullHeart from '../../img/fullHeart.png';
 import { handleFavorites } from '../../utils/favoriteUtil';
 import { useParams } from 'react-router-dom';
+import {
+  addComment,
+  getBookById,
+} from '../../store/booksEntities/booksEntitiesThunk';
 
 const BookPageBody: React.FC<BookType> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;

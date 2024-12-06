@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setSortBy } from '../../store/filterSlice';
+import { setSortBy } from '../../store/filter/filterSlice';
 import { useSearchParams } from 'react-router-dom';
 import { setQueryParams } from '../../utils/urlUtil';
 

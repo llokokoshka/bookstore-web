@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ReactSlider from 'react-slider';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setMaxPrice, setMinPrice } from '../../store/filterSlice';
+import { setMaxPrice, setMinPrice } from '../../store/filter/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
 import poligon from '../../img/Polygon 4.png';
 

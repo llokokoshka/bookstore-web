@@ -1,8 +1,8 @@
 import { PropsWithChildren, useEffect, useState } from 'react';
 
 import { useAppDispatch } from '../hooks';
-import { getUser } from '../store/thunk';
 import { ERROR_GET_USER_DATA } from '../constants/errorConstants';
+import { getUser } from '../store/auth/authThunk';
 
 const CheckUserAuth: React.FC<PropsWithChildren> = (props) => {
   const dispatch = useAppDispatch();

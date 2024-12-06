@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-import { IRecommendedState } from '../lib/types';
-import { getRecommended } from './thunk';
+import { IRecommendedState } from '../../lib/types';
+import { getRecommended } from './recommendedThunk';
 
 const initialState: IRecommendedState = {
   recommended: [],

@@ -1,6 +1,9 @@
-import { addFavoriteItem, deleteFavoriteItem } from '../store/thunk';
 import { FavoriteNormalizeType } from '../lib/types';
 import { AppDispatch } from '../store';
+import {
+  addFavoriteItem,
+  deleteFavoriteItem,
+} from '../store/favorites/favoritesThunk';
 
 export const handleFavorites = async (
   id: number | undefined,

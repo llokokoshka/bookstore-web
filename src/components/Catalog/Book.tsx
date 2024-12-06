@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import heart from '../../img/Heart.png';
 import fullHeart from '../../img/fullHeart.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addCartItem } from '../../store/thunk';
 import { IBookProps } from '../../lib/types';
 import Rating from '../Book Page/Rating';
 import { ApiPath } from '../../constants/textConstants';
 import { handleFavorites } from '../../utils/favoriteUtil';
+import { addCartItem } from '../../store/cart/cartThunk';
 
 const Book: React.FC<IBookProps> = (props) => {
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;

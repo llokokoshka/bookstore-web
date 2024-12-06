@@ -42,7 +42,3 @@ const Navigate: React.FC<{
 };
 
 export default Navigate;
-
-const StyledWrapper = styled.div`
-  /* padding: ${({ theme }) => theme.padding.header}; */
-`;

@@ -5,13 +5,13 @@ import styled from 'styled-components';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { loginValidationSchema } from '../../schemas/loginValidationSchema';
-import { loginUser } from '../../store/thunk';
 import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 import { IFormReg } from '../../lib/types';
 import { AppPages } from '../../constants/textConstants';
+import { loginUser } from '../../store/auth/authThunk';
 
 const AuthorizationBody: React.FC = () => {
   const dispatch = useAppDispatch();

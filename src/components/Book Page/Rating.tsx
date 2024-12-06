@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addOrUpdateRating, getBookRating } from '../../store/thunk';
 
 import starImg from '../../img/Star.png';
 import fullStar from '../../img/fullStar.png';
 import styled from 'styled-components';
+import {
+  addOrUpdateRating,
+  getBookRating,
+} from '../../store/booksEntities/booksEntitiesThunk';
 
 const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
   bookId,

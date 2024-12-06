@@ -7,7 +7,7 @@ import cart from '../../img/Cart.png';
 import like from '../../img/Heart.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
-import { getCart } from '../../store/thunk';
+import { getCart } from '../../store/cart/cartThunk';
 
 const AuthButtons: React.FC = () => {
   const dispatch = useAppDispatch();

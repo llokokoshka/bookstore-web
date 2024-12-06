@@ -5,7 +5,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import CartPageBody from './CartPageBody';
-import { getCart } from '../../store/thunk';
+import { getCart } from '../../store/cart/cartThunk';
 
 const CartPage: React.FC = () => {
   const BooksInCart = useAppSelector((state) => state.cart.cart);

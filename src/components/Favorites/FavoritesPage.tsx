@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import Header from '../Header/Header';
 import Footer from '../Footer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFavorite } from '../../store/thunk';
 import FavoritePageBody from './FavoritesPageBody';
+import { getFavorite } from '../../store/favorites/favoritesThunk';
 
 const FavoritePage: React.FC = () => {
   const Favorites = useAppSelector((state) => state.favorite.favorites);

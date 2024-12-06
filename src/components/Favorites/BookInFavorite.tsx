@@ -4,8 +4,8 @@ import { IPropsFavorite } from '../../lib/types';
 
 import rubbish from '../../img/Delete.png';
 import { useAppDispatch } from '../../hooks';
-import { deleteFavoriteItem } from '../../store/thunk';
 import { ApiPath } from '../../constants/textConstants';
+import { deleteFavoriteItem } from '../../store/favorites/favoritesThunk';
 
 const BookInFavorite: React.FC<IPropsFavorite> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;

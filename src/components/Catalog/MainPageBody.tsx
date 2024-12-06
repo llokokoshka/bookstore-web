@@ -8,19 +8,14 @@ import Poster from './Poster';
 import SortMenu from './SortMenu';
 import AuthPoster from './AuthPoster';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCatalog, getCart, getFavorite } from '../../store/thunk';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
-import {
-  setCheckedGenres,
-  setMaxPrice,
-  setMinPrice,
-  setPage,
-  setSearcheParam,
-  setSortBy,
-} from '../../store/filterSlice';
+import { setPage } from '../../store/filter/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
 import Catalog from './Catalog';
 import Navigate from './Navigate';
+import { getCart } from '../../store/cart/cartThunk';
+import { getCatalog } from '../../store/catalog/catalogThunk';
+import { getFavorite } from '../../store/favorites/favoritesThunk';
 
 const MainPageBody = () => {
   const dispatch = useAppDispatch();
@@ -64,41 +59,18 @@ const MainPageBody = () => {
   }, [user, dispatch]);
 
   useEffect(() => {
-    setSearchParams({
-      ...Object.fromEntries(searchParams.entries()),
+    setQueryParams({
+      dispatch: dispatch,
+      searchParams: searchParams,
+      setSearchParams: setSearchParams,
     });
 
     let pageNumber = searchParams.get('page');
     let genres = searchParams.getAll('genre')[0]?.split(',').map(Number);
     let minPriceParam = searchParams.get('minPrice');
     let maxPriceParam = searchParams.get('maxPrice');
-    let sortByParam = searchParams.getAll('sortBy').toString();
+    let sortByParam = searchParams.get('sortBy');
     let search = searchParams.get('search');
-
-    if (genres && genres.length !== 0) {
-      for (let genre of genres) {
-        dispatch(setCheckedGenres(genre));
-      }
-    }
-
-    if (pageNumber) {
-      dispatch(setPage(Number(pageNumber)));
-    }
-
-    if (minPriceParam) {
-      dispatch(setMinPrice(Number(minPriceParam)));
-    }
-
-    if (maxPriceParam) {
-      dispatch(setMaxPrice(Number(maxPriceParam)));
-    }
-    if (sortByParam) {
-      dispatch(setSortBy(sortByParam));
-    }
-
-    if (search) {
-      dispatch(setSearcheParam(search));
-    }
 
     const getBooksFromServer = async () => {
       if (books === null || catalog === null) {
