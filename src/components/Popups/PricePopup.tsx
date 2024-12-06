@@ -52,6 +52,7 @@ const PricePopup: React.FC = () => {
           renderTrack={(props, state) => (
             <div
               {...props}
+              key={props.key}
               className={`${
                 state.index === 1 ? 'track track-active' : 'track'
               }`}

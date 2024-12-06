@@ -12,7 +12,7 @@ import {
   getFavorite,
   getRecommended,
 } from '../../store/thunk';
-import Book from '../Catalog/Book';
+import Recommendations from './Recomendations';
 
 const BookPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -38,15 +38,6 @@ const BookPage: React.FC = () => {
   }, [pathname]);
 
   useEffect(() => {
-    if (!books) {
-      dispatch(getBookById(bookId));
-    }
-    if (recommendedBooks.length === 0) {
-      dispatch(getRecommended());
-    }
-  }, [bookId, dispatch]);
-
-  useEffect(() => {
     if (user && Object.keys(booksInCart).length === 0) {
       try {
         dispatch(getCart());
@@ -63,7 +54,22 @@ const BookPage: React.FC = () => {
     }
   }, [user, dispatch]);
 
-  const book = books?.find((book) => book.id === bookId);
+  useEffect(() => {
+    if (!books) {
+      dispatch(getBookById(bookId));
+    }
+    if (recommendedBooks.length === 0 || recommendedBooks.length < 4) {
+      dispatch(getRecommended());
+      for (let idRec of recommendedBooks) {
+        if (!(idRec in books)) {
+          dispatch(getBookById(idRec));
+        }
+      }
+    }
+  }, [bookId, dispatch]);
+
+  const book = bookId in books ? books[bookId] : null;
+  console.log(book);
   const isInFav = favorites.find((id) => id === book?.id);
   return (
     <StyledWrapper>
@@ -74,7 +80,7 @@ const BookPage: React.FC = () => {
           id={bookId}
           img={book.img}
           name={book.name}
-          author={book.author.text}
+          author={book.author}
           description={book.description}
           cover={book.cover}
           comments={book.comments}
@@ -85,38 +91,13 @@ const BookPage: React.FC = () => {
         <div className="big-title">Recommendations</div>
         <div className="recommended_books">
           {recommendedBooks?.map((idBook) => {
-            let inCart = false;
-            let inFavorites = false;
-            if (booksInCart && booksInCart.find((book) => book === idBook)) {
-              inCart = true;
-            }
-            if (
-              booksInFavorites &&
-              booksInFavorites.find((book) => book === idBook)
-            ) {
-              inFavorites = true;
-            }
-            const currentBook = books?.find((book) => book.id === idBook);
             return (
-              <>
-                {currentBook ? (
-                  <Book
-                    key={currentBook.id}
-                    id={currentBook.id}
-                    img={currentBook.img}
-                    name={currentBook.name}
-                    author={currentBook.author.text}
-                    price={
-                      currentBook.cover?.hardcover_amount &&
-                      currentBook.cover?.hardcover_amount > 0
-                        ? currentBook.cover?.hardcover_price
-                        : currentBook.cover?.paperback_price
-                    }
-                    isInCart={inCart}
-                    isInFavorites={inFavorites}
-                  />
-                ) : null}
-              </>
+              <Recommendations
+                id={idBook}
+                booksInCart={booksInCart}
+                booksInFavorites={booksInFavorites}
+                books={books}
+              />
             );
           })}
         </div>

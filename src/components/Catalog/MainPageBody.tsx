@@ -7,18 +7,8 @@ import Footer from '../Footer';
 import Poster from './Poster';
 import SortMenu from './SortMenu';
 import AuthPoster from './AuthPoster';
-import Book from './Book';
-import rightArr from '../../img/right arrow.png';
-import leftArr from '../../img/left arrow.png';
-import emtyRow from '../../img/Ellipse.png';
-import fullRow from '../../img/Ellipse full.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  getCatalog,
-  getCart,
-  getFavorite,
-  getSearched,
-} from '../../store/thunk';
+import { getCatalog, getCart, getFavorite } from '../../store/thunk';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
 import {
   setCheckedGenres,
@@ -29,36 +19,55 @@ import {
   setSortBy,
 } from '../../store/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
+import Catalog from './Catalog';
+import Navigate from './Navigate';
 
 const MainPageBody = () => {
   const dispatch = useAppDispatch();
-  const books = useAppSelector((state) => state.booksEntities.books);
-  const catalog = useAppSelector((state) => state.catalog.books);
   const user = useAppSelector((state) => state.auth.user);
+  const books = useAppSelector((state) => state.booksEntities.books);
   const booksInCart = useAppSelector((state) => state.cart.normalizeCart);
   const booksInFavorites = useAppSelector(
     (state) => state.favorite.normalizeFavorites
   );
-
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const page = useAppSelector((state) => state.catalog.meta?.page);
+  const catalog = useAppSelector((state) => state.catalog.books);
   const hasNextPage = useAppSelector(
     (state) => state.catalog.meta?.hasNextPage
   );
   const hasPrevPage = useAppSelector(
     (state) => state.catalog.meta?.hasPreviousPage
   );
+  const page = useAppSelector((state) => state.catalog.meta?.page);
   const colPages = useAppSelector((state) => state.catalog.meta?.pageCount);
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
+    if (user && Object.keys(booksInCart).length === 0) {
+      try {
+        dispatch(getCart());
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (user && Object.keys(booksInFavorites).length === 0) {
+      try {
+        dispatch(getFavorite());
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }, [user, dispatch]);
+
+  useEffect(() => {
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
     });
+
     let pageNumber = searchParams.get('page');
     let genres = searchParams.getAll('genre')[0]?.split(',').map(Number);
     let minPriceParam = searchParams.get('minPrice');
@@ -101,9 +110,9 @@ const MainPageBody = () => {
               minPrice: minPriceParam,
               maxPrice: maxPriceParam,
               sortBy: sortByParam,
+              search: search,
             })
           );
-          await dispatch(getSearched());
         } catch (error) {
           console.error(ERROR_GET_BOOKS_DATA, error);
         }
@@ -111,23 +120,6 @@ const MainPageBody = () => {
     };
     getBooksFromServer();
   }, [dispatch, page, searchParams]);
-
-  useEffect(() => {
-    if (user && Object.keys(booksInCart).length === 0) {
-      try {
-        dispatch(getCart());
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    if (user && Object.keys(booksInFavorites).length === 0) {
-      try {
-        dispatch(getFavorite());
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  }, [user, dispatch]);
 
   const handlePagePrev = () => {
     if (hasPrevPage && page) {
@@ -159,64 +151,24 @@ const MainPageBody = () => {
       <SortMenu />
       <div className="books-wrapp">
         {catalog?.map((id) => {
-          let inCart = false;
-          let inFavorites = false;
-          if (booksInCart && booksInCart.find((book) => book === id)) {
-            inCart = true;
-          }
-          if (
-            booksInFavorites &&
-            booksInFavorites.find((book) => book === id)
-          ) {
-            inFavorites = true;
-          }
-          const currentBook = books?.find((book) => book.id === id);
           return (
-            <>
-              {currentBook ? (
-                <Book
-                  key={currentBook.id}
-                  id={currentBook.id}
-                  img={currentBook.img}
-                  name={currentBook.name}
-                  author={currentBook.author.text}
-                  price={
-                    currentBook.cover?.hardcover_amount &&
-                    currentBook.cover?.hardcover_amount > 0
-                      ? currentBook.cover?.hardcover_price
-                      : currentBook.cover?.paperback_price
-                  }
-                  isInCart={inCart}
-                  isInFavorites={inFavorites}
-                />
-              ) : null}
-            </>
+            <Catalog
+              id={id}
+              booksInCart={booksInCart}
+              booksInFavorites={booksInFavorites}
+              books={books}
+            />
           );
         })}
       </div>
       <div className="navigate">
-        {hasPrevPage ? (
-          <div className="arr" onClick={handlePagePrev}>
-            <img src={leftArr} alt="left arr"></img>
-          </div>
-        ) : null}
-        {colPages === 1 ? (
-          <img src={fullRow} alt="dot" />
-        ) : colPages === 2 ? (
-          <>
-            <img src={fullRow} alt="dot" /> <img src={emtyRow} alt="dot" />
-          </>
-        ) : colPages && (colPages === 3 || colPages > 3) ? (
-          <>
-            <img src={fullRow} alt="dot" />
-            <img src={emtyRow} alt="dot" /> <img src={emtyRow} alt="dot" />
-          </>
-        ) : null}
-        {hasNextPage ? (
-          <div className="arr" onClick={handlePageNext}>
-            <img src={rightArr} alt="right arr"></img>{' '}
-          </div>
-        ) : null}
+        <Navigate
+          hasPrevPage={hasPrevPage}
+          handlePagePrev={handlePagePrev}
+          colPages={colPages}
+          hasNextPage={hasNextPage}
+          handlePageNext={handlePageNext}
+        />
       </div>
       {user === null ? <AuthPoster /> : null}
       <Footer />
@@ -235,13 +187,20 @@ const StyledWrapper = styled.div`
   .books-wrapp {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     flex-wrap: wrap;
     padding: ${({ theme }) => theme.padding.header};
-
     column-gap: 20px;
     row-gap: 80px;
     width: 100%;
+
+    @media screen and (max-width: 834px) {
+      padding: 0px 15px;
+    }
+    @media screen and (max-width: 320px) {
+      max-width: 290px;
+      max-height: 290px;
+    }
   }
 
   .navigate {

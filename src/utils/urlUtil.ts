@@ -42,7 +42,7 @@ export const setQueryParams = async (props: IQueryParams) => {
   } else if (search) {
     updatedParams.search = search;
   }
-
+  console.log(updatedParams?.search);
   props.setSearchParams(updatedParams);
   props.dispatch(
     getCatalog({

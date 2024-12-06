@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import RoundButtons from './RoundButton';
@@ -12,9 +12,12 @@ import { getCart } from '../../store/thunk';
 const AuthButtons: React.FC = () => {
   const dispatch = useAppDispatch();
   const itemsInCArt = useAppSelector((state) => state.cart.numberOfItemsInCart);
-  if (!itemsInCArt) {
-    dispatch(getCart());
-  }
+  useEffect(() => {
+    if (!itemsInCArt) {
+      dispatch(getCart());
+    }
+  }, [dispatch, itemsInCArt]);
+
   return (
     <StyledWrapper>
       <div className="cart-button">

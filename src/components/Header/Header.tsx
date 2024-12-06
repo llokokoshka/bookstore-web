@@ -30,10 +30,19 @@ const Header: React.FC = () => {
     }
   };
 
+  const deleteSearchParams = () => {
+    searchParams.delete('pageNum');
+    searchParams.delete('genres');
+    searchParams.delete('minPrice');
+    searchParams.delete('maxPrice');
+    searchParams.delete('sortBy');
+    searchParams.delete('search');
+  };
+
   return (
     <StyledWrapper>
       <Link to={AppPages.base}>
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" onClick={deleteSearchParams} />
       </Link>
       <div className="header">
         <div className="base-text">Catalog</div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { IPropsBookPageBody } from '../../lib/types';
+import { BookType } from '../../lib/types';
 import Comment from './Comment';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addComment, getBookById } from '../../store/thunk';
@@ -12,7 +12,7 @@ import fullHeart from '../../img/fullHeart.png';
 import { handleFavorites } from '../../utils/favoriteUtil';
 import { useParams } from 'react-router-dom';
 
-const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
+const BookPageBody: React.FC<BookType> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const dispatch = useAppDispatch();
   let { id } = useParams();
@@ -20,6 +20,9 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const [isFav, setIsFav] = useState(props.isFav);
+
+  const [localState, setLocalState] = useState(props);
+  const [loading, setLoading] = useState(false);
 
   const user = useAppSelector((state) => state.auth.user);
   const booksInFavorites = useAppSelector(
@@ -31,19 +34,20 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
     e.preventDefault();
     if (inputValue?.length > 0 && props.id && user && user.id) {
       try {
-        if (!props.id) {
-          dispatch(getBookById(bookId));
-        }
-        const response = await dispatch(
+        setLoading(true);
+        await dispatch(
           addComment({
             text: inputValue,
-            bookId: props.id,
+            bookId: bookId,
           })
         ).unwrap();
+        const updBook = await dispatch(getBookById(props.id)).unwrap();
+        setLocalState(updBook);
         setInputValue('');
-        return response;
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -54,7 +58,7 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
       dispatch,
       booksInFavorites,
       Favorites,
-      isFav
+      isFav || false
     );
     setIsFav(result);
   };
@@ -67,7 +71,7 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
     <StyledWrapper>
       <div className="book-information">
         <div className="book-cover">
-          {props.isFav ? (
+          {localState.isFav ? (
             <div className="book_favorite-button" onClick={useHandleFav}>
               <img src={fullHeart} alt="fullHeart"></img>
             </div>
@@ -88,11 +92,13 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
         </div>
         <div className="info-block">
           <div>
-            <div className="big-title">{props.name}</div>
-            <div className="normal-title">{props.author}</div>
+            <div className="big-title">{localState.name}</div>
+            <div className="normal-title">{localState.author.text}</div>
           </div>
           <div className="rating-block">
-            {props.id ? <Rating bookId={props.id} isUserRAte={true} /> : null}
+            {localState.id ? (
+              <Rating bookId={localState.id} isUserRAte={true} />
+            ) : null}
           </div>
           <div className="description">
             <div className="normal-title">Description</div>
@@ -101,9 +107,9 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
                 isDescriptionExpanded ? 'expanded' : ''
               }`}
             >
-              {props.description}
+              {localState.description}
             </div>
-            {!isDescriptionExpanded && props.description.length > 800 && (
+            {!isDescriptionExpanded && localState.description.length > 800 && (
               <span className="show-more" onClick={toggleDescription}>
                 ... See more
               </span>
@@ -117,9 +123,9 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
           <div className="book-buttons">
             <div>
               <p>Paperback</p>
-              {props.cover.paperback_amount > 0 ? (
+              {localState.cover.paperback_amount > 0 ? (
                 <button className="base-button">
-                  ${props.cover.paperback_price} USD
+                  ${localState.cover.paperback_price} USD
                 </button>
               ) : (
                 <button className="base-button not-aviable"></button>
@@ -127,9 +133,9 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
             </div>
             <div>
               <p>Hardcover</p>
-              {props.cover.hardcover_amount > 0 ? (
+              {localState.cover.hardcover_amount > 0 ? (
                 <button className="base-button">
-                  ${props.cover.hardcover_price} USD
+                  ${localState.cover.hardcover_price} USD
                 </button>
               ) : (
                 <button className="base-button opacity"></button>
@@ -140,15 +146,16 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
       </div>
 
       <div className="comments-block">
-        {props.comments?.map((comment) => (
-          <Comment
-            key={comment.id}
-            id={comment.id}
-            text={comment.text}
-            dateOfCreate={comment.dateOfCreate}
-            user={comment.user}
-          />
-        ))}
+        {Array.isArray(localState.comments) &&
+          localState.comments?.map((comment) => (
+            <Comment
+              key={comment.id}
+              id={comment.id}
+              text={comment.text}
+              dateOfCreate={comment.dateOfCreate}
+              user={comment.user}
+            />
+          ))}
       </div>
       {user ? (
         <form onSubmit={handleAddComment} className="form">
@@ -160,7 +167,7 @@ const BookPageBody: React.FC<IPropsBookPageBody> = (props) => {
             onChange={(e) => setInputValue(e.target.value)}
           ></input>
           <button className="base-button width" type="submit">
-            Post a comment
+            {loading ? <>loading...</> : <> Post a comment</>}
           </button>
         </form>
       ) : null}

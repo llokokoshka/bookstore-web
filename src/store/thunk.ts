@@ -40,7 +40,6 @@ import {
   getCatalogApi,
   getRatingApi,
   getRecommendedApi,
-  getSearchedApi,
 } from '../api/bookApi';
 
 export const loginUser = createAsyncThunk<IUserResponseData, IFormReg>(
@@ -104,7 +103,8 @@ export const getBookById = createAsyncThunk<BookType, number>(
   'books/getBook',
   async (bookId, thunkAPI) => {
     try {
-      let book = await getBookByIdApi(bookId);
+      const book = await getBookByIdApi(bookId);
+      thunkAPI.dispatch(addOrUpdBook([book]));
       return book;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err);
@@ -171,18 +171,6 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
 
       return newDataForCatalog;
     } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
-    }
-  }
-);
-export const getSearched = createAsyncThunk<IRecommendedThunk>(
-  'books/searched',
-  async (_, thunkAPI) => {
-    try {
-      const data = await getSearchedApi();
-      thunkAPI.dispatch(addOrUpdBook(data.books));
-      return data;
-    } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }
   }

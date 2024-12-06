@@ -10,7 +10,7 @@ const FavoritePageBody: React.FC = () => {
   return (
     <StyledWrapper>
       {Favorites?.favoritesItems?.map((item) => {
-        const Book = books?.find((book) => book.id === item.book);
+        const Book = item.book in books ? books[item.book] : undefined;
         return <BookInFavorite key={item.id} id={item.id} book={Book} />;
       })}
     </StyledWrapper>

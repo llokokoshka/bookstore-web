@@ -10,7 +10,7 @@ const CartPageBody: React.FC = () => {
   return (
     <StyledWrapper>
       {BooksInCart?.cartItems?.map((item) => {
-        const Book = books?.find((book) => book.id === item.book);
+        const Book = item.book in books ? books[item.book] : undefined;
         return (
           <BookInCart
             key={item.id}

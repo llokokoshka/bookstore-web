@@ -93,23 +93,23 @@ export type BookType = {
   isBestseller?: boolean;
   isNew?: boolean;
   author: Author;
-  bookGenres: BookGenre[] | [];
+  bookGenres?: BookGenre[] | [];
   comments: CommentsType[] | [];
-  rates: IUserRating | null;
-  totalRate: number | null;
+  rates?: IUserRating | null;
+  totalRate?: number | null;
   cover: CoverType;
+  isFav?: boolean;
 };
 
-export interface IPropsBookPageBody {
-  id: number;
-  img: string;
-  name: string;
-  author: string;
-  description: string;
-  cover: CoverType;
-  comments: CommentsType[] | undefined;
-  isFav: boolean;
-}
+// export interface IPropsBookPageBody {
+//   id: number;
+//   img: string;
+//   name: string;
+//   author: string;
+//   description: string;
+//   cover: CoverType;
+//   comments: CommentsType[] | undefined;
+// }
 
 export interface IPropsBookInCart {
   id: number;
@@ -151,7 +151,7 @@ export interface ICatalog {
 }
 
 export interface IBookState {
-  books: BookType[] | null;
+  books: Record<number, BookType>;
   error: string | null;
   loading: boolean;
 }
@@ -181,7 +181,7 @@ export interface IFilterState {
   minPrice: number;
   maxPrice: number;
   sortBy: string;
-  query: string;
+  search: string;
 }
 
 export interface ICommentsState {

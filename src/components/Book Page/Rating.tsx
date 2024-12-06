@@ -15,7 +15,9 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
   const dispatch = useAppDispatch();
 
   const book = useAppSelector((state) =>
-    state.booksEntities.books?.find((book) => book.id === bookId)
+    bookId in state.booksEntities.books
+      ? state.booksEntities.books[bookId]
+      : null
   );
 
   const bookRating = book?.totalRate;

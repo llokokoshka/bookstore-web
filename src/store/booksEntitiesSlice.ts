@@ -9,7 +9,7 @@ import {
 } from './thunk';
 
 const initialState: IBookState = {
-  books: null,
+  books: {},
   error: null,
   loading: false,
 };
@@ -19,25 +19,27 @@ const bookEntititesSlice = createSlice({
   initialState,
   reducers: {
     addOrUpdBook(state, action: PayloadAction<BookType[]>) {
-      action.payload.forEach((newBook) => {
-        const exBookIndex = state.books?.findIndex(
-          (book) => book.id === newBook.id
+      if (Object.keys(state.books).length === 0) {
+        const normalizedBooks = action.payload.reduce<Record<number, BookType>>(
+          (result, current) => {
+            result[current.id] = current;
+            return result;
+          },
+          {}
         );
-        if (
-          exBookIndex !== -1 &&
-          state.books &&
-          (exBookIndex || exBookIndex === 0)
-        ) {
-          state.books[exBookIndex] = {
-            ...state.books[exBookIndex],
-            ...newBook,
-          };
-        } else if (state.books) {
-          state.books.push(newBook);
-        } else {
-          state.books = [newBook];
-        }
-      });
+        if (normalizedBooks) state.books = normalizedBooks;
+      } else {
+        action.payload.forEach((newBook) => {
+          if (newBook.id in state.books) {
+            state.books[newBook.id] = {
+              ...state.books[newBook.id],
+              ...newBook,
+            };
+          } else {
+            state.books[newBook.id] = newBook;
+          }
+        });
+      }
     },
   },
   extraReducers: (builder) => {
@@ -47,27 +49,15 @@ const bookEntititesSlice = createSlice({
         state.error = null;
       })
       .addCase(addComment.fulfilled, (state, action) => {
-        console.log(state.books);
-        if (state.books) {
-          const indexOfBookinArray = state.books.findIndex(
-            (book) => book.id === action.payload.bookId
-          );
-          if (
-            indexOfBookinArray !== -1 &&
-            (indexOfBookinArray || indexOfBookinArray === 0)
-          ) {
-            console.log(
-              state.books.find((book) => book.id === indexOfBookinArray)
-            );
-            state.books[indexOfBookinArray].comments = {
-              ...state.books[indexOfBookinArray].comments,
+        if (!(Object.keys(state.books).length === 0)) {
+          const bookId = action.payload.bookId;
+          if (bookId && bookId in state.books) {
+            state.books[bookId].comments = {
+              ...state.books[bookId].comments,
               ...action.payload,
             };
-          } else if (
-            indexOfBookinArray !== -1 &&
-            (indexOfBookinArray || indexOfBookinArray === 0)
-          ) {
-            state.books[indexOfBookinArray].comments = [action.payload];
+          } else if (bookId) {
+            state.books[bookId].comments = [action.payload];
           }
         }
       })
@@ -76,24 +66,17 @@ const bookEntititesSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(addOrUpdateRating.fulfilled, (state, action) => {
-        if (state.books) {
-          const indexOfBook = state.books.findIndex(
-            (book) => book.id === action.payload.bookId
-          );
-          if (
-            indexOfBook !== -1 &&
-            (indexOfBook || indexOfBook === 0) &&
-            state.books[indexOfBook].rates &&
-            state.books[indexOfBook].rates !== undefined
-          ) {
-            state.books[indexOfBook].rates = {
-              ...state.books[indexOfBook].rates,
+        if (!(Object.keys(state.books).length === 0)) {
+          const bookId = action.payload.bookId;
+          if (bookId && state.books[bookId].rates) {
+            state.books[bookId].rates = {
+              ...state.books[bookId].rates,
               ...action.payload.rating,
             };
-            state.books[indexOfBook].totalRate = action.payload.avarageRating;
-          } else if (indexOfBook !== -1 && (indexOfBook || indexOfBook === 0)) {
-            state.books[indexOfBook].rates = action.payload.rating;
-            state.books[indexOfBook].totalRate = action.payload.avarageRating;
+            state.books[bookId].totalRate = action.payload.avarageRating;
+          } else if (bookId) {
+            state.books[bookId].rates = action.payload.rating;
+            state.books[bookId].totalRate = action.payload.avarageRating;
           }
         }
       })
@@ -103,15 +86,10 @@ const bookEntititesSlice = createSlice({
       })
       .addCase(getBookRating.fulfilled, (state, action) => {
         state.loading = false;
-        if (state.books !== null) {
-          const indexOfBook = state.books.findIndex(
-            (book) => book.id === action.payload.bookId
-          );
-          if (
-            (indexOfBook === 0 || indexOfBook) &&
-            indexOfBook === action.payload.bookId
-          ) {
-            state.books[indexOfBook].totalRate = action.payload.rate;
+        if (!(Object.keys(state.books).length === 0)) {
+          const bookId = action.payload.bookId;
+          if (bookId && bookId in state.books) {
+            state.books[bookId].totalRate = action.payload.rate;
           }
         }
       })

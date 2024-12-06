@@ -31,12 +31,13 @@ export async function getCatalogApi(searchStr: string) {
 }
 
 export async function getRatingApi(id: number) {
-  return axiosInstance
+  const response = await axiosInstance
     .get<RatingThunkType>(ApiPath.getBookRatingWithIdUrl(id))
     .then((res) => ({
       bookId: id,
       rate: res.data.rate,
     }));
+  return response;
 }
 
 export async function addCommentApi(bookId: number, text: string) {
@@ -75,10 +76,5 @@ export async function getRecommendedApi() {
   const response = await axiosInstance.get<IRecommendedThunk>(
     ApiPath.recommended
   );
-  return response.data;
-}
-
-export async function getSearchedApi() {
-  const response = await axiosInstance.get<IRecommendedThunk>(ApiPath.searched);
   return response.data;
 }
