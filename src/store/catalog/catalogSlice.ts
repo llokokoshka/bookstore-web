@@ -33,7 +33,7 @@ const catalogSlice = createSlice({
       })
       .addCase(getCatalog.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       });
   },
 });

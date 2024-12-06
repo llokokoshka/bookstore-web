@@ -35,7 +35,7 @@ const favoritesSlice = createSlice({
       })
       .addCase(getFavorite.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
       .addCase(addFavoriteItem.pending, (state) => {
         state.loading = true;
@@ -52,7 +52,7 @@ const favoritesSlice = createSlice({
       })
       .addCase(addFavoriteItem.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
       .addCase(deleteFavoriteItem.pending, (state) => {
         state.loading = true;
@@ -87,7 +87,7 @@ const favoritesSlice = createSlice({
       })
       .addCase(deleteFavoriteItem.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       });
   },
 });

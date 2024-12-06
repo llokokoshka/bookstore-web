@@ -40,7 +40,7 @@ const cartSlice = createSlice({
       })
       .addCase(getCart.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
       .addCase(addCartItem.pending, (state) => {
         state.loading = true;
@@ -64,7 +64,7 @@ const cartSlice = createSlice({
       })
       .addCase(addCartItem.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
       .addCase(upAmountCartItem.pending, (state) => {
         state.loading = true;
@@ -90,7 +90,7 @@ const cartSlice = createSlice({
       })
       .addCase(upAmountCartItem.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
       .addCase(downAmountCartItem.pending, (state) => {
         state.loading = true;
@@ -116,7 +116,7 @@ const cartSlice = createSlice({
       })
       .addCase(downAmountCartItem.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
       .addCase(deleteCartItem.pending, (state) => {
         state.loading = true;
@@ -152,7 +152,7 @@ const cartSlice = createSlice({
       })
       .addCase(deleteCartItem.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       });
   },
 });

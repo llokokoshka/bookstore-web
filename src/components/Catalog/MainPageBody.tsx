@@ -125,6 +125,7 @@ const MainPageBody = () => {
         {catalog?.map((id) => {
           return (
             <Catalog
+              key={id}
               id={id}
               booksInCart={booksInCart}
               booksInFavorites={booksInFavorites}

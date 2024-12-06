@@ -9,23 +9,21 @@ import { ApiPath } from '../../constants/textConstants';
 import heart from '../../img/Heart.png';
 import fullHeart from '../../img/fullHeart.png';
 import { handleFavorites } from '../../utils/favoriteUtil';
-import { useParams } from 'react-router-dom';
 import {
   addComment,
   getBookById,
 } from '../../store/booksEntities/booksEntitiesThunk';
 
 const BookPageBody: React.FC<BookType> = (props) => {
-  const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const dispatch = useAppDispatch();
-  let { id } = useParams();
-  const bookId = Number(id);
+  const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
+
   const [inputValue, setInputValue] = useState<string>('');
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const [isFav, setIsFav] = useState(props.isFav);
 
-  const [localState, setLocalState] = useState(props);
-  const [loading, setLoading] = useState(false);
+  // const [localState, setLocalState] = useState(props);
+  // const [loading, setLoading] = useState(false);
 
   const user = useAppSelector((state) => state.auth.user);
   const booksInFavorites = useAppSelector(
@@ -37,20 +35,21 @@ const BookPageBody: React.FC<BookType> = (props) => {
     e.preventDefault();
     if (inputValue?.length > 0 && props.id && user && user.id) {
       try {
-        setLoading(true);
+        // setLoading(true);
         await dispatch(
           addComment({
             text: inputValue,
-            bookId: bookId,
+            bookId: props.id,
           })
         ).unwrap();
         const updBook = await dispatch(getBookById(props.id)).unwrap();
-        setLocalState(updBook);
+        console.log(updBook);
+        // setLocalState(updBook);
         setInputValue('');
       } catch (err) {
         console.error(err);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     }
   };
@@ -74,7 +73,7 @@ const BookPageBody: React.FC<BookType> = (props) => {
     <StyledWrapper>
       <div className="book-information">
         <div className="book-cover">
-          {localState.isFav ? (
+          {props.isFav ? (
             <div className="book_favorite-button" onClick={useHandleFav}>
               <img src={fullHeart} alt="fullHeart"></img>
             </div>
@@ -95,13 +94,11 @@ const BookPageBody: React.FC<BookType> = (props) => {
         </div>
         <div className="info-block">
           <div>
-            <div className="big-title">{localState.name}</div>
-            <div className="normal-title">{localState.author.text}</div>
+            <div className="big-title">{props.name}</div>
+            <div className="normal-title">{props.author.text}</div>
           </div>
           <div className="rating-block">
-            {localState.id ? (
-              <Rating bookId={localState.id} isUserRAte={true} />
-            ) : null}
+            {props.id ? <Rating bookId={props.id} isUserRAte={true} /> : null}
           </div>
           <div className="description">
             <div className="normal-title">Description</div>
@@ -110,9 +107,9 @@ const BookPageBody: React.FC<BookType> = (props) => {
                 isDescriptionExpanded ? 'expanded' : ''
               }`}
             >
-              {localState.description}
+              {props.description}
             </div>
-            {!isDescriptionExpanded && localState.description.length > 800 && (
+            {!isDescriptionExpanded && props.description.length > 800 && (
               <span className="show-more" onClick={toggleDescription}>
                 ... See more
               </span>
@@ -126,9 +123,9 @@ const BookPageBody: React.FC<BookType> = (props) => {
           <div className="book-buttons">
             <div>
               <p>Paperback</p>
-              {localState.cover.paperback_amount > 0 ? (
+              {props.cover.paperback_amount > 0 ? (
                 <button className="base-button">
-                  ${localState.cover.paperback_price} USD
+                  ${props.cover.paperback_price} USD
                 </button>
               ) : (
                 <button className="base-button not-aviable"></button>
@@ -136,9 +133,9 @@ const BookPageBody: React.FC<BookType> = (props) => {
             </div>
             <div>
               <p>Hardcover</p>
-              {localState.cover.hardcover_amount > 0 ? (
+              {props.cover.hardcover_amount > 0 ? (
                 <button className="base-button">
-                  ${localState.cover.hardcover_price} USD
+                  ${props.cover.hardcover_price} USD
                 </button>
               ) : (
                 <button className="base-button opacity"></button>
@@ -149,8 +146,8 @@ const BookPageBody: React.FC<BookType> = (props) => {
       </div>
 
       <div className="comments-block">
-        {Array.isArray(localState.comments) &&
-          localState.comments?.map((comment) => (
+        {Array.isArray(props.comments) &&
+          props.comments?.map((comment) => (
             <Comment
               key={comment.id}
               id={comment.id}
@@ -170,7 +167,7 @@ const BookPageBody: React.FC<BookType> = (props) => {
             onChange={(e) => setInputValue(e.target.value)}
           ></input>
           <button className="base-button width" type="submit">
-            {loading ? <>loading...</> : <> Post a comment</>}
+            Post a comment
           </button>
         </form>
       ) : null}

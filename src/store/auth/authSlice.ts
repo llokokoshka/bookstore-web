@@ -54,7 +54,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
       .addCase(regUser.pending, (state) => {
         state.loading = true;
@@ -68,7 +68,7 @@ const authSlice = createSlice({
       })
       .addCase(regUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
       .addCase(getUser.pending, (state) => {
         state.loading = true;
@@ -82,7 +82,7 @@ const authSlice = createSlice({
       })
       .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       });
   },
 });

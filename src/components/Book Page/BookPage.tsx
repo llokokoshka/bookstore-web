@@ -8,7 +8,10 @@ import Footer from '../Footer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import Recommendations from './Recomendations';
-import { getBookById } from '../../store/booksEntities/booksEntitiesThunk';
+import {
+  getBookById,
+  getComments,
+} from '../../store/booksEntities/booksEntitiesThunk';
 import { getCart } from '../../store/cart/cartThunk';
 import { getFavorite } from '../../store/favorites/favoritesThunk';
 import { getRecommended } from '../../store/recommended/recommendedThunk';
@@ -53,9 +56,15 @@ const BookPage: React.FC = () => {
     }
   }, [user, dispatch]);
 
+  const book = bookId in books ? books[bookId] : null;
+  const comments = book?.comments;
+
   useEffect(() => {
     if (!books) {
       dispatch(getBookById(bookId));
+    }
+    if (book && !comments) {
+      dispatch(getComments(bookId));
     }
     if (recommendedBooks.length === 0 || recommendedBooks.length < 4) {
       dispatch(getRecommended());
@@ -65,15 +74,13 @@ const BookPage: React.FC = () => {
         }
       }
     }
-  }, [bookId, dispatch]);
+  }, [bookId, dispatch, comments]);
 
-  const book = bookId in books ? books[bookId] : null;
-  console.log(book);
   const isInFav = favorites.find((id) => id === book?.id);
   return (
     <StyledWrapper>
       <Header />
-      {book && books ? (
+      {book ? (
         <BookPageBody
           key={bookId}
           id={bookId}
@@ -92,6 +99,7 @@ const BookPage: React.FC = () => {
           {recommendedBooks?.map((idBook) => {
             return (
               <Recommendations
+                key={idBook}
                 id={idBook}
                 booksInCart={booksInCart}
                 booksInFavorites={booksInFavorites}
