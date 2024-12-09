@@ -28,9 +28,6 @@ const authSlice = createSlice({
         if (action.payload.avatar) {
           state.user.avatar = action.payload.avatar;
         }
-        if (action.payload.password) {
-          state.user.password = action.payload.password;
-        }
         if (action.payload.fullName) {
           state.user.fullName = action.payload.fullName;
         }

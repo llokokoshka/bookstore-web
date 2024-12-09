@@ -50,6 +50,15 @@ const Book: React.FC<IBookProps> = (props) => {
             <img src={heart} alt="heart"></img>
           </div>
         )}
+        {props.isNew ? (
+          <div className="special-type-new" onClick={useHandleFav}>
+            <div>New</div>
+          </div>
+        ) : props.isBestseller ? (
+          <div className="special-type-bestseller" onClick={useHandleFav}>
+            <div>Bestseller</div>
+          </div>
+        ) : null}
 
         <Link to={`/${props.id}`}>
           <img src={dirname + props.img} alt="img" className="book-cover"></img>
@@ -186,5 +195,49 @@ const StyledWrapper = styled.div`
     top: 615px;
     padding: 10px 50px;
     border-radius: 16px;
+  }
+  .special-type-new {
+    position: absolute;
+    width: 132px;
+    height: 30px;
+    top: 398px;
+    left: 20px;
+    padding: 10px 50px;
+    gap: 10px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 9.5px;
+    letter-spacing: 0.75px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    background-color: ${({ theme }) => theme.colors.green};
+    color: #344966;
+    z-index: 7;
+  }
+  .special-type-bestseller {
+    position: absolute;
+    z-index: 7;
+    width: 175px;
+    height: 30px;
+    top: 398px;
+    left: 20px;
+    padding: 10px 50px;
+    gap: 10px;
+    border-radius: 16px;
+    opacity: 0px;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 9.5px;
+    letter-spacing: 0.75px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+
+    background-color: ${({ theme }) => theme.colors.dark_blue};
+    color: white;
   }
 `;

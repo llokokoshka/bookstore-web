@@ -6,6 +6,7 @@ import {
   FavoriteItemType,
   FavoriteType,
   IUserResponseData,
+  UserType,
 } from '../lib/types';
 
 export async function saveFile(formData: FormData) {
@@ -37,12 +38,12 @@ export async function saveBase64File(base64Data: string, fileType: string) {
 export async function updateUserData(data: {
   fullName?: string;
   email?: string;
-}) {
+}): Promise<UserType> {
   const updUser = await axiosInstance.patch(ApiPath.user.me, {
     fullName: data?.fullName,
     email: data?.email,
   });
-  return updUser;
+  return updUser.data;
 }
 
 export async function updateUserPassword(data: {

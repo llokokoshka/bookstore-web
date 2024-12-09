@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import { InputPropsType } from '../../lib/types';
@@ -8,27 +8,34 @@ import { setUser } from '../../store/auth/authSlice';
 const ProfileInput: React.FC<InputPropsType> = (props) => {
   const [inputType, setInputType] = useState('password');
   let correctPassFlag = true;
-  const { img, label, typeP, register, name, value, disable, errors } = props;
+  const { img, label, typeP, register, name, disable, errors } = props;
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (name !== 'password') {
-      if (value) {
-        register(name, { value: value });
-      }
-    } else register(name, { value: '******************' });
-  });
 
   const handlerInputType = () => {
     setInputType((type) => (type === 'password' ? 'text' : 'password'));
   };
 
   const editValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      setUser({
-        name: e.target.value,
-      })
-    );
+    switch (name) {
+      case 'fullName': {
+        dispatch(
+          setUser({
+            fullName: e.target.value,
+          })
+        );
+        break;
+      }
+      case 'email': {
+        dispatch(
+          setUser({
+            email: e.target.value,
+          })
+        );
+        break;
+      }
+    }
   };
+
   const handlePass = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (name === 'password' && correctPassFlag) {
       e.target.value = '';
@@ -65,7 +72,6 @@ const ProfileInput: React.FC<InputPropsType> = (props) => {
             onChange={editValue}
             onFocus={handlePass}
             disabled={disable}
-            defaultValue={value}
             className="input__field pad-inp"
           />
         </div>
@@ -73,29 +79,35 @@ const ProfileInput: React.FC<InputPropsType> = (props) => {
       {name === 'email' && (
         <>
           {errors.email?.type === 'required' && (
-            <div>Email - обязательное поле.</div>
+            <div className="error-message">Email - обязательное поле.</div>
           )}
 
-          {errors.email ? <div>{errors.email.message}</div> : null}
+          {errors.email ? (
+            <div className="error-message">{errors.email.message}</div>
+          ) : null}
         </>
       )}
 
       {name === 'password' && (
         <>
           {errors.password?.type === 'required' && (
-            <div>Password - обязательное поле.</div>
+            <div className="error-message">Password - обязательное поле.</div>
           )}
 
-          {errors.password ? <div>{errors.password.message}</div> : null}
+          {errors.password ? (
+            <div className="error-message">{errors.password.message}</div>
+          ) : null}
         </>
       )}
 
       {name === 'fullName' && (
         <>
           {errors.fullName?.type === 'required' && (
-            <div>Full Name - обязательное поле.</div>
+            <div className="error-message">Full Name - обязательное поле.</div>
           )}
-          {errors.fullName ? <div>{errors.fullName.message}</div> : null}
+          {errors.fullName ? (
+            <div className="error-message">{errors.fullName.message}</div>
+          ) : null}
         </>
       )}
       {name === 'passwordNew' && (
@@ -105,6 +117,7 @@ const ProfileInput: React.FC<InputPropsType> = (props) => {
               style={{
                 display: disable === false ? 'block' : 'none',
               }}
+              className="error-message"
             >
               Password - обязательное поле.
             </div>
@@ -114,6 +127,7 @@ const ProfileInput: React.FC<InputPropsType> = (props) => {
               style={{
                 display: disable === false ? 'block' : 'none',
               }}
+              className="error-message"
             >
               {errors.passwordNew.message}
             </div>
@@ -135,6 +149,7 @@ const ProfileInput: React.FC<InputPropsType> = (props) => {
               style={{
                 display: disable === false ? 'block' : 'none',
               }}
+              className="error-message"
             >
               Password - обязательное поле.
             </div>
@@ -144,6 +159,7 @@ const ProfileInput: React.FC<InputPropsType> = (props) => {
               style={{
                 display: disable === false ? 'block' : 'none',
               }}
+              className="error-message"
             >
               {errors.passwordRep.message}
             </div>
@@ -202,5 +218,9 @@ const StyledWrapper = styled.div`
     width: 448px;
     margin-left: 64px;
     padding-left: 5px;
+  }
+
+  .error-message {
+    color: red;
   }
 `;

@@ -71,9 +71,11 @@ const AuthorizationBody: React.FC = () => {
               />
             </div>
             {errors.email?.type === 'required' && (
-              <div>Email - обязательное поле.</div>
+              <div className="error-message">Email - обязательное поле.</div>
             )}
-            {errors.email && <div>{errors.email.message}</div>}
+            {errors.email && (
+              <div className="error-message">{errors.email.message}</div>
+            )}
             {!errors.email && <div>Enter your email</div>}
             <div className="input">
               <div
@@ -91,9 +93,11 @@ const AuthorizationBody: React.FC = () => {
               ></input>
             </div>
             {errors.password?.type === 'required' && (
-              <div>Password - обязательное поле.</div>
+              <div className="error-message">Password - обязательное поле.</div>
             )}
-            {errors.password && <div>{errors.password.message}</div>}
+            {errors.password && (
+              <div className="error-message">{errors.password.message}</div>
+            )}
             {!errors.password && <div>Enter your password</div>}
           </div>
           <button className="base-button" type="submit">
@@ -131,5 +135,9 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+  }
+
+  .error-message {
+    color: red;
   }
 `;

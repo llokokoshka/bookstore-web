@@ -41,6 +41,10 @@ const Catalog: React.FC<{
           }
           isInCart={inCart}
           isInFavorites={inFavorites}
+          isBestseller={
+            currentBook.isBestseller ? currentBook.isBestseller : false
+          }
+          isNew={currentBook.isNew ? currentBook.isNew : false}
         />
       ) : null}
     </React.Fragment>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,11 +8,10 @@ import man from '../../img/User profile.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import camera from '../../img/Camera.png';
-import { IFormPass, IFormInfo } from '../../lib/types';
+import { IFormPass, IFormInfo, UserType } from '../../lib/types';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
 import ProfileInput from '../Input fields/ProfileInput';
-import { useAppSelector } from '../../hooks';
 import { ApiPath, DEFAULT_PASSWORD_STARS } from '../../constants/textConstants';
 import {
   ERROR_AVATAR_UPLOAD,
@@ -27,20 +26,18 @@ import {
 import { setUser, logout } from '../../store/auth/authSlice';
 import { convertFileToBase64 } from '../../utils/fileUtil';
 
-const ProfileBody: React.FC = () => {
+const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   const dispatch = useDispatch();
   const [changeInfo, setChangeInfo] = useState(true);
   const [changePass, setChangePass] = useState(true);
-
-  const user = useAppSelector((state) => state.auth.user);
-
+  const { user } = props;
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
 
   const {
     register: registerFormInfo,
     handleSubmit: handleSubmitFormInfo,
-    reset: resetInfo,
     formState: { errors: infoErrors },
+    setValue: setValueInfo,
   } = useForm<IFormInfo>({
     mode: 'onChange',
     resolver: yupResolver(profileValidationSchema),
@@ -86,6 +83,16 @@ const ProfileBody: React.FC = () => {
       }
     }
   };
+  useEffect(() => {
+    if (user) {
+      if (user.fullName) {
+        setValueInfo('fullName', user.fullName);
+      }
+      if (user.email) {
+        setValueInfo('email', user.email);
+      }
+    }
+  }, [user, setValueInfo]);
 
   const onSubmitFormInfo: SubmitHandler<IFormInfo> = async (data: {
     fullName?: string;
@@ -93,13 +100,7 @@ const ProfileBody: React.FC = () => {
   }) => {
     try {
       const updUser = await updateUserData(data);
-      dispatch(
-        setUser({
-          fullName: updUser.data?.fullName,
-          email: updUser.data?.email,
-        })
-      );
-      resetInfo();
+      dispatch(setUser(updUser));
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_DATA, err);
     }
@@ -128,6 +129,7 @@ const ProfileBody: React.FC = () => {
       })();
     }
   };
+
   const exit = () => {
     dispatch(logout());
   };
@@ -173,7 +175,6 @@ const ProfileBody: React.FC = () => {
               typeP="text"
               register={registerFormInfo}
               name="fullName"
-              value={user?.fullName}
               disable={changeInfo}
               errors={infoErrors}
             />
@@ -183,7 +184,6 @@ const ProfileBody: React.FC = () => {
               typeP="email"
               register={registerFormInfo}
               name="email"
-              value={user?.email}
               disable={changeInfo}
               errors={infoErrors}
             />
@@ -206,7 +206,6 @@ const ProfileBody: React.FC = () => {
               typeP="password"
               register={registerFormPass}
               name="password"
-              value="******************"
               disable={changePass}
               errors={passErrors}
             />
@@ -218,7 +217,6 @@ const ProfileBody: React.FC = () => {
               typeP="password"
               register={registerFormPass}
               name="passwordNew"
-              value=""
               disable={changePass}
               errors={passErrors}
             />
@@ -228,7 +226,6 @@ const ProfileBody: React.FC = () => {
               typeP="password"
               register={registerFormPass}
               name="passwordRep"
-              value=""
               disable={changePass}
               errors={passErrors}
             />

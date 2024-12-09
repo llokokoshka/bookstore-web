@@ -126,6 +126,8 @@ export interface IBookProps {
   price: number | undefined;
   isInCart: boolean;
   isInFavorites: boolean;
+  isBestseller: boolean;
+  isNew: boolean;
 }
 
 export interface IPropsFavorite {
@@ -196,7 +198,7 @@ export type InputPropsType = {
   typeP: string;
   register: any;
   name: string;
-  value: string | undefined;
+  // value: string | undefined;
   disable: boolean;
   errors: any;
 };
