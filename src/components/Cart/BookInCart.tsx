@@ -73,14 +73,6 @@ const StyledWrapper = styled.div`
   column-gap: 20px;
   padding: 40px 0px;
 
-  /* border-bottom: 1px solid grey; */
-  /* :not(:last-child) {
-    border-bottom: 1px solid grey;
-  } */
-  /* :last-child {
-    border-bottom: none;
-  } */
-
   .img-book {
     width: 197px;
     height: 289px;
@@ -109,14 +101,20 @@ const StyledWrapper = styled.div`
   .amount {
     display: flex;
     flex-direction: row;
+    align-items: center;
+
     column-gap: 58px;
   }
   .amount-block {
     display: flex;
     flex-direction: row;
+    align-items: center;
     column-gap: 14px;
   }
-
+  .icon-img {
+    width: 20px;
+    height: 20px;
+  }
   .icon-img :hover {
     cursor: pointer;
   }

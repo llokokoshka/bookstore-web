@@ -89,6 +89,7 @@ export default Book;
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  flex-basis: 305px;
   width: 305px;
   height: 663px;
   top: 748px;

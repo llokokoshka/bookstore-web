@@ -11,12 +11,22 @@ const FavoritePageBody: React.FC = () => {
   const Favorites = useAppSelector((state) => state.favorite.favorites);
   const books = useAppSelector((state) => state.booksEntities.books);
   return (
-    <StyledWrapper>
+    <StyledWrapper
+      $numberItems={
+        Favorites?.favoritesItems && Favorites.favoritesItems.length !== 0
+          ? Favorites?.favoritesItems.length
+          : 0
+      }
+    >
       {Favorites?.favoritesItems.length !== 0 ? (
         <>
           {Favorites?.favoritesItems?.map((item) => {
             const Book = item.book in books ? books[item.book] : undefined;
-            return <BookInFavorite key={item.id} id={item.id} book={Book} />;
+            return (
+              <div className="cartItem" key={item.id}>
+                <BookInFavorite key={item.id} id={item.id} book={Book} />{' '}
+              </div>
+            );
           })}
         </>
       ) : (
@@ -41,13 +51,16 @@ const FavoritePageBody: React.FC = () => {
 
 export default FavoritePageBody;
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ $numberItems: number }>`
   padding: ${({ theme }) => theme.padding.header};
 
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
+  .cartItem:not(:nth-child(n + ${(props) => props.$numberItems})) {
+    border-bottom: 1px solid #d6d8e7;
+  }
 
   .empty-cart {
     padding: 118px 0px 148px 0;

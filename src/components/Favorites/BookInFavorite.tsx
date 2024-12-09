@@ -22,10 +22,16 @@ const BookInFavorite: React.FC<IPropsFavorite> = (props) => {
   };
   return (
     <StyledWrapper>
-      <img src={dirnameBookImg + bookImg} alt="img" className="img-book"></img>
-      <div className="info-block">
-        <div className="big-title">{bookName}</div>
-        <div className="normal-title">{bookAuthor?.text}</div>
+      <div className="fav-main-block">
+        <img
+          src={dirnameBookImg + bookImg}
+          alt="img"
+          className="img-book"
+        ></img>
+        <div className="info-block">
+          <div className="big-title">{bookName}</div>
+          <div className="normal-title">{bookAuthor?.text}</div>
+        </div>
       </div>
       <img
         src={rubbish}
@@ -42,7 +48,15 @@ export default BookInFavorite;
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  column-gap: 20px;
+  justify-content: space-between;
+  /* column-gap: 20px; */
+  padding: 40px 0px;
+
+  .fav-main-block {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+  }
 
   .img-book {
     width: 197px;
@@ -55,8 +69,8 @@ const StyledWrapper = styled.div`
   }
   .icon-img {
     margin-top: 30px;
-    width: 48px;
-    height: 48px;
+    width: 30px;
+    height: 30px;
   }
   .icon-img:hover {
     cursor: pointer;

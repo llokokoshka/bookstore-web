@@ -8,13 +8,20 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
   async (data, thunkAPI) => {
     try {
       let strOfSearch;
-      const { pageNum, genres, minPrice, maxPrice, sortBy, search } = data;
+      const { pageNum, genres, minPrice, maxPrice, sortBy, search, take } =
+        data;
 
       if (pageNum === undefined || pageNum === null) {
         strOfSearch = `/books/?page=1&take=12`;
       } else {
         strOfSearch = `/books/?page=${pageNum}&take=12`;
       }
+
+      // if (take === undefined || take === null) {
+      //   strOfSearch += `&take=12`;
+      // } else {
+      //   strOfSearch += `&take=${take}`;
+      // }
 
       if (genres) {
         strOfSearch += `&genres=${genres}`;

@@ -77,7 +77,7 @@ const StyledWrapper = styled.div<{ $numberItems: number }>`
   .buttons {
     display: flex;
     flex-direction: row;
-    row-gap: 20px;
+    column-gap: 20px;
   }
 
   .cart-button {

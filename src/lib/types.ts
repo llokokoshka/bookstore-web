@@ -301,6 +301,7 @@ export type QueryParamsType = {
   maxPrice?: string | null;
   sortBy?: string | null;
   search?: string | null;
+  take?: number | null;
 };
 
 export interface IQueryParams {
