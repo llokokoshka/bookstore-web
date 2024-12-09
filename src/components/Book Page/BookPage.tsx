@@ -20,21 +20,17 @@ const BookPage: React.FC = () => {
   const dispatch = useAppDispatch();
   let { id } = useParams();
   const bookId = Number(id);
+  const user = useAppSelector((state) => state.auth.user);
   const books = useAppSelector((state) => state.booksEntities.books);
-  const favorites = useAppSelector(
-    (state) => state.favorite.normalizeFavorites
-  );
   const recommendedBooks = useAppSelector(
     (state) => state.recommended.recommended
   );
-  const user = useAppSelector((state) => state.auth.user);
   const booksInCart = useAppSelector((state) => state.cart.normalizeCart);
   const booksInFavorites = useAppSelector(
     (state) => state.favorite.normalizeFavorites
   );
 
   const { pathname } = useLocation();
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -60,13 +56,13 @@ const BookPage: React.FC = () => {
   const comments = book?.comments;
 
   useEffect(() => {
-    if (!books) {
+    if (!books && !book) {
       dispatch(getBookById(bookId));
     }
     if (book && !comments) {
       dispatch(getComments(bookId));
     }
-    if (recommendedBooks.length === 0 || recommendedBooks.length < 4) {
+    if (recommendedBooks.length < 4) {
       dispatch(getRecommended());
       for (let idRec of recommendedBooks) {
         if (!(idRec in books)) {
@@ -76,7 +72,7 @@ const BookPage: React.FC = () => {
     }
   }, [bookId, dispatch, comments]);
 
-  const isInFav = favorites.find((id) => id === book?.id);
+  const isInFav = booksInFavorites.find((id) => id === book?.id);
   return (
     <StyledWrapper>
       <Header />

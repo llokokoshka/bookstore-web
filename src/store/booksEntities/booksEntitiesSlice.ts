@@ -60,7 +60,6 @@ const bookEntititesSlice = createSlice({
             state.books[bookId].comments = [action.payload];
           }
         }
-        console.log(bookId ? state.books[bookId].comments : 'NO');
       })
       .addCase(addComment.rejected, (state, action) => {
         state.loading = true;
@@ -104,7 +103,7 @@ const bookEntititesSlice = createSlice({
       })
       .addCase(getBookById.fulfilled, (state, action) => {
         state.loading = false;
-        state.books = [action.payload];
+        if (action.payload) state.books[action.payload.id] = action.payload;
       })
       .addCase(getBookById.rejected, (state, action) => {
         state.loading = false;
