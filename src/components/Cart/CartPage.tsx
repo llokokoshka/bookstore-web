@@ -27,7 +27,7 @@ const CartPage: React.FC = () => {
 
   return (
     <StyledWrapper>
-      <Header />
+      <Header page="Cart" />
       <CartPageBody />
       <Footer />
     </StyledWrapper>

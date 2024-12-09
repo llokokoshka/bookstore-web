@@ -27,7 +27,7 @@ const FavoritePage: React.FC = () => {
 
   return (
     <StyledWrapper>
-      <Header />
+      <Header page="Favorites" />
       <FavoritePageBody />
       <Footer />
     </StyledWrapper>

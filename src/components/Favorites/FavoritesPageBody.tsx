@@ -3,16 +3,38 @@ import styled from 'styled-components';
 
 import { useAppSelector } from '../../hooks';
 import BookInFavorite from './BookInFavorite';
+import booksImg from '../../img/booksImg.png';
+import { Link } from 'react-router-dom';
+import { AppPages } from '../../constants/textConstants';
 
 const FavoritePageBody: React.FC = () => {
   const Favorites = useAppSelector((state) => state.favorite.favorites);
   const books = useAppSelector((state) => state.booksEntities.books);
   return (
     <StyledWrapper>
-      {Favorites?.favoritesItems?.map((item) => {
-        const Book = item.book in books ? books[item.book] : undefined;
-        return <BookInFavorite key={item.id} id={item.id} book={Book} />;
-      })}
+      {Favorites?.favoritesItems.length !== 0 ? (
+        <>
+          {Favorites?.favoritesItems?.map((item) => {
+            const Book = item.book in books ? books[item.book] : undefined;
+            return <BookInFavorite key={item.id} id={item.id} book={Book} />;
+          })}
+        </>
+      ) : (
+        <div className="empty-cart">
+          <img src={booksImg} alt="booksiMG"></img>
+          <div className="cart_info">
+            <div className="info-text">
+              <div className="big-title">Your favorites is empty</div>
+              <div className="cart_text">
+                Add items to favorites. Go to the catalogue no.
+              </div>
+            </div>
+            <Link to={AppPages.base}>
+              <button className="base-button">Go to catalog</button>
+            </Link>
+          </div>
+        </div>
+      )}
     </StyledWrapper>
   );
 };
@@ -26,4 +48,32 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+
+  .empty-cart {
+    padding: 118px 0px 148px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    column-gap: 109px;
+  }
+  .cart_info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 60px;
+  }
+  .info-text {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+  .cart_text {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 36px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    width: 465px;
+  }
 `;

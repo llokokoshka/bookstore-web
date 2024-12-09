@@ -7,7 +7,7 @@ export const baseTheme: IbaseTheme = {
     dark: '#0D1821',
     light: '#F0F4EF',
     green: '#BFCC94',
-    light_grey: '',
+    light_grey: '#D6D8E7',
     dark_grey: '#B9BAC3',
     dark_green: '#8D9F4F',
     black: '#000000',

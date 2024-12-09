@@ -75,7 +75,7 @@ const BookPage: React.FC = () => {
   const isInFav = booksInFavorites.find((id) => id === book?.id);
   return (
     <StyledWrapper>
-      <Header />
+      <Header page="Book" />
       {book ? (
         <BookPageBody
           key={bookId}

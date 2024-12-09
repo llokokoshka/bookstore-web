@@ -118,7 +118,7 @@ const MainPageBody = () => {
 
   return (
     <StyledWrapper>
-      <Header />
+      <Header page="Catalog" />
       <Poster />
       <SortMenu />
       <div className="books-wrapp">
@@ -160,7 +160,7 @@ const StyledWrapper = styled.div`
   .books-wrapp {
     display: flex;
     flex-direction: row;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     flex-wrap: wrap;
     padding: ${({ theme }) => theme.padding.header};
     column-gap: 20px;

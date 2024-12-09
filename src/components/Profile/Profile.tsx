@@ -20,7 +20,7 @@ const Profile: React.FC = () => {
   }, []);
   return (
     <StyledWrapper>
-      <Header />
+      <Header page="Profile" />
       <ProfileBody user={user} />
       <Footer />
     </StyledWrapper>
@@ -33,5 +33,5 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: '100hv';
 `;

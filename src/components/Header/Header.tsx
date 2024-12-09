@@ -10,7 +10,7 @@ import { AppPages } from '../../constants/textConstants';
 import { setSearcheParam } from '../../store/filter/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
 
-const Header: React.FC = () => {
+const Header: React.FC<{ page: string }> = (props) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const [searchInput, setSearchInput] = useState('');
@@ -45,7 +45,7 @@ const Header: React.FC = () => {
         <img src={logo} alt="logo" onClick={deleteSearchParams} />
       </Link>
       <div className="header">
-        <div className="base-text">Catalog</div>
+        <div className="base-text">{props.page}</div>
         <div className="input">
           <img src={search} alt="search" className="input__icon" />
           <input
@@ -60,6 +60,10 @@ const Header: React.FC = () => {
       </div>
       {user !== null && user !== undefined ? (
         <AuthButtons />
+      ) : props.page === 'Login' ? (
+        <Link className="todo-body__div-button" to={`/sign-up`}>
+          <button className="base-button">Log in/Sign Up</button>
+        </Link>
       ) : (
         <Link className="todo-body__div-button" to={`/sign-in`}>
           <button className="base-button">Log in/Sign Up</button>

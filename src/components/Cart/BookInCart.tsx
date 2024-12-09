@@ -73,7 +73,13 @@ const StyledWrapper = styled.div`
   column-gap: 20px;
   padding: 40px 0px;
 
-  border-bottom: 1px solid grey;
+  /* border-bottom: 1px solid grey; */
+  /* :not(:last-child) {
+    border-bottom: 1px solid grey;
+  } */
+  /* :last-child {
+    border-bottom: none;
+  } */
 
   .img-book {
     width: 197px;

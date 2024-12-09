@@ -250,12 +250,13 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
 export default ProfileBody;
 
 const StyledWrapper = styled.div`
-  padding: ${({ theme }) => theme.padding.header};
+  padding: 60px 0px 110px 80px;
   display: flex;
   flex-direction: row;
   align-items: start;
   column-gap: 128px;
   width: 100%;
+  flex: 1;
   @media screen and (max-width: 320px) {
     flex-direction: column;
   }
