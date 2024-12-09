@@ -20,6 +20,20 @@ export async function saveFile(formData: FormData) {
   return uploadedFile;
 }
 
+export async function saveBase64File(base64Data: string, fileType: string) {
+  const response = await axiosInstance.post(
+    ApiPath.files,
+    { base64Data, fileType },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access')}`,
+        // 'X-File-Type': fileType,
+      },
+    }
+  );
+  return response.data.data.filename;
+}
+
 export async function updateUserData(data: {
   fullName?: string;
   email?: string;

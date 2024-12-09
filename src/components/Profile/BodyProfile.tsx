@@ -20,11 +20,12 @@ import {
   ERROR_UPDATE_USER_PASSWORD,
 } from '../../constants/errorConstants';
 import {
-  saveFile,
+  saveBase64File,
   updateUserData,
   updateUserPassword,
 } from '../../api/userApi';
 import { setUser, logout } from '../../store/auth/authSlice';
+import { convertFileToBase64 } from '../../utils/fileUtil';
 
 const ProfileBody: React.FC = () => {
   const dispatch = useDispatch();
@@ -74,10 +75,10 @@ const ProfileBody: React.FC = () => {
 
   const handleUpdateAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const formData = new FormData();
-      formData.append('avatar', e.target.files[0]);
+      const file = e.target.files[0];
       try {
-        const data = await saveFile(formData);
+        const base64 = await convertFileToBase64(file);
+        const data = await saveBase64File(base64, 'avatar');
         dispatch(setUser({ avatar: data }));
       } catch (err) {
         console.error(ERROR_AVATAR_UPLOAD, err);

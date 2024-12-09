@@ -48,7 +48,11 @@ const PricePopup: React.FC = () => {
           defaultValue={value}
           ariaLabel={['Lower thumb', 'Upper thumb']}
           ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
-          renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+          renderThumb={(props, state) => (
+            <div {...props} key={props.key}>
+              {state.valueNow}
+            </div>
+          )}
           renderTrack={(props, state) => (
             <div
               {...props}
