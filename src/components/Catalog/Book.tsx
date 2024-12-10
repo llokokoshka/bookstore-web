@@ -109,10 +109,20 @@ const StyledWrapper = styled.div`
   left: 80px;
   row-gap: 30px;
 
+  @media screen and (max-width: 834px) {
+    column-gap: 21px;
+    width: 254px;
+    height: 573px;
+  }
+
   .book {
     position: relative;
     width: 100%;
     height: auto;
+
+    @media screen and (max-width: 834px) {
+      max-width: 254px;
+    }
   }
 
   .book__favorite-button {
@@ -137,6 +147,11 @@ const StyledWrapper = styled.div`
     width: 305px;
     height: 448px;
     border-radius: 16px;
+
+    @media screen and (max-width: 834px) {
+      width: 254px;
+      height: 372px;
+    }
   }
 
   .book-info {
@@ -144,6 +159,9 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     row-gap: 20px;
     width: 299px;
+    @media screen and (max-width: 834px) {
+      width: 254px;
+    }
   }
 
   .book-info__text {
@@ -200,6 +218,10 @@ const StyledWrapper = styled.div`
     letter-spacing: 0.75px;
     text-align: center;
     z-index: 5;
+
+    @media screen and (max-width: 834px) {
+      width: 254px;
+    }
   }
 
   .cart-button:hover {
@@ -212,6 +234,10 @@ const StyledWrapper = styled.div`
     top: 615px;
     padding: 10px 50px;
     border-radius: 16px;
+
+    @media screen and (max-width: 834px) {
+      width: 254px;
+    }
   }
 
   .book__new {
@@ -234,6 +260,10 @@ const StyledWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.green};
     color: #344966;
     z-index: 7;
+
+    @media screen and (max-width: 834px) {
+      top: 320px;
+    }
   }
 
   .book__bestseller {
@@ -258,5 +288,9 @@ const StyledWrapper = styled.div`
 
     background-color: ${({ theme }) => theme.colors.dark_blue};
     color: white;
+
+    @media screen and (max-width: 834px) {
+      top: 320px;
+    }
   }
 `;

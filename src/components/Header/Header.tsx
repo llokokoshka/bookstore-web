@@ -87,6 +87,11 @@ const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
   position: relative;
 
+  @media screen and (max-width: 834px) {
+    column-gap: 51px;
+    padding: 20px 15px;
+  }
+
   .header {
     display: flex;
     flex-direction: row;

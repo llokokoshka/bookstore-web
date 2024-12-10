@@ -5,7 +5,7 @@ type Author = {
     text: string;
 };
 
-type BookGenre = { id: number };
+export type BookGenreType = { id: number };
 
 export type GenresType = {
     id: number;
@@ -37,7 +37,7 @@ export type BookType = {
     isBestseller?: boolean;
     isNew?: boolean;
     author: Author;
-    bookGenres?: BookGenre[] | [];
+    bookGenres?: BookGenreType[] | [];
     comments: CommentsType[] | [];
     rates?: IUserRating | null;
     totalRate?: number | null;

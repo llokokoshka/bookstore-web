@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getRecommendedApi } from '../../api/bookApi';
 import { IRecommendedThunk } from '../../lib/types';
 import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
+import { BookGenreType } from '../../lib/bookTypes';
 
 export const getRecommended = createAsyncThunk<IRecommendedThunk>(
   'books/recommended',

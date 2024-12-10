@@ -31,6 +31,10 @@ export default Poster;
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
 
+  @media screen and (max-width: 834px) {
+    padding: 26px 15px;
+  }
+
   .poster {
     background-color: ${({ theme }) => theme.colors.light};
     display: flex;

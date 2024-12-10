@@ -89,6 +89,19 @@ const StyledWrapper = styled.div`
   width: 100%;
   padding: ${({ theme }) => theme.padding.header};
 
+  @media screen and (max-width: 834px) {
+    padding: 26px 15px;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    row-gap: 20px;
+  }
+  
+  @media screen and (max-width: 320px) {
+    max-width: 290px;
+    /* max-height: 290px; */
+  }
+
   .sort-menu {
     display: flex;
     flex-direction: row;
