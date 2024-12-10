@@ -4,6 +4,8 @@ import { useSearchParams } from 'react-router-dom';
 import cn from 'classnames';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import poligon from '../../img/Polygon 4.png';
+
 import {
   deleteCheckedGenres,
   setCheckedGenres,
@@ -57,6 +59,8 @@ const GenresPopup: React.FC = () => {
 
   return (
     <StyledWrapper>
+      <img src={poligon} alt="aa" className="poligon" />
+
       {AllGenres.map((genre) => (
         <div key={genre.id} className="genre">
           <input
@@ -84,11 +88,17 @@ const StyledWrapper = styled.div`
   padding: 15px;
   border-radius: 16px;
   width: 305px;
-  height: 740px;
+  height: auto;
   top: 74px;
   row-gap: 10px;
   z-index: 10;
 
+  .poligon {
+    position: absolute;
+    left: 11px;
+    top: -11px;
+    z-index: 6;
+  }
   .genre {
     display: flex;
     flex-direction: row;

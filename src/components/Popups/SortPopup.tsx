@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setSortBy } from '../../store/filter/filterSlice';
 import { useSearchParams } from 'react-router-dom';
 import { setQueryParams } from '../../utils/urlUtil';
+import poligon from '../../img/Polygon 4.png';
 
 const SortPopup: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +30,8 @@ const SortPopup: React.FC = () => {
 
   return (
     <StyledWrapper>
+      <img src={poligon} alt="aa" className="poligon" />
+
       {sortOptions.map((option) => (
         <div
           className="base-text --sort-param"
@@ -49,7 +52,7 @@ const StyledWrapper = styled.div`
   position: absolute;
   background: ${({ theme }) => theme.colors.light};
   width: 197px;
-  height: 226px;
+  height: auto;
   top: 78px;
   padding: 15px;
   gap: 12px;
@@ -57,6 +60,12 @@ const StyledWrapper = styled.div`
   opacity: 0px;
   z-index: 6;
 
+  .poligon {
+    position: absolute;
+    left: 11px;
+    top: -11px;
+    z-index: 6;
+  }
   .--sort-param {
     height: 34px;
     line-height: 28px;

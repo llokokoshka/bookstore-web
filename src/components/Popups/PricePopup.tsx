@@ -91,7 +91,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     background: ${({ theme }) => theme.colors.light};
     width: 413px;
-    height: 151px;
+    height: auto;
     padding: 40px 18px;
     border-radius: 16px;
     opacity: 0px;
