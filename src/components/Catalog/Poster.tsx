@@ -37,6 +37,7 @@ const StyledWrapper = styled.div`
     width: 100%;
     position: relative;
   }
+
   .poster__img {
     position: absolute;
     bottom: 0;
@@ -57,6 +58,7 @@ const StyledWrapper = styled.div`
     align-items: start;
     row-gap: 50px;
   }
+
   .info-block__text {
     display: flex;
     flex-direction: column;

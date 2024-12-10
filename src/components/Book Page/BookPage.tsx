@@ -6,7 +6,6 @@ import Header from '../Header/Header';
 import BookPageBody from './BodyBookPage';
 import Footer from '../Footer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-
 import Recommendations from './Recomendations';
 import {
   getBookById,
@@ -50,6 +49,7 @@ const BookPage: React.FC = () => {
         console.error(err);
       }
     }
+    // eslint-disable-next-line
   }, [user, dispatch]);
 
   const book = bookId in books ? books[bookId] : null;
@@ -70,6 +70,7 @@ const BookPage: React.FC = () => {
         }
       }
     }
+    // eslint-disable-next-line
   }, [bookId, dispatch, comments]);
 
   const isInFav = booksInFavorites.find((id) => id === book?.id);
@@ -91,7 +92,7 @@ const BookPage: React.FC = () => {
       ) : null}
       <div className="recommended">
         <div className="big-title">Recommendations</div>
-        <div className="recommended_books">
+        <div className="recommended__books">
           {recommendedBooks?.map((idBook) => {
             return (
               <Recommendations
@@ -125,7 +126,7 @@ const StyledWrapper = styled.div`
     row-gap: 50px;
   }
 
-  .recommended_books {
+  .recommended__books {
     display: flex;
     flex-direction: row;
     justify-content: space-between;

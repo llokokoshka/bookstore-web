@@ -11,7 +11,7 @@ const Navigate: React.FC<INavigateProps> = (props) => {
   return (
     <StyledWrapper>
       {props.hasPrevPage ? (
-        <div className="arr left" onClick={props.handlePagePrev}>
+        <div className="arrow" onClick={props.handlePagePrev}>
           <img src={leftArr} alt="left arr"></img>
         </div>
       ) : null}
@@ -53,7 +53,7 @@ const Navigate: React.FC<INavigateProps> = (props) => {
         ) : null}
       </div>
       {props.hasNextPage ? (
-        <div className="arr right" onClick={props.handlePageNext}>
+        <div className="arrow" onClick={props.handlePageNext}>
           <img src={rightArr} alt="right arr"></img>{' '}
         </div>
       ) : null}
@@ -72,7 +72,7 @@ const StyledWrapper = styled.div`
   margin-bottom: 152px;
   margin-top: 54px;
 
-  .arr:hover {
+  .arrow:hover {
     cursor: pointer;
   }
 

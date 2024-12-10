@@ -40,7 +40,7 @@ const PricePopup: React.FC = () => {
 
   return (
     <StyledWrapper>
-      <img src={poligon} alt="aa" className="pol-img" />
+      <img src={poligon} alt="aa" className="poligon" />
       <div className="main-block">
         <ReactSlider
           className="horizontal-slider"
@@ -81,7 +81,7 @@ const StyledWrapper = styled.div`
   position: absolute;
   top: 74px;
 
-  .pol-img {
+  .poligon {
     position: absolute;
     left: 11px;
     top: -11px;

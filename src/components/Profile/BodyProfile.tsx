@@ -29,7 +29,7 @@ import { UserType, IFormInfo, IFormPass } from '../../lib/authTypes';
 const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   const dispatch = useDispatch();
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
-  
+
   const [changeInfo, setChangeInfo] = useState(true);
   const [changePass, setChangePass] = useState(true);
   const { user } = props;
@@ -84,7 +84,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
       }
     }
   };
-  
+
   useEffect(() => {
     if (user) {
       if (user.fullName) {
@@ -141,7 +141,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
       <div>
         <div className="profile-img">
           <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
-          <label className="base-round-button lable-nice">
+          <label className="base-round-button --lable-nice">
             <input
               type="file"
               id="avatar"
@@ -159,7 +159,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
         </button>
       </div>
 
-      <div className="inputs">
+      <div className="container">
         <form
           className="container__info-block"
           onSubmit={handleSubmitFormInfo(onSubmitFormInfo)}
@@ -295,7 +295,7 @@ const StyledWrapper = styled.div`
     justify-content: space-between;
   }
 
-  .inputs {
+  .container {
     display: flex;
     flex-direction: column;
     row-gap: 40px;
@@ -317,7 +317,7 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .lable-nice {
+  .--lable-nice {
     display: flex;
     justify-content: center;
     align-items: center;

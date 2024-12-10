@@ -60,7 +60,7 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
         {isUserRate ? (
           <div className="rating">
             <img src={fullStar} alt="star"></img>
-            <h3 className="rate"> {niceViewOfBookRating || '0.0'}</h3>
+            <h3 className="rating__value"> {niceViewOfBookRating || '0.0'}</h3>
           </div>
         ) : null}
       </>
@@ -76,7 +76,10 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
                 )}
               </div>
             ))}
-            <h3 className="rate"> {userRating || '<- Rate this book'}</h3>
+            <h3 className="rating__value">
+              {' '}
+              {userRating || '<- Rate this book'}
+            </h3>
           </>
         ) : (
           <>
@@ -89,7 +92,7 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
                 )}
               </div>
             ))}
-            <h3 className="rate"> {niceViewOfBookRating || '0.0'}</h3>
+            <h3 className="rating__value"> {niceViewOfBookRating || '0.0'}</h3>
           </>
         )}
       </div>
@@ -115,8 +118,7 @@ const StyledWrapper = styled.div`
     column-gap: 15px;
   }
 
-  .rate {
-    /* width: 25px; */
+  .rating__value {
     height: 24px;
     top: 561px;
     left: 274px;

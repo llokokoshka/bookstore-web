@@ -11,7 +11,7 @@ const RoundButtons: React.FC<buttonProps> = (props) => {
   return (
     <StyledWrapper>
       <Link className="todo-body__div-button" to={props.url}>
-        <button className="base-round-button lable-nice">
+        <button className="base-round-button --lable-nice">
           <img src={props.img} alt="icon"></img>
         </button>
       </Link>
@@ -22,7 +22,7 @@ const RoundButtons: React.FC<buttonProps> = (props) => {
 export default RoundButtons;
 
 const StyledWrapper = styled.div`
-  .lable-nice {
+  .--lable-nice {
     display: flex;
     justify-content: center;
     align-items: center;

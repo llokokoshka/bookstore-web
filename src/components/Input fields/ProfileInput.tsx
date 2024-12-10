@@ -43,11 +43,11 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
       correctPassFlag = false;
     }
   };
-  
+
   return (
     <StyledWrapper>
       <div
-        className="input input__field correct size"
+        className="input input__field --correct --size"
         style={{
           display:
             disable === false &&
@@ -187,7 +187,7 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   row-gap: 9px;
 
-  .size {
+  .--size {
     width: 522px;
     height: 64px;
     display: flex;
@@ -212,7 +212,7 @@ const StyledWrapper = styled.div`
     justify-content: left;
     width: 100%;
   }
-  .correct {
+  .--correct {
     padding-left: 0px;
   }
 

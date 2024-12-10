@@ -56,6 +56,7 @@ const MainPageBody = () => {
         console.error(err);
       }
     }
+    // eslint-disable-next-line
   }, [user, dispatch]);
 
   useEffect(() => {
@@ -91,6 +92,7 @@ const MainPageBody = () => {
       }
     };
     getBooksFromServer();
+    // eslint-disable-next-line
   }, [dispatch, page, searchParams]);
 
   const handlePagePrev = () => {
@@ -124,7 +126,7 @@ const MainPageBody = () => {
       <Header page="Catalog" />
       <Poster />
       <SortMenu />
-      <div className="books-wrapp">
+      <div className="catalog">
         {catalog?.map((id) => {
           return (
             <Catalog
@@ -159,7 +161,7 @@ const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  .books-wrapp {
+  .catalog {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

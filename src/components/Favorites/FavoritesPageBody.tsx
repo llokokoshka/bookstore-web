@@ -10,7 +10,7 @@ import { AppPages } from '../../constants/textConstants';
 const FavoritePageBody: React.FC = () => {
   const Favorites = useAppSelector((state) => state.favorite.favorites);
   const books = useAppSelector((state) => state.booksEntities.books);
-  
+
   return (
     <StyledWrapper
       $numberItems={
@@ -24,7 +24,7 @@ const FavoritePageBody: React.FC = () => {
           {Favorites?.favoritesItems?.map((item) => {
             const Book = item.book in books ? books[item.book] : undefined;
             return (
-              <div className="cartItem" key={item.id}>
+              <div className="cart-item" key={item.id}>
                 <BookInFavorite key={item.id} id={item.id} book={Book} />{' '}
               </div>
             );
@@ -33,10 +33,10 @@ const FavoritePageBody: React.FC = () => {
       ) : (
         <div className="empty-cart">
           <img src={booksImg} alt="booksiMG"></img>
-          <div className="cart_info">
-            <div className="info-text">
+          <div className="cart__info">
+            <div className="info__text">
               <div className="big-title">Your favorites is empty</div>
-              <div className="cart_text">
+              <div className="cart-text">
                 Add items to favorites. Go to the catalogue no.
               </div>
             </div>
@@ -59,7 +59,8 @@ const StyledWrapper = styled.div<{ $numberItems: number }>`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  .cartItem:not(:nth-child(n + ${(props) => props.$numberItems})) {
+
+  .cart-item:not(:nth-child(n + ${(props) => props.$numberItems})) {
     border-bottom: 1px solid #d6d8e7;
   }
 
@@ -71,17 +72,20 @@ const StyledWrapper = styled.div<{ $numberItems: number }>`
     justify-content: center;
     column-gap: 109px;
   }
-  .cart_info {
+
+  .cart__info {
     display: flex;
     flex-direction: column;
     row-gap: 60px;
   }
-  .info-text {
+
+  .info__text {
     display: flex;
     flex-direction: column;
     row-gap: 20px;
   }
-  .cart_text {
+
+  .cart-text {
     font-size: 24px;
     font-weight: 400;
     line-height: 36px;

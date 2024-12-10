@@ -39,27 +39,27 @@ const BookInCart: React.FC<IBookInCartProps> = (props) => {
   const handleDeleteItem = async () => {
     await dispatch(deleteCartItem(props.id));
   };
-  
+
   return (
     <StyledWrapper>
-      <img src={dirnameBookImg + bookImg} alt="img" className="img-book"></img>
+      <img src={dirnameBookImg + bookImg} alt="img" className="book-img"></img>
       <div className="info-block">
         <div className="big-title">{bookName}</div>
         <div className="normal-title">{bookAuthor?.text}</div>
-        <div className="amount">
-          <div className="amount-block">
-            <div className="amount-bitton" onClick={handleMinusQuantity}>
-              <img src={minus} alt="img" className="button-img"></img>
+        <div className="info-block__amount">
+          <div className="amount__block">
+            <div className="block__button" onClick={handleMinusQuantity}>
+              <img src={minus} alt="img" className="button__img"></img>
             </div>
             <div>{props.quantity}</div>
-            <div className="amount-bitton" onClick={handlePlusQuantity}>
-              <img src={plus} alt="img" className="button-img"></img>
+            <div className="block__button" onClick={handlePlusQuantity}>
+              <img src={plus} alt="img" className="button__img"></img>
             </div>
           </div>
           <img
             src={rubbish}
             alt="img"
-            className="icon-img"
+            className="amount__rubbish-img"
             onClick={handleDeleteItem}
           ></img>
         </div>
@@ -77,7 +77,7 @@ const StyledWrapper = styled.div`
   column-gap: 20px;
   padding: 40px 0px;
 
-  .img-book {
+  .book-img {
     width: 197px;
     height: 289px;
   }
@@ -87,7 +87,7 @@ const StyledWrapper = styled.div`
     flex-direction: column;
   }
 
-  .amount-bitton {
+  .block__button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,31 +99,34 @@ const StyledWrapper = styled.div`
     opacity: 0px;
   }
 
-  .amount-bitton:hover {
+  .block__button:hover {
     cursor: pointer;
   }
-  .amount {
+
+  .info-block__amount {
     display: flex;
     flex-direction: row;
     align-items: center;
-
     column-gap: 58px;
   }
-  .amount-block {
+
+  .amount__block {
     display: flex;
     flex-direction: row;
     align-items: center;
     column-gap: 14px;
   }
-  .icon-img {
+
+  .amount__rubbish-img {
     width: 20px;
     height: 20px;
   }
-  .icon-img :hover {
+
+  .amount__rubbish-img:hover {
     cursor: pointer;
   }
 
-  .button-img {
+  .button__img {
     width: 8px;
     height: auto;
   }

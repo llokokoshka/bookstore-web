@@ -38,10 +38,10 @@ const SortMenu: React.FC = () => {
   return (
     <StyledWrapper>
       <p className="big-title">Catalog</p>
-      <div className="all-buttons">
-        <div className="button-container">
+      <div className="sort-menu">
+        <div className="sort-menu__button-container">
           <div onClick={handlerGenresOpen}>
-            <button className="grey-button">Genre</button>
+            <button className="button-container__grey-button">Genre</button>
             {isGenresOpen ? (
               <img src={openForward} alt="arrow" className="arrow" />
             ) : (
@@ -50,9 +50,9 @@ const SortMenu: React.FC = () => {
           </div>
           {isGenresOpen && <GenresPopup />}
         </div>
-        <div className="button-container">
+        <div className="sort-menu__button-container">
           <div onClick={handlerPriceOpen}>
-            <button className="grey-button">Price</button>
+            <button className="button-container__grey-button">Price</button>
             {isPriceOpen ? (
               <img src={openForward} alt="arrow" className="arrow" />
             ) : (
@@ -61,9 +61,9 @@ const SortMenu: React.FC = () => {
           </div>
           {isPriceOpen && <PricePopup />}
         </div>
-        <div className="button-container ">
+        <div className="sort-menu__button-container ">
           <div onClick={handlerSortOpen}>
-            <button className="grey-button light">
+            <button className="button-container__grey-button --light">
               Sort by {sortBy.toLowerCase()}{' '}
             </button>
             {isSortOpen ? (
@@ -89,22 +89,22 @@ const StyledWrapper = styled.div`
   width: 100%;
   padding: ${({ theme }) => theme.padding.header};
 
-  .all-buttons {
+  .sort-menu {
     display: flex;
     flex-direction: row;
     column-gap: 20px;
   }
 
-  .button-container {
+  .sort-menu__button-container {
     display: flex;
     position: relative;
   }
 
-  .button-container:hover {
+  .sort-menu__button-container:hover {
     cursor: pointer;
   }
 
-  .grey-button {
+  .button-container__grey-button {
     position: relative;
     background-color: ${({ theme }) => theme.colors.light};
     width: 196px;
@@ -126,7 +126,7 @@ const StyledWrapper = styled.div`
     z-index: 10;
   }
 
-  .light {
+  .--light {
     background-color: white;
   }
 `;

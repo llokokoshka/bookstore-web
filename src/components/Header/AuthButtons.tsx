@@ -12,7 +12,7 @@ import { getCart } from '../../store/cart/cartThunk';
 const AuthButtons: React.FC = () => {
   const dispatch = useAppDispatch();
   const itemsInCArt = useAppSelector((state) => state.cart.numberOfItemsInCart);
-  
+
   useEffect(() => {
     if (!itemsInCArt) {
       dispatch(getCart());
@@ -22,7 +22,7 @@ const AuthButtons: React.FC = () => {
   return (
     <StyledWrapper>
       <div className="cart-button">
-        <div className="cart-button_item">{itemsInCArt}</div>
+        <div className="cart-button__item">{itemsInCArt}</div>
         <RoundButtons url={AppPages.cart} img={cart} />
       </div>
       <RoundButtons url={AppPages.favorite} img={like} />
@@ -42,7 +42,7 @@ const StyledWrapper = styled.div`
     position: relative;
   }
 
-  .cart-button_item {
+  .cart-button__item {
     position: absolute;
     display: flex;
     justify-content: center;

@@ -70,58 +70,63 @@ const BookPageBody: React.FC<BookType> = (props) => {
 
   return (
     <StyledWrapper>
-      <div className="book-information">
-        <div className="book-cover">
+      <div className="book">
+        <div className="book__cover">
           {localState.isFav ? (
-            <div className="book_favorite-button" onClick={useHandleFav}>
+            <div className="cover__favorite-button" onClick={useHandleFav}>
               <img src={fullHeart} alt="fullHeart"></img>
             </div>
           ) : (
             <div
-              className="book_favorite-button opacity"
+              className="cover__favorite-button --opacity"
               onClick={useHandleFav}
             >
               <img src={heart} alt="heart"></img>
             </div>
           )}
-
           <img
             src={dirnameBookImg + localState.img}
             alt="img"
-            className="img-book"
+            className="cover__img"
           ></img>
         </div>
-        <div className="info-block">
+        <div className="book__info-block">
           <div>
             <div className="big-title">{localState.name}</div>
             <div className="normal-title">{localState.author.text}</div>
           </div>
-          <div className="rating-block">
+          <div>
             {localState.id ? (
               <Rating bookId={localState.id} isUserRate={true} />
             ) : null}
           </div>
-          <div className="description">
+          <div className="info-block__description">
             <div className="normal-title">Description</div>
             <div
-              className={`base-text param ${
+              className={`base-text --param ${
                 isDescriptionExpanded ? 'expanded' : ''
               }`}
             >
               {props.description}
             </div>
             {!isDescriptionExpanded && props.description.length > 800 && (
-              <span className="show-more" onClick={toggleDescription}>
+              <span
+                className="description__show-more"
+                onClick={toggleDescription}
+              >
                 ... See more
               </span>
             )}
             {isDescriptionExpanded && (
-              <span className="show-more" onClick={toggleDescription}>
+              <span
+                className="description__show-more"
+                onClick={toggleDescription}
+              >
                 See less
               </span>
             )}
           </div>
-          <div className="book-buttons">
+          <div className="info-block__buttons">
             <div>
               <p>Paperback</p>
               {localState.cover.paperback_amount > 0 ? (
@@ -129,7 +134,7 @@ const BookPageBody: React.FC<BookType> = (props) => {
                   ${localState.cover.paperback_price} USD
                 </button>
               ) : (
-                <button className="base-button not-aviable"></button>
+                <button className="base-button --opacity">Not available</button>
               )}
             </div>
             <div>
@@ -139,14 +144,14 @@ const BookPageBody: React.FC<BookType> = (props) => {
                   ${localState.cover.hardcover_price} USD
                 </button>
               ) : (
-                <button className="base-button opacity"></button>
+                <button className="base-button --opacity">Not available</button>
               )}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="comments-block">
+      <div className="comments">
         {Array.isArray(localState.comments) &&
           localState.comments?.map((comment) => (
             <Comment
@@ -159,15 +164,15 @@ const BookPageBody: React.FC<BookType> = (props) => {
           ))}
       </div>
       {user ? (
-        <form onSubmit={handleAddComment} className="form">
+        <form onSubmit={handleAddComment} className="comment">
           <input
             type="text"
             placeholder="Share a comment"
-            className="input-s"
+            className="comment__form"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           ></input>
-          <button className="base-button width" type="submit">
+          <button className="base-button --width" type="submit">
             {loading ? <>loading...</> : <>Post a comment</>}
           </button>
         </form>
@@ -184,42 +189,23 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   row-gap: 110px;
 
-  .input-s {
-    background-color: ${({ theme }) => theme.colors.light};
-    width: 738px;
-    height: 128px;
-    padding-left: 20px;
-    border-radius: 16px;
-  }
-  .book-cover {
-    position: relative;
-  }
-
-  .book-information {
+  .book {
     display: flex;
     flex-direction: row;
     column-gap: 128px;
     height: auto;
   }
-  .img-book {
+
+  .book__cover {
+    position: relative;
+  }
+
+  .cover__img {
     width: 522px;
     height: 779px;
   }
 
-  .info-block {
-    display: flex;
-    flex-direction: column;
-    row-gap: 30px;
-    max-width: 630px;
-    width: 100%;
-    height: auto;
-  }
-  .comments-block {
-    display: flex;
-    flex-direction: column-reverse;
-    row-gap: 10px;
-  }
-  .book_favorite-button {
+  .cover__favorite-button {
     position: absolute;
     background-color: ${({ theme }) => theme.colors.dark_blue};
     border-radius: 50%;
@@ -233,22 +219,43 @@ const StyledWrapper = styled.div`
     justify-content: center;
   }
 
-  .book_favorite-button:hover {
+  .cover__favorite-button:hover {
     cursor: pointer;
   }
 
-  .width {
-    width: 276px;
+  .book__info-block {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    max-width: 630px;
+    width: 100%;
+    height: auto;
   }
-  .form {
+
+  .info-block__description {
+    display: flex;
+    flex-direction: column;
+    row-gap: 19px;
+  }
+
+  .comments {
+    display: flex;
+    flex-direction: column-reverse;
+    row-gap: 10px;
+  }
+
+  .comment {
     display: flex;
     flex-direction: column;
     row-gap: 30px;
   }
-  .description {
-    display: flex;
-    flex-direction: column;
-    row-gap: 19px;
+
+  .comment__form {
+    background-color: ${({ theme }) => theme.colors.light};
+    width: 738px;
+    height: 128px;
+    padding-left: 20px;
+    border-radius: 16px;
   }
 
   .description .base-text {
@@ -257,25 +264,25 @@ const StyledWrapper = styled.div`
     text-overflow: ellipsis;
   }
 
-  .description .base-text.expanded {
+  .description .base-text .expanded {
     max-height: none;
     overflow: visible;
     text-overflow: unset;
     white-space: normal;
   }
 
-  .show-more {
+  .description__show-more {
     display: flex;
     justify-content: end;
     color: ${({ theme }) => theme.colors.dark};
     cursor: pointer;
   }
 
-  .show-more:hover {
+  .description__show-more:hover {
     text-decoration: underline;
   }
 
-  .book-buttons {
+  .info-block__buttons {
     display: flex;
     flex-direction: row;
     max-width: 541px;
@@ -283,16 +290,23 @@ const StyledWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
   }
-  .param {
+
+  .--width {
+    width: 276px;
+  }
+
+  .--param {
     max-width: 630px;
     max-height: 264px;
     width: 100%;
     height: 100%;
   }
-  .opacity {
+
+  .--opacity {
     opacity: 50%;
   }
-  .opacity:hover {
+
+  .--opacity:hover {
     opacity: 100%;
   }
 `;

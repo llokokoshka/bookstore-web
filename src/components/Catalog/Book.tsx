@@ -45,35 +45,42 @@ const Book: React.FC<IBookProps> = (props) => {
     <StyledWrapper>
       <div className="book">
         {isFav ? (
-          <div className="book_favorite-button" onClick={useHandleFav}>
+          <div className="book__favorite-button" onClick={useHandleFav}>
             <img src={fullHeart} alt="fullHeart"></img>
           </div>
         ) : (
-          <div className="book_favorite-button opacity" onClick={useHandleFav}>
+          <div
+            className="book__favorite-button --opacity"
+            onClick={useHandleFav}
+          >
             <img src={heart} alt="heart"></img>
           </div>
         )}
         {props.isNew ? (
-          <div className="special-type-new" onClick={useHandleFav}>
+          <div className="book__new" onClick={useHandleFav}>
             <div>New</div>
           </div>
         ) : props.isBestseller ? (
-          <div className="special-type-bestseller" onClick={useHandleFav}>
+          <div className="book__bestseller" onClick={useHandleFav}>
             <div>Bestseller</div>
           </div>
         ) : null}
 
         <Link to={`${AppPages.getBookIdUrl(props.id)}`}>
-          <img src={dirname + props.img} alt="img" className="book-cover"></img>
+          <img
+            src={dirname + props.img}
+            alt="img"
+            className="book__cover"
+          ></img>
         </Link>
       </div>
       <div className="book-info">
         <Link
           to={`${AppPages.getBookIdUrl(props.id)}`}
-          className="book-info_text"
+          className="book-info__text"
         >
-          <div className="text_title">{props.name}</div>
-          <div className="text_base">{props.author}</div>
+          <div className="text__title">{props.name}</div>
+          <div className="text__base">{props.author}</div>
           <div></div>
         </Link>
         {props.id ? <Rating bookId={props.id} isUserRate={false} /> : null}
@@ -82,7 +89,7 @@ const Book: React.FC<IBookProps> = (props) => {
       {props.isInCart ? (
         <button className="cart-button">Item in cart</button>
       ) : (
-        <button className="base-button correct" onClick={addBookInCart}>
+        <button className="base-button --correct" onClick={addBookInCart}>
           $ {props.price} USD
         </button>
       )}
@@ -102,41 +109,13 @@ const StyledWrapper = styled.div`
   left: 80px;
   row-gap: 30px;
 
-  .book-info_text {
-    text-decoration: none;
-  }
-  .text_title {
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 30px;
-    text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-    color: ${({ theme }) => theme.colors.dark_blue};
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .text_base {
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 30px;
-    text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-    color: ${({ theme }) => theme.colors.dark_grey};
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
   .book {
     position: relative;
     width: 100%;
     height: auto;
   }
 
-  .book_favorite-button {
+  .book__favorite-button {
     position: absolute;
     background-color: ${({ theme }) => theme.colors.dark_blue};
     border-radius: 50%;
@@ -154,7 +133,7 @@ const StyledWrapper = styled.div`
     cursor: pointer;
   }
 
-  .book-cover {
+  .book__cover {
     width: 305px;
     height: 448px;
     border-radius: 16px;
@@ -167,10 +146,40 @@ const StyledWrapper = styled.div`
     width: 299px;
   }
 
-  .opacity {
+  .book-info__text {
+    text-decoration: none;
+  }
+
+  .text__title {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: ${({ theme }) => theme.colors.dark_blue};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .text__base {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: ${({ theme }) => theme.colors.dark_grey};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .--opacity {
     opacity: 50%;
   }
-  .opacity:hover {
+  .--opacity:hover {
     opacity: 100%;
   }
 
@@ -192,18 +201,20 @@ const StyledWrapper = styled.div`
     text-align: center;
     z-index: 5;
   }
+
   .cart-button:hover {
     /* cursor: pointer; */
   }
 
-  .correct {
+  .--correct {
     width: 305px;
     height: 48px;
     top: 615px;
     padding: 10px 50px;
     border-radius: 16px;
   }
-  .special-type-new {
+
+  .book__new {
     position: absolute;
     width: 132px;
     height: 30px;
@@ -224,7 +235,8 @@ const StyledWrapper = styled.div`
     color: #344966;
     z-index: 7;
   }
-  .special-type-bestseller {
+
+  .book__bestseller {
     position: absolute;
     z-index: 7;
     width: 175px;

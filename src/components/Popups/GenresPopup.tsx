@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 import cn from 'classnames';
 
-import arrow from '../../img/arrow.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   deleteCheckedGenres,
@@ -61,7 +60,7 @@ const GenresPopup: React.FC = () => {
       {AllGenres.map((genre) => (
         <div key={genre.id} className="genre">
           <input
-            className={cn('checkbox', {
+            className={cn('genre__checkbox', {
               hippen: CheckedGenresIDs.includes(genre.id),
             })}
             type="checkbox"
@@ -97,7 +96,7 @@ const StyledWrapper = styled.div`
     color: ${({ theme }) => theme.colors.dark_blue};
   }
 
-  .checkbox {
+  .genre__checkbox {
     appearance: none;
     -webkit-appearance: none;
     display: flex;
@@ -113,11 +112,11 @@ const StyledWrapper = styled.div`
     cursor: pointer;
   }
 
-  .checkbox:checked {
+  .genre__checkbox:checked {
     background-color: ${({ theme }) => theme.colors.dark_blue};
   }
 
-  .checkbox:checked::after {
+  .genre__checkbox:checked::after {
     content: '✔';
     position: absolute;
     transform: scale(1);

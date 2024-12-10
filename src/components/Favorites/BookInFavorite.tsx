@@ -24,13 +24,13 @@ const BookInFavorite: React.FC<IFavoriteProps> = (props) => {
 
   return (
     <StyledWrapper>
-      <div className="fav-main-block">
+      <div className="favorite">
         <img
           src={dirnameBookImg + bookImg}
           alt="img"
-          className="img-book"
+          className="favorite__book-img"
         ></img>
-        <div className="info-block">
+        <div className="favorite__info-block">
           <div className="big-title">{bookName}</div>
           <div className="normal-title">{bookAuthor?.text}</div>
         </div>
@@ -38,7 +38,7 @@ const BookInFavorite: React.FC<IFavoriteProps> = (props) => {
       <img
         src={rubbish}
         alt="img"
-        className="icon-img"
+        className="rubbish-img"
         onClick={handleDeleteItem}
       ></img>
     </StyledWrapper>
@@ -53,27 +53,27 @@ const StyledWrapper = styled.div`
   justify-content: space-between;
   padding: 40px 0px;
 
-  .fav-main-block {
+  .favorite {
     display: flex;
     flex-direction: row;
     column-gap: 20px;
   }
 
-  .img-book {
+  .favorite__book-img {
     width: 197px;
     height: 289px;
   }
 
-  .info-block {
+  .favorite__info-block {
     display: flex;
     flex-direction: column;
   }
-  .icon-img {
+  .rubbish-img {
     margin-top: 30px;
     width: 30px;
     height: 30px;
   }
-  .icon-img:hover {
+  .rubbish-img:hover {
     cursor: pointer;
   }
 `;

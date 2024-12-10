@@ -15,14 +15,14 @@ const Comment: React.FC<CommentsType> = (props) => {
       <img
         src={dirname + props.user?.avatar}
         alt="img"
-        className="avatar change_avatar"
+        className="avatar --change-avatar"
       ></img>
-      <div className="comment-block">
-        <div className="info">
-          <div className="name">{props.user.fullName}</div>
-          <div className="data">Left a comment {daysAgo} days ago</div>
+      <div className="comment">
+        <div className="comment__info">
+          <div className="info__name">{props.user.fullName}</div>
+          <div className="info__data">Left a comment {daysAgo} days ago</div>
         </div>
-        <div className="comment-text">{props.text}</div>
+        <div className="comment__text">{props.text}</div>
       </div>
     </StyledWrapper>
   );
@@ -40,7 +40,7 @@ const StyledWrapper = styled.div`
   position: relative;
   padding: 30px 30px 25px 30px;
 
-  .change_avatar {
+  .--change-avatar {
     position: absolute;
     width: 60px;
     height: 60px;
@@ -48,19 +48,21 @@ const StyledWrapper = styled.div`
     left: 30px;
     border-radius: 50%;
   }
-  .comment-block {
+
+  .comment {
     display: flex;
     flex-direction: column;
     margin-left: 80px;
     row-gap: 9px;
   }
-  .info {
+
+  .comment__info {
     display: flex;
     flex-direction: column;
     row-gap: 4px;
   }
 
-  .name {
+  .info__name {
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
@@ -71,7 +73,7 @@ const StyledWrapper = styled.div`
     color: ${({ theme }) => theme.colors.dark};
   }
 
-  .data {
+  .info__data {
     font-size: 12px;
     font-weight: 400;
     line-height: 18px;
@@ -82,7 +84,7 @@ const StyledWrapper = styled.div`
     color: ${({ theme }) => theme.colors.dark_grey};
   }
 
-  .comment-text {
+  .comment__text {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
