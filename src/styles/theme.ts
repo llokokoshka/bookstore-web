@@ -7,12 +7,12 @@ export const baseTheme: IbaseTheme = {
     dark: '#0D1821',
     light: '#F0F4EF',
     green: '#BFCC94',
-    light_grey: '',
+    light_grey: '#D6D8E7',
     dark_grey: '#B9BAC3',
     dark_green: '#8D9F4F',
     black: '#000000',
   },
-  // in px
+
   sizes: {
     desctop: 550,
     mobile: 260,
@@ -24,6 +24,8 @@ export const baseTheme: IbaseTheme = {
   border: {
     grey: '1px solid #f5f5f5',
     red: '1px solid #b83f45',
+    blue: '1px solid #344966',
+    green: '2px solid #BFCC94',
   },
 
   padding: {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,37 +8,37 @@ import man from '../../img/User profile.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import camera from '../../img/Camera.png';
-import { IFormPass, IFormInfo } from '../../lib/types';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
 import ProfileInput from '../Input fields/ProfileInput';
-import { useAppSelector } from '../../hooks';
-import { DEFAULT_PASSWORD_STARS } from '../../constants/textConstants';
+import { ApiPath, DEFAULT_PASSWORD_STARS } from '../../constants/textConstants';
 import {
   ERROR_AVATAR_UPLOAD,
   ERROR_UPDATE_USER_DATA,
   ERROR_UPDATE_USER_PASSWORD,
 } from '../../constants/errorConstants';
 import {
-  SaveFile,
-  UpdateUserData,
-  UpdateUserPassword,
+  saveBase64File,
+  updateUserData,
+  updateUserPassword,
 } from '../../api/userApi';
+import { setUser, logout } from '../../store/auth/authSlice';
+import { convertFileToBase64 } from '../../utils/fileUtil';
+import { UserType, IFormInfo, IFormPass } from '../../lib/authTypes';
 
-const ProfileBody: React.FC = () => {
+const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   const dispatch = useDispatch();
+  const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
+  
   const [changeInfo, setChangeInfo] = useState(true);
   const [changePass, setChangePass] = useState(true);
-
-  const user = useAppSelector((state) => state.auth.user);
-
-  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/`;
+  const { user } = props;
 
   const {
     register: registerFormInfo,
     handleSubmit: handleSubmitFormInfo,
-    reset: resetInfo,
     formState: { errors: infoErrors },
+    setValue: setValueInfo,
   } = useForm<IFormInfo>({
     mode: 'onChange',
     resolver: yupResolver(profileValidationSchema),
@@ -73,24 +73,36 @@ const ProfileBody: React.FC = () => {
 
   const handleUpdateAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const formData = new FormData();
-      formData.append('avatar', e.target.files[0]);
+      const file = e.target.files[0];
       try {
-        SaveFile(formData, dispatch);
+        const base64 = await convertFileToBase64(file);
+        const data = await saveBase64File(base64, 'avatar');
+        dispatch(setUser({ avatar: data }));
       } catch (err) {
         console.error(ERROR_AVATAR_UPLOAD, err);
         return err;
       }
     }
   };
+  
+  useEffect(() => {
+    if (user) {
+      if (user.fullName) {
+        setValueInfo('fullName', user.fullName);
+      }
+      if (user.email) {
+        setValueInfo('email', user.email);
+      }
+    }
+  }, [user, setValueInfo]);
 
   const onSubmitFormInfo: SubmitHandler<IFormInfo> = async (data: {
     fullName?: string;
     email?: string;
   }) => {
     try {
-      UpdateUserData(data, dispatch);
-      resetInfo();
+      const updUser = await updateUserData(data);
+      dispatch(setUser(updUser));
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_DATA, err);
     }
@@ -102,7 +114,7 @@ const ProfileBody: React.FC = () => {
     passwordRep: string;
   }) => {
     try {
-      UpdateUserPassword(data);
+      updateUserPassword(data);
       resetPass();
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_PASSWORD, err);
@@ -120,23 +132,33 @@ const ProfileBody: React.FC = () => {
     }
   };
 
+  const exit = () => {
+    dispatch(logout());
+  };
+
   return (
     <StyledWrapper>
-      <div className="profile-img">
-        <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
-        <label className="base-round-button lable-nice">
-          <input
-            type="file"
-            id="avatar"
-            name="avatar"
-            accept="image/png, image/jpeg, image/jpg"
-            multiple
-            style={{ display: 'none' }}
-            onChange={handleUpdateAvatar}
-          />
-          <img src={camera} alt="camera" />
-        </label>
+      <div>
+        <div className="profile-img">
+          <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
+          <label className="base-round-button lable-nice">
+            <input
+              type="file"
+              id="avatar"
+              name="avatar"
+              accept="image/png, image/jpeg, image/jpg"
+              multiple
+              style={{ display: 'none' }}
+              onChange={handleUpdateAvatar}
+            />
+            <img src={camera} alt="camera" />
+          </label>
+        </div>
+        <button className="base-button" onClick={exit}>
+          Logout
+        </button>
       </div>
+
       <div className="inputs">
         <form
           className="container__info-block"
@@ -155,7 +177,6 @@ const ProfileBody: React.FC = () => {
               typeP="text"
               register={registerFormInfo}
               name="fullName"
-              value={user?.fullName}
               disable={changeInfo}
               errors={infoErrors}
             />
@@ -165,7 +186,6 @@ const ProfileBody: React.FC = () => {
               typeP="email"
               register={registerFormInfo}
               name="email"
-              value={user?.email}
               disable={changeInfo}
               errors={infoErrors}
             />
@@ -188,7 +208,6 @@ const ProfileBody: React.FC = () => {
               typeP="password"
               register={registerFormPass}
               name="password"
-              value="******************"
               disable={changePass}
               errors={passErrors}
             />
@@ -200,7 +219,6 @@ const ProfileBody: React.FC = () => {
               typeP="password"
               register={registerFormPass}
               name="passwordNew"
-              value=""
               disable={changePass}
               errors={passErrors}
             />
@@ -210,7 +228,6 @@ const ProfileBody: React.FC = () => {
               typeP="password"
               register={registerFormPass}
               name="passwordRep"
-              value=""
               disable={changePass}
               errors={passErrors}
             />
@@ -235,12 +252,13 @@ const ProfileBody: React.FC = () => {
 export default ProfileBody;
 
 const StyledWrapper = styled.div`
-  padding: ${({ theme }) => theme.padding.header};
+  padding: 60px 0px 110px 80px;
   display: flex;
   flex-direction: row;
   align-items: start;
   column-gap: 128px;
   width: 100%;
+  flex: 1;
   @media screen and (max-width: 320px) {
     flex-direction: column;
   }

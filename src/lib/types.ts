@@ -1,47 +1,85 @@
-export interface IFormInput {
-  email: string;
-  password: string;
-  passwordRep: string;
+import { SetURLSearchParams } from 'react-router-dom';
+import { AppDispatch } from '../store';
+import { BookType, CommentsType, GenresType } from './bookTypes';
+import { IUserRating } from './authTypes';
+
+export interface IFavoriteProps {
+  id: number;
+  book: BookType | undefined;
 }
 
-export interface IFormReg {
-  email: string;
-  password: string;
+export interface IFilterState {
+  page: number;
+  genres: GenresType[];
+  checkedGenresId: number[];
+  minPrice: number;
+  maxPrice: number;
+  sortBy: string;
+  search: string;
 }
 
-export interface IFormInfo {
-  fullName: string;
-  email: string;
+export interface ICommentsState {
+  comments: CommentsType[];
+  loading: boolean;
+  error: string | null;
 }
 
-export interface IFormPass {
-  password: string;
-  passwordNew: string;
-  passwordRep: string;
-}
-
-export type User = {
-  id?: number;
-  fullName?: string;
-  email?: string;
-  password?: string;
-  passwordNew?: string;
-  avatar?: string;
+export type AddCommentThunkType = {
+  text: string;
+  bookId: number;
 };
 
-export interface AuthState {
-  user: User | null;
+export type RatingResThunkType = {
+  bookId: number;
+  rating: IUserRating;
+};
+
+export type RatingThunkType = {
+  bookId: number;
+  rate: number;
+};
+
+export interface IRecommendedProps {
+  id: number;
+  booksInCart: number[];
+  booksInFavorites: number[];
+  books: Record<number, BookType>;
+}
+
+export interface IRecommendedThunk {
+  newArrayWithBookIds: number[];
+  books: BookType[];
+}
+
+export interface IRecommendedState {
+  recommended: number[];
   error: string | null;
   loading: boolean;
 }
 
-export type InputProps = {
-  img: string;
-  label: string;
-  typeP: string;
-  register: any;
-  name: string;
-  value: string | undefined;
-  disable: boolean;
-  errors: any;
+export interface ISearchedState {
+  searched: number[];
+  error: string | null;
+  loading: boolean;
+}
+
+export type QueryParamsType = {
+  pageNum?: string | null;
+  genres?: string | null;
+  minPrice?: string | null;
+  maxPrice?: string | null;
+  sortBy?: string | null;
+  search?: string | null;
 };
+
+export interface IQueryParams {
+  dispatch: AppDispatch;
+  searchParams: URLSearchParams;
+  setSearchParams: SetURLSearchParams;
+  pageNum?: string;
+  genres?: string[] | number[] | undefined;
+  sortByOption?: string;
+  minPriceParam?: string;
+  maxPriceParam?: string;
+  search?: string;
+}

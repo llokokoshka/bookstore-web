@@ -5,12 +5,13 @@ import styled from 'styled-components';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { loginValidationSchema } from '../../schemas/loginValidationSchema';
-import { loginUser } from '../../store/thunk';
 import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
-import { IFormReg } from '../../lib/types';
+import { AppPages } from '../../constants/textConstants';
+import { loginUser } from '../../store/auth/authThunk';
+import { IFormReg } from '../../lib/authTypes';
 
 const AuthorizationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,13 +37,13 @@ const AuthorizationBody: React.FC = () => {
     password: string;
   }) => {
     try {
-      console.log('Валидация прошла успешно!');
-      const user = await dispatch(
+      const responseData = await dispatch(
         loginUser({ email: data.email, password: data.password })
-      );
-      if (user.payload.user) {
-        navigate('/profile');
-      } else navigate('/sign-in');
+      ).unwrap();
+
+      if (responseData.user) {
+        navigate(AppPages.profile);
+      } else navigate(AppPages.login);
       reset();
     } catch (err) {
       console.warn('При авторизации возникла ошибка: ', err);
@@ -70,9 +71,11 @@ const AuthorizationBody: React.FC = () => {
               />
             </div>
             {errors.email?.type === 'required' && (
-              <div>Email - обязательное поле.</div>
+              <div className="error-message">Email - обязательное поле.</div>
             )}
-            {errors.email && <div>{errors.email.message}</div>}
+            {errors.email && (
+              <div className="error-message">{errors.email.message}</div>
+            )}
             {!errors.email && <div>Enter your email</div>}
             <div className="input">
               <div
@@ -90,9 +93,11 @@ const AuthorizationBody: React.FC = () => {
               ></input>
             </div>
             {errors.password?.type === 'required' && (
-              <div>Password - обязательное поле.</div>
+              <div className="error-message">Password - обязательное поле.</div>
             )}
-            {errors.password && <div>{errors.password.message}</div>}
+            {errors.password && (
+              <div className="error-message">{errors.password.message}</div>
+            )}
             {!errors.password && <div>Enter your password</div>}
           </div>
           <button className="base-button" type="submit">
@@ -109,20 +114,6 @@ export default AuthorizationBody;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
-
-  .poster {
-    display: flex;
-    width: 100%;
-    position: relative;
-  }
-
-  .poster__img {
-    position: absolute;
-    bottom: 0;
-  }
-  .password_btn:hover {
-    cursor: pointer;
-  }
 
   .poster__container {
     display: flex;
@@ -144,5 +135,9 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+  }
+
+  .error-message {
+    color: red;
   }
 `;

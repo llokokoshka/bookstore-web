@@ -8,7 +8,7 @@ import Footer from '../Footer';
 const Registration: React.FC = () => {
   return (
     <StyledWrapper>
-      <Header />
+      <Header page="Registration" />
       <RegistrationBody />
       <Footer />
     </StyledWrapper>

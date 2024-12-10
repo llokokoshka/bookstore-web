@@ -1,34 +1,36 @@
-import { useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { getUserApi } from '../store/thunk';
+import { useAppDispatch } from '../hooks';
 import { ERROR_GET_USER_DATA } from '../constants/errorConstants';
+import { getUser } from '../store/auth/authThunk';
 
-const CheckUserAuth: React.FC = () => {
+const CheckUserAuth: React.FC<PropsWithChildren> = (props) => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
-  const accessToken = localStorage.getItem('access');
+
   const [isInit, setIsInit] = useState(false);
 
   useEffect(() => {
+    const accessToken = localStorage.getItem('access');
     const checkUserF = async () => {
-      if (accessToken && !user) {
-        try {
-          await dispatch(getUserApi());
-        } catch (error) {
-          console.error(ERROR_GET_USER_DATA, error);
-        }
+      if (!accessToken) {
+        setIsInit(true);
       }
-      setIsInit(true);
+      try {
+        await dispatch(getUser()).unwrap();
+      } catch (error) {
+        console.error(ERROR_GET_USER_DATA, error);
+      } finally {
+        setIsInit(true);
+      }
     };
     checkUserF();
-  }, [dispatch, user, accessToken]);
+  }, [dispatch]);
 
   if (!isInit) {
     return null;
   }
 
-  return null;
+  return <>{props.children}</>;
 };
 
 export default CheckUserAuth;

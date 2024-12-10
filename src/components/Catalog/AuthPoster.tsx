@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import fairy from '../../img/atz 1.png';
+import fairy from '../../img/fairy.png';
 import castle from '../../img/castle.png';
+import { AppPages } from '../../constants/textConstants';
+import { Link } from 'react-router-dom';
 
 const AuthPoster: React.FC = () => {
   return (
@@ -17,7 +19,9 @@ const AuthPoster: React.FC = () => {
                 Authorize now and discover the fabulous world of books
               </div>
             </div>
-            <button className="base-button">Log In/Sing Up</button>
+            <Link to={AppPages.registration}>
+              <button className="base-button">Log In/Sing Up</button>
+            </Link>
           </div>
         </div>
         <img src={fairy} alt="books" className="poster__img" />
@@ -40,7 +44,6 @@ const StyledWrapper = styled.div`
   .poster__img {
     position: absolute;
     right: 0;
-    /* padding-top: 135px; */
   }
 
   .poster__container {
@@ -58,6 +61,7 @@ const StyledWrapper = styled.div`
     align-items: start;
     row-gap: 50px;
   }
+
   .info-block__text {
     display: flex;
     flex-direction: column;

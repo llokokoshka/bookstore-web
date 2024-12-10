@@ -1,32 +1,73 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import logo from '../../img/logo.png';
 import search from '../../img/search-icon.png';
 import AuthButtons from './AuthButtons';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppPages } from '../../constants/textConstants';
+import { setSearcheParam } from '../../store/filter/filterSlice';
+import { setQueryParams } from '../../utils/urlUtil';
 
-const Header: React.FC = () => {
+const Header: React.FC<{ page: string }> = (props) => {
+  const dispatch = useAppDispatch();
+
   const user = useAppSelector((state) => state.auth.user);
+
+  const [searchInput, setSearchInput] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const setSearch = () => {
+    if (searchInput.length > 0) {
+      dispatch(setSearcheParam(searchInput));
+      setQueryParams({
+        dispatch: dispatch,
+        searchParams: searchParams,
+        setSearchParams: setSearchParams,
+        search: searchInput,
+      });
+    } else {
+      searchParams.delete('search');
+    }
+  };
+
+  const deleteSearchParams = () => {
+    searchParams.delete('pageNum');
+    searchParams.delete('genres');
+    searchParams.delete('minPrice');
+    searchParams.delete('maxPrice');
+    searchParams.delete('sortBy');
+    searchParams.delete('search');
+  };
+
   return (
     <StyledWrapper>
-      <img src={logo} alt="logo" />
+      <Link to={AppPages.base}>
+        <img src={logo} alt="logo" onClick={deleteSearchParams} />
+      </Link>
       <div className="header">
-        <div className="base-text">Catalog</div>
+        <div className="base-text">{props.page}</div>
         <div className="input">
           <img src={search} alt="search" className="input__icon" />
           <input
             type="text"
             placeholder="Search"
             className="input__field"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            onKeyUp={(e) => (e.code === 'Enter' ? setSearch() : null)}
           ></input>
         </div>
       </div>
-      {user !== null ? (
+      {user !== null && user !== undefined ? (
         <AuthButtons />
+      ) : props.page === 'Login' ? (
+        <Link className="todo-body__div-button" to={`${AppPages.login}`}>
+          <button className="base-button">Log in/Sign Up</button>
+        </Link>
       ) : (
-        <Link className="todo-body__div-button" to={`/sign-in`}>
+        <Link className="todo-body__div-button" to={`${AppPages.registration}`}>
           <button className="base-button">Log in/Sign Up</button>
         </Link>
       )}
@@ -51,7 +92,6 @@ const StyledWrapper = styled.div`
     flex-direction: row;
     width: 739px;
     align-items: center;
-    /* justify-content: space-between; */
     column-gap: 43px;
   }
 `;
