@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { GenresType } from '../../lib/types';
 import {
   deleteCheckedGenres,
   setCheckedGenres,
 } from '../../store/filter/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
+import { GenresType } from '../../lib/bookTypes';
 
 const GenresPopup: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,9 +21,9 @@ const GenresPopup: React.FC = () => {
 
   const handleGenreSelect = async (genre: GenresType) => {
     const findGenre = CheckedGenresIDs.find((id) => id === genre.id);
+
     if (!findGenre) {
       dispatch(setCheckedGenres(genre.id));
-
       const genres = searchParams.getAll('genre');
 
       if (!genres.includes(genre.id.toString())) {

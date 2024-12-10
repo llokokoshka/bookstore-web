@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IFilterState, GenresType } from '../../lib/types';
+import { IFilterState } from '../../lib/types';
+import { GenresType } from '../../lib/bookTypes';
 
 const initialState: IFilterState = {
   page: 1,

@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { InputPropsType } from '../../lib/types';
 import { useAppDispatch } from '../../hooks';
 import { setUser } from '../../store/auth/authSlice';
+import { ProfileInputPropsType } from '../../lib/authTypes';
 
-const ProfileInput: React.FC<InputPropsType> = (props) => {
+const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
+  const dispatch = useAppDispatch();
   const [inputType, setInputType] = useState('password');
+
   let correctPassFlag = true;
   const { img, label, typeP, register, name, disable, errors } = props;
-  const dispatch = useAppDispatch();
 
   const handlerInputType = () => {
     setInputType((type) => (type === 'password' ? 'text' : 'password'));
@@ -42,6 +43,7 @@ const ProfileInput: React.FC<InputPropsType> = (props) => {
       correctPassFlag = false;
     }
   };
+  
   return (
     <StyledWrapper>
       <div

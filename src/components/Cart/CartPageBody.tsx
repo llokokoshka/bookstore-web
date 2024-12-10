@@ -10,6 +10,7 @@ import { AppPages } from '../../constants/textConstants';
 const CartPageBody: React.FC = () => {
   const BooksInCart = useAppSelector((state) => state.cart.cart);
   const books = useAppSelector((state) => state.booksEntities.books);
+  
   return (
     <StyledWrapper
       $numberItems={

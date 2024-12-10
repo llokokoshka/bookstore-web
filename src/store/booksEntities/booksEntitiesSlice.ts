@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IBookState, BookType } from '../../lib/types';
 import {
   addComment,
   addOrUpdateRating,
   getBookRating,
   getBookById,
 } from './booksEntitiesThunk';
+import { IBookState, BookType } from '../../lib/bookTypes';
 
 const initialState: IBookState = {
   books: {},

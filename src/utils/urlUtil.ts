@@ -66,12 +66,7 @@ export const setQueryParams = async (props: IQueryParams) => {
   }
 
   props.setSearchParams(updatedParams);
-  let nBooks = 12;
-  const widthPage = window.innerWidth;
 
-  if (widthPage > 1764 && widthPage < 2090) {
-    nBooks = 15;
-  }
   props.dispatch(
     getCatalog({
       pageNum: updatedParams?.page || pageNum || '1',
@@ -83,7 +78,6 @@ export const setQueryParams = async (props: IQueryParams) => {
       maxPrice: updatedParams?.maxPrice || maxPrice || null,
       sortBy: updatedParams?.sortBy || sortBy || null,
       search: updatedParams?.search || search || null,
-      take: nBooks,
     })
   );
 };

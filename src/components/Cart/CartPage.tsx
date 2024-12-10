@@ -8,8 +8,8 @@ import CartPageBody from './CartPageBody';
 import { getCart } from '../../store/cart/cartThunk';
 
 const CartPage: React.FC = () => {
-  const BooksInCart = useAppSelector((state) => state.cart.cart);
   const dispatch = useAppDispatch();
+  const BooksInCart = useAppSelector((state) => state.cart.cart);
 
   useEffect(() => {
     window.scrollTo(0, 0);

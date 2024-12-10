@@ -1,14 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import {
   getFavoriteApi,
   addFavoriteItemApi,
   deleteFavoriteItemApi,
 } from '../../api/userApi';
-import {
-  FavoriteNormalizeType,
-  FavoriteItemNormalizeType,
-} from '../../lib/types';
 import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
+import { FavoriteNormalizeType, FavoriteItemNormalizeType } from '../../lib/favoriteTypes';
 
 export const getFavorite = createAsyncThunk<FavoriteNormalizeType>(
   'favorite/getFavorite',
@@ -24,9 +22,9 @@ export const getFavorite = createAsyncThunk<FavoriteNormalizeType>(
 
     const newArrWithBookIds = arrayWithFavItems
       ? arrayWithFavItems.map((item) => {
-          const bookId = item.book.id;
-          return { ...item, book: bookId };
-        })
+        const bookId = item.book.id;
+        return { ...item, book: bookId };
+      })
       : null;
 
     const newData = {

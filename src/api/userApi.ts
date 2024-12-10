@@ -1,25 +1,8 @@
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath } from '../constants/textConstants';
-import {
-  CartItemType,
-  CartType,
-  FavoriteItemType,
-  FavoriteType,
-  IUserResponseData,
-  UserType,
-} from '../lib/types';
-
-export async function saveFile(formData: FormData) {
-  const response = await axiosInstance.post(ApiPath.files, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Autorization: `Bearer ${localStorage.getItem('access')}`,
-      'X-File-Type': 'avatar',
-    },
-  });
-  const uploadedFile = response.data.data.filename;
-  return uploadedFile;
-}
+import { UserType, IUserResponseData } from '../lib/authTypes';
+import { CartType, CartItemType } from '../lib/cartTypes';
+import { FavoriteType, FavoriteItemType } from '../lib/favoriteTypes';
 
 export async function saveBase64File(base64Data: string, fileType: string) {
   const response = await axiosInstance.post(
@@ -28,7 +11,6 @@ export async function saveBase64File(base64Data: string, fileType: string) {
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('access')}`,
-        // 'X-File-Type': fileType,
       },
     }
   );
@@ -105,6 +87,7 @@ export async function getFavoriteApi() {
 
   return response.data;
 }
+
 export async function addFavoriteItemApi(bookId: number) {
   const response = await axiosInstance.post<FavoriteItemType>(
     ApiPath.user.favorites.item,
@@ -115,6 +98,7 @@ export async function addFavoriteItemApi(bookId: number) {
 
   return response.data;
 }
+
 export async function deleteFavoriteItemApi(ItemId: number) {
   const response = await axiosInstance.delete(
     ApiPath.user.favorites.getItemWithIdUrl(ItemId)

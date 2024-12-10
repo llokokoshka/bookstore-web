@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { loginUserApi, regUserApi } from '../../api/authApi';
 import { AppPages } from '../../constants/textConstants';
-import { IUserResponseData, IFormReg } from '../../lib/types';
 import { getUserApi } from '../../api/userApi';
+import { IUserResponseData, IFormReg } from '../../lib/authTypes';
 
 export const loginUser = createAsyncThunk<IUserResponseData, IFormReg>(
   AppPages.login,

@@ -8,7 +8,6 @@ import man from '../../img/User profile.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import camera from '../../img/Camera.png';
-import { IFormPass, IFormInfo, UserType } from '../../lib/types';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
 import ProfileInput from '../Input fields/ProfileInput';
@@ -25,13 +24,15 @@ import {
 } from '../../api/userApi';
 import { setUser, logout } from '../../store/auth/authSlice';
 import { convertFileToBase64 } from '../../utils/fileUtil';
+import { UserType, IFormInfo, IFormPass } from '../../lib/authTypes';
 
 const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   const dispatch = useDispatch();
+  const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
+  
   const [changeInfo, setChangeInfo] = useState(true);
   const [changePass, setChangePass] = useState(true);
   const { user } = props;
-  const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
 
   const {
     register: registerFormInfo,
@@ -83,6 +84,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
       }
     }
   };
+  
   useEffect(() => {
     if (user) {
       if (user.fullName) {

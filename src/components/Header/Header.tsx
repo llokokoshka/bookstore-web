@@ -12,7 +12,9 @@ import { setQueryParams } from '../../utils/urlUtil';
 
 const Header: React.FC<{ page: string }> = (props) => {
   const dispatch = useAppDispatch();
+
   const user = useAppSelector((state) => state.auth.user);
+
   const [searchInput, setSearchInput] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -61,11 +63,11 @@ const Header: React.FC<{ page: string }> = (props) => {
       {user !== null && user !== undefined ? (
         <AuthButtons />
       ) : props.page === 'Login' ? (
-        <Link className="todo-body__div-button" to={`/sign-up`}>
+        <Link className="todo-body__div-button" to={`${AppPages.login}`}>
           <button className="base-button">Log in/Sign Up</button>
         </Link>
       ) : (
-        <Link className="todo-body__div-button" to={`/sign-in`}>
+        <Link className="todo-body__div-button" to={`${AppPages.registration}`}>
           <button className="base-button">Log in/Sign Up</button>
         </Link>
       )}

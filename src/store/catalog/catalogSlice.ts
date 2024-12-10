@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { ICatalogState } from '../../lib/types';
 import { getCatalog } from './catalogThunk';
+import { ICatalogState } from '../../lib/bookTypes';
 
 const initialState: ICatalogState = {
   books: null,

@@ -9,9 +9,9 @@ import {
   getBookRating,
 } from '../../store/booksEntities/booksEntitiesThunk';
 
-const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
+const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
   bookId,
-  isUserRAte,
+  isUserRate,
 }) => {
   let fullStars = 0;
   let userRate: number | null = null;
@@ -57,7 +57,7 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
   return (
     <StyledWrapper>
       <>
-        {isUserRAte ? (
+        {isUserRate ? (
           <div className="rating">
             <img src={fullStar} alt="star"></img>
             <h3 className="rate"> {niceViewOfBookRating || '0.0'}</h3>
@@ -65,7 +65,7 @@ const Rating: React.FC<{ bookId: number; isUserRAte: boolean }> = ({
         ) : null}
       </>
       <div className="rating">
-        {isUserRAte ? (
+        {isUserRate ? (
           <>
             {[1, 2, 3, 4, 5].map((star) => (
               <div key={star} onClick={() => handleRating(star)}>
@@ -104,7 +104,6 @@ const StyledWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* column-gap: 40px; */
   max-width: 504px;
   width: 100%;
 

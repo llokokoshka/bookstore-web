@@ -1,28 +1,26 @@
 import React from 'react';
 
 import Book from './Book';
-import { BookType } from '../../lib/types';
+import { ICatalogProps } from '../../lib/bookTypes';
 
-const Catalog: React.FC<{
-  id: number;
-  booksInCart: number[];
-  booksInFavorites: number[];
-  books: Record<number, BookType>;
-}> = (props) => {
+const Catalog: React.FC<ICatalogProps> = (props) => {
   let inCart = false;
   let inFavorites = false;
+
   if (
     props.booksInCart &&
     props.booksInCart.find((book) => book === props.id)
   ) {
     inCart = true;
   }
+
   if (
     props.booksInFavorites &&
     props.booksInFavorites.find((book) => book === props.id)
   ) {
     inFavorites = true;
   }
+
   const currentBook = props.id in props.books ? props.books[props.id] : null;
   return (
     <React.Fragment key={currentBook?.id}>

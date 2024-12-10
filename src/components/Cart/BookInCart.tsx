@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IPropsBookInCart } from '../../lib/types';
 
 import plus from '../../img/plus.png';
 import minus from '../../img/minus.png';
@@ -13,8 +12,10 @@ import {
   downAmountCartItem,
   upAmountCartItem,
 } from '../../store/cart/cartThunk';
+import { IBookInCartProps } from '../../lib/bookTypes';
 
-const BookInCart: React.FC<IPropsBookInCart> = (props) => {
+const BookInCart: React.FC<IBookInCartProps> = (props) => {
+  const dispatch = useAppDispatch();
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   let bookImg, bookName, bookAuthor;
   if (props.book) {
@@ -22,7 +23,7 @@ const BookInCart: React.FC<IPropsBookInCart> = (props) => {
     bookName = props.book.name;
     bookAuthor = props.book.author;
   }
-  const dispatch = useAppDispatch();
+
   const handleMinusQuantity = async () => {
     if (props.quantity === 1) {
       await dispatch(deleteCartItem(props.id));
@@ -30,12 +31,15 @@ const BookInCart: React.FC<IPropsBookInCart> = (props) => {
       await dispatch(downAmountCartItem(props.id));
     }
   };
+
   const handlePlusQuantity = async () => {
     await dispatch(upAmountCartItem(props.id));
   };
+
   const handleDeleteItem = async () => {
     await dispatch(deleteCartItem(props.id));
   };
+  
   return (
     <StyledWrapper>
       <img src={dirnameBookImg + bookImg} alt="img" className="img-book"></img>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import fairy from '../../img/atz 1.png';
+import fairy from '../../img/fairy.png';
 import castle from '../../img/castle.png';
 import { AppPages } from '../../constants/textConstants';
 import { Link } from 'react-router-dom';

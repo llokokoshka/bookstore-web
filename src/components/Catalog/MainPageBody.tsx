@@ -58,8 +58,6 @@ const MainPageBody = () => {
     }
   }, [user, dispatch]);
 
-  const widthPage = window.innerWidth;
-
   useEffect(() => {
     setQueryParams({
       dispatch: dispatch,
@@ -75,14 +73,6 @@ const MainPageBody = () => {
     let search = searchParams.get('search');
 
     const getBooksFromServer = async () => {
-      // console.log(widthPage);
-      // let nBooks = 12;
-      // if (widthPage > 1764 && widthPage < 2090) {
-      //   nBooks = 15;
-      // }
-      // console.log('1', nBooks);
-      // console.log('2', catalog?.length);
-
       if (books === null || catalog === null) {
         try {
           await dispatch(
@@ -101,7 +91,7 @@ const MainPageBody = () => {
       }
     };
     getBooksFromServer();
-  }, [dispatch, page, searchParams, widthPage]);
+  }, [dispatch, page, searchParams]);
 
   const handlePagePrev = () => {
     if (hasPrevPage && page) {
@@ -114,6 +104,7 @@ const MainPageBody = () => {
       });
     }
   };
+
   const handlePageNext = () => {
     if (hasNextPage && page) {
       dispatch(setPage(page + 1));
@@ -172,15 +163,10 @@ const StyledWrapper = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    /* justify-content: space-between; */
     padding: ${({ theme }) => theme.padding.header};
     column-gap: 20px;
     row-gap: 80px;
     width: 100%;
-
-    @media screen and (min-width: 1441px) {
-      /* column-gap: ; */
-    }
 
     @media screen and (max-width: 834px) {
       padding: 0px 15px;

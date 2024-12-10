@@ -10,6 +10,7 @@ import { AppPages } from '../../constants/textConstants';
 const FavoritePageBody: React.FC = () => {
   const Favorites = useAppSelector((state) => state.favorite.favorites);
   const books = useAppSelector((state) => state.booksEntities.books);
+  
   return (
     <StyledWrapper
       $numberItems={

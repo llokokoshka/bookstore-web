@@ -1,21 +1,17 @@
 import React from 'react';
 
 import Book from '../Catalog/Book';
-import { BookType } from '../../lib/types';
+import { IRecommendedProps } from '../../lib/types';
 
-const Recommendations: React.FC<{
-  id: number;
-  booksInCart: number[];
-  booksInFavorites: number[];
-  books: Record<number, BookType>;
-}> = (props) => {
+const Recommendations: React.FC<IRecommendedProps> = (props) => {
   const idBook = props.id;
-
   let inCart = false;
   let inFavorites = false;
+
   if (props.booksInCart && props.booksInCart.find((book) => book === idBook)) {
     inCart = true;
   }
+
   if (
     props.booksInFavorites &&
     props.booksInFavorites.find((book) => book === idBook)

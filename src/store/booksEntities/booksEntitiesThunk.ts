@@ -10,14 +10,12 @@ import {
 } from '../../api/bookApi';
 import {
   RatingThunkType,
-  BookType,
-  GenresType,
   AddCommentThunkType,
-  CommentsType,
-  IUserRating,
 } from '../../lib/types';
 import { addOrUpdBook } from './booksEntitiesSlice';
 import { setGenres } from '../filter/filterSlice';
+import { IUserRating } from '../../lib/authTypes';
+import { BookType, GenresType, CommentsType } from '../../lib/bookTypes';
 
 export const getBookRating = createAsyncThunk<RatingThunkType, number>(
   'books/fetchBookRating',

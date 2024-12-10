@@ -8,8 +8,8 @@ import FavoritePageBody from './FavoritesPageBody';
 import { getFavorite } from '../../store/favorites/favoritesThunk';
 
 const FavoritePage: React.FC = () => {
-  const Favorites = useAppSelector((state) => state.favorite.favorites);
   const dispatch = useAppDispatch();
+  const Favorites = useAppSelector((state) => state.favorite.favorites);
 
   useEffect(() => {
     window.scrollTo(0, 0);

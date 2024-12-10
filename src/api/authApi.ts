@@ -1,6 +1,6 @@
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath } from '../constants/textConstants';
-import { IUserResponseData } from '../lib/types';
+import { IUserResponseData } from '../lib/authTypes';
 
 export async function loginUserApi(email: string, password: string) {
   const response = await axiosInstance.post<IUserResponseData>(ApiPath.login, {

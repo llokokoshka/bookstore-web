@@ -1,25 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IPropsFavorite } from '../../lib/types';
+import { IFavoriteProps } from '../../lib/types';
 
 import rubbish from '../../img/Delete.png';
 import { useAppDispatch } from '../../hooks';
 import { ApiPath } from '../../constants/textConstants';
 import { deleteFavoriteItem } from '../../store/favorites/favoritesThunk';
 
-const BookInFavorite: React.FC<IPropsFavorite> = (props) => {
+const BookInFavorite: React.FC<IFavoriteProps> = (props) => {
+  const dispatch = useAppDispatch();
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   let bookImg, bookName, bookAuthor;
+
   if (props.book) {
     bookImg = props.book.img;
     bookName = props.book.name;
     bookAuthor = props.book.author;
   }
-  const dispatch = useAppDispatch();
 
   const handleDeleteItem = async () => {
     await dispatch(deleteFavoriteItem(props.id));
   };
+
   return (
     <StyledWrapper>
       <div className="fav-main-block">
@@ -49,7 +51,6 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* column-gap: 20px; */
   padding: 40px 0px;
 
   .fav-main-block {

@@ -1,14 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getCatalogApi, getRatingApi } from '../../api/bookApi';
-import { ICatalog, QueryParamsType } from '../../lib/types';
+import { QueryParamsType } from '../../lib/types';
 import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
+import { ICatalog } from '../../lib/bookTypes';
 
 export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
   `getCatalog`,
   async (data, thunkAPI) => {
     try {
       let strOfSearch;
-      const { pageNum, genres, minPrice, maxPrice, sortBy, search, take } =
+      const { pageNum, genres, minPrice, maxPrice, sortBy, search } =
         data;
 
       if (pageNum === undefined || pageNum === null) {
@@ -16,12 +17,6 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
       } else {
         strOfSearch = `/books/?page=${pageNum}&take=12`;
       }
-
-      // if (take === undefined || take === null) {
-      //   strOfSearch += `&take=12`;
-      // } else {
-      //   strOfSearch += `&take=${take}`;
-      // }
 
       if (genres) {
         strOfSearch += `&genres=${genres}`;
@@ -58,8 +53,8 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
 
       const newArrWithBookIds = arrayWithBooks
         ? arrayWithBooks.map((book) => {
-            return book.id;
-          })
+          return book.id;
+        })
         : null;
 
       const newDataForCatalog: ICatalog = {

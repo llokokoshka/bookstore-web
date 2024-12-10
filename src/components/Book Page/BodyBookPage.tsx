@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { BookType } from '../../lib/types';
 import Comment from './Comment';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Rating from './Rating';
@@ -13,6 +12,7 @@ import {
   addComment,
   getBookById,
 } from '../../store/booksEntities/booksEntitiesThunk';
+import { BookType } from '../../lib/bookTypes';
 
 const BookPageBody: React.FC<BookType> = (props) => {
   const dispatch = useAppDispatch();
@@ -98,7 +98,7 @@ const BookPageBody: React.FC<BookType> = (props) => {
           </div>
           <div className="rating-block">
             {localState.id ? (
-              <Rating bookId={localState.id} isUserRAte={true} />
+              <Rating bookId={localState.id} isUserRate={true} />
             ) : null}
           </div>
           <div className="description">

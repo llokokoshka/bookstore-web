@@ -5,8 +5,8 @@ import {
   changeAmountItemInCartApi,
   deteleItemInCartApi,
 } from '../../api/userApi';
-import { CartNormalizeType, CartItemNormalizeType } from '../../lib/types';
 import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
+import { CartNormalizeType, CartItemNormalizeType } from '../../lib/cartTypes';
 
 export const getCart = createAsyncThunk<CartNormalizeType>(
   'cart/getCart',
@@ -20,9 +20,9 @@ export const getCart = createAsyncThunk<CartNormalizeType>(
     const arrayWithCartItems = data.cartItems;
     const newArrWithBookIds = arrayWithCartItems
       ? arrayWithCartItems.map((item) => {
-          const bookId = item.book.id;
-          return { ...item, book: bookId };
-        })
+        const bookId = item.book.id;
+        return { ...item, book: bookId };
+      })
       : null;
     const newData = {
       ...data,

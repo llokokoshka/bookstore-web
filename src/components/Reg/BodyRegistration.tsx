@@ -9,9 +9,9 @@ import man from '../../img/чел 1.png';
 import mail from '../../img/Mail.png';
 import hide from '../../img/Hide.png';
 import { useAppDispatch } from '../../hooks';
-import { IFormReg, IFormInput } from '../../lib/types';
 import { AppPages } from '../../constants/textConstants';
 import { regUser } from '../../store/auth/authThunk';
+import { IFormInput, IFormReg } from '../../lib/authTypes';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();

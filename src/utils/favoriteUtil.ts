@@ -1,4 +1,4 @@
-import { FavoriteNormalizeType } from '../lib/types';
+import { FavoriteNormalizeType } from '../lib/favoriteTypes';
 import { AppDispatch } from '../store';
 import {
   addFavoriteItem,

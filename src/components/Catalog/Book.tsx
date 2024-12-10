@@ -5,20 +5,23 @@ import styled from 'styled-components';
 import heart from '../../img/Heart.png';
 import fullHeart from '../../img/fullHeart.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { IBookProps } from '../../lib/types';
 import Rating from '../Book Page/Rating';
-import { ApiPath } from '../../constants/textConstants';
+import { ApiPath, AppPages } from '../../constants/textConstants';
 import { handleFavorites } from '../../utils/favoriteUtil';
 import { addCartItem } from '../../store/cart/cartThunk';
+import { IBookProps } from '../../lib/bookTypes';
 
 const Book: React.FC<IBookProps> = (props) => {
+  const dispatch = useAppDispatch();
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
+
   const [isFav, setIsFav] = useState(props.isInFavorites);
+
   const booksInFavorites = useAppSelector(
     (state) => state.favorite.normalizeFavorites
   );
   const Favorites = useAppSelector((state) => state.favorite.favorites);
-  const dispatch = useAppDispatch();
+
   const addBookInCart = () => {
     if (props.id) dispatch(addCartItem(props.id));
   };
@@ -60,17 +63,20 @@ const Book: React.FC<IBookProps> = (props) => {
           </div>
         ) : null}
 
-        <Link to={`/${props.id}`}>
+        <Link to={`${AppPages.getBookIdUrl(props.id)}`}>
           <img src={dirname + props.img} alt="img" className="book-cover"></img>
         </Link>
       </div>
       <div className="book-info">
-        <Link to={`/${props.id}`} className="book-info_text">
+        <Link
+          to={`${AppPages.getBookIdUrl(props.id)}`}
+          className="book-info_text"
+        >
           <div className="text_title">{props.name}</div>
           <div className="text_base">{props.author}</div>
           <div></div>
         </Link>
-        {props.id ? <Rating bookId={props.id} isUserRAte={false} /> : null}
+        {props.id ? <Rating bookId={props.id} isUserRate={false} /> : null}
       </div>
 
       {props.isInCart ? (

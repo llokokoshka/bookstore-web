@@ -1,10 +1,7 @@
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath } from '../constants/textConstants';
+import { BookType, CommentsType, GenresType, ICatalogFromServer } from '../lib/bookTypes';
 import {
-  BookType,
-  CommentsType,
-  GenresType,
-  IBook,
   IRecommendedThunk,
   RatingResThunkType,
   RatingThunkType,
@@ -27,7 +24,7 @@ export async function getBookByIdApi(bookId: number) {
 }
 
 export async function getCatalogApi(searchStr: string) {
-  const response = await axiosInstance.get<IBook>(searchStr);
+  const response = await axiosInstance.get<ICatalogFromServer>(searchStr);
   return response.data;
 }
 

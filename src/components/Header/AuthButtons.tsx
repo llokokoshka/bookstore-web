@@ -12,6 +12,7 @@ import { getCart } from '../../store/cart/cartThunk';
 const AuthButtons: React.FC = () => {
   const dispatch = useAppDispatch();
   const itemsInCArt = useAppSelector((state) => state.cart.numberOfItemsInCart);
+  
   useEffect(() => {
     if (!itemsInCArt) {
       dispatch(getCart());

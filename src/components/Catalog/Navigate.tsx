@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import rightArr from '../../img/right arrow.png';
 import leftArr from '../../img/left arrow.png';
