@@ -31,10 +31,10 @@ const SortPopup: React.FC = () => {
     <StyledWrapper>
       {sortOptions.map((option) => (
         <div
-          className="base-text"
+          className="base-text sort-param"
           key={option}
           onClick={() => handleSortOption(option)}
-          style={{ fontWeight: sortBy === option ? 'bold' : 'normal' }}
+          style={{ color: sortBy === option ? '#344966' : '#B9BAC3' }}
         >
           {option}
         </div>
@@ -56,4 +56,13 @@ const StyledWrapper = styled.div`
   border-radius: 16px;
   opacity: 0px;
   z-index: 6;
+
+  .sort-param {
+    height: 34px;
+    line-height: 28px;
+    letter-spacing: 0.75px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+  }
 `;

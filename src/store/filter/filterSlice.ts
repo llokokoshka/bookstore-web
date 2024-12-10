@@ -9,7 +9,7 @@ const initialState: IFilterState = {
   checkedGenresId: [],
   minPrice: 0,
   maxPrice: 100,
-  sortBy: 'price',
+  sortBy: 'Price',
   search: '',
 };
 

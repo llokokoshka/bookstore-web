@@ -63,11 +63,11 @@ const Header: React.FC<{ page: string }> = (props) => {
       {user !== null && user !== undefined ? (
         <AuthButtons />
       ) : props.page === 'Login' ? (
-        <Link className="todo-body__div-button" to={`${AppPages.login}`}>
+        <Link className="todo-body__div-button" to={`${AppPages.registration}`}>
           <button className="base-button">Log in/Sign Up</button>
         </Link>
       ) : (
-        <Link className="todo-body__div-button" to={`${AppPages.registration}`}>
+        <Link className="todo-body__div-button" to={`${AppPages.login}`}>
           <button className="base-button">Log in/Sign Up</button>
         </Link>
       )}

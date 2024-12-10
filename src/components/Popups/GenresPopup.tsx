@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
+import cn from 'classnames';
 
+import arrow from '../../img/arrow.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   deleteCheckedGenres,
@@ -57,8 +59,11 @@ const GenresPopup: React.FC = () => {
   return (
     <StyledWrapper>
       {AllGenres.map((genre) => (
-        <div key={genre.id}>
+        <div key={genre.id} className="genre">
           <input
+            className={cn('checkbox', {
+              hippen: CheckedGenresIDs.includes(genre.id),
+            })}
             type="checkbox"
             checked={CheckedGenresIDs.includes(genre.id)}
             onChange={() => handleGenreSelect(genre)}
@@ -73,6 +78,8 @@ const GenresPopup: React.FC = () => {
 export default GenresPopup;
 
 const StyledWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   position: absolute;
   background-color: ${({ theme }) => theme.colors.light};
   padding: 15px;
@@ -80,7 +87,40 @@ const StyledWrapper = styled.div`
   width: 305px;
   height: 740px;
   top: 74px;
-  gap: 0px;
-  opacity: 0px;
+  row-gap: 10px;
   z-index: 10;
+
+  .genre {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    color: ${({ theme }) => theme.colors.dark_blue};
+  }
+
+  .checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    display: flex;
+    opacity: 1;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: ${({ theme }) => theme.border.blue};
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .checkbox:checked {
+    background-color: ${({ theme }) => theme.colors.dark_blue};
+  }
+
+  .checkbox:checked::after {
+    content: '✔';
+    position: absolute;
+    transform: scale(1);
+    color: white;
+  }
 `;

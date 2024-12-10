@@ -112,3 +112,11 @@ export interface IBookItemState {
     loading: boolean;
 }
 
+export interface INavigateProps {
+    hasPrevPage: boolean | undefined;
+    handlePagePrev: () => void;
+    page: number | undefined;
+    colPages: number | undefined;
+    hasNextPage: boolean | undefined;
+    handlePageNext: () => void;
+}

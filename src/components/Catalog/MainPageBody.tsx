@@ -102,6 +102,7 @@ const MainPageBody = () => {
         setSearchParams: setSearchParams,
         pageNum: (page - 1).toString(),
       });
+      window.scrollTo(0, 575);
     }
   };
 
@@ -114,6 +115,7 @@ const MainPageBody = () => {
         setSearchParams: setSearchParams,
         pageNum: (page + 1).toString(),
       });
+      window.scrollTo(0, 575);
     }
   };
 
@@ -135,15 +137,14 @@ const MainPageBody = () => {
           );
         })}
       </div>
-      <div className="navigate">
-        <Navigate
-          hasPrevPage={hasPrevPage}
-          handlePagePrev={handlePagePrev}
-          colPages={colPages}
-          hasNextPage={hasNextPage}
-          handlePageNext={handlePageNext}
-        />
-      </div>
+      <Navigate
+        hasPrevPage={hasPrevPage}
+        handlePagePrev={handlePagePrev}
+        page={page}
+        colPages={colPages}
+        hasNextPage={hasNextPage}
+        handlePageNext={handlePageNext}
+      />
       {user === null ? <AuthPoster /> : null}
       <Footer />
     </StyledWrapper>
@@ -175,17 +176,5 @@ const StyledWrapper = styled.div`
       max-width: 290px;
       max-height: 290px;
     }
-  }
-
-  .navigate {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    column-gap: 30px;
-    margin-bottom: 152px;
-  }
-  .arr:hover {
-    cursor: pointer;
   }
 `;
