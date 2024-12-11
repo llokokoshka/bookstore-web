@@ -70,9 +70,9 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
             {[1, 2, 3, 4, 5].map((star) => (
               <div key={star} onClick={() => handleRating(star)}>
                 {userRating && star <= userRating ? (
-                  <img src={fullStar} alt="fullStar" />
+                  <img src={fullStar} alt="fullStar" className="star" />
                 ) : (
-                  <img src={starImg} alt="star" />
+                  <img src={starImg} alt="star" className="star" />
                 )}
               </div>
             ))}
@@ -84,11 +84,15 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
         ) : (
           <>
             {[1, 2, 3, 4, 5].map((star) => (
-              <div key={star} onClick={() => handleRating(star)}>
+              <div
+                key={star}
+                onClick={() => handleRating(star)}
+                className="star"
+              >
                 {fullStars && star <= fullStars ? (
-                  <img src={fullStar} alt="fullStar" />
+                  <img src={fullStar} alt="fullStar" className="star" />
                 ) : (
-                  <img src={starImg} alt="star" />
+                  <img src={starImg} alt="star" className="star" />
                 )}
               </div>
             ))}
@@ -113,9 +117,19 @@ const StyledWrapper = styled.div`
   .rating {
     display: flex;
     flex-direction: row;
+    width: 299px;
     justify-content: space-between;
     align-items: center;
-    column-gap: 15px;
+    /* column-gap: 15px; */
+  }
+
+  .star {
+    width: 26px;
+    height: 26px;
+    @media screen and (max-width: 835px) {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   .rating__value {

@@ -46,14 +46,14 @@ const Book: React.FC<IBookProps> = (props) => {
       <div className="book">
         {isFav ? (
           <div className="book__favorite-button" onClick={useHandleFav}>
-            <img src={fullHeart} alt="fullHeart"></img>
+            <img src={fullHeart} alt="fullHeart" className="heart-size"></img>
           </div>
         ) : (
           <div
             className="book__favorite-button --opacity"
             onClick={useHandleFav}
           >
-            <img src={heart} alt="heart"></img>
+            <img src={heart} alt="heart" className="heart-size"></img>
           </div>
         )}
         {props.isNew ? (
@@ -109,9 +109,10 @@ const StyledWrapper = styled.div`
   left: 80px;
   row-gap: 30px;
 
-  @media screen and (max-width: 834px) {
+  @media screen and (max-width: 835px) {
     column-gap: 21px;
     width: 254px;
+    flex-basis: 254px;
     height: 573px;
   }
 
@@ -137,6 +138,20 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media screen and (max-width: 835px) {
+      width: 39px;
+      height: 39px;
+      top: 16px;
+      left: 16px;
+    }
+  }
+
+  .heart-size {
+    @media screen and (max-width: 835px) {
+      width: 21px;
+      height: 21px;
+    }
   }
 
   .book_favorite-button:hover {
@@ -148,7 +163,7 @@ const StyledWrapper = styled.div`
     height: 448px;
     border-radius: 16px;
 
-    @media screen and (max-width: 834px) {
+    @media screen and (max-width: 835px) {
       width: 254px;
       height: 372px;
     }
@@ -159,7 +174,7 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     row-gap: 20px;
     width: 299px;
-    @media screen and (max-width: 834px) {
+    @media screen and (max-width: 835px) {
       width: 254px;
     }
   }
@@ -179,6 +194,10 @@ const StyledWrapper = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    @media screen and (max-width: 835px) {
+      font-size: 16px;
+      line-height: 24px;
+    }
   }
 
   .text__base {
@@ -192,6 +211,10 @@ const StyledWrapper = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    @media screen and (max-width: 835px) {
+      font-size: 16px;
+      line-height: 24px;
+    }
   }
 
   .--opacity {
@@ -219,7 +242,7 @@ const StyledWrapper = styled.div`
     text-align: center;
     z-index: 5;
 
-    @media screen and (max-width: 834px) {
+    @media screen and (max-width: 835px) {
       width: 254px;
     }
   }
@@ -235,7 +258,7 @@ const StyledWrapper = styled.div`
     padding: 10px 50px;
     border-radius: 16px;
 
-    @media screen and (max-width: 834px) {
+    @media screen and (max-width: 835px) {
       width: 254px;
     }
   }
@@ -261,7 +284,7 @@ const StyledWrapper = styled.div`
     color: #344966;
     z-index: 7;
 
-    @media screen and (max-width: 834px) {
+    @media screen and (max-width: 835px) {
       top: 320px;
     }
   }
@@ -289,7 +312,7 @@ const StyledWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.dark_blue};
     color: white;
 
-    @media screen and (max-width: 834px) {
+    @media screen and (max-width: 835px) {
       top: 320px;
     }
   }

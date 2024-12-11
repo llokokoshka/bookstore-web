@@ -26,6 +26,12 @@ export default createGlobalStyle`
     letter-spacing: 0.75px;
     text-align: center;
     z-index: 5;
+
+    @media screen and ( max-width: 835px ){
+      width: 231px;
+      height: 44px;
+      padding: 10px 50px;
+    }
   }
 
   .base-button:hover{
@@ -37,6 +43,11 @@ export default createGlobalStyle`
     font-weight: 700;
     line-height: 60px;
     text-align: left;
+    @media screen and (max-width: 835px) {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 48px;
+    }
   }
   
   .normal-title{
@@ -44,6 +55,11 @@ export default createGlobalStyle`
     font-weight: 400;
     line-height: 30px;
     text-align: left;
+    @media screen and (max-width: 835px) {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    }
   }
 
   .base-text{

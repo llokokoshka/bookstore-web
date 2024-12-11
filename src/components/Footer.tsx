@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
       </div>
       <div className="contacts__footer-text">
         <div>6391 Elgin St. Celina, Delaware 10299</div>
-        <img src={map} alt="map" />
+        <img src={map} alt="map" className="map" />
       </div>
     </StyledWrapper>
   );
@@ -40,16 +40,34 @@ const StyledWrapper = styled.div`
   color: ${({ theme }) => theme.colors.light};
   padding: ${({ theme }) => theme.padding.footer};
 
+  @media screen and (max-width: 835px) {
+    padding: 73px 15px;
+  }
+  @media screen and (max-width: 321px) {
+    flex-direction: column;
+    max-width: 290px;
+    height: auto;
+  }
+
   .contacts {
     display: flex;
     flex-direction: column;
     align-items: start;
     row-gap: 40px;
   }
+
   .contacts__footer-text {
     display: flex;
     flex-direction: column;
     align-items: start;
     row-gap: 5px;
+  }
+  .map {
+    @media screen and (max-width: 835px) {
+      width: 290px;
+      height: auto;
+    }
+    @media screen and (max-width: 321px) {
+    }
   }
 `;

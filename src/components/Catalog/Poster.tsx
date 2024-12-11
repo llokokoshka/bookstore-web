@@ -19,7 +19,7 @@ const Poster: React.FC = () => {
             </div>
             <button className="base-button">Choose a book</button>
           </div>
-          <img src={poster} alt="logo" />
+          <img src={poster} alt="logo" className="container-img" />
         </div>
       </div>
     </StyledWrapper>
@@ -31,7 +31,7 @@ export default Poster;
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
 
-  @media screen and (max-width: 834px) {
+  @media screen and (max-width: 835px) {
     padding: 26px 15px;
   }
 
@@ -40,11 +40,21 @@ const StyledWrapper = styled.div`
     display: flex;
     width: 100%;
     position: relative;
+    border-radius: 16px;
+    height: 400px;
+    @media screen and (max-width: 835px) {
+      height: 289px;
+    }
   }
 
   .poster__img {
     position: absolute;
     bottom: 0;
+
+    @media screen and (max-width: 835px) {
+      width: 361px;
+      height: 218px;
+    }
   }
 
   .poster__container {
@@ -54,6 +64,12 @@ const StyledWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     padding: 0 108px 0 98px;
+
+    @media screen and (max-width: 835px) {
+      padding-left: 40px;
+      padding-right: 0;
+      align-items: end;
+    }
   }
 
   .container__info-block {
@@ -61,11 +77,28 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     align-items: start;
     row-gap: 50px;
+
+    @media screen and (max-width: 835px) {
+      margin-bottom: 56px;
+    }
   }
 
   .info-block__text {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+  }
+
+  .container-img {
+    position: absolute;
+    width: 406px;
+    height: 400px;
+    left: 60%;
+
+    @media screen and (max-width: 835px) {
+      left: 58%;
+      width: 328px;
+      height: 364px;
+    }
   }
 `;

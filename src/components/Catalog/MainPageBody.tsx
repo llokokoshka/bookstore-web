@@ -171,10 +171,12 @@ const StyledWrapper = styled.div`
     row-gap: 80px;
     width: 100%;
 
-    @media screen and (max-width: 834px) {
+    @media screen and (max-width: 835px) {
       padding: 0px 15px;
+      column-gap: 21px;
+      row-gap: 30px;
     }
-    @media screen and (max-width: 320px) {
+    @media screen and (max-width: 321px) {
       max-width: 290px;
       max-height: 290px;
     }

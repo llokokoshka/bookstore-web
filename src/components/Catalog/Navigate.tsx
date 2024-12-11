@@ -71,6 +71,10 @@ const StyledWrapper = styled.div`
   column-gap: 50px;
   margin-bottom: 152px;
   margin-top: 54px;
+  @media screen and (max-width: 835px) {
+    margin-bottom: 60px;
+    margin-top: 60px;
+  }
 
   .arrow:hover {
     cursor: pointer;

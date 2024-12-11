@@ -124,7 +124,7 @@ const StyledWrapper = styled.div`
   width: 100%;
   padding: ${({ theme }) => theme.padding.header};
 
-  @media screen and (max-width: 834px) {
+  @media screen and (max-width: 835px) {
     padding: 26px 15px;
     flex-direction: column;
     justify-content: start;
@@ -132,7 +132,7 @@ const StyledWrapper = styled.div`
     row-gap: 20px;
   }
 
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 321px) {
     max-width: 290px;
     /* max-height: 290px; */
   }
@@ -165,6 +165,10 @@ const StyledWrapper = styled.div`
     line-height: 28px;
     letter-spacing: 0.75px;
     color: ${({ theme }) => theme.colors.dark_blue};
+
+    @media screen and (max-width: 835px) {
+      width: 255px;
+    }
   }
 
   .arrow {

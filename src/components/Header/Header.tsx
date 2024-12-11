@@ -87,10 +87,13 @@ const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
   position: relative;
 
-  @media screen and (max-width: 834px) {
+  @media screen and (max-width: 835px) {
     column-gap: 51px;
     padding: 20px 15px;
   }
+  /* @media screen and (max-width: 321px) {
+    flex-direction: column;
+  } */
 
   .header {
     display: flex;
@@ -98,5 +101,15 @@ const StyledWrapper = styled.div`
     width: 739px;
     align-items: center;
     column-gap: 43px;
+
+    @media screen and (max-width: 321px) {
+      width: 290px;
+    }
+  }
+
+  .input {
+    @media screen and (max-width: 835px) {
+      width: 247px;
+    }
   }
 `;
