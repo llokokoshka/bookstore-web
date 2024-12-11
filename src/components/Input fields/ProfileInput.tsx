@@ -220,6 +220,16 @@ const StyledWrapper = styled.div`
     width: 448px;
     margin-left: 64px;
     padding-left: 5px;
+    @media screen and (max-width: 835px) {
+      /* position: absolute; */
+      width: 529px;
+      /* height: 64px; */
+      top: 0;
+      margin-left: 0px;
+      padding-left: 0px;
+      /* left: 290px; */
+      border-radius: 16px;
+    }
   }
 
   .error-message {

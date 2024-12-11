@@ -104,7 +104,7 @@ const AuthorizationBody: React.FC = () => {
             Log in
           </button>
         </form>
-        <img src={man} alt="man" />
+        <img src={man} alt="man" className="container__img" />
       </div>
     </StyledWrapper>
   );
@@ -114,7 +114,9 @@ export default AuthorizationBody;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
-
+  @media screen and (max-width: 835px) {
+    padding: 95px 15px;
+  }
   .poster__container {
     display: flex;
     flex-direction: row;
@@ -122,7 +124,13 @@ const StyledWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     position: relative;
-    padding: 0 108px 0 98px;
+    /* padding: 0 108px 0 98px; */
+  }
+  .container__img {
+    @media screen and (max-width: 835px) {
+      width: 390px;
+      height: 333px;
+    }
   }
 
   .container__info-block {

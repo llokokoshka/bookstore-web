@@ -28,6 +28,7 @@ const BookPage: React.FC = () => {
   const booksInFavorites = useAppSelector(
     (state) => state.favorite.normalizeFavorites
   );
+  let currentRecommendedBooks: number[] = recommendedBooks;
 
   const { pathname } = useLocation();
   useEffect(() => {
@@ -70,6 +71,13 @@ const BookPage: React.FC = () => {
         }
       }
     }
+    // const width = window.outerWidth;
+    // currentRecommendedBooks = recommendedBooks;
+    // if (width < 835 && width > 320) {
+    //   currentRecommendedBooks = recommendedBooks.splice(3, 1);
+    // } else if (width <= 320) {
+    //   currentRecommendedBooks = recommendedBooks.splice(2, 2);
+    // }
     // eslint-disable-next-line
   }, [bookId, dispatch, comments]);
 
@@ -93,7 +101,7 @@ const BookPage: React.FC = () => {
       <div className="recommended">
         <div className="big-title">Recommendations</div>
         <div className="recommended__books">
-          {recommendedBooks?.map((idBook) => {
+          {currentRecommendedBooks?.map((idBook) => {
             return (
               <Recommendations
                 key={idBook}

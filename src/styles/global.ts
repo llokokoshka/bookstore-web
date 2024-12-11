@@ -94,6 +94,10 @@ export default createGlobalStyle`
     line-height: 24px;
     letter-spacing: 0.75px;
     text-align: left;
+    @media screen and (max-width: 835px) {
+      width: 392px;
+      height: 64px;
+    }
   }
 
   .input__dark-title{

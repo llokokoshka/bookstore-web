@@ -259,6 +259,10 @@ const StyledWrapper = styled.div`
   column-gap: 128px;
   width: 100%;
   flex: 1;
+  @media screen and (max-width: 835px) {
+    padding: 95px 15px;
+    column-gap: 20px;
+  }
   @media screen and (max-width: 320px) {
     flex-direction: column;
   }

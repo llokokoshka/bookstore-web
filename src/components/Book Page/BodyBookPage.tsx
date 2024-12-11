@@ -188,6 +188,9 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 110px;
+  @media screen and (max-width: 835px) {
+    padding: 100px 15px 88px 15px;
+  }
 
   .book {
     display: flex;
@@ -203,6 +206,10 @@ const StyledWrapper = styled.div`
   .cover__img {
     width: 522px;
     height: 779px;
+    @media screen and (max-width: 835px) {
+      width: 391px;
+      height: 584px;
+    }
   }
 
   .cover__favorite-button {
@@ -212,7 +219,7 @@ const StyledWrapper = styled.div`
     width: 59px;
     height: 59px;
     top: 30px;
-    left: 433px;
+    left: 322px;
     z-index: 5;
     display: flex;
     align-items: center;
