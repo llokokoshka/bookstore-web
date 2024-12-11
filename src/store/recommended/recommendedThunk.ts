@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { getRecommendedApi } from '../../api/bookApi';
 import { IRecommendedThunk } from '../../lib/types';
 import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
-import { BookGenreType } from '../../lib/bookTypes';
 
-export const getRecommended = createAsyncThunk<IRecommendedThunk>(
+export const getRecommended = createAsyncThunk<IRecommendedThunk, number>(
   'books/recommended',
-  async (_, thunkAPI) => {
+  async (bookId, thunkAPI) => {
     try {
-      const data = await getRecommendedApi();
+      const data = await getRecommendedApi(bookId);
       thunkAPI.dispatch(addOrUpdBook(data.books));
       return data;
     } catch (err) {

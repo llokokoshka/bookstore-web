@@ -63,7 +63,7 @@ const BookPage: React.FC = () => {
       dispatch(getComments(bookId));
     }
     if (recommendedBooks.length < 4) {
-      dispatch(getRecommended());
+      dispatch(getRecommended(bookId));
       for (let idRec of recommendedBooks) {
         if (!(idRec in books)) {
           dispatch(getBookById(idRec));

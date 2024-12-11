@@ -70,9 +70,9 @@ export async function getAvarageRatingApi(bookId: number) {
   return response.data.rate;
 }
 
-export async function getRecommendedApi() {
+export async function getRecommendedApi(bookId: number) {
   const response = await axiosInstance.get<IRecommendedThunk>(
-    ApiPath.recommended
+    ApiPath.getRecommendedWithIdUrl(bookId),
   );
   return response.data;
 }

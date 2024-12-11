@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import forward from '../../img/right arrow.png';
@@ -17,11 +17,46 @@ const SortMenu: React.FC = () => {
   const [isPriceOpen, setIsPriceOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
 
+  const genreRef = useRef<HTMLDivElement>(null);
+  const priceRef = useRef<HTMLDivElement>(null);
+  const sortRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (isGenresOpen && genres.length === 0) {
       dispatch(getGenres());
     }
   }, [isGenresOpen, genres, dispatch]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      if (sortRef.current && !sortRef.current.contains(target) && isSortOpen) {
+        setIsSortOpen(false);
+      }
+
+      if (
+        priceRef.current &&
+        !priceRef.current.contains(target) &&
+        isPriceOpen
+      ) {
+        setIsPriceOpen(false);
+      }
+
+      if (
+        genreRef.current &&
+        !genreRef.current.contains(target) &&
+        isGenresOpen
+      ) {
+        setIsGenresOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSortOpen, isPriceOpen, isGenresOpen]);
 
   const handlerGenresOpen = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsGenresOpen(!isGenresOpen);
@@ -39,7 +74,7 @@ const SortMenu: React.FC = () => {
     <StyledWrapper>
       <p className="big-title">Catalog</p>
       <div className="sort-menu">
-        <div className="sort-menu__button-container">
+        <div className="sort-menu__button-container" ref={genreRef}>
           <div onClick={handlerGenresOpen}>
             <button className="button-container__grey-button">Genre</button>
             {isGenresOpen ? (
@@ -50,7 +85,7 @@ const SortMenu: React.FC = () => {
           </div>
           {isGenresOpen && <GenresPopup />}
         </div>
-        <div className="sort-menu__button-container">
+        <div className="sort-menu__button-container" ref={priceRef}>
           <div onClick={handlerPriceOpen}>
             <button className="button-container__grey-button">Price</button>
             {isPriceOpen ? (
@@ -61,7 +96,7 @@ const SortMenu: React.FC = () => {
           </div>
           {isPriceOpen && <PricePopup />}
         </div>
-        <div className="sort-menu__button-container ">
+        <div className="sort-menu__button-container " ref={sortRef}>
           <div onClick={handlerSortOpen}>
             <button className="button-container__grey-button --light">
               Sort by {sortBy.toLowerCase()}{' '}
@@ -96,7 +131,7 @@ const StyledWrapper = styled.div`
     align-items: start;
     row-gap: 20px;
   }
-  
+
   @media screen and (max-width: 320px) {
     max-width: 290px;
     /* max-height: 290px; */
