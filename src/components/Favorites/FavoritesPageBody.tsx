@@ -54,6 +54,9 @@ export default FavoritePageBody;
 
 const StyledWrapper = styled.div<{ $numberItems: number }>`
   padding: ${({ theme }) => theme.padding.header};
+  @media screen and (max-width: 834px) {
+    padding: 20px 15px 110px 15px;
+  }
 
   display: flex;
   flex-direction: column;

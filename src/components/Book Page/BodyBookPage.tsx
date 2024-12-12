@@ -188,7 +188,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 110px;
-  @media screen and (max-width: 835px) {
+  @media screen and (max-width: 834px) {
     padding: 100px 15px 88px 15px;
   }
 
@@ -206,7 +206,7 @@ const StyledWrapper = styled.div`
   .cover__img {
     width: 522px;
     height: 779px;
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 391px;
       height: 584px;
     }

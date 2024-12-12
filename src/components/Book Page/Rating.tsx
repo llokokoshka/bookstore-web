@@ -126,7 +126,7 @@ const StyledWrapper = styled.div`
   .star {
     width: 26px;
     height: 26px;
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 20px;
       height: 20px;
     }

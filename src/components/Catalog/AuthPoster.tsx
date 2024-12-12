@@ -35,7 +35,7 @@ export default AuthPoster;
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
 
-  @media screen and (max-width: 835px) {
+  @media screen and (max-width: 834px) {
     padding: 26px 15px;
   }
 
@@ -52,7 +52,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     right: 0;
     bottom: 0;
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 377px;
       height: 455px;
       z-index: 1;
@@ -67,7 +67,7 @@ const StyledWrapper = styled.div`
     width: 100%;
     padding: 0 108px 0 757px;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       padding-left: 411px;
       padding-right: 0;
       align-items: end;
@@ -80,7 +80,7 @@ const StyledWrapper = styled.div`
     align-items: start;
     row-gap: 50px;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       margin-bottom: 118px;
       margin-right: 1px;
     }
@@ -99,7 +99,7 @@ const StyledWrapper = styled.div`
     left: 108px;
     bottom: 0;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 389px;
       height: 345px;
       /* top: 117px; */

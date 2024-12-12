@@ -1,36 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import logo from '../../img/logo.png';
-import search from '../../img/search-icon.png';
 import AuthButtons from './AuthButtons';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
-import { setSearcheParam } from '../../store/filter/filterSlice';
-import { setQueryParams } from '../../utils/urlUtil';
+import Search from './Search';
 
 const Header: React.FC<{ page: string }> = (props) => {
-  const dispatch = useAppDispatch();
-
   const user = useAppSelector((state) => state.auth.user);
 
-  const [searchInput, setSearchInput] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const setSearch = () => {
-    if (searchInput.length > 0) {
-      dispatch(setSearcheParam(searchInput));
-      setQueryParams({
-        dispatch: dispatch,
-        searchParams: searchParams,
-        setSearchParams: setSearchParams,
-        search: searchInput,
-      });
-    } else {
-      searchParams.delete('search');
-    }
-  };
+  const [searchParams] = useSearchParams();
 
   const deleteSearchParams = () => {
     searchParams.delete('pageNum');
@@ -48,17 +29,7 @@ const Header: React.FC<{ page: string }> = (props) => {
       </Link>
       <div className="header">
         <div className="base-text">{props.page}</div>
-        <div className="input">
-          <img src={search} alt="search" className="input__icon" />
-          <input
-            type="text"
-            placeholder="Search"
-            className="input__field"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            onKeyUp={(e) => (e.code === 'Enter' ? setSearch() : null)}
-          ></input>
-        </div>
+        <Search />
       </div>
       {user !== null && user !== undefined ? (
         <AuthButtons />
@@ -87,13 +58,10 @@ const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
   position: relative;
 
-  @media screen and (max-width: 835px) {
+  @media screen and (max-width: 834px) {
     column-gap: 51px;
     padding: 20px 15px;
   }
-  /* @media screen and (max-width: 321px) {
-    flex-direction: column;
-  } */
 
   .header {
     display: flex;
@@ -102,14 +70,8 @@ const StyledWrapper = styled.div`
     align-items: center;
     column-gap: 43px;
 
-    @media screen and (max-width: 321px) {
+    @media screen and (max-width: 320px) {
       width: 290px;
-    }
-  }
-
-  .input {
-    @media screen and (max-width: 835px) {
-      width: 247px;
     }
   }
 `;

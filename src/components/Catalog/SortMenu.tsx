@@ -124,7 +124,7 @@ const StyledWrapper = styled.div`
   width: 100%;
   padding: ${({ theme }) => theme.padding.header};
 
-  @media screen and (max-width: 835px) {
+  @media screen and (max-width: 834px) {
     padding: 26px 15px;
     flex-direction: column;
     justify-content: start;
@@ -166,7 +166,7 @@ const StyledWrapper = styled.div`
     letter-spacing: 0.75px;
     color: ${({ theme }) => theme.colors.dark_blue};
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 255px;
     }
   }

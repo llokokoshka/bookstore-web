@@ -199,6 +199,14 @@ const StyledWrapper = styled.div`
       width: 290px;
     }
   }
+
+  .input__text-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 100%;
+  }
+
   .input-title {
     display: flex;
     justify-content: left;
@@ -206,30 +214,20 @@ const StyledWrapper = styled.div`
     padding-top: 6px;
     width: 100%;
   }
-  .input__text-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    width: 100%;
-  }
-  .--correct {
-    padding-left: 0px;
-  }
 
   .pad-inp {
     width: 448px;
     margin-left: 64px;
     padding-left: 5px;
-    @media screen and (max-width: 835px) {
-      /* position: absolute; */
-      width: 529px;
-      /* height: 64px; */
-      top: 0;
-      margin-left: 0px;
-      padding-left: 0px;
-      /* left: 290px; */
+    @media screen and (max-width: 834px) {
+      width: 465px;
+      height: 28px;
       border-radius: 16px;
     }
+  }
+
+  .--correct {
+    padding-left: 0px;
   }
 
   .error-message {

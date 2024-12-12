@@ -138,8 +138,8 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
 
   return (
     <StyledWrapper>
-      <div>
-        <div className="profile-img">
+      <div className="profile">
+        <div className="profile__img">
           <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
           <label className="base-round-button --lable-nice">
             <input
@@ -259,7 +259,7 @@ const StyledWrapper = styled.div`
   column-gap: 128px;
   width: 100%;
   flex: 1;
-  @media screen and (max-width: 835px) {
+  @media screen and (max-width: 834px) {
     padding: 95px 15px;
     column-gap: 20px;
   }
@@ -267,7 +267,14 @@ const StyledWrapper = styled.div`
     flex-direction: column;
   }
 
-  .profile-img {
+  .profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    row-gap: 16px;
+  }
+
+  .profile__img {
     position: relative;
     max-width: 305px;
     height: auto;

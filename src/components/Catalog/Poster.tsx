@@ -31,7 +31,7 @@ export default Poster;
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
 
-  @media screen and (max-width: 835px) {
+  @media screen and (max-width: 834px) {
     padding: 26px 15px;
   }
 
@@ -42,7 +42,7 @@ const StyledWrapper = styled.div`
     position: relative;
     border-radius: 16px;
     height: 400px;
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       height: 289px;
     }
   }
@@ -51,7 +51,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     bottom: 0;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 361px;
       height: 218px;
     }
@@ -65,7 +65,7 @@ const StyledWrapper = styled.div`
     width: 100%;
     padding: 0 108px 0 98px;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       padding-left: 40px;
       padding-right: 0;
       align-items: end;
@@ -78,7 +78,7 @@ const StyledWrapper = styled.div`
     align-items: start;
     row-gap: 50px;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       margin-bottom: 56px;
     }
   }
@@ -95,7 +95,7 @@ const StyledWrapper = styled.div`
     height: 400px;
     left: 60%;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       left: 58%;
       width: 328px;
       height: 364px;

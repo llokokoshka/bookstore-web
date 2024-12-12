@@ -137,7 +137,7 @@ export default RegistrationBody;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.header};
-  @media screen and (max-width: 835px) {
+  @media screen and (max-width: 834px) {
     padding: 95px 15px;
   }
   .poster__container {
@@ -150,7 +150,7 @@ const StyledWrapper = styled.div`
   }
 
   .container__img {
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 390px;
       height: 333px;
     }

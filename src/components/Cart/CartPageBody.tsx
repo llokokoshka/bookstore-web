@@ -35,10 +35,12 @@ const CartPageBody: React.FC = () => {
               </div>
             );
           })}
-          <div className="big-title">Total: {BooksInCart?.total_price}</div>
-          <div className="buttons">
-            <button className="cart-button">Continue shopping</button>
-            <button className="base-button">Chekout</button>
+          <div className="cart-info">
+            <div className="big-title">Total: {BooksInCart?.total_price}</div>
+            <div className="buttons">
+              <button className="cart-button">Continue shopping</button>
+              <button className="base-button">Chekout</button>
+            </div>
           </div>
         </>
       ) : (
@@ -66,6 +68,10 @@ export default CartPageBody;
 const StyledWrapper = styled.div<{ $numberItems: number }>`
   padding: ${({ theme }) => theme.padding.header};
 
+  @media screen and (max-width: 834px) {
+    padding: 20px 15px 110px 15px;
+  }
+
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -73,6 +79,11 @@ const StyledWrapper = styled.div<{ $numberItems: number }>`
 
   .cart-item:not(:nth-child(n + ${(props) => props.$numberItems})) {
     border-bottom: 1px solid #d6d8e7;
+  }
+  .cart-info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
   }
 
   .buttons {

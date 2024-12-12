@@ -40,7 +40,7 @@ const StyledWrapper = styled.div`
   color: ${({ theme }) => theme.colors.light};
   padding: ${({ theme }) => theme.padding.footer};
 
-  @media screen and (max-width: 835px) {
+  @media screen and (max-width: 834px) {
     padding: 73px 15px;
   }
   @media screen and (max-width: 321px) {
@@ -63,7 +63,7 @@ const StyledWrapper = styled.div`
     row-gap: 5px;
   }
   .map {
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 290px;
       height: auto;
     }

@@ -44,8 +44,10 @@ const BookInCart: React.FC<IBookInCartProps> = (props) => {
     <StyledWrapper>
       <img src={dirnameBookImg + bookImg} alt="img" className="book-img"></img>
       <div className="info-block">
-        <div className="big-title">{bookName}</div>
-        <div className="normal-title">{bookAuthor?.text}</div>
+        <div>
+          <div className="big-title">{bookName}</div>
+          <div className="normal-title --correct-size">{bookAuthor?.text}</div>
+        </div>
         <div className="info-block__amount">
           <div className="amount__block">
             <div className="block__button" onClick={handleMinusQuantity}>
@@ -63,7 +65,7 @@ const BookInCart: React.FC<IBookInCartProps> = (props) => {
             onClick={handleDeleteItem}
           ></img>
         </div>
-        <div>{props.price}</div>
+        <div className="total-prise">$ {props.price} USD</div>
       </div>
     </StyledWrapper>
   );
@@ -76,15 +78,24 @@ const StyledWrapper = styled.div`
   flex-direction: row;
   column-gap: 20px;
   padding: 40px 0px;
+  @media screen and (max-width: 834px) {
+    column-gap: 17px;
+  }
 
   .book-img {
     width: 197px;
     height: 289px;
+    border-radius: 16px;
+    @media screen and (max-width: 834px) {
+      width: 255px;
+      height: 375px;
+    }
   }
 
   .info-block {
     display: flex;
     flex-direction: column;
+    row-gap: 50px;
   }
 
   .block__button {
@@ -129,5 +140,17 @@ const StyledWrapper = styled.div`
   .button__img {
     width: 8px;
     height: auto;
+  }
+
+  .total-prise {
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 54px;
+  }
+
+  .--correct-size {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
   }
 `;

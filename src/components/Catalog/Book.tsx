@@ -109,7 +109,7 @@ const StyledWrapper = styled.div`
   left: 80px;
   row-gap: 30px;
 
-  @media screen and (max-width: 835px) {
+  @media screen and (max-width: 834px) {
     column-gap: 21px;
     width: 254px;
     flex-basis: 254px;
@@ -139,7 +139,7 @@ const StyledWrapper = styled.div`
     align-items: center;
     justify-content: center;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 39px;
       height: 39px;
       top: 16px;
@@ -148,7 +148,7 @@ const StyledWrapper = styled.div`
   }
 
   .heart-size {
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 21px;
       height: 21px;
     }
@@ -163,7 +163,7 @@ const StyledWrapper = styled.div`
     height: 448px;
     border-radius: 16px;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 254px;
       height: 372px;
     }
@@ -174,7 +174,7 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     row-gap: 20px;
     width: 299px;
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 254px;
     }
   }
@@ -194,7 +194,7 @@ const StyledWrapper = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       font-size: 16px;
       line-height: 24px;
     }
@@ -211,7 +211,7 @@ const StyledWrapper = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       font-size: 16px;
       line-height: 24px;
     }
@@ -242,7 +242,7 @@ const StyledWrapper = styled.div`
     text-align: center;
     z-index: 5;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 254px;
     }
   }
@@ -258,7 +258,7 @@ const StyledWrapper = styled.div`
     padding: 10px 50px;
     border-radius: 16px;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       width: 254px;
     }
   }
@@ -284,7 +284,7 @@ const StyledWrapper = styled.div`
     color: #344966;
     z-index: 7;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       top: 320px;
     }
   }
@@ -312,7 +312,7 @@ const StyledWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.dark_blue};
     color: white;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 834px) {
       top: 320px;
     }
   }
