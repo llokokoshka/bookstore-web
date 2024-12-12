@@ -7,10 +7,11 @@ import {
   getBookById,
 } from './booksEntitiesThunk';
 import { IBookState, BookType } from '../../lib/bookTypes';
+import { useAppSelector } from '../../hooks';
 
 const initialState: IBookState = {
   books: {},
-  error: null,
+  error: undefined,
   loading: false,
 };
 
@@ -44,26 +45,49 @@ const bookEntititesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addComment.pending, (state) => {
+      .addCase(addComment.pending, (state, action) => {
         state.loading = true;
-        state.error = null;
+        const bookId = action.meta.arg.bookId;
+        const text = action.meta.arg.text;
+        const currentBook = bookId in state.books ? state.books[bookId] : null;
+        // const userId = useAppSelector((state) => state.auth.user?.id);
+
+        const newComment = {
+          // id:
+          //   Number(
+          //     Object.values(state.books[bookId].comments.reverse()[0])[0]
+          //   ) + 1,
+          text: text,
+          dateOfCreate: Date.now(),
+          // user: { id: userId },
+        };
+
+        if (currentBook) {
+          state.books[bookId].comments = {
+            ...state.books[bookId].comments,
+            ...newComment,
+          };
+        }
+        console.log(state.books[bookId].comments);
+        state.error = undefined;
       })
       .addCase(addComment.fulfilled, (state, action) => {
         const bookId = action.payload.bookId;
-        if (!(Object.keys(state.books).length === 0)) {
-          if (bookId && bookId in state.books) {
-            state.books[bookId].comments = {
-              ...state.books[bookId].comments,
-              ...action.payload,
-            };
-          } else if (bookId && state.books) {
-            state.books[bookId].comments = [action.payload];
-          }
+        if (bookId && bookId in state.books) {
+          state.books[bookId].comments[
+            state.books[bookId].comments.length - 1
+          ] = action.payload;
         }
       })
       .addCase(addComment.rejected, (state, action) => {
-        state.loading = true;
-        state.error = action.error as string;
+        state.loading = false;
+        const deleteComment = action.meta.arg;
+        const lastComment =
+          state.books[deleteComment.bookId].comments.reverse()[0];
+        state.books[deleteComment.bookId].comments.filter(
+          (comment) => comment.id !== lastComment.id
+        );
+        state.error = action.error.message;
       })
       .addCase(addOrUpdateRating.fulfilled, (state, action) => {
         if (!(Object.keys(state.books).length === 0)) {
@@ -82,7 +106,7 @@ const bookEntititesSlice = createSlice({
       })
       .addCase(getBookRating.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.error = undefined;
       })
       .addCase(getBookRating.fulfilled, (state, action) => {
         state.loading = false;
@@ -95,11 +119,11 @@ const bookEntititesSlice = createSlice({
       })
       .addCase(getBookRating.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error as string;
+        state.error = action.error.message;
       })
       .addCase(getBookById.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.error = undefined;
       })
       .addCase(getBookById.fulfilled, (state, action) => {
         state.loading = false;
@@ -107,7 +131,7 @@ const bookEntititesSlice = createSlice({
       })
       .addCase(getBookById.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error as string;
+        state.error = action.error.message;
       });
   },
 });

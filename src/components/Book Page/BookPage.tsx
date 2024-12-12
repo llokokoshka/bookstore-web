@@ -57,7 +57,7 @@ const BookPage: React.FC = () => {
   const comments = book?.comments;
 
   useEffect(() => {
-    if (!books && !book) {
+    if (!book || !books) {
       dispatch(getBookById(bookId));
     }
     if (book && !comments) {
@@ -71,13 +71,6 @@ const BookPage: React.FC = () => {
         }
       }
     }
-    // const width = window.outerWidth;
-    // currentRecommendedBooks = recommendedBooks;
-    // if (width < 835 && width > 320) {
-    //   currentRecommendedBooks = recommendedBooks.splice(3, 1);
-    // } else if (width <= 320) {
-    //   currentRecommendedBooks = recommendedBooks.splice(2, 2);
-    // }
     // eslint-disable-next-line
   }, [bookId, dispatch, comments]);
 

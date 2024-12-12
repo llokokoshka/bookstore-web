@@ -64,7 +64,6 @@ export const setQueryParams = async (props: IQueryParams) => {
     updatedParams.search = search;
     props.dispatch(setSearcheParam(search));
   }
-
   props.setSearchParams(updatedParams);
 
   props.dispatch(

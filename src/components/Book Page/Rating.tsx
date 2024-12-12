@@ -58,7 +58,7 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
     <StyledWrapper>
       <>
         {isUserRate ? (
-          <div className="rating">
+          <div className="total-rating">
             <img src={fullStar} alt="star"></img>
             <h3 className="rating__value"> {niceViewOfBookRating || '0.0'}</h3>
           </div>
@@ -114,13 +114,18 @@ const StyledWrapper = styled.div`
   max-width: 504px;
   width: 100%;
 
+  .total-rating {
+    display: flex;
+    flex-direction: row;
+    column-gap: 13px;
+  }
+
   .rating {
     display: flex;
     flex-direction: row;
     width: 299px;
     justify-content: space-between;
     align-items: center;
-    /* column-gap: 15px; */
   }
 
   .star {
