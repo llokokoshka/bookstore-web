@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getUserApi, loginUser, regUser } from './thunk';
-import { AuthState } from '../lib/types';
+import { loginUser, regUser, getUser } from './authThunk';
+import { IAuthState } from '../../lib/authTypes';
 
-const initialState: AuthState = {
+const initialState: IAuthState = {
   user: null,
   error: null,
-  loading: true,
+  loading: false,
 };
 
 const authSlice = createSlice({
@@ -27,9 +27,6 @@ const authSlice = createSlice({
       if (state.user) {
         if (action.payload.avatar) {
           state.user.avatar = action.payload.avatar;
-        }
-        if (action.payload.password) {
-          state.user.password = action.payload.password;
         }
         if (action.payload.fullName) {
           state.user.fullName = action.payload.fullName;
@@ -54,7 +51,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
       .addCase(regUser.pending, (state) => {
         state.loading = true;
@@ -68,21 +65,21 @@ const authSlice = createSlice({
       })
       .addCase(regUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
-      .addCase(getUserApi.pending, (state) => {
+      .addCase(getUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getUserApi.fulfilled, (state, action) => {
+      .addCase(getUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
         localStorage.setItem('access', action.payload.access_token);
         localStorage.setItem('refresh', action.payload.refresh_token);
       })
-      .addCase(getUserApi.rejected, (state, action) => {
+      .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       });
   },
 });

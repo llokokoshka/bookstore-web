@@ -1,44 +1,53 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
-import { InputProps } from '../../lib/types';
 import { useAppDispatch } from '../../hooks';
-import { setUser } from '../../store/authSlice';
+import { setUser } from '../../store/auth/authSlice';
+import { ProfileInputPropsType } from '../../lib/authTypes';
 
-const ProfileInput: React.FC<InputProps> = (props) => {
-  const [inputType, setInputType] = useState('password');
-  let correctPassFlag = true;
-  const { img, label, typeP, register, name, value, disable, errors } = props;
+const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (name !== 'password') {
-      if (value) {
-        register(name, { value: value });
-      }
-    } else register(name, { value: '******************' });
-  });
+  const [inputType, setInputType] = useState('password');
+
+  let correctPassFlag = true;
+  const { img, label, typeP, register, name, disable, errors } = props;
 
   const handlerInputType = () => {
     setInputType((type) => (type === 'password' ? 'text' : 'password'));
   };
 
   const editValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      setUser({
-        name: e.target.value,
-      })
-    );
+    switch (name) {
+      case 'fullName': {
+        dispatch(
+          setUser({
+            fullName: e.target.value,
+          })
+        );
+        break;
+      }
+      case 'email': {
+        dispatch(
+          setUser({
+            email: e.target.value,
+          })
+        );
+        break;
+      }
+    }
   };
+
   const handlePass = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (name === 'password' && correctPassFlag) {
       e.target.value = '';
       correctPassFlag = false;
     }
   };
+
   return (
     <StyledWrapper>
       <div
-        className="input input__field correct size"
+        className="input input__field --correct --size"
         style={{
           display:
             disable === false &&
@@ -65,7 +74,6 @@ const ProfileInput: React.FC<InputProps> = (props) => {
             onChange={editValue}
             onFocus={handlePass}
             disabled={disable}
-            defaultValue={value}
             className="input__field pad-inp"
           />
         </div>
@@ -73,29 +81,35 @@ const ProfileInput: React.FC<InputProps> = (props) => {
       {name === 'email' && (
         <>
           {errors.email?.type === 'required' && (
-            <div>Email - обязательное поле.</div>
+            <div className="error-message">Email - обязательное поле.</div>
           )}
 
-          {errors.email ? <div>{errors.email.message}</div> : null}
+          {errors.email ? (
+            <div className="error-message">{errors.email.message}</div>
+          ) : null}
         </>
       )}
 
       {name === 'password' && (
         <>
           {errors.password?.type === 'required' && (
-            <div>Password - обязательное поле.</div>
+            <div className="error-message">Password - обязательное поле.</div>
           )}
 
-          {errors.password ? <div>{errors.password.message}</div> : null}
+          {errors.password ? (
+            <div className="error-message">{errors.password.message}</div>
+          ) : null}
         </>
       )}
 
       {name === 'fullName' && (
         <>
           {errors.fullName?.type === 'required' && (
-            <div>Full Name - обязательное поле.</div>
+            <div className="error-message">Full Name - обязательное поле.</div>
           )}
-          {errors.fullName ? <div>{errors.fullName.message}</div> : null}
+          {errors.fullName ? (
+            <div className="error-message">{errors.fullName.message}</div>
+          ) : null}
         </>
       )}
       {name === 'passwordNew' && (
@@ -105,6 +119,7 @@ const ProfileInput: React.FC<InputProps> = (props) => {
               style={{
                 display: disable === false ? 'block' : 'none',
               }}
+              className="error-message"
             >
               Password - обязательное поле.
             </div>
@@ -114,6 +129,7 @@ const ProfileInput: React.FC<InputProps> = (props) => {
               style={{
                 display: disable === false ? 'block' : 'none',
               }}
+              className="error-message"
             >
               {errors.passwordNew.message}
             </div>
@@ -135,6 +151,7 @@ const ProfileInput: React.FC<InputProps> = (props) => {
               style={{
                 display: disable === false ? 'block' : 'none',
               }}
+              className="error-message"
             >
               Password - обязательное поле.
             </div>
@@ -144,6 +161,7 @@ const ProfileInput: React.FC<InputProps> = (props) => {
               style={{
                 display: disable === false ? 'block' : 'none',
               }}
+              className="error-message"
             >
               {errors.passwordRep.message}
             </div>
@@ -169,7 +187,7 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   row-gap: 9px;
 
-  .size {
+  .--size {
     width: 522px;
     height: 64px;
     display: flex;
@@ -181,6 +199,14 @@ const StyledWrapper = styled.div`
       width: 290px;
     }
   }
+
+  .input__text-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 100%;
+  }
+
   .input-title {
     display: flex;
     justify-content: left;
@@ -188,19 +214,23 @@ const StyledWrapper = styled.div`
     padding-top: 6px;
     width: 100%;
   }
-  .input__text-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    width: 100%;
-  }
-  .correct {
-    padding-left: 0px;
-  }
 
   .pad-inp {
     width: 448px;
     margin-left: 64px;
     padding-left: 5px;
+    @media screen and (max-width: 834px) {
+      width: 465px;
+      height: 28px;
+      border-radius: 16px;
+    }
+  }
+
+  .--correct {
+    padding-left: 0px;
+  }
+
+  .error-message {
+    color: red;
   }
 `;

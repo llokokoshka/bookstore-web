@@ -9,20 +9,20 @@ const Footer: React.FC = () => {
     <StyledWrapper>
       <div className="contacts">
         <img src={logo} alt="logo" />
-        <div className="footer-text">
+        <div className="contacts__footer-text">
           <div>tranthuy.nute@gmail.com</div>
           <div>(480) 555-0103</div>
         </div>
       </div>
-      <div className="footer-text">
+      <div className="contacts__footer-text">
         <div>Home Page</div>
         <div>Catalog</div>
         <div>My Account</div>
         <div>Cart</div>
       </div>
-      <div className="footer-text">
+      <div className="contacts__footer-text">
         <div>6391 Elgin St. Celina, Delaware 10299</div>
-        <img src={map} alt="map" />
+        <img src={map} alt="map" className="map" />
       </div>
     </StyledWrapper>
   );
@@ -40,16 +40,34 @@ const StyledWrapper = styled.div`
   color: ${({ theme }) => theme.colors.light};
   padding: ${({ theme }) => theme.padding.footer};
 
+  @media screen and (max-width: 834px) {
+    padding: 73px 15px;
+  }
+  @media screen and (max-width: 321px) {
+    flex-direction: column;
+    max-width: 290px;
+    height: auto;
+  }
+
   .contacts {
     display: flex;
     flex-direction: column;
     align-items: start;
     row-gap: 40px;
   }
-  .footer-text {
+
+  .contacts__footer-text {
     display: flex;
     flex-direction: column;
     align-items: start;
     row-gap: 5px;
+  }
+  .map {
+    @media screen and (max-width: 834px) {
+      width: 290px;
+      height: auto;
+    }
+    @media screen and (max-width: 321px) {
+    }
   }
 `;

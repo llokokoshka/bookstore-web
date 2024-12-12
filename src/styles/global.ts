@@ -8,6 +8,7 @@ export default createGlobalStyle`
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
   }
+
   .base-button {
     width: 231px;
     height: 44px;
@@ -16,7 +17,6 @@ export default createGlobalStyle`
     padding: ${({ theme }) => theme.padding.button};
     gap: 10px;
     border-radius: ${({ theme }) => theme.sizes.base_radius}px;
-    opacity: 0px;
     color: white;
     background-color: #344966;
     font-size: 16px;
@@ -25,6 +25,12 @@ export default createGlobalStyle`
     letter-spacing: 0.75px;
     text-align: center;
     z-index: 5;
+
+    @media screen and ( max-width: 834px ){
+      width: 231px;
+      height: 44px;
+      padding: 10px 50px;
+    }
   }
 
   .base-button:hover{
@@ -36,12 +42,23 @@ export default createGlobalStyle`
     font-weight: 700;
     line-height: 60px;
     text-align: left;
+    @media screen and (max-width: 834px) {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 48px;
+    }
   }
+  
   .normal-title{
     font-size: 20px;
     font-weight: 400;
     line-height: 30px;
     text-align: left;
+    @media screen and (max-width: 834px) {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    }
   }
 
   .base-text{
@@ -76,10 +93,13 @@ export default createGlobalStyle`
     line-height: 24px;
     letter-spacing: 0.75px;
     text-align: left;
+    @media screen and (max-width: 834px) {
+      width: 392px;
+      height: 64px;
+    }
   }
 
   .input__dark-title{
-    font-family: Poppins;
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
@@ -101,7 +121,6 @@ export default createGlobalStyle`
   }
   
   .base-round-button{
-    /* position: absolute; */
     width: 48px;
     height: 48px;
     opacity: 0px;
@@ -112,5 +131,4 @@ export default createGlobalStyle`
   .base-round-button:hover{
     cursor: pointer;
   }
-
 `;

@@ -8,7 +8,7 @@ import AuthorizationBody from './BodyAuthorization';
 const Authorization: React.FC = () => {
   return (
     <StyledWrapper>
-      <Header />
+      <Header page="Login" />
       <AuthorizationBody />
       <Footer />
     </StyledWrapper>
