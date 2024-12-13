@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import cn from 'classnames';
 
 import search from '../../img/search-icon.png';
 import { useAppDispatch } from '../../hooks';
 import { setSearcheParam } from '../../store/filter/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
+import { BaseInput } from '../BaseInput';
 
-const Search: React.FC = () => {
+const Search: React.FC<{
+  className?: string;
+  inputClassName?: string;
+}> = (props) => {
   const dispatch = useAppDispatch();
 
   const [searchInput, setSearchInput] = useState('');
@@ -28,18 +33,21 @@ const Search: React.FC = () => {
   };
 
   return (
-    <StyledWrapper>
-      <div className="input">
+    <StyledWrapper className={props.className}>
+      <BaseInput>
         <img src={search} alt="search" className="input__icon" />
         <input
           type="text"
           placeholder="Search"
-          className="input__field input__field--size"
+          className={cn(
+            'input__field input__field--size',
+            props.inputClassName
+          )}
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           onKeyUp={(e) => (e.code === 'Enter' ? setSearch() : null)}
         ></input>
-      </div>
+      </BaseInput>
     </StyledWrapper>
   );
 };
@@ -47,10 +55,17 @@ const Search: React.FC = () => {
 export default Search;
 
 const StyledWrapper = styled.div`
-  position: relative;
+  /* position: relative;
+  width: 100%; */
+
   .input__field--size {
     @media screen and (max-width: 834px) {
-      width: 247px;
+      max-width: 247px;
+      width: 100%;
+    }
+    @media screen and (max-width: 320px) {
+      max-width: 290px;
+      width: 100%;
     }
   }
 `;

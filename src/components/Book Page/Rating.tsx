@@ -14,44 +14,38 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
   isUserRate,
 }) => {
   let fullStars = 0;
-  let userRate: number | null = null;
+  let userRateID: number | null = null;
+  let userRate: number | null | undefined = null;
+
   const dispatch = useAppDispatch();
 
   const book = useAppSelector((state) =>
-    bookId in state.booksEntities.books
-      ? state.booksEntities.books[bookId]
-      : null
+    state.booksEntities.books[bookId] ? state.booksEntities.books[bookId] : null
   );
 
   const bookRating = book?.totalRate;
   let niceViewOfBookRating = `0.0`;
+
   if (bookRating) {
     fullStars = Math.round(bookRating);
   }
+
   if (Number.isInteger(bookRating)) {
     niceViewOfBookRating = `${bookRating}.0`;
   } else {
     niceViewOfBookRating = `${bookRating}`;
   }
+
   const userRates = useAppSelector((state) => state.auth.user?.rating);
-
-  const isUserRateThisBook = userRates?.find(
-    (item) => item.book.id === book?.id
-  );
-
-  if (isUserRateThisBook) {
-    userRate = Number(isUserRateThisBook.value);
+  if (userRates) {
+    userRateID = userRates[bookId];
+  }
+  if (userRateID) {
+    userRate = book?.rates?.find((rate) => rate.id === userRateID)?.value;
   }
 
-  const [userRating, setUserRating] = useState<number | null>(userRate);
-
-  useEffect(() => {
-    dispatch(getBookRating(bookId));
-  }, [dispatch, bookId]);
-
-  const handleRating = (rate: number) => {
-    setUserRating(rate);
-    dispatch(addOrUpdateRating({ bookId, rate }));
+  const handleRating = async (rate: number) => {
+    await dispatch(addOrUpdateRating({ bookId, rate }));
   };
 
   return (
@@ -70,7 +64,7 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
             <div className="rating__stars">
               {[1, 2, 3, 4, 5].map((star) => (
                 <div key={star} onClick={() => handleRating(star)}>
-                  {userRating && star <= userRating ? (
+                  {userRate && star <= userRate ? (
                     <img src={fullStar} alt="fullStar" className="star" />
                   ) : (
                     <img src={starImg} alt="star" className="star" />
@@ -78,9 +72,7 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
                 </div>
               ))}
             </div>
-            <h3 className="rating__value">
-              {userRating || '<- Rate this book'}
-            </h3>
+            <h3 className="rating__value">{userRate || '<- Rate this book'}</h3>
           </>
         ) : (
           <>

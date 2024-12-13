@@ -8,10 +8,7 @@ import {
   getAllCommentsApi,
   getAvarageRatingApi,
 } from '../../api/bookApi';
-import {
-  RatingThunkType,
-  AddCommentThunkType,
-} from '../../lib/types';
+import { RatingThunkType, AddCommentThunkType } from '../../lib/types';
 import { addOrUpdBook } from './booksEntitiesSlice';
 import { setGenres } from '../filter/filterSlice';
 import { IUserRating } from '../../lib/authTypes';
@@ -53,7 +50,7 @@ export const getGenres = createAsyncThunk<GenresType[]>(
 
 export const addComment = createAsyncThunk<CommentsType, AddCommentThunkType>(
   'comments/addComment',
-  async ({ text, bookId }, thunkAPI) => {
+  async ({ text, bookId, user }, thunkAPI) => {
     try {
       const data = await addCommentApi(bookId, text);
 

@@ -1,4 +1,5 @@
-import { IUserRating, PartialUserType } from './authTypes';
+import { IUserRating, PartialUserType, UserType } from './authTypes';
+import { RatingResThunkType } from './types';
 
 type Author = {
   id: number;
@@ -13,10 +14,10 @@ export type GenresType = {
 };
 
 export type CommentsType = {
-  id: number;
+  id: number | string;
   text: string;
   dateOfCreate: Date;
-  user: PartialUserType;
+  user: UserType;
   bookId?: number;
 };
 
@@ -39,7 +40,7 @@ export type BookType = {
   author: Author;
   bookGenres?: BookGenreType[] | [];
   comments: CommentsType[] | [];
-  rates?: IUserRating | null;
+  rates: IUserRating[] | [];
   totalRate?: number | null;
   cover: CoverType;
   isFav?: boolean;
@@ -102,7 +103,7 @@ export interface ICatalogProps {
 
 export interface IBookState {
   books: Record<number, BookType>;
-  error: string | undefined;
+  error?: string | undefined | null;
   loading: boolean;
 }
 

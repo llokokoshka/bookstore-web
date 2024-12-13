@@ -6,12 +6,11 @@ import {
   getBookRating,
   getBookById,
 } from './booksEntitiesThunk';
-import { IBookState, BookType } from '../../lib/bookTypes';
-import { useAppSelector } from '../../hooks';
+import { IBookState, BookType, CommentsType } from '../../lib/bookTypes';
 
 const initialState: IBookState = {
   books: {},
-  error: undefined,
+  error: null,
   loading: false,
 };
 
@@ -20,26 +19,15 @@ const bookEntititesSlice = createSlice({
   initialState,
   reducers: {
     addOrUpdBook(state, action: PayloadAction<BookType[]>) {
-      if (Object.keys(state.books).length === 0) {
-        const normalizedBooks = action.payload.reduce<Record<number, BookType>>(
-          (result, current) => {
-            result[current.id] = current;
-            return result;
-          },
-          {}
-        );
-        if (normalizedBooks) state.books = normalizedBooks;
-      } else {
-        action.payload.forEach((newBook) => {
-          if (newBook.id in state.books) {
-            state.books[newBook.id] = {
-              ...state.books[newBook.id],
-              ...newBook,
-            };
-          } else {
-            state.books[newBook.id] = newBook;
-          }
-        });
+      const normalizedBooks = action.payload.reduce<Record<number, BookType>>(
+        (result, current) => {
+          result[current.id] = current;
+          return result;
+        },
+        {}
+      );
+      for (let key in normalizedBooks) {
+        state.books[key] = { ...state.books[key], ...normalizedBooks[key] };
       }
     },
   },
@@ -49,72 +37,70 @@ const bookEntititesSlice = createSlice({
         state.loading = true;
         const bookId = action.meta.arg.bookId;
         const text = action.meta.arg.text;
-        const currentBook = bookId in state.books ? state.books[bookId] : null;
-        // const userId = useAppSelector((state) => state.auth.user?.id);
+        const currentBook = state.books[bookId];
 
-        const newComment = {
-          // id:
-          //   Number(
-          //     Object.values(state.books[bookId].comments.reverse()[0])[0]
-          //   ) + 1,
+        if (!currentBook) {
+          return;
+        }
+        const user = action.meta.arg.user;
+
+        const newComment: CommentsType = {
+          id: action.meta.requestId,
           text: text,
-          dateOfCreate: Date.now(),
-          // user: { id: userId },
+          dateOfCreate: new Date(),
+          user: user,
         };
 
         if (currentBook) {
-          state.books[bookId].comments = {
+          state.books[bookId].comments = [
             ...state.books[bookId].comments,
-            ...newComment,
-          };
+            newComment,
+          ];
         }
-        console.log(state.books[bookId].comments);
-        state.error = undefined;
       })
       .addCase(addComment.fulfilled, (state, action) => {
         const bookId = action.payload.bookId;
-        if (bookId && bookId in state.books) {
-          state.books[bookId].comments[
-            state.books[bookId].comments.length - 1
-          ] = action.payload;
+        if (bookId && state.books[bookId]) {
+          const index = state.books[bookId].comments.findIndex((comment) => {
+            return comment.id === action.meta.requestId;
+          });
+          if (index) {
+            state.books[bookId].comments[index] = action.payload;
+          }
         }
       })
       .addCase(addComment.rejected, (state, action) => {
         state.loading = false;
-        const deleteComment = action.meta.arg;
-        const lastComment =
-          state.books[deleteComment.bookId].comments.reverse()[0];
-        state.books[deleteComment.bookId].comments.filter(
-          (comment) => comment.id !== lastComment.id
+        state.books[action.meta.arg.bookId].comments.filter(
+          (comment) => comment.id !== action.meta.requestId
         );
         state.error = action.error.message;
       })
       .addCase(addOrUpdateRating.fulfilled, (state, action) => {
-        if (!(Object.keys(state.books).length === 0)) {
-          const bookId = action.payload.bookId;
-          if (bookId && state.books[bookId].rates) {
-            state.books[bookId].rates = {
+        const bookId = action.payload.bookId;
+        if (bookId && state.books[bookId]) {
+          const index = state.books[bookId].rates.findIndex((rate) => {
+            return rate.id === action.payload.rating.id;
+          });
+          if (index || index === 0) {
+            state.books[bookId].rates[index] = action.payload.rating;
+          } else {
+            state.books[bookId].rates = [
               ...state.books[bookId].rates,
-              ...action.payload.rating,
-            };
-            state.books[bookId].totalRate = action.payload.avarageRating;
-          } else if (bookId) {
-            state.books[bookId].rates = action.payload.rating;
-            state.books[bookId].totalRate = action.payload.avarageRating;
+              action.payload.rating,
+            ];
           }
+          state.books[bookId].totalRate = action.payload.avarageRating;
         }
       })
       .addCase(getBookRating.pending, (state) => {
         state.loading = true;
-        state.error = undefined;
       })
       .addCase(getBookRating.fulfilled, (state, action) => {
         state.loading = false;
-        if (!(Object.keys(state.books).length === 0)) {
-          const bookId = action.payload.bookId;
-          if (bookId && bookId in state.books) {
-            state.books[bookId].totalRate = action.payload.rate;
-          }
+        const bookId = action.payload.bookId;
+        if (bookId && state.books[bookId]) {
+          state.books[bookId].totalRate = action.payload.rate;
         }
       })
       .addCase(getBookRating.rejected, (state, action) => {
@@ -123,7 +109,6 @@ const bookEntititesSlice = createSlice({
       })
       .addCase(getBookById.pending, (state) => {
         state.loading = true;
-        state.error = undefined;
       })
       .addCase(getBookById.fulfilled, (state, action) => {
         state.loading = false;

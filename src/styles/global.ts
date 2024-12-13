@@ -66,19 +66,20 @@ export default createGlobalStyle`
     font-weight: 500;
     line-height: 24px;
     text-align: left;
+    @media screen and (max-width: 320px) {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 21px;
+    }
   }
 
-  .input {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    height: 64px;
-    width: 100%;
-  }
-  
   .input__icon {
     position: absolute;
     padding: 22px 24px;
+    @media screen and (max-width: 320px) {
+      padding: 11px 16px;
+    }
+    
   }
 
   .input__field {
@@ -94,8 +95,15 @@ export default createGlobalStyle`
     letter-spacing: 0.75px;
     text-align: left;
     @media screen and (max-width: 834px) {
-      width: 392px;
+      max-width: 392px;
       height: 64px;
+    }
+    @media screen and (max-width: 320px) {
+      max-width: 290px;
+      height: 47px;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 28px;
     }
   }
 
@@ -126,6 +134,10 @@ export default createGlobalStyle`
     opacity: 0px;
     background-color: ${({ theme }) => theme.colors.dark_blue};
     border-radius: 50%;
+    @media screen and (max-width: 320px) {
+      width: 32.73px;
+      height: 32.73px;
+    }
   }
 
   .base-round-button:hover{

@@ -1,6 +1,12 @@
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath } from '../constants/textConstants';
-import { BookType, CommentsType, GenresType, ICatalogFromServer } from '../lib/bookTypes';
+import { IUserRating } from '../lib/authTypes';
+import {
+  BookType,
+  CommentsType,
+  GenresType,
+  ICatalogFromServer,
+} from '../lib/bookTypes';
 import {
   IRecommendedThunk,
   RatingResThunkType,
@@ -56,11 +62,11 @@ export async function getAllCommentsApi(bookId: number) {
 }
 
 export async function addRateApi(bookId: number, rate: number) {
-  const rating = await axiosInstance.post<RatingResThunkType>(
+  const rating = await axiosInstance.post<IUserRating>(
     ApiPath.getBookRatingWithIdUrl(bookId),
     { rate }
   );
-  return rating.data.rating;
+  return rating.data;
 }
 
 export async function getAvarageRatingApi(bookId: number) {
@@ -72,7 +78,7 @@ export async function getAvarageRatingApi(bookId: number) {
 
 export async function getRecommendedApi(bookId: number) {
   const response = await axiosInstance.get<IRecommendedThunk>(
-    ApiPath.getRecommendedWithIdUrl(bookId),
+    ApiPath.getRecommendedWithIdUrl(bookId)
   );
   return response.data;
 }

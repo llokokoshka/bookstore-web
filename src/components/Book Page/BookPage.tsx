@@ -102,6 +102,7 @@ const BookPage: React.FC = () => {
           author={book.author}
           description={book.description}
           cover={book.cover}
+          rates={book.rates}
           comments={book.comments}
           isFav={isInFav === undefined ? false : true}
         />

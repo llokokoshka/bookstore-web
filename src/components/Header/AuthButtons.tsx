@@ -36,7 +36,15 @@ export default AuthButtons;
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  column-gap: 27px;
+  max-width: 198px;
+  width: 100%;
+  justify-content: space-between;
+  /* column-gap: 27px; */
+  @media screen and (max-width: 320px) {
+    max-width: 135px;
+
+    /* column-gap: 18px; */
+  }
 
   .cart-button {
     position: relative;
@@ -52,15 +60,17 @@ const StyledWrapper = styled.div`
     height: 23px;
     top: -6px;
     left: 33px;
-    gap: 0px;
-    opacity: 0px;
     border-radius: 50%;
     font-size: 12px;
     font-weight: 700;
     line-height: 18px;
     text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
     color: ${({ theme }) => theme.colors.dark_blue};
+    @media screen and (max-width: 320px) {
+      width: 15.81px;
+      height: 15.33px;
+      top: -4px;
+      left: 22.69px;
+    }
   }
 `;

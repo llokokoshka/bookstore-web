@@ -22,24 +22,32 @@ const Header: React.FC<{ page: string }> = (props) => {
     searchParams.delete('search');
   };
 
+  const isUserAvailable = user;
+
   return (
     <StyledWrapper>
       <Link to={AppPages.base}>
-        <img src={logo} alt="logo" onClick={deleteSearchParams} />
+        <img src={logo} alt="logo" id="logo" />
       </Link>
-      <div className="header">
-        <div className="base-text">{props.page}</div>
-        <Search />
+      {/* <div className="header"> */}
+      <div className="base-text" id="pageName">
+        {props.page}
       </div>
+      <Search className="header-search" />
+      {/* </div> */}
       {user !== null && user !== undefined ? (
         <AuthButtons />
       ) : props.page === 'Login' ? (
         <Link className="todo-body__div-button" to={`${AppPages.registration}`}>
-          <button className="base-button">Log in/Sign Up</button>
+          <button className="base-button" id="loginButton">
+            Log in/Sign Up
+          </button>
         </Link>
       ) : (
         <Link className="todo-body__div-button" to={`${AppPages.login}`}>
-          <button className="base-button">Log in/Sign Up</button>
+          <button className="base-button" id="regButton">
+            Log in/Sign Up
+          </button>
         </Link>
       )}
     </StyledWrapper>
@@ -52,15 +60,35 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  column-gap: 127px;
+  flex-wrap: nowrap;
+  /* column-gap: 127px; */
   align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.padding.header};
   position: relative;
 
   @media screen and (max-width: 834px) {
-    column-gap: 51px;
+    /* column-gap: 51px; */
     padding: 20px 15px;
+  }
+  @media screen and (max-width: 320px) {
+    flex-wrap: wrap;
+    /* column-gap: 18px; */
+    padding: 20px 15px;
+    /* flex-direction: row; */
+  }
+  #logo {
+    @media screen and (max-width: 320px) {
+      width: 62px;
+      height: 31px;
+    }
+  }
+  #header-search {
+    @media screen and (max-width: 320px) {
+      order: 2;
+      flex: 1 0 100%;
+      margin-top: 10px;
+    }
   }
 
   .header {
@@ -74,4 +102,7 @@ const StyledWrapper = styled.div`
       width: 290px;
     }
   }
+  /* .header-search {
+    background-color: tomato;
+  } */
 `;

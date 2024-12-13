@@ -45,6 +45,9 @@ const StyledWrapper = styled.div`
     @media screen and (max-width: 834px) {
       height: 289px;
     }
+    /* @media screen and (max-width: 834px) {
+      height: 289px;
+    } */
   }
 
   .poster__img {
@@ -69,6 +72,9 @@ const StyledWrapper = styled.div`
       padding-left: 40px;
       padding-right: 0;
       align-items: end;
+    }
+    @media screen and (max-width: 834px) {
+      flex-direction: column;
     }
   }
 
@@ -99,6 +105,12 @@ const StyledWrapper = styled.div`
       left: 58%;
       width: 328px;
       height: 364px;
+    }
+    @media screen and (max-width: 834px) {
+      width: 253px;
+      height: 282px;
+      top: 242px;
+      left: 271px;
     }
   }
 `;

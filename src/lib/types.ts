@@ -1,7 +1,7 @@
 import { SetURLSearchParams } from 'react-router-dom';
 import { AppDispatch } from '../store';
 import { BookType, CommentsType, GenresType } from './bookTypes';
-import { IUserRating } from './authTypes';
+import { IUserRating, PartialUserType, UserType } from './authTypes';
 
 export interface IFavoriteProps {
   id: number;
@@ -27,11 +27,12 @@ export interface ICommentsState {
 export type AddCommentThunkType = {
   text: string;
   bookId: number;
+  user: UserType;
 };
 
 export type RatingResThunkType = {
-  bookId: number;
-  rating: IUserRating;
+  rateId: number;
+  value: IUserRating;
 };
 
 export type RatingThunkType = {

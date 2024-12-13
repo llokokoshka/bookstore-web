@@ -27,6 +27,7 @@ const CommentInput: React.FC<Props> = (props) => {
           addComment({
             text: inputValue,
             bookId: props.id,
+            user: user,
           })
         ).unwrap();
         await dispatch(getBookById(props.id)).unwrap();
