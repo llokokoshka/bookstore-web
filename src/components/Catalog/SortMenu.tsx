@@ -98,7 +98,7 @@ const SortMenu: React.FC = () => {
         </div>
         <div className="sort-menu__button-container " ref={sortRef}>
           <div onClick={handlerSortOpen}>
-            <button className="button-container__grey-button --light">
+            <button className="button-container__grey-button button-container__grey-button--light">
               Sort by {sortBy.toLowerCase()}{' '}
             </button>
             {isSortOpen ? (
@@ -178,7 +178,7 @@ const StyledWrapper = styled.div`
     z-index: 10;
   }
 
-  .--light {
+  .button-container__grey-button--light {
     background-color: white;
   }
 `;

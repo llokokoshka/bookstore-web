@@ -48,7 +48,7 @@ const CommentInput: React.FC<Props> = (props) => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           ></input>
-          <button className="base-button --width" type="submit">
+          <button className="base-button base-button--width" type="submit">
             {loading ? <>loading...</> : <>Post a comment</>}
           </button>
         </form>
@@ -60,6 +60,10 @@ const CommentInput: React.FC<Props> = (props) => {
 export default CommentInput;
 
 const StyledWrapper = styled.div`
+  margin-top: 60px;
+  @media screen and (max-width: 834px) {
+    margin-top: 40px;
+  }
   .comment__form {
     background-color: ${({ theme }) => theme.colors.light};
     width: 738px;
@@ -74,7 +78,7 @@ const StyledWrapper = styled.div`
     row-gap: 30px;
   }
 
-  .--width {
+  .base-button--width {
     width: 276px;
   }
 `;

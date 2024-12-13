@@ -49,7 +49,7 @@ const CartPageBody: React.FC = () => {
           <div className="empty-cart__info">
             <div className="info__text">
               <div className="big-title">Your cart is empty</div>
-              <div className="cart_text">
+              <div className="cart__text">
                 Add items to cart to make a purchase. Go to the catalogue no.
               </div>
             </div>
@@ -134,7 +134,7 @@ const StyledWrapper = styled.div<{ $numberItems: number }>`
     row-gap: 20px;
   }
 
-  .cart_text {
+  .cart__text {
     font-size: 24px;
     font-weight: 400;
     line-height: 36px;

@@ -15,7 +15,7 @@ const Comment: React.FC<CommentsType> = (props) => {
       <img
         src={dirname + props.user?.avatar}
         alt="img"
-        className="avatar --change-avatar"
+        className="avatar avatar--comment"
       ></img>
       <div className="comment">
         <div className="comment__info">
@@ -40,7 +40,11 @@ const StyledWrapper = styled.div`
   position: relative;
   padding: 30px 30px 25px 30px;
 
-  .--change-avatar {
+  @media screen and (max-width: 834px) {
+    width: 667px;
+  }
+
+  .avatar--comment {
     position: absolute;
     width: 60px;
     height: 60px;
@@ -79,8 +83,6 @@ const StyledWrapper = styled.div`
     line-height: 18px;
     letter-spacing: 0.75px;
     text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
     color: ${({ theme }) => theme.colors.dark_grey};
   }
 
@@ -90,8 +92,9 @@ const StyledWrapper = styled.div`
     line-height: 24px;
     letter-spacing: 0.75px;
     text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
     color: ${({ theme }) => theme.colors.dark_blue};
+    @media screen and (max-width: 834px) {
+      padding-right: 92px;
+    }
   }
 `;

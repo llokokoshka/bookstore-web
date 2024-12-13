@@ -20,7 +20,9 @@ const AuthPoster: React.FC = () => {
               </div>
             </div>
             <Link to={AppPages.registration}>
-              <button className="base-button --correct">Log In/Sing Up</button>
+              <button className="base-button base-button--top">
+                Log In/Sing Up
+              </button>
             </Link>
           </div>
         </div>
@@ -107,7 +109,7 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .--correct {
+  .base-button--top {
     z-index: 11;
   }
 `;

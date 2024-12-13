@@ -32,7 +32,9 @@ const BookInFavorite: React.FC<IFavoriteProps> = (props) => {
         ></img>
         <div className="favorite__info-block">
           <div className="big-title">{bookName}</div>
-          <div className="normal-title --correct-size">{bookAuthor?.text}</div>
+          <div className="normal-title normal-title--size">
+            {bookAuthor?.text}
+          </div>
         </div>
       </div>
       <img
@@ -80,7 +82,7 @@ const StyledWrapper = styled.div`
   .rubbish-img:hover {
     cursor: pointer;
   }
-  .--correct-size {
+  .normal-title--size {
     font-size: 20px;
     font-weight: 500;
     line-height: 30px;

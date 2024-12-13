@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -28,7 +28,10 @@ const BookPage: React.FC = () => {
   const booksInFavorites = useAppSelector(
     (state) => state.favorite.normalizeFavorites
   );
-  let currentRecommendedBooks: number[] = recommendedBooks;
+
+  const [currentRecommendedBooks, setCurrentRecommendedBooks] = useState<
+    number[]
+  >([]);
 
   const { pathname } = useLocation();
   useEffect(() => {
@@ -71,6 +74,18 @@ const BookPage: React.FC = () => {
         }
       }
     }
+
+    let newData: number[] = [...recommendedBooks];
+
+    const width = window.outerWidth;
+    if (width > 320 && width < 835) {
+      newData.pop();
+    } else if (width <= 320) {
+      newData.pop();
+      newData.pop();
+    }
+
+    setCurrentRecommendedBooks(newData);
     // eslint-disable-next-line
   }, [bookId, dispatch, comments]);
 
@@ -125,6 +140,9 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     padding: ${({ theme }) => theme.padding.header};
     row-gap: 50px;
+    @media screen and (max-width: 834px) {
+      padding: 0 15px 100px 15px;
+    }
   }
 
   .recommended__books {

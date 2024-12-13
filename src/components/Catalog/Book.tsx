@@ -50,7 +50,7 @@ const Book: React.FC<IBookProps> = (props) => {
           </div>
         ) : (
           <div
-            className="book__favorite-button --opacity"
+            className="book__favorite-button book__favorite-button--opacity"
             onClick={useHandleFav}
           >
             <img src={heart} alt="heart" className="heart-size"></img>
@@ -89,7 +89,10 @@ const Book: React.FC<IBookProps> = (props) => {
       {props.isInCart ? (
         <button className="cart-button">Item in cart</button>
       ) : (
-        <button className="base-button --correct" onClick={addBookInCart}>
+        <button
+          className="base-button base-button--size"
+          onClick={addBookInCart}
+        >
           $ {props.price} USD
         </button>
       )}
@@ -217,10 +220,10 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .--opacity {
+  .book__favorite-button--opacity {
     opacity: 50%;
   }
-  .--opacity:hover {
+  .book__favorite-button--opacity:hover {
     opacity: 100%;
   }
 
@@ -251,7 +254,7 @@ const StyledWrapper = styled.div`
     /* cursor: pointer; */
   }
 
-  .--correct {
+  .base-button--size {
     width: 305px;
     height: 48px;
     top: 615px;

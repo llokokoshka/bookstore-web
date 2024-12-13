@@ -34,7 +34,7 @@ const Search: React.FC = () => {
         <input
           type="text"
           placeholder="Search"
-          className="input__field --correct-size"
+          className="input__field input__field--size"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           onKeyUp={(e) => (e.code === 'Enter' ? setSearch() : null)}
@@ -48,7 +48,7 @@ export default Search;
 
 const StyledWrapper = styled.div`
   position: relative;
-  .--correct-size {
+  .input__field--size {
     @media screen and (max-width: 834px) {
       width: 247px;
     }

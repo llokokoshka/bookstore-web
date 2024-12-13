@@ -46,7 +46,9 @@ const BookInCart: React.FC<IBookInCartProps> = (props) => {
       <div className="info-block">
         <div>
           <div className="big-title">{bookName}</div>
-          <div className="normal-title --correct-size">{bookAuthor?.text}</div>
+          <div className="normal-title normal-title--size">
+            {bookAuthor?.text}
+          </div>
         </div>
         <div className="info-block__amount">
           <div className="amount__block">
@@ -148,7 +150,7 @@ const StyledWrapper = styled.div`
     line-height: 54px;
   }
 
-  .--correct-size {
+  .normal-title--size {
     font-size: 20px;
     font-weight: 500;
     line-height: 30px;

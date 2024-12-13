@@ -59,7 +59,7 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
       <>
         {isUserRate ? (
           <div className="total-rating">
-            <img src={fullStar} alt="star"></img>
+            <img src={fullStar} alt="star" className="star"></img>
             <h3 className="rating__value"> {niceViewOfBookRating || '0.0'}</h3>
           </div>
         ) : null}
@@ -67,35 +67,34 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
       <div className="rating">
         {isUserRate ? (
           <>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <div key={star} onClick={() => handleRating(star)}>
-                {userRating && star <= userRating ? (
-                  <img src={fullStar} alt="fullStar" className="star" />
-                ) : (
-                  <img src={starImg} alt="star" className="star" />
-                )}
-              </div>
-            ))}
+            <div className="rating__stars">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <div key={star} onClick={() => handleRating(star)}>
+                  {userRating && star <= userRating ? (
+                    <img src={fullStar} alt="fullStar" className="star" />
+                  ) : (
+                    <img src={starImg} alt="star" className="star" />
+                  )}
+                </div>
+              ))}
+            </div>
             <h3 className="rating__value">
-              {' '}
               {userRating || '<- Rate this book'}
             </h3>
           </>
         ) : (
           <>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <div
-                key={star}
-                onClick={() => handleRating(star)}
-                className="star"
-              >
-                {fullStars && star <= fullStars ? (
-                  <img src={fullStar} alt="fullStar" className="star" />
-                ) : (
-                  <img src={starImg} alt="star" className="star" />
-                )}
-              </div>
-            ))}
+            <div className="rating__stars">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <div key={star} onClick={() => handleRating(star)}>
+                  {fullStars && star <= fullStars ? (
+                    <img src={fullStar} alt="fullStar" className="star" />
+                  ) : (
+                    <img src={starImg} alt="star" className="star" />
+                  )}
+                </div>
+              ))}
+            </div>
             <h3 className="rating__value"> {niceViewOfBookRating || '0.0'}</h3>
           </>
         )}
@@ -114,6 +113,12 @@ const StyledWrapper = styled.div`
   max-width: 504px;
   width: 100%;
 
+  @media screen and (max-width: 834px) {
+    flex-direction: column;
+    align-items: start;
+    row-gap: 15px;
+  }
+
   .total-rating {
     display: flex;
     flex-direction: row;
@@ -126,6 +131,17 @@ const StyledWrapper = styled.div`
     width: 299px;
     justify-content: space-between;
     align-items: center;
+    @media screen and (max-width: 834px) {
+      width: 255px;
+    }
+  }
+  .rating__stars {
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+    @media screen and (max-width: 834px) {
+      column-gap: 24px;
+    }
   }
 
   .star {
@@ -145,8 +161,6 @@ const StyledWrapper = styled.div`
     font-weight: 500;
     line-height: 24px;
     text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-    color: #b9bac3;
+    color: ${({ theme }) => theme.colors.dark_grey};
   }
 `;

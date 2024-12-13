@@ -141,7 +141,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
       <div className="profile">
         <div className="profile__img">
           <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
-          <label className="base-round-button --lable-nice">
+          <label className="base-round-button base-round-button--display">
             <input
               type="file"
               id="avatar"
@@ -328,7 +328,7 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .--lable-nice {
+  .base-round-button--display {
     display: flex;
     justify-content: center;
     align-items: center;

@@ -40,7 +40,7 @@ const BookCover: React.FC<Props> = (props) => {
           </div>
         ) : (
           <div
-            className="cover__favorite-button --opacity"
+            className="cover__favorite-button cover__favorite-button--opacity"
             onClick={useHandleFav}
           >
             <img src={heart} alt="heart"></img>
@@ -94,11 +94,11 @@ const StyledWrapper = styled.div`
     cursor: pointer;
   }
 
-  .--opacity {
+  .cover__favorite-button--opacity {
     opacity: 50%;
   }
 
-  .--opacity:hover {
+  .cover__favorite-button--opacity:hover {
     opacity: 100%;
   }
 `;

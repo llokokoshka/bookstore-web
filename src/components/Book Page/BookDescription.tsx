@@ -17,7 +17,7 @@ const BookDescription: React.FC<Props> = (props) => {
       <div className="info-block__description">
         <div className="normal-title">Description</div>
         <div
-          className={`base-text --param ${
+          className={`base-text base-text--size ${
             isDescriptionExpanded ? 'expanded' : ''
           }`}
         >
@@ -41,7 +41,7 @@ const BookDescription: React.FC<Props> = (props) => {
 export default BookDescription;
 
 const StyledWrapper = styled.div`
-  .--param {
+  .base-text--size {
     max-width: 630px;
     max-height: 264px;
     width: 100%;

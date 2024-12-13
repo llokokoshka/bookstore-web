@@ -24,19 +24,21 @@ const BookPageBody: React.FC<BookType> = (props) => {
           cover={props.cover}
         />
       </div>
-      <div className="comments">
-        {Array.isArray(props.comments) &&
-          props.comments?.map((comment) => (
-            <Comment
-              key={comment.id}
-              id={comment.id}
-              text={comment.text}
-              dateOfCreate={comment.dateOfCreate}
-              user={comment.user}
-            />
-          ))}
+      <div>
+        <div className="comments">
+          {Array.isArray(props.comments) &&
+            props.comments?.map((comment) => (
+              <Comment
+                key={comment.id}
+                id={comment.id}
+                text={comment.text}
+                dateOfCreate={comment.dateOfCreate}
+                user={comment.user}
+              />
+            ))}
+        </div>
+        <CommentInput id={props.id} />
       </div>
-      <CommentInput id={props.id} />
     </StyledWrapper>
   );
 };
@@ -50,6 +52,7 @@ const StyledWrapper = styled.div`
   row-gap: 110px;
   @media screen and (max-width: 834px) {
     padding: 100px 15px 88px 15px;
+    row-gap: 88px;
   }
 
   .book {
