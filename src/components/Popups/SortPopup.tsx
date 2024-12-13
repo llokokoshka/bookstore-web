@@ -5,19 +5,13 @@ import { setSortBy } from '../../store/filter/filterSlice';
 import { useSearchParams } from 'react-router-dom';
 import { setQueryParams } from '../../utils/urlUtil';
 import poligon from '../../img/Polygon 4.png';
+import { SortOptions } from '../../constants/textConstants';
 
 const SortPopup: React.FC = () => {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const sortBy = useAppSelector((state) => state.filters.sortBy);
-  const sortOptions = [
-    'Price',
-    'Name',
-    'Author name',
-    'Rating',
-    'Date of issue',
-  ];
   const handleSortOption = async (sortOption: string) => {
     setQueryParams({
       dispatch: dispatch,
@@ -32,7 +26,7 @@ const SortPopup: React.FC = () => {
     <StyledWrapper>
       <img src={poligon} alt="aa" className="poligon" />
 
-      {sortOptions.map((option) => (
+      {SortOptions.map((option) => (
         <div
           className="base-text base-text--size"
           key={option}

@@ -1,5 +1,4 @@
-import { IUserRating, PartialUserType, UserType } from './authTypes';
-import { RatingResThunkType } from './types';
+import { IUserRating, UserType } from './authTypes';
 
 type Author = {
   id: number;

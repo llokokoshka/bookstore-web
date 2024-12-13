@@ -55,9 +55,17 @@ export const ApiPath = {
     return this.getBook.replace(':bookId', `${id}`);
   },
   recommended: `books/:bookId/recommended`,
-  
+
   getRecommendedWithIdUrl(id: string | number) {
     return this.recommended.replace(':bookId', `${id}`);
   },
   searched: `books/search`,
 } as const;
+
+export const SortOptions = [
+  'Price',
+  'Name',
+  'Author name',
+  'Rating',
+  'Date of issue',
+];
