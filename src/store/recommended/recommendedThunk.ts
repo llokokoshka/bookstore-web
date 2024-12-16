@@ -11,8 +11,8 @@ export const getRecommended = createAsyncThunk<IRecommendedThunk, number>(
       const data = await getRecommendedApi(bookId);
       thunkAPI.dispatch(addOrUpdBook(data.books));
       return data;
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );

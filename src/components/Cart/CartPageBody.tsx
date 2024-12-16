@@ -3,9 +3,7 @@ import styled from 'styled-components';
 
 import BookInCart from './BookInCart';
 import { useAppSelector } from '../../hooks';
-import booksImg from '../../img/booksImg.png';
-import { Link } from 'react-router-dom';
-import { AppPages } from '../../constants/textConstants';
+import EmptyPage from './EmtyPage';
 
 const CartPageBody: React.FC = () => {
   const BooksInCart = useAppSelector((state) => state.cart.cart);
@@ -44,20 +42,7 @@ const CartPageBody: React.FC = () => {
           </div>
         </>
       ) : (
-        <div className="empty-cart">
-          <img src={booksImg} alt="booksiMG"></img>
-          <div className="empty-cart__info">
-            <div className="info__text">
-              <div className="big-title">Your cart is empty</div>
-              <div className="cart__text">
-                Add items to cart to make a purchase. Go to the catalogue no.
-              </div>
-            </div>
-            <Link to={AppPages.base}>
-              <button className="base-button">Go to catalog</button>
-            </Link>
-          </div>
-        </div>
+        <EmptyPage page="cart" />
       )}
     </StyledWrapper>
   );

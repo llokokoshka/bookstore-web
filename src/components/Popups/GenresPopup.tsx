@@ -10,7 +10,6 @@ import {
   deleteCheckedGenres,
   setCheckedGenres,
 } from '../../store/filter/filterSlice';
-import { setQueryParams } from '../../utils/urlUtil';
 import { GenresType } from '../../lib/bookTypes';
 
 const GenresPopup: React.FC = () => {
@@ -32,27 +31,24 @@ const GenresPopup: React.FC = () => {
       if (!genres.includes(genre.id.toString())) {
         genres.push(genre.id.toString());
       }
-      setQueryParams({
-        dispatch: dispatch,
-        searchParams: searchParams,
-        setSearchParams: setSearchParams,
-        genres: genres,
+      searchParams.set('genre', genres.join(','));
+
+      setSearchParams({
+        ...Object.fromEntries(searchParams.entries()),
       });
     } else {
       dispatch(deleteCheckedGenres(genre.id));
-      const genres = searchParams
-        .getAll('genre')[0]
-        .split(',')
-        .map(Number)
-        .filter((g) => g !== genre.id);
+      const hasGenres = searchParams.getAll('genre')[0].split(',').map(Number);
+      const genres = hasGenres.filter((g) => g !== genre.id);
+
       if (genres.length === 0) {
         searchParams.delete('genre');
+      } else {
+        searchParams.set('genre', genres.join(','));
       }
-      setQueryParams({
-        dispatch: dispatch,
-        searchParams: searchParams,
-        setSearchParams: setSearchParams,
-        genres: genres,
+
+      setSearchParams({
+        ...Object.fromEntries(searchParams.entries()),
       });
     }
   };

@@ -20,9 +20,9 @@ export const getCart = createAsyncThunk<CartNormalizeType>(
     const arrayWithCartItems = data.cartItems;
     const newArrWithBookIds = arrayWithCartItems
       ? arrayWithCartItems.map((item) => {
-        const bookId = item.book.id;
-        return { ...item, book: bookId };
-      })
+          const bookId = item.book.id;
+          return { ...item, book: bookId };
+        })
       : null;
     const newData = {
       ...data,
@@ -45,7 +45,7 @@ export const addCartItem = createAsyncThunk<CartItemNormalizeType, number>(
       };
       return newData;
     } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );
@@ -62,7 +62,7 @@ export const upAmountCartItem = createAsyncThunk<CartItemNormalizeType, number>(
       };
       return newData;
     } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );
@@ -80,7 +80,7 @@ export const downAmountCartItem = createAsyncThunk<
     };
     return newData;
   } catch (err: any) {
-    return thunkAPI.rejectWithValue(err);
+    return thunkAPI.rejectWithValue(err.response.data.message);
   }
 });
 
@@ -91,7 +91,7 @@ export const deleteCartItem = createAsyncThunk(
       const data = await deteleItemInCartApi(ItemId);
       return data;
     } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );

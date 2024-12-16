@@ -44,6 +44,9 @@ const filterSlice = createSlice({
     setSearcheParam(state, action: PayloadAction<string>) {
       state.search = action.payload;
     },
+    deleteAllParams(state) {
+      state = initialState;
+    },
   },
 });
 
@@ -56,6 +59,7 @@ export const {
   setCheckedGenres,
   deleteCheckedGenres,
   setSearcheParam,
+  deleteAllParams,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

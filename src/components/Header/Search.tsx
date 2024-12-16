@@ -6,8 +6,7 @@ import cn from 'classnames';
 import search from '../../img/search-icon.png';
 import { useAppDispatch } from '../../hooks';
 import { setSearcheParam } from '../../store/filter/filterSlice';
-import { setQueryParams } from '../../utils/urlUtil';
-import { BaseInput } from '../BaseInput';
+import { BaseInput } from '../BaseComponentsStyles/BaseInput';
 
 const Search: React.FC<{
   className?: string;
@@ -21,15 +20,13 @@ const Search: React.FC<{
   const setSearch = () => {
     if (searchInput.length > 0) {
       dispatch(setSearcheParam(searchInput));
-      setQueryParams({
-        dispatch: dispatch,
-        searchParams: searchParams,
-        setSearchParams: setSearchParams,
-        search: searchInput,
-      });
+      searchParams.set('search', searchInput);
     } else {
       searchParams.delete('search');
     }
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+    });
   };
 
   return (
@@ -57,6 +54,7 @@ export default Search;
 const StyledWrapper = styled.div`
   /* position: relative;
   width: 100%; */
+  max-width: 630px;
 
   .input__field--size {
     @media screen and (max-width: 834px) {

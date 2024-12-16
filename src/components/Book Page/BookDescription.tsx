@@ -14,26 +14,24 @@ const BookDescription: React.FC<Props> = (props) => {
 
   return (
     <StyledWrapper>
-      <div className="info-block__description">
-        <div className="normal-title">Description</div>
-        <div
-          className={`base-text base-text--size ${
-            isDescriptionExpanded ? 'expanded' : ''
-          }`}
-        >
-          {props.description}
-        </div>
-        {!isDescriptionExpanded && props.description.length > 400 && (
-          <div className="description__show-more" onClick={toggleDescription}>
-            ... See more
-          </div>
-        )}
-        {isDescriptionExpanded && (
-          <div className="description__show-more" onClick={toggleDescription}>
-            See less
-          </div>
-        )}
+      <div className="normal-title">Description</div>
+      <div
+        className={`base-text base-text--size ${
+          isDescriptionExpanded ? 'expanded' : ''
+        }`}
+      >
+        {props.description}
       </div>
+      {!isDescriptionExpanded && props.description.length > 400 && (
+        <div className="description__show-more" onClick={toggleDescription}>
+          ... See more
+        </div>
+      )}
+      {isDescriptionExpanded && (
+        <div className="description__show-more" onClick={toggleDescription}>
+          See less
+        </div>
+      )}
     </StyledWrapper>
   );
 };
@@ -41,17 +39,15 @@ const BookDescription: React.FC<Props> = (props) => {
 export default BookDescription;
 
 const StyledWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 19px;
+
   .base-text--size {
     max-width: 630px;
     max-height: 264px;
     width: 100%;
     height: 100%;
-  }
-
-  .info-block__description {
-    display: flex;
-    flex-direction: column;
-    row-gap: 19px;
   }
 
   .base-text {

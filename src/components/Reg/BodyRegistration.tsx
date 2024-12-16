@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { registrationValidationSchema } from '../../schemas/registrationValidationSchema';
 import man from '../../img/чел 1.png';
@@ -12,6 +14,7 @@ import { useAppDispatch } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
 import { regUser } from '../../store/auth/authThunk';
 import { IFormInput, IFormReg } from '../../lib/authTypes';
+import { BaseInput } from '../BaseComponentsStyles/BaseInput';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -45,7 +48,18 @@ const RegistrationBody: React.FC = () => {
       }
       reset();
     } catch (err) {
-      console.warn('При регистрации возникла ошибка: ', err);
+      console.error('При регистрации возникла ошибка: ', err);
+      toast.error(`При регистрации возникла ошибка: ${err}`, {
+        position: 'top-right',
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
     }
   };
 
@@ -57,9 +71,10 @@ const RegistrationBody: React.FC = () => {
           className="container__info-block"
           onSubmit={handleSubmit(onSubmit)}
         >
+          <ToastContainer />
           <div className="info-block__text">
             <div className="big-title">Sign up</div>
-            <div className="input">
+            <BaseInput>
               <img src={mail} alt="Email" className="input__icon" />
               <input
                 type="email"
@@ -68,7 +83,7 @@ const RegistrationBody: React.FC = () => {
                 className="input__field"
                 {...register('email')}
               />
-            </div>
+            </BaseInput>
             {errors.email?.type === 'required' && (
               <div className="error">Email - обязательное поле.</div>
             )}
@@ -76,7 +91,7 @@ const RegistrationBody: React.FC = () => {
               <div className="error">{errors.email.message}</div>
             )}
             {!errors.email && <div>Enter your email</div>}
-            <div className="input">
+            <BaseInput>
               <div
                 className="password__btn active"
                 onClick={changeInputTypeHandler}
@@ -90,7 +105,7 @@ const RegistrationBody: React.FC = () => {
                 autoComplete="false"
                 {...register('password')}
               ></input>
-            </div>
+            </BaseInput>
             {errors.password?.type === 'required' && (
               <div className="error">Password - обязательное поле.</div>
             )}
@@ -98,7 +113,7 @@ const RegistrationBody: React.FC = () => {
               <div className="error">{errors.password.message}</div>
             )}
             {!errors.password && <div>Enter your password</div>}
-            <div className="input">
+            <BaseInput>
               <div
                 className="password__btn active"
                 onClick={changeInputTypeHandler}
@@ -112,7 +127,7 @@ const RegistrationBody: React.FC = () => {
                 autoComplete="false"
                 {...register('passwordRep')}
               ></input>
-            </div>
+            </BaseInput>
             {errors.passwordRep?.type === 'required' && (
               <div className="error">Password - обязательное поле.</div>
             )}

@@ -73,7 +73,7 @@ const StyledWrapper = styled.div`
       padding-right: 0;
       align-items: end;
     }
-    @media screen and (max-width: 834px) {
+    @media screen and (max-width: 320px) {
       flex-direction: column;
     }
   }
@@ -106,7 +106,7 @@ const StyledWrapper = styled.div`
       width: 328px;
       height: 364px;
     }
-    @media screen and (max-width: 834px) {
+    @media screen and (max-width: 320px) {
       width: 253px;
       height: 282px;
       top: 242px;

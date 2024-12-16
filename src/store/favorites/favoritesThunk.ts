@@ -6,7 +6,10 @@ import {
   deleteFavoriteItemApi,
 } from '../../api/userApi';
 import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
-import { FavoriteNormalizeType, FavoriteItemNormalizeType } from '../../lib/favoriteTypes';
+import {
+  FavoriteNormalizeType,
+  FavoriteItemNormalizeType,
+} from '../../lib/favoriteTypes';
 
 export const getFavorite = createAsyncThunk<FavoriteNormalizeType>(
   'favorite/getFavorite',
@@ -22,9 +25,9 @@ export const getFavorite = createAsyncThunk<FavoriteNormalizeType>(
 
     const newArrWithBookIds = arrayWithFavItems
       ? arrayWithFavItems.map((item) => {
-        const bookId = item.book.id;
-        return { ...item, book: bookId };
-      })
+          const bookId = item.book.id;
+          return { ...item, book: bookId };
+        })
       : null;
 
     const newData = {
@@ -49,7 +52,7 @@ export const addFavoriteItem = createAsyncThunk<
     };
     return newData;
   } catch (err: any) {
-    return thunkAPI.rejectWithValue(err);
+    return thunkAPI.rejectWithValue(err.response.data.message);
   }
 });
 
@@ -60,7 +63,7 @@ export const deleteFavoriteItem = createAsyncThunk(
       const data = await deleteFavoriteItemApi(ItemId);
       return data;
     } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );

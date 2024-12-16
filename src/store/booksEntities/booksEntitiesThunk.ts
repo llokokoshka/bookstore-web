@@ -30,7 +30,7 @@ export const getBookById = createAsyncThunk<BookType, number>(
       thunkAPI.dispatch(addOrUpdBook([book]));
       return book;
     } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );
@@ -56,7 +56,7 @@ export const addComment = createAsyncThunk<CommentsType, AddCommentThunkType>(
 
       return data;
     } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );

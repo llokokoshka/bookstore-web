@@ -33,25 +33,23 @@ const BookCover: React.FC<Props> = (props) => {
 
   return (
     <StyledWrapper>
-      <div className="book__cover">
-        {props.isFav ? (
-          <div className="cover__favorite-button" onClick={useHandleFav}>
-            <img src={fullHeart} alt="fullHeart"></img>
-          </div>
-        ) : (
-          <div
-            className="cover__favorite-button cover__favorite-button--opacity"
-            onClick={useHandleFav}
-          >
-            <img src={heart} alt="heart"></img>
-          </div>
-        )}
-        <img
-          src={dirnameBookImg + props.img}
-          alt="img"
-          className="cover__img"
-        ></img>
-      </div>
+      {props.isFav ? (
+        <div className="cover__favorite-button" onClick={useHandleFav}>
+          <img src={fullHeart} alt="fullHeart"></img>
+        </div>
+      ) : (
+        <div
+          className="cover__favorite-button cover__favorite-button--opacity"
+          onClick={useHandleFav}
+        >
+          <img src={heart} alt="heart"></img>
+        </div>
+      )}
+      <img
+        src={dirnameBookImg + props.img}
+        alt="img"
+        className="cover__img"
+      ></img>
     </StyledWrapper>
   );
 };
@@ -59,9 +57,7 @@ const BookCover: React.FC<Props> = (props) => {
 export default BookCover;
 
 const StyledWrapper = styled.div`
-  .book__cover {
-    position: relative;
-  }
+  position: relative;
 
   .cover__img {
     width: 522px;

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setSortBy } from '../../store/filter/filterSlice';
 import { useSearchParams } from 'react-router-dom';
-import { setQueryParams } from '../../utils/urlUtil';
 import poligon from '../../img/Polygon 4.png';
 import { SortOptions } from '../../constants/textConstants';
 
@@ -13,11 +12,10 @@ const SortPopup: React.FC = () => {
 
   const sortBy = useAppSelector((state) => state.filters.sortBy);
   const handleSortOption = async (sortOption: string) => {
-    setQueryParams({
-      dispatch: dispatch,
-      searchParams: searchParams,
-      setSearchParams: setSearchParams,
-      sortByOption: sortOption,
+    searchParams.set('sortBy', sortOption);
+
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
     });
     dispatch(setSortBy(sortOption));
   };

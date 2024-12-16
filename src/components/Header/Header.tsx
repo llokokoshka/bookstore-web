@@ -1,55 +1,33 @@
 import React from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import logo from '../../img/logo.png';
-import AuthButtons from './AuthButtons';
-import { useAppSelector } from '../../hooks';
+import UserButtons from './UserButtons';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
 import Search from './Search';
+import { deleteAllParams } from '../../store/filter/filterSlice';
+import AuthButton from './AuthButton';
 
 const Header: React.FC<{ page: string }> = (props) => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
 
-  const [searchParams] = useSearchParams();
-
-  const deleteSearchParams = () => {
-    searchParams.delete('pageNum');
-    searchParams.delete('genres');
-    searchParams.delete('minPrice');
-    searchParams.delete('maxPrice');
-    searchParams.delete('sortBy');
-    searchParams.delete('search');
+  const cleanFiltersStore = () => {
+    dispatch(deleteAllParams());
   };
-
-  const isUserAvailable = user;
 
   return (
     <StyledWrapper>
       <Link to={AppPages.base}>
-        <img src={logo} alt="logo" id="logo" />
+        <img src={logo} alt="logo" id="logo" onClick={cleanFiltersStore} />
       </Link>
-      {/* <div className="header"> */}
       <div className="base-text" id="pageName">
         {props.page}
       </div>
       <Search className="header-search" />
-      {/* </div> */}
-      {user !== null && user !== undefined ? (
-        <AuthButtons />
-      ) : props.page === 'Login' ? (
-        <Link className="todo-body__div-button" to={`${AppPages.registration}`}>
-          <button className="base-button" id="loginButton">
-            Log in/Sign Up
-          </button>
-        </Link>
-      ) : (
-        <Link className="todo-body__div-button" to={`${AppPages.login}`}>
-          <button className="base-button" id="regButton">
-            Log in/Sign Up
-          </button>
-        </Link>
-      )}
+      {user ? <UserButtons /> : <AuthButton page={props.page} />}
     </StyledWrapper>
   );
 };
@@ -83,7 +61,8 @@ const StyledWrapper = styled.div`
       height: 31px;
     }
   }
-  #header-search {
+  .header-search {
+    max-width: 630px;
     @media screen and (max-width: 320px) {
       order: 2;
       flex: 1 0 100%;
@@ -102,7 +81,4 @@ const StyledWrapper = styled.div`
       width: 290px;
     }
   }
-  /* .header-search {
-    background-color: tomato;
-  } */
 `;

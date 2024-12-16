@@ -72,6 +72,13 @@ export default createGlobalStyle`
       line-height: 21px;
     }
   }
+  /* .input{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    height: 64px;
+    width: 100%;
+  } */
 
   .input__icon {
     position: absolute;
@@ -89,6 +96,7 @@ export default createGlobalStyle`
     padding-left: 64px;
     max-width: 630px;
     width: 100%;
+    height: auto;
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;

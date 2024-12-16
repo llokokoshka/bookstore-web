@@ -9,8 +9,7 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
   async (data, thunkAPI) => {
     try {
       let strOfSearch;
-      const { pageNum, genres, minPrice, maxPrice, sortBy, search } =
-        data;
+      const { pageNum, genres, minPrice, maxPrice, sortBy, search } = data;
 
       if (pageNum === undefined || pageNum === null) {
         strOfSearch = `/books/?page=1&take=12`;
@@ -53,8 +52,8 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
 
       const newArrWithBookIds = arrayWithBooks
         ? arrayWithBooks.map((book) => {
-          return book.id;
-        })
+            return book.id;
+          })
         : null;
 
       const newDataForCatalog: ICatalog = {
@@ -64,7 +63,7 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
 
       return newDataForCatalog;
     } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );

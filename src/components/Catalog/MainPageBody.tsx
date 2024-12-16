@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Header from '../Header/Header';
@@ -9,7 +9,7 @@ import SortMenu from './SortMenu';
 import AuthPoster from './AuthPoster';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
-import { setPage } from '../../store/filter/filterSlice';
+import { deleteAllParams, setPage } from '../../store/filter/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
 import Catalog from './Catalog';
 import Navigate from './Navigate';
@@ -40,7 +40,6 @@ const MainPageBody = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
   useEffect(() => {
     if (user && Object.keys(booksInCart).length === 0) {
       try {
@@ -74,21 +73,19 @@ const MainPageBody = () => {
     let search = searchParams.get('search');
 
     const getBooksFromServer = async () => {
-      if (books === null || catalog === null) {
-        try {
-          await dispatch(
-            getCatalog({
-              pageNum: pageNumber,
-              genres: genres ? genres.toString() : null,
-              minPrice: minPriceParam,
-              maxPrice: maxPriceParam,
-              sortBy: sortByParam,
-              search: search,
-            })
-          );
-        } catch (error) {
-          console.error(ERROR_GET_BOOKS_DATA, error);
-        }
+      try {
+        await dispatch(
+          getCatalog({
+            pageNum: pageNumber,
+            genres: genres ? genres.toString() : null,
+            minPrice: minPriceParam,
+            maxPrice: maxPriceParam,
+            sortBy: sortByParam,
+            search: search,
+          })
+        );
+      } catch (error) {
+        console.error(ERROR_GET_BOOKS_DATA, error);
       }
     };
     getBooksFromServer();
@@ -98,11 +95,10 @@ const MainPageBody = () => {
   const handlePagePrev = () => {
     if (hasPrevPage && page) {
       dispatch(setPage(page - 1));
-      setQueryParams({
-        dispatch: dispatch,
-        searchParams: searchParams,
-        setSearchParams: setSearchParams,
-        pageNum: (page - 1).toString(),
+      searchParams.set('page', (page - 1).toString());
+
+      setSearchParams({
+        ...Object.fromEntries(searchParams.entries()),
       });
       window.scrollTo(0, 575);
     }
@@ -111,11 +107,10 @@ const MainPageBody = () => {
   const handlePageNext = () => {
     if (hasNextPage && page) {
       dispatch(setPage(page + 1));
-      setQueryParams({
-        dispatch: dispatch,
-        searchParams: searchParams,
-        setSearchParams: setSearchParams,
-        pageNum: (page + 1).toString(),
+      searchParams.set('page', (page + 1).toString());
+
+      setSearchParams({
+        ...Object.fromEntries(searchParams.entries()),
       });
       window.scrollTo(0, 575);
     }

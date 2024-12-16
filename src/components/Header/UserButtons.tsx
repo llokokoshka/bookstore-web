@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
 import { getCart } from '../../store/cart/cartThunk';
 
-const AuthButtons: React.FC = () => {
+const UserButtons: React.FC = () => {
   const dispatch = useAppDispatch();
   const itemsInCArt = useAppSelector((state) => state.cart.numberOfItemsInCart);
 
@@ -31,7 +31,7 @@ const AuthButtons: React.FC = () => {
   );
 };
 
-export default AuthButtons;
+export default UserButtons;
 
 const StyledWrapper = styled.div`
   display: flex;

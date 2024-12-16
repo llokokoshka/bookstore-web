@@ -17,7 +17,7 @@ export const loginUser = createAsyncThunk<IUserResponseData, IFormReg>(
 
       return data;
     } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );
@@ -48,7 +48,7 @@ export const getUser = createAsyncThunk<IUserResponseData>(
       const data = await getUserApi();
       return data;
     } catch (err: any) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );

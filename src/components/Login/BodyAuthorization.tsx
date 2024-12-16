@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { loginValidationSchema } from '../../schemas/loginValidationSchema';
 import man from '../../img/чел 1.png';
@@ -12,6 +14,7 @@ import { useAppDispatch } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
 import { loginUser } from '../../store/auth/authThunk';
 import { IFormReg } from '../../lib/authTypes';
+import { BaseInput } from '../BaseComponentsStyles/BaseInput';
 
 const AuthorizationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -47,6 +50,17 @@ const AuthorizationBody: React.FC = () => {
       reset();
     } catch (err) {
       console.warn('При авторизации возникла ошибка: ', err);
+      toast.error(`При авторизации возникла ошибка: ${err}`, {
+        position: 'top-right',
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
     }
   };
 
@@ -58,9 +72,11 @@ const AuthorizationBody: React.FC = () => {
           className="container__info-block"
           onSubmit={handleSubmit(onSubmit)}
         >
+          <ToastContainer />
+
           <div className="info-block__text">
             <div className="big-title">Log In</div>
-            <div className="input">
+            <BaseInput>
               <img src={mail} alt="Email" className="input__icon" />
               <input
                 type="email"
@@ -69,7 +85,7 @@ const AuthorizationBody: React.FC = () => {
                 className="input__field"
                 {...register('email')}
               />
-            </div>
+            </BaseInput>
             {errors.email?.type === 'required' && (
               <div className="error-message">Email - обязательное поле.</div>
             )}
@@ -77,7 +93,7 @@ const AuthorizationBody: React.FC = () => {
               <div className="error-message">{errors.email.message}</div>
             )}
             {!errors.email && <div>Enter your email</div>}
-            <div className="input">
+            <BaseInput>
               <div
                 className="password__btn active"
                 onClick={changeInputTypeHandler}
@@ -91,7 +107,7 @@ const AuthorizationBody: React.FC = () => {
                 autoComplete="false"
                 {...register('password')}
               ></input>
-            </div>
+            </BaseInput>
             {errors.password?.type === 'required' && (
               <div className="error-message">Password - обязательное поле.</div>
             )}

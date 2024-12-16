@@ -3,9 +3,7 @@ import styled from 'styled-components';
 
 import { useAppSelector } from '../../hooks';
 import BookInFavorite from './BookInFavorite';
-import booksImg from '../../img/booksImg.png';
-import { Link } from 'react-router-dom';
-import { AppPages } from '../../constants/textConstants';
+import EmptyPage from '../Cart/EmtyPage';
 
 const FavoritePageBody: React.FC = () => {
   const Favorites = useAppSelector((state) => state.favorite.favorites);
@@ -25,26 +23,13 @@ const FavoritePageBody: React.FC = () => {
             const Book = item.book in books ? books[item.book] : undefined;
             return (
               <div className="cart-item" key={item.id}>
-                <BookInFavorite key={item.id} id={item.id} book={Book} />{' '}
+                <BookInFavorite key={item.id} id={item.id} book={Book} />
               </div>
             );
           })}
         </>
       ) : (
-        <div className="empty-cart">
-          <img src={booksImg} alt="booksiMG"></img>
-          <div className="cart__info">
-            <div className="info__text">
-              <div className="big-title">Your favorites is empty</div>
-              <div className="cart-text">
-                Add items to favorites. Go to the catalogue no.
-              </div>
-            </div>
-            <Link to={AppPages.base}>
-              <button className="base-button">Go to catalog</button>
-            </Link>
-          </div>
-        </div>
+        <EmptyPage page="favorites" />
       )}
     </StyledWrapper>
   );
