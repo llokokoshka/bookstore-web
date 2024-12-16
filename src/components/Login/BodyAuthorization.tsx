@@ -49,8 +49,8 @@ const AuthorizationBody: React.FC = () => {
       } else navigate(AppPages.login);
       reset();
     } catch (err) {
-      console.warn('При авторизации возникла ошибка: ', err);
-      toast.error(`При авторизации возникла ошибка: ${err}`, {
+      console.warn('Authorization error: ', err);
+      toast.error(`Authorization error: ${err}`, {
         position: 'top-right',
         autoClose: 2500,
         hideProgressBar: false,

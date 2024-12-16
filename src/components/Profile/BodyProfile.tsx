@@ -25,6 +25,8 @@ import {
 import { setUser, logout } from '../../store/auth/authSlice';
 import { convertFileToBase64 } from '../../utils/fileUtil';
 import { UserType, IFormInfo, IFormPass } from '../../lib/authTypes';
+import { cleanCart } from '../../store/cart/cartSlice';
+import { cleanFav } from '../../store/favorites/favoritesSlice';
 
 const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   const dispatch = useDispatch();
@@ -134,6 +136,8 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
 
   const exit = () => {
     dispatch(logout());
+    dispatch(cleanCart());
+    dispatch(cleanFav());
   };
 
   return (

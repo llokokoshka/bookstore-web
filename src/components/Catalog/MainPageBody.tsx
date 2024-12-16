@@ -41,14 +41,14 @@ const MainPageBody = () => {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
-    if (user && Object.keys(booksInCart).length === 0) {
+    if (user && booksInCart.length === 0) {
       try {
         dispatch(getCart());
       } catch (err) {
         console.error(err);
       }
     }
-    if (user && Object.keys(booksInFavorites).length === 0) {
+    if (user && booksInFavorites.length === 0) {
       try {
         dispatch(getFavorite());
       } catch (err) {

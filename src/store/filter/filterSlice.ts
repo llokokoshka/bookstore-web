@@ -45,7 +45,13 @@ const filterSlice = createSlice({
       state.search = action.payload;
     },
     deleteAllParams(state) {
-      state = initialState;
+      state.page = 1;
+      state.genres = [];
+      state.checkedGenresId = [];
+      state.minPrice = 0;
+      state.maxPrice = 100;
+      state.sortBy = 'Price';
+      state.search = '';
     },
   },
 });

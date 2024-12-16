@@ -48,8 +48,8 @@ const RegistrationBody: React.FC = () => {
       }
       reset();
     } catch (err) {
-      console.error('При регистрации возникла ошибка: ', err);
-      toast.error(`При регистрации возникла ошибка: ${err}`, {
+      console.error('Registration error: ', err);
+      toast.error(`Registration error: ${err}`, {
         position: 'top-right',
         autoClose: 2500,
         hideProgressBar: false,
