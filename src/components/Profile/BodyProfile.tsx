@@ -118,9 +118,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
     try {
       const updUser = await updateUserData(data);
       dispatch(setUser(updUser));
-      // const updUser: UserType = await dispatch(
-      //   updateUserInfo({ fullName: data.fullName, email: data.email })
-      // );
+
       toast.success(`Data updated successfully`, {
         position: 'top-right',
         autoClose: 2500,
