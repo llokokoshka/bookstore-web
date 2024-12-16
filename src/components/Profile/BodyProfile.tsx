@@ -118,19 +118,33 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
     try {
       const updUser = await updateUserData(data);
       dispatch(setUser(updUser));
-      // toast.error(`Upload error: ${err}`, {
-      //   position: 'top-right',
-      //   autoClose: 2500,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: 'light',
-      //   transition: Bounce,
-      // });
+      // const updUser: UserType = await dispatch(
+      //   updateUserInfo({ fullName: data.fullName, email: data.email })
+      // );
+      toast.success(`Data updated successfully`, {
+        position: 'top-right',
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_DATA, err);
+      toast.error(`Error while update data: ${err}`, {
+        position: 'top-right',
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
     }
   };
 
@@ -141,9 +155,31 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   }) => {
     try {
       updateUserPassword(data);
+      toast.success(`Password updated successfully`, {
+        position: 'top-right',
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
       resetPass();
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_PASSWORD, err);
+      toast.error(`Error while update password: ${err}`, {
+        position: 'top-right',
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
     }
   };
 

@@ -7,11 +7,7 @@ import {
   GenresType,
   ICatalogFromServer,
 } from '../lib/bookTypes';
-import {
-  IRecommendedThunk,
-  RatingResThunkType,
-  RatingThunkType,
-} from '../lib/types';
+import { IRecommendedThunk, RatingThunkType } from '../lib/types';
 
 export async function getBookRatingApi(bookId: number) {
   const response = await axiosInstance.get<RatingThunkType>(
