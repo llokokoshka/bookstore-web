@@ -5,13 +5,14 @@ import starImg from '../../img/Star.png';
 import fullStar from '../../img/fullStar.png';
 import styled from 'styled-components';
 import { addOrUpdateRating } from '../../store/booksEntities/booksEntitiesThunk';
+import { IUserRating } from '../../lib/authTypes';
 
 const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
   bookId,
   isUserRate,
 }) => {
   let fullStars = 0;
-  let userRateID: number | null = null;
+  let userRateID: IUserRating | null = null;
   let userRate: number | null | undefined = null;
 
   const dispatch = useAppDispatch();
@@ -38,7 +39,7 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
     userRateID = userRates[bookId];
   }
   if (userRateID) {
-    userRate = book?.rates?.find((rate) => rate.id === userRateID)?.value;
+    userRate = userRateID.value;
   }
 
   const handleRating = async (rate: number) => {

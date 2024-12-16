@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { loginUser, regUser, getUser } from './authThunk';
 import { IAuthState } from '../../lib/authTypes';
+import { addOrUpdateRating } from '../booksEntities/booksEntitiesThunk';
 
 const initialState: IAuthState = {
   user: null,
@@ -80,6 +81,12 @@ const authSlice = createSlice({
       .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error as string;
+      })
+      .addCase(addOrUpdateRating.fulfilled, (state, action) => {
+        const bookId = action.payload.bookId;
+        if (bookId && state.user) {
+          state.user.rating[bookId] = action.payload.rating;
+        }
       });
   },
 });

@@ -1,3 +1,8 @@
+export interface IUserRating {
+  id: number;
+  value: number;
+}
+
 export type UserType = {
   id?: number;
   fullName?: string;
@@ -5,7 +10,7 @@ export type UserType = {
   password?: string;
   passwordNew?: string;
   avatar?: string;
-  rating: Record<number, number>;
+  rating: Record<number, IUserRating>;
 };
 
 export type PartialUserType = {
@@ -14,11 +19,6 @@ export type PartialUserType = {
   avatar: string;
   email?: string;
 };
-
-export interface IUserRating {
-  id: number;
-  value: number;
-}
 
 export interface IUserRatingWithTotalRate extends IUserRating {
   avarageRating: number;

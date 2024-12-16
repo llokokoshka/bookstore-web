@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import man from '../../img/User profile.png';
 import mail from '../../img/Mail.png';
@@ -82,6 +84,17 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
         dispatch(setUser({ avatar: data }));
       } catch (err) {
         console.error(ERROR_AVATAR_UPLOAD, err);
+        toast.error(`Upload error: ${err}`, {
+          position: 'top-right',
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Bounce,
+        });
         return err;
       }
     }
@@ -105,6 +118,17 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
     try {
       const updUser = await updateUserData(data);
       dispatch(setUser(updUser));
+      // toast.error(`Upload error: ${err}`, {
+      //   position: 'top-right',
+      //   autoClose: 2500,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: 'light',
+      //   transition: Bounce,
+      // });
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_DATA, err);
     }
@@ -142,6 +166,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
 
   return (
     <StyledWrapper>
+      <ToastContainer />
       <div className="profile">
         <div className="profile__img">
           <img src={dirname + user?.avatar} alt="img" className="avatar"></img>

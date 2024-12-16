@@ -63,6 +63,7 @@ const StyledWrapper = styled.div`
   }
   .header-search {
     max-width: 630px;
+    width: 100%;
     @media screen and (max-width: 320px) {
       order: 2;
       flex: 1 0 100%;

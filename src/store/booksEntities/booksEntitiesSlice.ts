@@ -78,20 +78,7 @@ const bookEntititesSlice = createSlice({
       })
       .addCase(addOrUpdateRating.fulfilled, (state, action) => {
         const bookId = action.payload.bookId;
-        if (bookId && state.books[bookId]) {
-          const index = state.books[bookId].rates.findIndex((rate) => {
-            return rate.id === action.payload.rating.id;
-          });
-          if (index || index === 0) {
-            state.books[bookId].rates[index] = action.payload.rating;
-          } else {
-            state.books[bookId].rates = [
-              ...state.books[bookId].rates,
-              action.payload.rating,
-            ];
-          }
-          state.books[bookId].totalRate = action.payload.avarageRating;
-        }
+        state.books[bookId].totalRate = action.payload.avarageRating;
       })
       .addCase(getBookRating.pending, (state) => {
         state.loading = true;
