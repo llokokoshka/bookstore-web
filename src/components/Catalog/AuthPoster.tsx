@@ -5,6 +5,7 @@ import fairy from '../../img/fairy.png';
 import castle from '../../img/castle.png';
 import { AppPages } from '../../constants/textConstants';
 import { Link } from 'react-router-dom';
+import BaseButton from '../BaseComponentsStyles/BaseButton';
 
 const AuthPoster: React.FC = () => {
   return (
@@ -20,9 +21,10 @@ const AuthPoster: React.FC = () => {
               </div>
             </div>
             <Link to={AppPages.registration}>
-              <button className="base-button base-button--top">
-                Log In/Sing Up
-              </button>
+              <BaseButton
+                buttonClassName="base-button--top"
+                text={` Log In/Sing Up`}
+              />
             </Link>
           </div>
         </div>

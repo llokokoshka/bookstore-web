@@ -16,6 +16,7 @@ import { regUser } from '../../store/auth/authThunk';
 import { IFormInput, IFormReg } from '../../lib/authTypes';
 import { BaseInput } from '../BaseComponentsStyles/BaseInput';
 import Toast from '../Toast';
+import BaseButton from '../BaseComponentsStyles/BaseButton';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -129,9 +130,7 @@ const RegistrationBody: React.FC = () => {
               <div>Repeat your password without errors</div>
             )}
           </div>
-          <button className="base-button" type="submit">
-            Sign up
-          </button>
+          <BaseButton type="submit" text={`Sign up`} />
         </form>
         <img src={man} alt="man" className="container__img" />
       </div>

@@ -10,6 +10,7 @@ import { ApiPath, AppPages } from '../../constants/textConstants';
 import { handleFavorites } from '../../utils/favoriteUtil';
 import { addCartItem } from '../../store/cart/cartThunk';
 import { IBookProps } from '../../lib/bookTypes';
+import BaseButton from '../BaseComponentsStyles/BaseButton';
 
 const Book: React.FC<IBookProps> = (props) => {
   const dispatch = useAppDispatch();
@@ -89,12 +90,11 @@ const Book: React.FC<IBookProps> = (props) => {
       {props.isInCart ? (
         <button className="cart-button">Item in cart</button>
       ) : (
-        <button
-          className="base-button base-button--size"
+        <BaseButton
+          buttonClassName="base-button--size"
+          text={`$ ${props.price} USD`}
           onClick={addBookInCart}
-        >
-          $ {props.price} USD
-        </button>
+        />
       )}
     </StyledWrapper>
   );

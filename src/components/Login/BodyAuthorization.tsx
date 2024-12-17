@@ -16,6 +16,7 @@ import { loginUser } from '../../store/auth/authThunk';
 import { IFormReg } from '../../lib/authTypes';
 import { BaseInput } from '../BaseComponentsStyles/BaseInput';
 import Toast from '../Toast';
+import BaseButton from '../BaseComponentsStyles/BaseButton';
 
 const AuthorizationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -107,9 +108,7 @@ const AuthorizationBody: React.FC = () => {
             )}
             {!errors.password && <div>Enter your password</div>}
           </div>
-          <button className="base-button" type="submit">
-            Log in
-          </button>
+          <BaseButton text={`Log in`} type="submit" />
         </form>
         <img src={man} alt="man" className="container__img" />
       </div>

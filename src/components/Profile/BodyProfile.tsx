@@ -30,6 +30,7 @@ import { UserType, IFormInfo, IFormPass } from '../../lib/authTypes';
 import { cleanCart } from '../../store/cart/cartSlice';
 import { cleanFav } from '../../store/favorites/favoritesSlice';
 import Toast from '../Toast';
+import BaseButton from '../BaseComponentsStyles/BaseButton';
 
 const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   const dispatch = useDispatch();
@@ -167,9 +168,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
             <img src={camera} alt="camera" />
           </label>
         </div>
-        <button className="base-button" onClick={exit}>
-          Logout
-        </button>
+        <BaseButton text={`Logout`} onClick={exit} />
       </div>
 
       <div className="container">
@@ -246,17 +245,16 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
             />
           </div>
         </form>
-        <button
-          className="base-button view"
+        <BaseButton
+          buttonClassName="view"
           type="button"
+          onClick={handleSubmit}
           style={{
             display:
               changeInfo === false || changePass === false ? 'block' : 'none',
           }}
-          onClick={handleSubmit}
-        >
-          Confirm
-        </button>
+          text={`Confirm`}
+        />
       </div>
     </StyledWrapper>
   );

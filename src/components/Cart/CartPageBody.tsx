@@ -6,6 +6,7 @@ import { useAppSelector } from '../../hooks';
 import EmptyPage from './EmtyPage';
 import { Link } from 'react-router-dom';
 import { AppPages } from '../../constants/textConstants';
+import BaseButton from '../BaseComponentsStyles/BaseButton';
 
 const CartPageBody: React.FC = () => {
   const BooksInCart = useAppSelector((state) => state.cart.cart);
@@ -41,7 +42,7 @@ const CartPageBody: React.FC = () => {
               <Link to={`${AppPages.base}`}>
                 <button className="cart-button">Continue shopping</button>
               </Link>
-              <button className="base-button">Chekout</button>
+              <BaseButton text={`Chekout`} />
             </div>
           </div>
         </>

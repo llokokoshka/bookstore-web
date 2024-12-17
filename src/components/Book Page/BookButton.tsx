@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import BaseButton from '../BaseComponentsStyles/BaseButton';
 
 interface Props {
   type: string;
@@ -12,13 +13,15 @@ const BookButton: React.FC<Props> = (props) => {
     <StyledWrapper>
       <p>{props.type}</p>
       {props.amount > 0 ? (
-        <button className="base-button base-button--width">
-          ${props.price} USD
-        </button>
+        <BaseButton
+          buttonClassName="base-button--width"
+          text={`${props.price} USD`}
+        />
       ) : (
-        <button className="base-button base-button--width base-button--opacity">
-          Not available
-        </button>
+        <BaseButton
+          buttonClassName="base-button--width base-button--opacity"
+          text={`Not available`}
+        />
       )}
     </StyledWrapper>
   );

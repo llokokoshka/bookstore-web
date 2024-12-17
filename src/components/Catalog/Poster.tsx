@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import poster from '../../img/poster-img.png';
 import books from '../../img/books-poster.png';
+import BaseButton from '../BaseComponentsStyles/BaseButton';
 
 const Poster: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ const Poster: React.FC = () => {
                 Buy two books and get one for free
               </div>
             </div>
-            <button className="base-button">Choose a book</button>
+            <BaseButton text={`Choose a book`} />
           </div>
           <img src={poster} alt="logo" className="container-img" />
         </div>

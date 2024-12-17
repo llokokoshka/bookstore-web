@@ -6,6 +6,7 @@ import {
   addComment,
   getBookById,
 } from '../../store/booksEntities/booksEntitiesThunk';
+import BaseButton from '../BaseComponentsStyles/BaseButton';
 
 interface Props {
   id: number;
@@ -49,9 +50,11 @@ const CommentInput: React.FC<Props> = (props) => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           ></input>
-          <button className="base-button base-button--width" type="submit">
-            {loading ? <>loading...</> : <>Post a comment</>}
-          </button>
+          <BaseButton
+            buttonClassName="base-button--width"
+            type="submit"
+            text={loading ? `loading...` : `Post a comment`}
+          />
         </form>
       ) : null}
     </StyledWrapper>

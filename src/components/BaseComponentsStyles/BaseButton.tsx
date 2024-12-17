@@ -1,6 +1,30 @@
+import React from 'react';
 import styled from 'styled-components';
+import cn from 'classnames';
 
-export const BaseButton = styled.div`
+interface Props {
+  buttonClassName?: string;
+  text?: string;
+  type?: 'button' | 'submit' | 'reset';
+  onClick?: () => void;
+  style?: React.CSSProperties | undefined;
+}
+
+const BaseButton: React.FC<Props> = (props) => {
+  return (
+    <StyledWrapper
+      className={cn('', props.buttonClassName)}
+      type={props.type}
+      onClick={props.onClick}
+    >
+      {props.text}
+    </StyledWrapper>
+  );
+};
+
+export default BaseButton;
+
+export const StyledWrapper = styled.button`
   width: 231px;
   height: 44px;
   top: 8px;
@@ -23,7 +47,7 @@ export const BaseButton = styled.div`
     padding: 10px 50px;
   }
 
-  :hover {
+  &:hover {
     cursor: pointer;
   }
 `;

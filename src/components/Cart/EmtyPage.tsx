@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import booksImg from '../../img/booksImg.png';
 import { Link } from 'react-router-dom';
 import { AppPages } from '../../constants/textConstants';
+import BaseButton from '../BaseComponentsStyles/BaseButton';
 
 interface Props {
   page: string;
@@ -29,11 +30,11 @@ const EmptyPage: React.FC<Props> = (props) => {
         </div>
         {props.page === 'catalog' ? (
           <Link to={AppPages.base}>
-            <button className="base-button">Reset filters</button>
+            <BaseButton text={`Reset filters`} />
           </Link>
         ) : (
           <Link to={AppPages.base}>
-            <button className="base-button">Go to catalog</button>
+            <BaseButton text={`Go to catalog`} />
           </Link>
         )}
       </div>
