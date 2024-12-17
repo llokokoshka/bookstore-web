@@ -29,9 +29,8 @@ const BookPage: React.FC = () => {
     (state) => state.favorite.normalizeFavorites
   );
 
-  const [currentRecommendedBooks, setCurrentRecommendedBooks] = useState<
-    number[]
-  >([]);
+  const [currentRecommendedBooks, setCurrentRecommendedBooks] =
+    useState<number[]>(recommendedBooks);
 
   const { pathname } = useLocation();
   useEffect(() => {
@@ -39,14 +38,14 @@ const BookPage: React.FC = () => {
   }, [pathname]);
 
   useEffect(() => {
-    if (user && Object.keys(booksInCart).length === 0) {
+    if (user && booksInCart.length === 0) {
       try {
         dispatch(getCart());
       } catch (err) {
         console.error(err);
       }
     }
-    if (user && Object.keys(booksInFavorites).length === 0) {
+    if (user && booksInFavorites.length === 0) {
       try {
         dispatch(getFavorite());
       } catch (err) {
@@ -87,7 +86,7 @@ const BookPage: React.FC = () => {
 
     setCurrentRecommendedBooks(newData);
     // eslint-disable-next-line
-  }, [bookId, dispatch, comments]);
+  }, [bookId, dispatch, comments, recommendedBooks]);
 
   const isInFav = booksInFavorites.find((id) => id === book?.id);
   return (

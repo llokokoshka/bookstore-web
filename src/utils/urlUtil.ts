@@ -1,3 +1,4 @@
+import { ERROR_GET_BOOKS_DATA } from '../constants/errorConstants';
 import { IQueryParams } from '../lib/types';
 import { getCatalog } from '../store/catalog/catalogThunk';
 import {
@@ -65,18 +66,21 @@ export const setQueryParams = async (props: IQueryParams) => {
     props.dispatch(setSearcheParam(search));
   }
   props.setSearchParams(updatedParams);
-
-  props.dispatch(
-    getCatalog({
-      pageNum: updatedParams?.page || pageNum || '1',
-      genres:
-        props.genres?.join(',').toString() ||
-        genres.join(',').toString() ||
-        null,
-      minPrice: updatedParams?.minPrice || minPrice || null,
-      maxPrice: updatedParams?.maxPrice || maxPrice || null,
-      sortBy: updatedParams?.sortBy || sortBy || null,
-      search: updatedParams?.search || search || null,
-    })
-  );
+  try {
+    await props.dispatch(
+      getCatalog({
+        pageNum: updatedParams?.page || pageNum || '1',
+        genres:
+          props.genres?.join(',').toString() ||
+          genres.join(',').toString() ||
+          null,
+        minPrice: updatedParams?.minPrice || minPrice || null,
+        maxPrice: updatedParams?.maxPrice || maxPrice || null,
+        sortBy: updatedParams?.sortBy || sortBy || null,
+        search: updatedParams?.search || search || null,
+      })
+    );
+  } catch (error) {
+    console.error(ERROR_GET_BOOKS_DATA, error);
+  }
 };

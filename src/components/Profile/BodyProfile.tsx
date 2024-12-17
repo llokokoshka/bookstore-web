@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import man from '../../img/User profile.png';
@@ -29,6 +29,7 @@ import { convertFileToBase64 } from '../../utils/fileUtil';
 import { UserType, IFormInfo, IFormPass } from '../../lib/authTypes';
 import { cleanCart } from '../../store/cart/cartSlice';
 import { cleanFav } from '../../store/favorites/favoritesSlice';
+import Toast from '../Toast';
 
 const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   const dispatch = useDispatch();
@@ -84,17 +85,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
         dispatch(setUser({ avatar: data }));
       } catch (err) {
         console.error(ERROR_AVATAR_UPLOAD, err);
-        toast.error(`Upload error: ${err}`, {
-          position: 'top-right',
-          autoClose: 2500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-          transition: Bounce,
-        });
+        Toast({ message: 'Upload error', error: err });
         return err;
       }
     }
@@ -118,31 +109,10 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
     try {
       const updUser = await updateUserData(data);
       dispatch(setUser(updUser));
-
-      toast.success(`Data updated successfully`, {
-        position: 'top-right',
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      });
+      Toast({ message: 'Data updated successfully' });
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_DATA, err);
-      toast.error(`Error while update data: ${err}`, {
-        position: 'top-right',
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      });
+      Toast({ message: 'Error while update data', error: err });
     }
   };
 
@@ -153,31 +123,11 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   }) => {
     try {
       updateUserPassword(data);
-      toast.success(`Password updated successfully`, {
-        position: 'top-right',
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      });
+      Toast({ message: 'Password updated successfully' });
       resetPass();
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_PASSWORD, err);
-      toast.error(`Error while update password: ${err}`, {
-        position: 'top-right',
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      });
+      Toast({ message: 'Error while update password', error: err });
     }
   };
 

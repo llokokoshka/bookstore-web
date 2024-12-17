@@ -37,8 +37,6 @@ export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
 
       const arrayWithBooks = catalog.data;
       if (arrayWithBooks) {
-        thunkAPI.dispatch(addOrUpdBook(arrayWithBooks));
-
         const ratings = await Promise.all(
           arrayWithBooks.map((book) => getRatingApi(book.id))
         );

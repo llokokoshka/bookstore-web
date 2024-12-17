@@ -4,8 +4,9 @@ import { IFavoriteProps } from '../../lib/types';
 
 import rubbish from '../../img/Delete.png';
 import { useAppDispatch } from '../../hooks';
-import { ApiPath } from '../../constants/textConstants';
+import { ApiPath, AppPages } from '../../constants/textConstants';
 import { deleteFavoriteItem } from '../../store/favorites/favoritesThunk';
+import { Link } from 'react-router-dom';
 
 const BookInFavorite: React.FC<IFavoriteProps> = (props) => {
   const dispatch = useAppDispatch();
@@ -25,11 +26,13 @@ const BookInFavorite: React.FC<IFavoriteProps> = (props) => {
   return (
     <StyledWrapper>
       <div className="favorite">
-        <img
-          src={dirnameBookImg + bookImg}
-          alt="img"
-          className="favorite__book-img"
-        ></img>
+        <Link to={`${AppPages.getBookIdUrl(props.id)}`}>
+          <img
+            src={dirnameBookImg + bookImg}
+            alt="img"
+            className="favorite__book-img"
+          ></img>
+        </Link>
         <div className="favorite__info-block">
           <div className="big-title">{bookName}</div>
           <div className="normal-title normal-title--size">

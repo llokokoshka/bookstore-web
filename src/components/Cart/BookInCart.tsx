@@ -6,13 +6,14 @@ import minus from '../../img/minus.png';
 import rubbish from '../../img/Delete.png';
 import { useAppDispatch } from '../../hooks';
 
-import { ApiPath } from '../../constants/textConstants';
+import { ApiPath, AppPages } from '../../constants/textConstants';
 import {
   deleteCartItem,
   downAmountCartItem,
   upAmountCartItem,
 } from '../../store/cart/cartThunk';
 import { IBookInCartProps } from '../../lib/bookTypes';
+import { Link } from 'react-router-dom';
 
 const BookInCart: React.FC<IBookInCartProps> = (props) => {
   const dispatch = useAppDispatch();
@@ -42,7 +43,13 @@ const BookInCart: React.FC<IBookInCartProps> = (props) => {
 
   return (
     <StyledWrapper>
-      <img src={dirnameBookImg + bookImg} alt="img" className="book-img"></img>
+      <Link to={`${AppPages.getBookIdUrl(props.id)}`}>
+        <img
+          src={dirnameBookImg + bookImg}
+          alt="img"
+          className="book-img"
+        ></img>
+      </Link>
       <div className="info-block">
         <div>
           <div className="big-title">{bookName}</div>

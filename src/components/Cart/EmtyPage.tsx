@@ -16,14 +16,26 @@ const EmptyPage: React.FC<Props> = (props) => {
       <div className="empty-cart__info">
         <div className="info__text">
           <div className="big-title">Your {props.page} is empty</div>
-          <div className="cart__text">
-            Add items to {props.page} to make a purchase. Go to the catalogue
-            no.
-          </div>
+          {props.page === 'catalog' ? (
+            <div className="cart__text">
+              There are no books with these filters
+            </div>
+          ) : (
+            <div className="cart__text">
+              Add items to {props.page} to make a purchase. Go to the catalogue
+              no.
+            </div>
+          )}
         </div>
-        <Link to={AppPages.base}>
-          <button className="base-button">Go to catalog</button>
-        </Link>
+        {props.page === 'catalog' ? (
+          <Link to={AppPages.base}>
+            <button className="base-button">Reset filters</button>
+          </Link>
+        ) : (
+          <Link to={AppPages.base}>
+            <button className="base-button">Go to catalog</button>
+          </Link>
+        )}
       </div>
     </StyledWrapper>
   );
@@ -38,6 +50,7 @@ const StyledWrapper = styled.div`
   align-items: start;
   justify-content: center;
   column-gap: 109px;
+  height: auto;
 
   .empty-cart__info {
     display: flex;

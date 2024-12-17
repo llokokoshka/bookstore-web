@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { loginValidationSchema } from '../../schemas/loginValidationSchema';
@@ -15,6 +15,7 @@ import { AppPages } from '../../constants/textConstants';
 import { loginUser } from '../../store/auth/authThunk';
 import { IFormReg } from '../../lib/authTypes';
 import { BaseInput } from '../BaseComponentsStyles/BaseInput';
+import Toast from '../Toast';
 
 const AuthorizationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -50,17 +51,7 @@ const AuthorizationBody: React.FC = () => {
       reset();
     } catch (err) {
       console.warn('Authorization error: ', err);
-      toast.error(`Authorization error: ${err}`, {
-        position: 'top-right',
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      });
+      Toast({ message: 'Authorization error', error: err });
     }
   };
 

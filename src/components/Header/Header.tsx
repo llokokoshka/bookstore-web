@@ -12,6 +12,7 @@ import AuthButton from './AuthButton';
 
 const Header: React.FC<{ page: string }> = (props) => {
   const dispatch = useAppDispatch();
+  const itemsInCart = useAppSelector((state) => state.cart.numberOfItemsInCart);
   const user = useAppSelector((state) => state.auth.user);
 
   const cleanFiltersStore = () => {
@@ -27,7 +28,11 @@ const Header: React.FC<{ page: string }> = (props) => {
         {props.page}
       </div>
       <Search className="header-search" />
-      {user ? <UserButtons /> : <AuthButton page={props.page} />}
+      {user ? (
+        <UserButtons itemsInCart={itemsInCart} />
+      ) : (
+        <AuthButton page={props.page} />
+      )}
     </StyledWrapper>
   );
 };
@@ -39,21 +44,17 @@ const StyledWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: nowrap;
-  /* column-gap: 127px; */
   align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.padding.header};
   position: relative;
 
   @media screen and (max-width: 834px) {
-    /* column-gap: 51px; */
     padding: 20px 15px;
   }
   @media screen and (max-width: 320px) {
     flex-wrap: wrap;
-    /* column-gap: 18px; */
     padding: 20px 15px;
-    /* flex-direction: row; */
   }
   #logo {
     @media screen and (max-width: 320px) {

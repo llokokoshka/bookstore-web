@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Header from '../Header/Header';
@@ -8,14 +8,13 @@ import Poster from './Poster';
 import SortMenu from './SortMenu';
 import AuthPoster from './AuthPoster';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
-import { deleteAllParams, setPage } from '../../store/filter/filterSlice';
+import { setPage } from '../../store/filter/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
 import Catalog from './Catalog';
 import Navigate from './Navigate';
 import { getCart } from '../../store/cart/cartThunk';
-import { getCatalog } from '../../store/catalog/catalogThunk';
 import { getFavorite } from '../../store/favorites/favoritesThunk';
+import EmptyPage from '../Cart/EmtyPage';
 
 const MainPageBody = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +39,7 @@ const MainPageBody = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   useEffect(() => {
     if (user && booksInCart.length === 0) {
       try {
@@ -64,31 +64,6 @@ const MainPageBody = () => {
       searchParams: searchParams,
       setSearchParams: setSearchParams,
     });
-
-    let pageNumber = searchParams.get('page');
-    let genres = searchParams.getAll('genre')[0]?.split(',').map(Number);
-    let minPriceParam = searchParams.get('minPrice');
-    let maxPriceParam = searchParams.get('maxPrice');
-    let sortByParam = searchParams.get('sortBy');
-    let search = searchParams.get('search');
-
-    const getBooksFromServer = async () => {
-      try {
-        await dispatch(
-          getCatalog({
-            pageNum: pageNumber,
-            genres: genres ? genres.toString() : null,
-            minPrice: minPriceParam,
-            maxPrice: maxPriceParam,
-            sortBy: sortByParam,
-            search: search,
-          })
-        );
-      } catch (error) {
-        console.error(ERROR_GET_BOOKS_DATA, error);
-      }
-    };
-    getBooksFromServer();
     // eslint-disable-next-line
   }, [dispatch, page, searchParams]);
 
@@ -122,17 +97,21 @@ const MainPageBody = () => {
       <Poster />
       <SortMenu />
       <div className="catalog">
-        {catalog?.map((id) => {
-          return (
-            <Catalog
-              key={id}
-              id={id}
-              booksInCart={booksInCart}
-              booksInFavorites={booksInFavorites}
-              books={books}
-            />
-          );
-        })}
+        {!(catalog?.length === 0) ? (
+          catalog?.map((id) => {
+            return (
+              <Catalog
+                key={id}
+                id={id}
+                booksInCart={booksInCart}
+                booksInFavorites={booksInFavorites}
+                books={books}
+              />
+            );
+          })
+        ) : (
+          <EmptyPage page="catalog" />
+        )}
       </div>
       <Navigate
         hasPrevPage={hasPrevPage}

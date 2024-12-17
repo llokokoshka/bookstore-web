@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { registrationValidationSchema } from '../../schemas/registrationValidationSchema';
@@ -15,6 +15,7 @@ import { AppPages } from '../../constants/textConstants';
 import { regUser } from '../../store/auth/authThunk';
 import { IFormInput, IFormReg } from '../../lib/authTypes';
 import { BaseInput } from '../BaseComponentsStyles/BaseInput';
+import Toast from '../Toast';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -49,17 +50,7 @@ const RegistrationBody: React.FC = () => {
       reset();
     } catch (err) {
       console.error('Registration error: ', err);
-      toast.error(`Registration error: ${err}`, {
-        position: 'top-right',
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      });
+      Toast({ message: 'Registration error', error: err });
     }
   };
 

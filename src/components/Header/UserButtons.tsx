@@ -1,28 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import RoundButtons from './RoundButton';
 import profile from '../../img/User profile button.png';
 import cart from '../../img/Cart.png';
 import like from '../../img/Heart.png';
-import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
-import { getCart } from '../../store/cart/cartThunk';
 
-const UserButtons: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const itemsInCArt = useAppSelector((state) => state.cart.numberOfItemsInCart);
-
-  useEffect(() => {
-    if (!itemsInCArt) {
-      dispatch(getCart());
-    }
-  }, [dispatch, itemsInCArt]);
-
+const UserButtons: React.FC<{ itemsInCart: number }> = (props) => {
   return (
     <StyledWrapper>
       <div className="cart-button">
-        <div className="cart-button__item">{itemsInCArt}</div>
+        <div className="cart-button__item">{props.itemsInCart}</div>
         <RoundButtons url={AppPages.cart} img={cart} />
       </div>
       <RoundButtons url={AppPages.favorite} img={like} />
@@ -39,11 +28,8 @@ const StyledWrapper = styled.div`
   max-width: 198px;
   width: 100%;
   justify-content: space-between;
-  /* column-gap: 27px; */
   @media screen and (max-width: 320px) {
     max-width: 135px;
-
-    /* column-gap: 18px; */
   }
 
   .cart-button {
