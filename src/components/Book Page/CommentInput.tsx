@@ -7,6 +7,7 @@ import {
   getBookById,
 } from '../../store/booksEntities/booksEntitiesThunk';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
+import ProfileInput from '../Input fields/ProfileInput';
 
 interface Props {
   id: number;
@@ -39,17 +40,22 @@ const CommentInput: React.FC<Props> = (props) => {
     }
   };
 
+  const editValueComment = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target?.value);
+  };
+
   return (
     <StyledWrapper>
       {user ? (
         <form onSubmit={handleAddComment} className="comment">
-          <input
+          <ProfileInput
             type="text"
             placeholder="Share a comment"
-            className="comment__form"
+            inputClassName="comment__form"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          ></input>
+            onChange={editValueComment}
+            name="comment"
+          />
           <BaseButton
             buttonClassName="base-button--width"
             type="submit"
@@ -80,6 +86,7 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 30px;
+    height: auto;
   }
 
   .base-button--width {

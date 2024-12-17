@@ -50,7 +50,7 @@ export default createGlobalStyle`
     position: relative;
     height: 64px;
     width: 100%;
-  } */
+  }
 
   .input__icon {
     position: absolute;
@@ -94,7 +94,7 @@ export default createGlobalStyle`
     letter-spacing: 0.75px;
     text-align: left;
     color: ${({ theme }) => theme.colors.dark_blue};
-  }
+  } */
 
   .green-title{
     font-size: 14px;

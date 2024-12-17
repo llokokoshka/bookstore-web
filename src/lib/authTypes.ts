@@ -57,11 +57,16 @@ export interface IAuthState {
 }
 
 export type ProfileInputPropsType = {
-  img: string;
-  label: string;
-  typeP: string;
-  register: any;
-  name: string;
-  disable: boolean;
-  errors: any;
+  type: string;
+  img?: string;
+  label?: string;
+  inputClassName?: string;
+  disable?: boolean;
+  register?: any;
+  name?: string;
+  errors?: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (e?: any) => void;
+  onKeyUp?: (e?: any) => void;
 };

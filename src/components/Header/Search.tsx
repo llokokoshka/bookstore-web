@@ -7,6 +7,7 @@ import search from '../../img/search-icon.png';
 import { useAppDispatch } from '../../hooks';
 import { setSearcheParam } from '../../store/filter/filterSlice';
 import { BaseInput } from '../BaseComponentsStyles/BaseInput';
+import ProfileInput from '../Input fields/ProfileInput';
 
 const Search: React.FC<{
   className?: string;
@@ -31,20 +32,16 @@ const Search: React.FC<{
 
   return (
     <StyledWrapper className={props.className}>
-      <BaseInput>
-        <img src={search} alt="search" className="input__icon" />
-        <input
-          type="text"
-          placeholder="Search"
-          className={cn(
-            'input__field input__field--size',
-            props.inputClassName
-          )}
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          onKeyUp={(e) => (e.code === 'Enter' ? setSearch() : null)}
-        ></input>
-      </BaseInput>
+      <ProfileInput
+        img={search}
+        type="text"
+        placeholder="Search"
+        inputClassName="input__field--size"
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
+        onKeyUp={(e) => (e.code === 'Enter' ? setSearch() : null)}
+        name="input"
+      />
     </StyledWrapper>
   );
 };

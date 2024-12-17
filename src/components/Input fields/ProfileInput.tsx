@@ -1,42 +1,25 @@
-import React from 'react';
-
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import cn from 'classnames';
 
-import { useAppDispatch } from '../../hooks';
-import { setUser } from '../../store/auth/authSlice';
 import { ProfileInputPropsType } from '../../lib/authTypes';
 
 const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
-  const dispatch = useAppDispatch();
   const [inputType, setInputType] = useState('password');
-
-  let correctPassFlag = true;
-  const { img, label, typeP, register, name, disable, errors } = props;
-
   const handlerInputType = () => {
     setInputType((type) => (type === 'password' ? 'text' : 'password'));
   };
 
-  const editValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    switch (name) {
-      case 'fullName': {
-        dispatch(
-          setUser({
-            fullName: e.target.value,
-          })
-        );
-        break;
-      }
-      case 'email': {
-        dispatch(
-          setUser({
-            email: e.target.value,
-          })
-        );
-        break;
-      }
-    }
+  let correctPassFlag = true;
+  const { img, label, type, register, name, disable, errors } = props;
+
+  const styleParams: React.CSSProperties | undefined = {
+    display:
+      disable === false && (name === 'passwordNew' || name === 'passwordRep')
+        ? 'block'
+        : name
+        ? 'block'
+        : 'none',
   };
 
   const handlePass = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,139 +28,38 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
       correctPassFlag = false;
     }
   };
-
   return (
     <StyledWrapper>
-      <div
-        className="input input__field --correct --size"
-        style={{
-          display:
-            disable === false &&
-            (name === 'passwordNew' || name === 'passwordRep')
-              ? 'block'
-              : name === 'password' || name === 'fullName' || name === 'email'
-              ? 'block'
-              : 'none',
-        }}
-      >
-        <div
-          className="password__btn active"
-          onClick={
-            typeP === 'password' && !disable ? handlerInputType : undefined
-          }
-        >
-          <img src={img} alt={typeP} className="input__icon" />
-        </div>
+      <div className="input input__field --correct --size" style={styleParams}>
+        {img && (
+          <div
+            className="password__btn active"
+            onClick={
+              type === 'password' && !disable ? handlerInputType : undefined
+            }
+          >
+            <img src={img} alt={type} className="input__icon" />
+          </div>
+        )}
         <div className="input__text-block">
-          <div className="input__dark-title input-title">Your {label}</div>
+          {label && (
+            <div className="input__dark-title input-title">Your {label}</div>
+          )}
           <input
-            type={typeP === 'password' ? inputType : typeP}
-            {...register(name)}
-            onChange={editValue}
+            type={type === 'password' ? inputType : type}
+            {...(register && register(name))}
             onFocus={handlePass}
             disabled={disable}
-            className="input__field pad-inp"
+            className={cn('input__field pad-inp', props.inputClassName)}
+            placeholder={props.placeholder}
+            value={props.value}
+            onChange={props.onChange}
+            onKeyUp={props.onKeyUp}
           />
         </div>
       </div>
-      {name === 'email' && (
-        <>
-          {errors.email?.type === 'required' && (
-            <div className="error-message">Email - обязательное поле.</div>
-          )}
 
-          {errors.email ? (
-            <div className="error-message">{errors.email.message}</div>
-          ) : null}
-        </>
-      )}
-
-      {name === 'password' && (
-        <>
-          {errors.password?.type === 'required' && (
-            <div className="error-message">Password - обязательное поле.</div>
-          )}
-
-          {errors.password ? (
-            <div className="error-message">{errors.password.message}</div>
-          ) : null}
-        </>
-      )}
-
-      {name === 'fullName' && (
-        <>
-          {errors.fullName?.type === 'required' && (
-            <div className="error-message">Full Name - обязательное поле.</div>
-          )}
-          {errors.fullName ? (
-            <div className="error-message">{errors.fullName.message}</div>
-          ) : null}
-        </>
-      )}
-      {name === 'passwordNew' && (
-        <>
-          {errors.passwordNew?.type === 'required' && (
-            <div
-              style={{
-                display: disable === false ? 'block' : 'none',
-              }}
-              className="error-message"
-            >
-              Password - обязательное поле.
-            </div>
-          )}
-          {errors.passwordNew ? (
-            <div
-              style={{
-                display: disable === false ? 'block' : 'none',
-              }}
-              className="error-message"
-            >
-              {errors.passwordNew.message}
-            </div>
-          ) : (
-            <div
-              style={{
-                display: disable === false ? 'block' : 'none',
-              }}
-            >
-              Enter your password
-            </div>
-          )}
-        </>
-      )}
-      {name === 'passwordRep' && (
-        <>
-          {errors.passwordRep?.type === 'required' && (
-            <div
-              style={{
-                display: disable === false ? 'block' : 'none',
-              }}
-              className="error-message"
-            >
-              Password - обязательное поле.
-            </div>
-          )}
-          {errors.passwordRep ? (
-            <div
-              style={{
-                display: disable === false ? 'block' : 'none',
-              }}
-              className="error-message"
-            >
-              {errors.passwordRep.message}
-            </div>
-          ) : (
-            <div
-              style={{
-                display: disable === false ? 'block' : 'none',
-              }}
-            >
-              Repeat your password without errors
-            </div>
-          )}
-        </>
-      )}
+      {errors && <div className="error-message">{errors}</div>}
     </StyledWrapper>
   );
 };
@@ -189,6 +71,64 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   row-gap: 9px;
 
+  .input {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    height: 64px;
+    width: 100%;
+  }
+
+  .input__icon {
+    position: absolute;
+    padding: 22px 24px;
+    @media screen and (max-width: 320px) {
+      padding: 11px 16px;
+    }
+  }
+
+  .input__field {
+    display: flex;
+    background-color: ${({ theme }) => theme.colors.light};
+    border-radius: ${({ theme }) => theme.sizes.base_radius}px;
+    padding-left: 64px;
+    max-width: 630px;
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.75px;
+    text-align: left;
+
+    @media screen and (max-width: 834px) {
+      max-width: 392px;
+      height: 64px;
+    }
+    @media screen and (max-width: 320px) {
+      max-width: 290px;
+      height: 47px;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 28px;
+    }
+  }
+  .input__text-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 100%;
+    height: auto;
+  }
+
+  .input__dark-title {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.75px;
+    text-align: left;
+    color: ${({ theme }) => theme.colors.dark_blue};
+  }
   .--size {
     width: 522px;
     height: 64px;

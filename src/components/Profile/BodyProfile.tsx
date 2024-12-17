@@ -80,6 +80,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   const handleUpdateAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      console.log(file);
       try {
         const base64 = await convertFileToBase64(file);
         const data = await saveBase64File(base64, 'avatar');
@@ -148,6 +149,20 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
     dispatch(cleanCart());
     dispatch(cleanFav());
   };
+  const editValueName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      setUser({
+        fullName: e.target.value,
+      })
+    );
+  };
+  const editValueMail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      setUser({
+        email: e.target.value,
+      })
+    );
+  };
 
   return (
     <StyledWrapper>
@@ -186,20 +201,22 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
             <ProfileInput
               img={man}
               label="full name"
-              typeP="text"
+              type="text"
               register={registerFormInfo}
               name="fullName"
               disable={changeInfo}
-              errors={infoErrors}
+              errors={infoErrors.fullName?.message}
+              onChange={editValueName}
             />
             <ProfileInput
               img={mail}
               label="email"
-              typeP="email"
+              type="email"
               register={registerFormInfo}
               name="email"
               disable={changeInfo}
-              errors={infoErrors}
+              errors={infoErrors.email?.message}
+              onChange={editValueMail}
             />
           </div>
         </form>
@@ -217,31 +234,31 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
             <ProfileInput
               img={hide}
               label="password"
-              typeP="password"
+              type="password"
               register={registerFormPass}
               name="password"
               disable={changePass}
-              errors={passErrors}
+              errors={passErrors.password?.message}
             />
           </div>
           <div className="pass-inputs">
             <ProfileInput
               img={hide}
               label="new password"
-              typeP="password"
+              type="password"
               register={registerFormPass}
               name="passwordNew"
               disable={changePass}
-              errors={passErrors}
+              errors={passErrors.passwordNew?.message}
             />
             <ProfileInput
               img={hide}
               label="copy of new password"
-              typeP="password"
+              type="password"
               register={registerFormPass}
               name="passwordRep"
               disable={changePass}
-              errors={passErrors}
+              errors={passErrors.passwordRep?.message}
             />
           </div>
         </form>
