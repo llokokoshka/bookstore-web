@@ -15,9 +15,9 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
 
   const styleParams: React.CSSProperties | undefined = {
     display:
-      disable === false && (name === 'passwordNew' || name === 'passwordRep')
+      (name === 'passwordNew' || name === 'passwordRep') && disable === false
         ? 'block'
-        : name
+        : !(name === 'passwordNew' || name === 'passwordRep')
         ? 'block'
         : 'none',
   };
@@ -28,8 +28,18 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
       correctPassFlag = false;
     }
   };
+
+  const inputFieldClass = cn('input__field', {
+    '--with-icon': img,
+  });
+
+  const height = name === 'comment' ? 128 : name === 'search' ? 64 : 64;
+  const heightinput = name === 'comment' ? 128 : name === 'search' ? 64 : 24;
+
+  const width = name === 'comment' ? 738 : name === 'search' ? 630 : 630;
+
   return (
-    <StyledWrapper>
+    <StyledWrapper height={height} width={width} heightinput={heightinput}>
       <div className="input input__field --correct --size" style={styleParams}>
         {img && (
           <div
@@ -50,7 +60,7 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
             {...(register && register(name))}
             onFocus={handlePass}
             disabled={disable}
-            className={cn('input__field pad-inp', props.inputClassName)}
+            className={cn(inputFieldClass, props.inputClassName)}
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.onChange}
@@ -66,16 +76,29 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
 
 export default ProfileInput;
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{
+  height: number;
+  width: number;
+  heightinput: number;
+}>`
   display: flex;
   flex-direction: column;
+  height: 100%;
+  max-width: ${({ width }) => `${width}px`};
+  width: 100%;
   row-gap: 9px;
-
+  /* height: ${({ height }) => `${height}px`}; */
+  border: 2px solid transparent;
+  border-radius: ${({ theme }) => theme.sizes.base_radius}px;
+  &:focus-within {
+    border: 2px solid ${({ theme }) => theme.colors.dark_blue};
+  }
   .input {
     display: flex;
     flex-direction: row;
     position: relative;
-    height: 64px;
+    height: 100%;
+    height: ${({ height }) => `${height}px`};
     width: 100%;
   }
 
@@ -91,20 +114,27 @@ const StyledWrapper = styled.div`
     display: flex;
     background-color: ${({ theme }) => theme.colors.light};
     border-radius: ${({ theme }) => theme.sizes.base_radius}px;
-    padding-left: 64px;
-    max-width: 630px;
-    width: 100%;
-    height: auto;
+    align-items: center;
+    height: ${({ heightinput }) => `${heightinput}px`};
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
     letter-spacing: 0.75px;
     text-align: left;
+    padding-left: 5px;
+    width: auto;
+    border: none;
+    outline: none;
+
+    &.--with-icon {
+      margin-left: 64px;
+    }
 
     @media screen and (max-width: 834px) {
       max-width: 392px;
       height: 64px;
     }
+
     @media screen and (max-width: 320px) {
       max-width: 290px;
       height: 47px;
@@ -113,6 +143,7 @@ const StyledWrapper = styled.div`
       line-height: 28px;
     }
   }
+
   .input__text-block {
     display: flex;
     flex-direction: column;
@@ -129,16 +160,18 @@ const StyledWrapper = styled.div`
     text-align: left;
     color: ${({ theme }) => theme.colors.dark_blue};
   }
+
   .--size {
-    width: 522px;
-    height: 64px;
+    max-width: ${({ width }) => `${width}px`};
+    width: 100%;
+    height: ${({ height }) => `${height}px`};
     display: flex;
     flex-direction: row;
     @media screen and (max-width: 834px) {
-      width: 529px;
+      max-width: 529px;
     }
     @media screen and (max-width: 320px) {
-      width: 290px;
+      max-width: 290px;
     }
   }
 
@@ -155,17 +188,6 @@ const StyledWrapper = styled.div`
     padding-left: 64px;
     padding-top: 6px;
     width: 100%;
-  }
-
-  .pad-inp {
-    width: 448px;
-    margin-left: 64px;
-    padding-left: 5px;
-    @media screen and (max-width: 834px) {
-      width: 465px;
-      height: 28px;
-      border-radius: 16px;
-    }
   }
 
   .--correct {

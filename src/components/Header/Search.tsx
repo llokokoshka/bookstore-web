@@ -40,7 +40,7 @@ const Search: React.FC<{
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}
         onKeyUp={(e) => (e.code === 'Enter' ? setSearch() : null)}
-        name="input"
+        name="search"
       />
     </StyledWrapper>
   );

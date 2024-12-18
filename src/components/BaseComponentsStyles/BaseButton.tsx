@@ -16,6 +16,7 @@ const BaseButton: React.FC<Props> = (props) => {
       className={cn('', props.buttonClassName)}
       type={props.type}
       onClick={props.onClick}
+      style={props.style}
     >
       {props.text}
     </StyledWrapper>

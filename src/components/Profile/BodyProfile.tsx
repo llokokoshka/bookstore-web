@@ -6,13 +6,9 @@ import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import man from '../../img/User profile.png';
-import mail from '../../img/Mail.png';
-import hide from '../../img/Hide.png';
 import camera from '../../img/Camera.png';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
-import ProfileInput from '../Input fields/ProfileInput';
 import { ApiPath, DEFAULT_PASSWORD_STARS } from '../../constants/textConstants';
 import {
   ERROR_AVATAR_UPLOAD,
@@ -31,6 +27,8 @@ import { cleanCart } from '../../store/cart/cartSlice';
 import { cleanFav } from '../../store/favorites/favoritesSlice';
 import Toast from '../Toast';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
+import ProfileInfoForm from './ProfileInfoForm';
+import ProfilePassForm from './ProfilePassForm';
 
 const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   const dispatch = useDispatch();
@@ -187,81 +185,26 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
       </div>
 
       <div className="container">
-        <form
-          className="container__info-block"
-          onSubmit={handleSubmitFormInfo(onSubmitFormInfo)}
-        >
-          <div className="info">
-            <div className="info__text">
-              <div className="normal-title">Personal information</div>
-              <div className="green-title" onClick={handleChangeInfo}>
-                Change information
-              </div>
-            </div>
-            <ProfileInput
-              img={man}
-              label="full name"
-              type="text"
-              register={registerFormInfo}
-              name="fullName"
-              disable={changeInfo}
-              errors={infoErrors.fullName?.message}
-              onChange={editValueName}
-            />
-            <ProfileInput
-              img={mail}
-              label="email"
-              type="email"
-              register={registerFormInfo}
-              name="email"
-              disable={changeInfo}
-              errors={infoErrors.email?.message}
-              onChange={editValueMail}
-            />
-          </div>
-        </form>
-        <form
-          className="info"
-          onSubmit={handleSubmitFormPass(onSubmitFormPass)}
-        >
-          <div className="info">
-            <div className="info__text">
-              <div className="normal-title">Password</div>
-              <div className="green-title" onClick={handleChangePass}>
-                Change password
-              </div>
-            </div>
-            <ProfileInput
-              img={hide}
-              label="password"
-              type="password"
-              register={registerFormPass}
-              name="password"
-              disable={changePass}
-              errors={passErrors.password?.message}
-            />
-          </div>
-          <div className="pass-inputs">
-            <ProfileInput
-              img={hide}
-              label="new password"
-              type="password"
-              register={registerFormPass}
-              name="passwordNew"
-              disable={changePass}
-              errors={passErrors.passwordNew?.message}
-            />
-            <ProfileInput
-              img={hide}
-              label="copy of new password"
-              type="password"
-              register={registerFormPass}
-              name="passwordRep"
-              disable={changePass}
-              errors={passErrors.passwordRep?.message}
-            />
-          </div>
-        </form>
+        <ProfileInfoForm
+          user={props.user}
+          changeInfo={changeInfo}
+          editValueMail={editValueMail}
+          editValueName={editValueName}
+          handleChangeInfo={handleChangeInfo}
+          onSubmitFormInfo={onSubmitFormInfo}
+          handleSubmitFormInfo={handleSubmitFormInfo}
+          infoErrors={infoErrors}
+          registerFormInfo={registerFormInfo}
+        />
+        <ProfilePassForm
+          changePass={changePass}
+          handleChangePass={handleChangePass}
+          onSubmitFormPass={onSubmitFormPass}
+          user={props.user}
+          handleSubmitFormPass={handleSubmitFormPass}
+          passErrors={passErrors}
+          registerFormPass={registerFormPass}
+        />
         <BaseButton
           buttonClassName="view"
           type="button"
@@ -338,6 +281,7 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 40px;
+    width: 100%;
   }
 
   .avatar {
