@@ -15,9 +15,12 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
 
   const styleParams: React.CSSProperties | undefined = {
     display:
-      (name === 'passwordNew' || name === 'passwordRep') && disable === false
+      (name === 'passwordNew' || name === 'passwordRep') &&
+      disable === false &&
+      props.isProfile
         ? 'block'
-        : !(name === 'passwordNew' || name === 'passwordRep')
+        : !(name === 'passwordNew' || name === 'passwordRep') ||
+          !props.isProfile
         ? 'block'
         : 'none',
   };
@@ -34,7 +37,14 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
   });
 
   const height = name === 'comment' ? 128 : name === 'search' ? 64 : 64;
-  const heightinput = name === 'comment' ? 128 : name === 'search' ? 64 : 24;
+  const heightinput =
+    name === 'comment'
+      ? 128
+      : name === 'search'
+      ? 64
+      : !props.isProfile
+      ? 64
+      : 24;
 
   const width = name === 'comment' ? 738 : name === 'search' ? 630 : 630;
 
@@ -70,6 +80,14 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
       </div>
 
       {errors && <div className="error-message">{errors}</div>}
+      {!errors &&
+        !props.isProfile &&
+        name !== 'search' &&
+        name !== 'comment' &&
+        name !== 'passwordRep' && <div>Enter your {name}</div>}
+      {!errors && !props.isProfile && name === 'passwordRep' && (
+        <div>Repeat your password without errors</div>
+      )}
     </StyledWrapper>
   );
 };
@@ -87,12 +105,7 @@ const StyledWrapper = styled.div<{
   max-width: ${({ width }) => `${width}px`};
   width: 100%;
   row-gap: 9px;
-  /* height: ${({ height }) => `${height}px`}; */
-  border: 2px solid transparent;
-  border-radius: ${({ theme }) => theme.sizes.base_radius}px;
-  &:focus-within {
-    border: 2px solid ${({ theme }) => theme.colors.dark_blue};
-  }
+
   .input {
     display: flex;
     flex-direction: row;
@@ -100,6 +113,11 @@ const StyledWrapper = styled.div<{
     height: 100%;
     height: ${({ height }) => `${height}px`};
     width: 100%;
+    border: 2px solid transparent;
+    border-radius: ${({ theme }) => theme.sizes.base_radius}px;
+    &:focus-within {
+      border: 2px solid ${({ theme }) => theme.colors.dark_blue};
+    }
   }
 
   .input__icon {
@@ -115,7 +133,7 @@ const StyledWrapper = styled.div<{
     background-color: ${({ theme }) => theme.colors.light};
     border-radius: ${({ theme }) => theme.sizes.base_radius}px;
     align-items: center;
-    height: ${({ heightinput }) => `${heightinput}px`};
+    height: ${({ heightinput }) => `${heightinput - 3}px`};
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;

@@ -17,6 +17,7 @@ import { IFormInput, IFormReg } from '../../lib/authTypes';
 import { BaseInput } from '../BaseComponentsStyles/BaseInput';
 import Toast from '../Toast';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
+import ProfileInput from '../Input fields/ProfileInput';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -66,69 +67,34 @@ const RegistrationBody: React.FC = () => {
           <ToastContainer />
           <div className="info-block__text">
             <div className="big-title">Sign up</div>
-            <BaseInput>
-              <img src={mail} alt="Email" className="input__icon" />
-              <input
-                type="email"
-                id="email"
-                placeholder="Email"
-                className="input__field"
-                {...register('email')}
-              />
-            </BaseInput>
-            {errors.email?.type === 'required' && (
-              <div className="error">Email - обязательное поле.</div>
-            )}
-            {errors.email && (
-              <div className="error">{errors.email.message}</div>
-            )}
-            {!errors.email && <div>Enter your email</div>}
-            <BaseInput>
-              <div
-                className="password__btn active"
-                onClick={changeInputTypeHandler}
-              >
-                <img src={hide} alt="Password" className="input__icon" />
-              </div>
-              <input
-                type={inputType}
-                placeholder="Password"
-                className="input__field"
-                autoComplete="false"
-                {...register('password')}
-              ></input>
-            </BaseInput>
-            {errors.password?.type === 'required' && (
-              <div className="error">Password - обязательное поле.</div>
-            )}
-            {errors.password && (
-              <div className="error">{errors.password.message}</div>
-            )}
-            {!errors.password && <div>Enter your password</div>}
-            <BaseInput>
-              <div
-                className="password__btn active"
-                onClick={changeInputTypeHandler}
-              >
-                <img src={hide} alt="Password" className="input__icon" />
-              </div>
-              <input
-                type={inputType}
-                placeholder="Password replay"
-                className="input__field"
-                autoComplete="false"
-                {...register('passwordRep')}
-              ></input>
-            </BaseInput>
-            {errors.passwordRep?.type === 'required' && (
-              <div className="error">Password - обязательное поле.</div>
-            )}
-            {errors.passwordRep && (
-              <div className="error">{errors.passwordRep.message}</div>
-            )}
-            {!errors.passwordRep && (
-              <div>Repeat your password without errors</div>
-            )}
+            <ProfileInput
+              type="email"
+              img={mail}
+              placeholder="Email"
+              name="email"
+              register={register}
+              errors={errors.email?.message}
+            />
+            <ProfileInput
+              type={inputType}
+              img={hide}
+              placeholder="Password"
+              name="password"
+              register={register}
+              errors={errors.password?.message}
+              inputClassName='"password__btn active'
+              onClick={changeInputTypeHandler}
+            />
+            <ProfileInput
+              type={inputType}
+              img={hide}
+              placeholder="Password replay"
+              name="passwordRep"
+              register={register}
+              errors={errors.passwordRep?.message}
+              inputClassName='"password__btn active'
+              onClick={changeInputTypeHandler}
+            />
           </div>
           <BaseButton type="submit" text={`Sign up`} />
         </form>
@@ -166,11 +132,16 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     align-items: start;
     row-gap: 50px;
+    max-width: 413px;
+    width: 100%;
   }
+
   .info-block__text {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+    max-width: 413px;
+    width: 100%;
   }
   .error {
     color: #ff0000;

@@ -263,20 +263,6 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .info {
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-    width: 100%;
-  }
-
-  .info__text {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: space-between;
-  }
-
   .container {
     display: flex;
     flex-direction: column;

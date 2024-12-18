@@ -47,6 +47,7 @@ const ProfileInfoForm: React.FC<Props> = (props) => {
         disable={props.changeInfo}
         errors={props.infoErrors.fullName?.message}
         onChange={props.editValueName}
+        isProfile={true}
       />
       <ProfileInput
         img={mail}
@@ -57,6 +58,7 @@ const ProfileInfoForm: React.FC<Props> = (props) => {
         disable={props.changeInfo}
         errors={props.infoErrors.email?.message}
         onChange={props.editValueMail}
+        isProfile={true}
       />
     </StyledWrapper>
   );

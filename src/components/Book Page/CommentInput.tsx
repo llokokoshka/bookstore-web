@@ -77,8 +77,6 @@ const StyledWrapper = styled.div`
 
   .comment__form {
     background-color: ${({ theme }) => theme.colors.light};
-    /* width: 738px; */
-    /* height: 128px; */
     padding-left: 20px;
     border-radius: 16px;
   }
@@ -87,7 +85,6 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 30px;
-    /* height: 208px; */
   }
 
   .base-button--width {

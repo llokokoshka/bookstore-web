@@ -44,6 +44,7 @@ const ProfilePassForm: React.FC<Props> = (props) => {
           name="password"
           disable={props.changePass}
           errors={props.passErrors.password?.message}
+          isProfile={true}
         />
       </div>
       <div className="pass-inputs">
@@ -55,6 +56,7 @@ const ProfilePassForm: React.FC<Props> = (props) => {
           name="passwordNew"
           disable={props.changePass}
           errors={props.passErrors.passwordNew?.message}
+          isProfile={true}
         />
         <ProfileInput
           img={hide}
@@ -64,6 +66,7 @@ const ProfilePassForm: React.FC<Props> = (props) => {
           name="passwordRep"
           disable={props.changePass}
           errors={props.passErrors.passwordRep?.message}
+          isProfile={true}
         />
       </div>
     </StyledWrapper>
@@ -78,6 +81,12 @@ const StyledWrapper = styled.form`
   row-gap: 20px;
   max-width: 630px;
   width: 100%;
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
 
   .info__text {
     display: flex;

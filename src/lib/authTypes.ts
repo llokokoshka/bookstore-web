@@ -69,4 +69,7 @@ export type ProfileInputPropsType = {
   value?: string;
   onChange?: (e?: any) => void;
   onKeyUp?: (e?: any) => void;
+  onClick?: () => void;
+  isProfile?: boolean;
+  text?: string
 };

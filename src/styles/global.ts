@@ -44,57 +44,6 @@ export default createGlobalStyle`
       line-height: 21px;
     }
   }
-  /* .input{
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    height: 64px;
-    width: 100%;
-  }
-
-  .input__icon {
-    position: absolute;
-    padding: 22px 24px;
-    @media screen and (max-width: 320px) {
-      padding: 11px 16px;
-    }
-    
-  }
-
-  .input__field {
-    display: flex;
-    background-color: ${({ theme }) => theme.colors.light};
-    border-radius: ${({ theme }) => theme.sizes.base_radius}px;
-    padding-left: 64px;
-    max-width: 630px;
-    width: 100%;
-    height: auto;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0.75px;
-    text-align: left;
-    @media screen and (max-width: 834px) {
-      max-width: 392px;
-      height: 64px;
-    }
-    @media screen and (max-width: 320px) {
-      max-width: 290px;
-      height: 47px;
-      font-size: 12px;
-      font-weight: 400;
-      line-height: 28px;
-    }
-  }
-
-  .input__dark-title{
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0.75px;
-    text-align: left;
-    color: ${({ theme }) => theme.colors.dark_blue};
-  } */
 
   .green-title{
     font-size: 14px;

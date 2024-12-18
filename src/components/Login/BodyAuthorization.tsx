@@ -114,11 +114,15 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     align-items: start;
     row-gap: 50px;
+    max-width: 413px;
+    width: 100%;
   }
   .info-block__text {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+    max-width: 413px;
+    width: 100%;
   }
 
   .error-message {
