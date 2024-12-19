@@ -26,7 +26,7 @@ const BookInFavorite: React.FC<IFavoriteProps> = (props) => {
   return (
     <StyledWrapper>
       <div className="favorite">
-        <Link to={`${AppPages.getBookIdUrl(props.id)}`}>
+        <Link to={props.book ? `${AppPages.getBookIdUrl(props.book.id)}` : ''}>
           <img
             src={dirnameBookImg + bookImg}
             alt="img"

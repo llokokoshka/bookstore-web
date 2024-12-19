@@ -38,7 +38,7 @@ const FavoritePageBody: React.FC = () => {
 export default FavoritePageBody;
 
 const StyledWrapper = styled.div<{ $numberItems: number }>`
-  padding: ${({ theme }) => theme.padding.header};
+  padding: ${({ theme }) => theme.padding.base};
   @media screen and (max-width: 834px) {
     padding: 20px 15px 110px 15px;
   }

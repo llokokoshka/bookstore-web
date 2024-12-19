@@ -108,15 +108,19 @@ const StyledWrapper = styled.div`
   flex-basis: 305px;
   width: 305px;
   height: 663px;
-  top: 748px;
-  left: 80px;
   row-gap: 30px;
 
   @media screen and (max-width: 834px) {
-    column-gap: 21px;
-    width: 254px;
     flex-basis: 254px;
+    width: 254px;
     height: 573px;
+    column-gap: 21px;
+  }
+  @media screen and (max-width: 320px) {
+    flex-basis: 135px;
+    width: 135px;
+    height: 333px;
+    row-gap: 15px;
   }
 
   .book {
@@ -127,20 +131,24 @@ const StyledWrapper = styled.div`
     @media screen and (max-width: 834px) {
       max-width: 254px;
     }
+
+    @media screen and (max-width: 320px) {
+      max-width: 135px;
+    }
   }
 
   .book__favorite-button {
     position: absolute;
-    background-color: ${({ theme }) => theme.colors.dark_blue};
-    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 48px;
     height: 48px;
     top: 20px;
     left: 20px;
+    border-radius: 50%;
+    background-color: ${({ theme }) => theme.colors.dark_blue};
     z-index: 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     @media screen and (max-width: 834px) {
       width: 39px;
@@ -148,12 +156,22 @@ const StyledWrapper = styled.div`
       top: 16px;
       left: 16px;
     }
+    @media screen and (max-width: 320px) {
+      width: 25px;
+      height: 25px;
+      top: 16px;
+      left: 19px;
+    }
   }
 
   .heart-size {
     @media screen and (max-width: 834px) {
       width: 21px;
       height: 21px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 14px;
+      height: 14px;
     }
   }
 
@@ -170,15 +188,23 @@ const StyledWrapper = styled.div`
       width: 254px;
       height: 372px;
     }
+    @media screen and (max-width: 320px) {
+      width: 135px;
+      height: 192px;
+    }
   }
 
   .book-info {
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
     width: 299px;
+    row-gap: 20px;
+
     @media screen and (max-width: 834px) {
       width: 254px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 135px;
     }
   }
 
@@ -191,15 +217,19 @@ const StyledWrapper = styled.div`
     font-weight: 500;
     line-height: 30px;
     text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
     color: ${({ theme }) => theme.colors.dark_blue};
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
     @media screen and (max-width: 834px) {
       font-size: 16px;
       line-height: 24px;
+    }
+
+    @media screen and (max-width: 320px) {
+      font-size: 14px;
+      line-height: 21px;
     }
   }
 
@@ -207,16 +237,21 @@ const StyledWrapper = styled.div`
     font-size: 20px;
     font-weight: 500;
     line-height: 30px;
+
     text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
     color: ${({ theme }) => theme.colors.dark_grey};
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
     @media screen and (max-width: 834px) {
       font-size: 16px;
       line-height: 24px;
+    }
+
+    @media screen and (max-width: 320px) {
+      font-size: 14px;
+      line-height: 21px;
     }
   }
 
@@ -236,8 +271,9 @@ const StyledWrapper = styled.div`
     gap: 10px;
     border-radius: ${({ theme }) => theme.sizes.base_radius}px;
     border: 1px solid #344966;
-    color: #344966;
     background-color: white;
+
+    color: #344966;
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
@@ -247,6 +283,12 @@ const StyledWrapper = styled.div`
 
     @media screen and (max-width: 834px) {
       width: 254px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 135px;
+      font-size: 14px;
+      line-height: 28px;
+      padding: 0;
     }
   }
 
@@ -258,43 +300,52 @@ const StyledWrapper = styled.div`
     width: 305px;
     height: 48px;
     top: 615px;
-    padding: 10px 50px;
     border-radius: 16px;
 
     @media screen and (max-width: 834px) {
       width: 254px;
     }
+
+    @media screen and (max-width: 320px) {
+      width: 135px;
+    }
   }
 
   .book__new {
     position: absolute;
+
     width: 132px;
     height: 30px;
     top: 398px;
     left: 20px;
-    padding: 10px 50px;
+    padding: ${({ theme }) => theme.padding.button};
     gap: 10px;
     border-radius: 16px;
+    background-color: ${({ theme }) => theme.colors.green};
+
     font-size: 14px;
     font-style: italic;
     font-weight: 500;
     line-height: 9.5px;
     letter-spacing: 0.75px;
     text-align: center;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-    background-color: ${({ theme }) => theme.colors.green};
     color: #344966;
     z-index: 7;
 
     @media screen and (max-width: 834px) {
       top: 320px;
     }
+
+    @media screen and (max-width: 320px) {
+      top: 153px;
+      width: 113px;
+      left: 12px;
+      padding: 10px 0 0 0;
+    }
   }
 
   .book__bestseller {
     position: absolute;
-    z-index: 7;
     width: 175px;
     height: 30px;
     top: 398px;
@@ -302,21 +353,25 @@ const StyledWrapper = styled.div`
     padding: 10px 50px;
     gap: 10px;
     border-radius: 16px;
-    opacity: 0px;
+    background-color: ${({ theme }) => theme.colors.dark_blue};
+
     font-size: 14px;
     font-style: italic;
     font-weight: 500;
     line-height: 9.5px;
     letter-spacing: 0.75px;
     text-align: center;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-
-    background-color: ${({ theme }) => theme.colors.dark_blue};
     color: white;
+    z-index: 7;
 
     @media screen and (max-width: 834px) {
       top: 320px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 113px;
+      top: 153px;
+      left: 12px;
+      padding: 10px 0 0 0;
     }
   }
 `;

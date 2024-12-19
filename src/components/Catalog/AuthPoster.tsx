@@ -23,7 +23,7 @@ const AuthPoster: React.FC = () => {
             <Link to={AppPages.registration}>
               <BaseButton
                 buttonClassName="base-button--top"
-                text={` Log In/Sing Up`}
+                text={`Log In/Sing Up`}
               />
             </Link>
           </div>
@@ -37,28 +37,45 @@ const AuthPoster: React.FC = () => {
 export default AuthPoster;
 
 const StyledWrapper = styled.div`
-  padding: ${({ theme }) => theme.padding.header};
+  padding: ${({ theme }) => theme.padding.base};
 
   @media screen and (max-width: 834px) {
-    padding: 26px 15px;
+    padding: ${({ theme }) => theme.padding.base_tablet};
   }
 
   .poster {
-    background-color: ${({ theme }) => theme.colors.light};
     display: flex;
-    width: 100%;
     position: relative;
+    width: 100%;
     height: 400px;
     border-radius: 16px;
+    background-color: ${({ theme }) => theme.colors.light};
+    @media screen and (max-width: 834px) {
+      height: 289px;
+    }
+
+    @media screen and (max-width: 320px) {
+      height: 505px;
+    }
   }
 
   .poster__img {
     position: absolute;
     right: 0;
     bottom: 0;
+
     @media screen and (max-width: 834px) {
       width: 377px;
       height: 455px;
+      z-index: 1;
+    }
+
+    @media screen and (max-width: 320px) {
+      max-width: 232px;
+      max-height: 140px;
+      right: 0;
+      left: 70px;
+      top: 0;
       z-index: 1;
     }
   }
@@ -76,6 +93,11 @@ const StyledWrapper = styled.div`
       padding-right: 0;
       align-items: end;
     }
+    @media screen and (max-width: 320px) {
+      flex-direction: column;
+      padding-left: 20px;
+      align-items: start;
+    }
   }
 
   .container__info-block {
@@ -87,6 +109,12 @@ const StyledWrapper = styled.div`
     @media screen and (max-width: 834px) {
       margin-bottom: 118px;
       margin-right: 1px;
+    }
+
+    @media screen and (max-width: 320px) {
+      max-width: 230px;
+      padding-top: 20px;
+      row-gap: 20px;
     }
   }
 
@@ -106,8 +134,13 @@ const StyledWrapper = styled.div`
     @media screen and (max-width: 834px) {
       width: 389px;
       height: 345px;
-      /* top: 117px; */
       left: 1px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 253px;
+      height: 282px;
+      bottom: 0;
+      left: 18px;
     }
   }
 

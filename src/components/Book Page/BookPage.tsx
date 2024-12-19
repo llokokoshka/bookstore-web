@@ -138,7 +138,7 @@ const StyledWrapper = styled.div`
   .recommended {
     display: flex;
     flex-direction: column;
-    padding: ${({ theme }) => theme.padding.header};
+    padding: ${({ theme }) => theme.padding.base};
     row-gap: 50px;
     @media screen and (max-width: 834px) {
       padding: 0 15px 100px 15px;

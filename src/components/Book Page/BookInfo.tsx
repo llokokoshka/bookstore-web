@@ -17,7 +17,7 @@ interface Props {
 const BookInfo: React.FC<Props> = (props) => {
   return (
     <StyledWrapper>
-      <div>
+      <div className="main-info">
         <div className="big-title">{props.name}</div>
         <div className="normal-title">{props.author}</div>
       </div>
@@ -52,6 +52,19 @@ const StyledWrapper = styled.div`
     max-width: 392px;
   }
 
+  .main-info {
+    display: flex;
+    flex-direction: column;
+    max-width: 630px;
+    width: 100%;
+    flex-wrap: wrap;
+    word-break: break-all;
+    hyphens: auto;
+    @media screen and (max-width: 834px) {
+      max-width: 392px;
+    }
+  }
+
   .info-block__buttons {
     display: flex;
     flex-direction: row;
@@ -59,5 +72,8 @@ const StyledWrapper = styled.div`
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    @media screen and (max-width: 834px) {
+      max-width: 392px;
+    }
   }
 `;

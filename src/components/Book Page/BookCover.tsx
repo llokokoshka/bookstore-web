@@ -62,6 +62,7 @@ const StyledWrapper = styled.div`
   .cover__img {
     width: 522px;
     height: 779px;
+    border-radius: 16px;
     @media screen and (max-width: 834px) {
       width: 391px;
       height: 584px;

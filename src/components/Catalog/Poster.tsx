@@ -30,34 +30,47 @@ const Poster: React.FC = () => {
 export default Poster;
 
 const StyledWrapper = styled.div`
-  padding: ${({ theme }) => theme.padding.header};
+  padding: ${({ theme }) => theme.padding.base};
 
   @media screen and (max-width: 834px) {
-    padding: 26px 15px;
+    padding: ${({ theme }) => theme.padding.base_tablet};
   }
 
   .poster {
-    background-color: ${({ theme }) => theme.colors.light};
     display: flex;
-    width: 100%;
     position: relative;
-    border-radius: 16px;
+    width: 100%;
     height: 400px;
+    border-radius: 16px;
+    background-color: ${({ theme }) => theme.colors.light};
+
     @media screen and (max-width: 834px) {
       height: 289px;
     }
-    /* @media screen and (max-width: 834px) {
-      height: 289px;
-    } */
+
+    @media screen and (max-width: 320px) {
+      height: 505px;
+    }
   }
 
   .poster__img {
     position: absolute;
     bottom: 0;
+    max-width: 406px;
+    max-height: 400px;
+    width: 100%;
+    height: 100%;
 
     @media screen and (max-width: 834px) {
-      width: 361px;
-      height: 218px;
+      max-width: 361px;
+      max-height: 218px;
+    }
+    @media screen and (max-width: 320px) {
+      max-width: 232px;
+      max-height: 140px;
+      right: 0;
+      left: 70px;
+      top: 0;
     }
   }
 
@@ -70,12 +83,14 @@ const StyledWrapper = styled.div`
     padding: 0 108px 0 98px;
 
     @media screen and (max-width: 834px) {
+      align-items: end;
       padding-left: 40px;
       padding-right: 0;
-      align-items: end;
     }
     @media screen and (max-width: 320px) {
       flex-direction: column;
+      padding-left: 20px;
+      align-items: start;
     }
   }
 
@@ -83,10 +98,17 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: start;
+    width: 100%;
     row-gap: 50px;
 
     @media screen and (max-width: 834px) {
       margin-bottom: 56px;
+    }
+
+    @media screen and (max-width: 320px) {
+      max-width: 230px;
+      padding-top: 20px;
+      row-gap: 20px;
     }
   }
 
@@ -103,15 +125,15 @@ const StyledWrapper = styled.div`
     left: 60%;
 
     @media screen and (max-width: 834px) {
-      left: 58%;
       width: 328px;
       height: 364px;
+      left: 58%;
     }
     @media screen and (max-width: 320px) {
       width: 253px;
       height: 282px;
-      top: 242px;
-      left: 271px;
+      bottom: 0;
+      left: 18px;
     }
   }
 `;

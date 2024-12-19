@@ -46,7 +46,7 @@ const StyledWrapper = styled.div`
   flex-wrap: nowrap;
   align-items: center;
   width: 100%;
-  padding: ${({ theme }) => theme.padding.header};
+  padding: ${({ theme }) => theme.padding.base};
   position: relative;
 
   @media screen and (max-width: 834px) {
@@ -63,8 +63,6 @@ const StyledWrapper = styled.div`
     }
   }
   .header-search {
-    max-width: 630px;
-    width: 100%;
     @media screen and (max-width: 320px) {
       order: 2;
       flex: 1 0 100%;

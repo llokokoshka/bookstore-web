@@ -45,7 +45,11 @@ export const StyledWrapper = styled.button`
   @media screen and (max-width: 834px) {
     width: 231px;
     height: 44px;
-    padding: 10px 50px;
+  }
+  @media screen and (max-width: 320px) {
+    padding: 0;
+    font-size: 14px;
+    line-height: 28px;
   }
 
   &:hover {

@@ -13,7 +13,7 @@ import {
   upAmountCartItem,
 } from '../../store/cart/cartThunk';
 import { IBookInCartProps } from '../../lib/bookTypes';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 const BookInCart: React.FC<IBookInCartProps> = (props) => {
   const dispatch = useAppDispatch();
@@ -43,7 +43,7 @@ const BookInCart: React.FC<IBookInCartProps> = (props) => {
 
   return (
     <StyledWrapper>
-      <Link to={`${AppPages.getBookIdUrl(props.id)}`}>
+      <Link to={props.book ? `${AppPages.getBookIdUrl(props.book.id)}` : ''}>
         <img
           src={dirnameBookImg + bookImg}
           alt="img"

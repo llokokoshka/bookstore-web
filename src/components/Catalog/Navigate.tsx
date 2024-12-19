@@ -68,9 +68,10 @@ const StyledWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  column-gap: 50px;
   margin-bottom: 152px;
   margin-top: 54px;
+  column-gap: 50px;
+
   @media screen and (max-width: 834px) {
     margin-bottom: 60px;
     margin-top: 60px;

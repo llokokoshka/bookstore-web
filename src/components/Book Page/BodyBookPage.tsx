@@ -46,7 +46,7 @@ const BookPageBody: React.FC<BookType> = (props) => {
 export default BookPageBody;
 
 const StyledWrapper = styled.div`
-  padding: ${({ theme }) => theme.padding.header};
+  padding: ${({ theme }) => theme.padding.base};
   display: flex;
   flex-direction: column;
   row-gap: 110px;

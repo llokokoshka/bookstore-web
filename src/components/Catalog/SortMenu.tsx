@@ -99,7 +99,7 @@ const SortMenu: React.FC = () => {
         <div className="sort-menu__button-container " ref={sortRef}>
           <div onClick={handlerSortOpen}>
             <button className="button-container__grey-button button-container__grey-button--light">
-              Sort by {sortBy.toLowerCase()}{' '}
+              Sort by {sortBy.toLowerCase()}
             </button>
             {isSortOpen ? (
               <img src={openForward} alt="arrow" className="arrow" />
@@ -122,25 +122,32 @@ const StyledWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: ${({ theme }) => theme.padding.header};
+  padding: ${({ theme }) => theme.padding.base};
 
   @media screen and (max-width: 834px) {
-    padding: 26px 15px;
     flex-direction: column;
     justify-content: start;
     align-items: start;
+    padding: ${({ theme }) => theme.padding.base_tablet};
     row-gap: 20px;
   }
 
-  @media screen and (max-width: 321px) {
+  @media screen and (max-width: 320px) {
     max-width: 290px;
-    /* max-height: 290px; */
   }
 
   .sort-menu {
     display: flex;
     flex-direction: row;
     column-gap: 20px;
+
+    @media screen and (max-width: 834px) {
+    }
+
+    @media screen and (max-width: 320px) {
+      flex-direction: column;
+      row-gap: 20px;
+    }
   }
 
   .sort-menu__button-container {
@@ -154,10 +161,10 @@ const StyledWrapper = styled.div`
 
   .button-container__grey-button {
     position: relative;
-    background-color: ${({ theme }) => theme.colors.light};
     width: 196px;
     height: 48px;
     padding: 10px 8px 10px 15px;
+    background-color: ${({ theme }) => theme.colors.light};
     border-radius: 16px;
     text-align: start;
     font-size: 18px;
@@ -168,6 +175,9 @@ const StyledWrapper = styled.div`
 
     @media screen and (max-width: 834px) {
       width: 255px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 290px;
     }
   }
 

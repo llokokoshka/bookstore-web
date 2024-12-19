@@ -107,7 +107,7 @@ const RegistrationBody: React.FC = () => {
 export default RegistrationBody;
 
 const StyledWrapper = styled.div`
-  padding: ${({ theme }) => theme.padding.header};
+  padding: ${({ theme }) => theme.padding.base};
   @media screen and (max-width: 834px) {
     padding: 95px 15px;
   }

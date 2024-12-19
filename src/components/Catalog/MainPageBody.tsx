@@ -94,34 +94,36 @@ const MainPageBody = () => {
   return (
     <StyledWrapper>
       <Header page="Catalog" />
-      <Poster />
-      <SortMenu />
-      <div className="catalog">
-        {!(catalog?.length === 0) ? (
-          catalog?.map((id) => {
-            return (
-              <Catalog
-                key={id}
-                id={id}
-                booksInCart={booksInCart}
-                booksInFavorites={booksInFavorites}
-                books={books}
-              />
-            );
-          })
-        ) : (
-          <EmptyPage page="catalog" />
-        )}
+      <div className="main-page">
+        <Poster />
+        <SortMenu />
+        <div className="catalog">
+          {!(catalog?.length === 0) ? (
+            catalog?.map((id) => {
+              return (
+                <Catalog
+                  key={id}
+                  id={id}
+                  booksInCart={booksInCart}
+                  booksInFavorites={booksInFavorites}
+                  books={books}
+                />
+              );
+            })
+          ) : (
+            <EmptyPage page="catalog" />
+          )}
+        </div>
+        <Navigate
+          hasPrevPage={hasPrevPage}
+          handlePagePrev={handlePagePrev}
+          page={page}
+          colPages={colPages}
+          hasNextPage={hasNextPage}
+          handlePageNext={handlePageNext}
+        />
+        {user === null ? <AuthPoster /> : null}
       </div>
-      <Navigate
-        hasPrevPage={hasPrevPage}
-        handlePagePrev={handlePagePrev}
-        page={page}
-        colPages={colPages}
-        hasNextPage={hasNextPage}
-        handlePageNext={handlePageNext}
-      />
-      {user === null ? <AuthPoster /> : null}
       <Footer />
     </StyledWrapper>
   );
@@ -140,19 +142,17 @@ const StyledWrapper = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    padding: ${({ theme }) => theme.padding.header};
+    width: 100%;
+    padding: ${({ theme }) => theme.padding.base};
     column-gap: 20px;
     row-gap: 80px;
-    width: 100%;
 
     @media screen and (max-width: 834px) {
       padding: 0px 15px;
-      column-gap: 21px;
       row-gap: 30px;
     }
+
     @media screen and (max-width: 320px) {
-      max-width: 290px;
-      max-height: 290px;
     }
   }
 `;

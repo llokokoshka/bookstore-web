@@ -37,7 +37,7 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
   });
 
   const height = name === 'comment' ? 128 : name === 'search' ? 64 : 64;
-  const heightinput =
+  const inputheight =
     name === 'comment'
       ? 128
       : name === 'search'
@@ -46,10 +46,18 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
       ? 64
       : 24;
 
-  const width = name === 'comment' ? 738 : name === 'search' ? 630 : 630;
+  const widthbase = name === 'comment' ? 738 : name === 'search' ? 630 : 630;
+  const widthmedium = name === 'comment' ? 738 : name === 'search' ? 247 : 529;
+  const widthmin = name === 'comment' ? 289 : name === 'search' ? 290 : 290;
 
   return (
-    <StyledWrapper height={height} width={width} heightinput={heightinput}>
+    <StyledWrapper
+      height={height}
+      widthbase={widthbase}
+      inputheight={inputheight}
+      widthmedium={widthmedium}
+      widthmin={widthmin}
+    >
       <div className="input input__field --correct --size" style={styleParams}>
         {img && (
           <div
@@ -96,15 +104,24 @@ export default ProfileInput;
 
 const StyledWrapper = styled.div<{
   height: number;
-  width: number;
-  heightinput: number;
+  widthbase: number;
+  inputheight: number;
+  widthmedium: number;
+  widthmin: number;
 }>`
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-width: ${({ width }) => `${width}px`};
+  max-width: ${({ widthbase }) => `${widthbase}px`};
   width: 100%;
   row-gap: 9px;
+  @media screen and (max-width: 834px) {
+    max-width: ${({ widthmedium }) => `${widthmedium}px`};
+  }
+
+  @media screen and (max-width: 320px) {
+    max-width: ${({ widthmin }) => `${widthmin}px`};
+  }
 
   .input {
     display: flex;
@@ -122,9 +139,9 @@ const StyledWrapper = styled.div<{
 
   .input__icon {
     position: absolute;
-    padding: 22px 24px;
+    padding: 24px 24px;
     @media screen and (max-width: 320px) {
-      padding: 11px 16px;
+      padding: 16px 16px;
     }
   }
 
@@ -133,29 +150,27 @@ const StyledWrapper = styled.div<{
     background-color: ${({ theme }) => theme.colors.light};
     border-radius: ${({ theme }) => theme.sizes.base_radius}px;
     align-items: center;
-    height: ${({ heightinput }) => `${heightinput - 3}px`};
+    height: ${({ inputheight }) => `${inputheight - 4}px`};
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
     letter-spacing: 0.75px;
     text-align: left;
     padding-left: 5px;
-    width: auto;
-    border: none;
+    /* width: auto; */
+    /* border: none; */
     outline: none;
 
     &.--with-icon {
-      margin-left: 64px;
+      padding-left: 64px;
     }
 
     @media screen and (max-width: 834px) {
-      max-width: 392px;
-      height: 64px;
+      /* max-width: 392px; */
     }
 
     @media screen and (max-width: 320px) {
-      max-width: 290px;
-      height: 47px;
+      /* max-width: 290px; */
       font-size: 12px;
       font-weight: 400;
       line-height: 28px;
@@ -180,16 +195,20 @@ const StyledWrapper = styled.div<{
   }
 
   .--size {
-    max-width: ${({ width }) => `${width}px`};
+    max-width: ${({ widthbase }) => `${widthbase}px`};
     width: 100%;
     height: ${({ height }) => `${height}px`};
     display: flex;
     flex-direction: row;
     @media screen and (max-width: 834px) {
-      max-width: 529px;
+      max-width: ${({ widthmedium }) => `${widthmedium}px`};
+
+      /* max-width: 529px; */
     }
     @media screen and (max-width: 320px) {
-      max-width: 290px;
+      max-width: ${({ widthmin }) => `${widthmin}px`};
+
+      width: auto;
     }
   }
 

@@ -27,10 +27,11 @@ export interface IbaseTheme {
   };
 
   padding: {
-    header: string;
+    base: string;
     body: string;
     footer: string;
     button: string;
+    base_tablet: string;
   };
 
   order: {

@@ -30,7 +30,7 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
 
   if (Number.isInteger(bookRating)) {
     niceViewOfBookRating = `${bookRating}.0`;
-  } else {
+  } else if (bookRating) {
     niceViewOfBookRating = `${bookRating}`;
   }
 
@@ -100,7 +100,7 @@ const StyledWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  max-width: 504px;
+  max-width: 630px;
   width: 100%;
 
   @media screen and (max-width: 834px) {
@@ -118,11 +118,14 @@ const StyledWrapper = styled.div`
   .rating {
     display: flex;
     flex-direction: row;
-    width: 299px;
+    max-width: 396px;
     justify-content: space-between;
     align-items: center;
     @media screen and (max-width: 834px) {
       width: 255px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 135px;
     }
   }
   .rating__stars {
@@ -132,6 +135,9 @@ const StyledWrapper = styled.div`
     @media screen and (max-width: 834px) {
       column-gap: 24px;
     }
+    @media screen and (max-width: 320px) {
+      column-gap: 7px;
+    }
   }
 
   .star {
@@ -140,6 +146,10 @@ const StyledWrapper = styled.div`
     @media screen and (max-width: 834px) {
       width: 20px;
       height: 20px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 15px;
+      height: 15px;
     }
   }
 
@@ -152,5 +162,9 @@ const StyledWrapper = styled.div`
     line-height: 24px;
     text-align: left;
     color: ${({ theme }) => theme.colors.dark_grey};
+    @media screen and (max-width: 320px) {
+      font-size: 13px;
+      line-height: 19.5px;
+    }
   }
 `;
