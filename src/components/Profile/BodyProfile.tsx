@@ -164,7 +164,6 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
 
   return (
     <StyledWrapper>
-      <ToastContainer />
       <div className="profile">
         <div className="profile__img">
           <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
@@ -178,7 +177,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
               style={{ display: 'none' }}
               onChange={handleUpdateAvatar}
             />
-            <img src={camera} alt="camera" />
+            <img src={camera} alt="camera" className="correct-size" />
           </label>
         </div>
         <BaseButton text={`Logout`} onClick={exit} />
@@ -216,6 +215,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
           text={`Confirm`}
         />
       </div>
+      <ToastContainer />
     </StyledWrapper>
   );
 };
@@ -236,6 +236,7 @@ const StyledWrapper = styled.div`
   }
   @media screen and (max-width: 320px) {
     flex-direction: column;
+    padding: 50px 15px 40px 15px;
   }
 
   .profile {
@@ -262,12 +263,19 @@ const StyledWrapper = styled.div`
       max-height: 290px;
     }
   }
+  .correct-size {
+    width: 22px;
+    height: auto;
+  }
 
   .container {
     display: flex;
     flex-direction: column;
     row-gap: 40px;
     width: 100%;
+    @media screen and (max-width: 320px) {
+      padding-top: 20px;
+    }
   }
 
   .avatar {
@@ -293,6 +301,10 @@ const StyledWrapper = styled.div`
     position: absolute;
     top: 77.7%;
     left: 77.7%;
+    @media screen and (max-width: 320px) {
+      top: 83%;
+      left: 83%;
+    }
   }
   .pass-inputs {
     display: flex;

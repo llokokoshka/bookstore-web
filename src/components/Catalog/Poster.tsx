@@ -18,7 +18,10 @@ const Poster: React.FC = () => {
                 Buy two books and get one for free
               </div>
             </div>
-            <BaseButton text={`Choose a book`} />
+            <BaseButton
+              text={`Choose a book`}
+              buttonClassName="correct-button-size"
+            />
           </div>
           <img src={poster} alt="logo" className="container-img" />
         </div>
@@ -31,7 +34,6 @@ export default Poster;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.base};
-
   @media screen and (max-width: 834px) {
     padding: ${({ theme }) => theme.padding.base_tablet};
   }
@@ -40,7 +42,7 @@ const StyledWrapper = styled.div`
     display: flex;
     position: relative;
     width: 100%;
-    height: 400px;
+    height: auto;
     border-radius: 16px;
     background-color: ${({ theme }) => theme.colors.light};
 
@@ -49,7 +51,7 @@ const StyledWrapper = styled.div`
     }
 
     @media screen and (max-width: 320px) {
-      height: 505px;
+      height: auto;
     }
   }
 
@@ -119,21 +121,19 @@ const StyledWrapper = styled.div`
   }
 
   .container-img {
-    position: absolute;
-    width: 406px;
-    height: 400px;
-    left: 60%;
-
     @media screen and (max-width: 834px) {
       width: 328px;
       height: auto;
-      left: 58%;
     }
     @media screen and (max-width: 320px) {
       width: 253px;
       height: auto;
-      bottom: 0;
-      left: 18px;
+    }
+  }
+
+  .correct-button-size {
+    @media screen and (max-width: 320px) {
+      width: 200px;
     }
   }
 `;

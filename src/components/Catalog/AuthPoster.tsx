@@ -51,7 +51,7 @@ const StyledWrapper = styled.div`
     border-radius: 16px;
     background-color: ${({ theme }) => theme.colors.light};
     @media screen and (max-width: 834px) {
-      height: 289px;
+      height: 400px;
     }
 
     @media screen and (max-width: 320px) {

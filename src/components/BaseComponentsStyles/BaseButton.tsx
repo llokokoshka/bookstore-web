@@ -47,6 +47,7 @@ export const StyledWrapper = styled.button`
     height: 44px;
   }
   @media screen and (max-width: 320px) {
+    width: 135px;
     padding: 0;
     font-size: 14px;
     line-height: 28px;

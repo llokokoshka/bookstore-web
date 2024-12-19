@@ -64,7 +64,6 @@ const RegistrationBody: React.FC = () => {
           className="container__info-block"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <ToastContainer />
           <div className="info-block__text">
             <div className="big-title">Sign up</div>
             <ProfileInput
@@ -75,6 +74,7 @@ const RegistrationBody: React.FC = () => {
               register={register}
               errors={errors.email?.message}
             />
+
             <ProfileInput
               type={inputType}
               img={hide}
@@ -95,6 +95,7 @@ const RegistrationBody: React.FC = () => {
               inputClassName='"password__btn active'
               onClick={changeInputTypeHandler}
             />
+            <ToastContainer />
           </div>
           <BaseButton type="submit" text={`Sign up`} />
         </form>
@@ -111,6 +112,9 @@ const StyledWrapper = styled.div`
   @media screen and (max-width: 834px) {
     padding: 95px 15px;
   }
+  @media screen and (max-width: 320px) {
+    padding: 30px 15px;
+  }
   .poster__container {
     display: flex;
     flex-direction: row;
@@ -118,12 +122,20 @@ const StyledWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     position: relative;
+    @media screen and (max-width: 320px) {
+      flex-direction: column;
+      row-gap: 60px;
+    }
   }
 
   .container__img {
     @media screen and (max-width: 834px) {
       width: 390px;
       height: 333px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 290px;
+      height: 247px;
     }
   }
 

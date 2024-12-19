@@ -88,6 +88,10 @@ const StyledWrapper = styled.div`
   top: 74px;
   row-gap: 10px;
   z-index: 10;
+  @media screen and (max-width: 320px) {
+    width: 290px;
+    z-index: 12;
+  }
 
   .poligon {
     position: absolute;

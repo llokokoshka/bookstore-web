@@ -45,12 +45,15 @@ const StyledWrapper = styled.div`
   background: ${({ theme }) => theme.colors.light};
   width: 197px;
   height: auto;
-  top: 78px;
+  top: 74px;
   padding: 15px;
   gap: 12px;
   border-radius: 16px;
   opacity: 0px;
   z-index: 6;
+  @media screen and (max-width: 320px) {
+    width: 290px;
+  }
 
   .poligon {
     position: absolute;
