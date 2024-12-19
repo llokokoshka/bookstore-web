@@ -35,7 +35,9 @@ const StyledWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   width: 100%;
+  height: auto;
   background-color: ${({ theme }) => theme.colors.dark};
   color: ${({ theme }) => theme.colors.light};
   padding: ${({ theme }) => theme.padding.footer};
@@ -43,10 +45,11 @@ const StyledWrapper = styled.div`
   @media screen and (max-width: 834px) {
     padding: 73px 15px;
   }
-  @media screen and (max-width: 321px) {
+  @media screen and (max-width: 320px) {
     flex-direction: column;
-    max-width: 290px;
-    height: auto;
+    align-items: start;
+    padding-bottom: 30px;
+    row-gap: 40px;
   }
 
   .contacts {

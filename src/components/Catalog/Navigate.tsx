@@ -14,7 +14,9 @@ const Navigate: React.FC<INavigateProps> = (props) => {
         <div className="arrow" onClick={props.handlePagePrev}>
           <img src={leftArr} alt="left arr"></img>
         </div>
-      ) : null}
+      ) : (
+        <div className="arrow"></div>
+      )}
       <div className="dots">
         {props.colPages === 1 ? (
           <img src={fullRow} alt="dot" />
@@ -54,9 +56,11 @@ const Navigate: React.FC<INavigateProps> = (props) => {
       </div>
       {props.hasNextPage ? (
         <div className="arrow" onClick={props.handlePageNext}>
-          <img src={rightArr} alt="right arr"></img>{' '}
+          <img src={rightArr} alt="right arr"></img>
         </div>
-      ) : null}
+      ) : (
+        <div className="arrow"></div>
+      )}
     </StyledWrapper>
   );
 };

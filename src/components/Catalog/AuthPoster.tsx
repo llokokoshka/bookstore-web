@@ -133,12 +133,12 @@ const StyledWrapper = styled.div`
 
     @media screen and (max-width: 834px) {
       width: 389px;
-      height: 345px;
+      height: auto;
       left: 1px;
     }
     @media screen and (max-width: 320px) {
       width: 253px;
-      height: 282px;
+      height: auto;
       bottom: 0;
       left: 18px;
     }
