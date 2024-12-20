@@ -7,7 +7,7 @@ import Rating from '../Book Page/Rating';
 import { AppPages } from '../../constants/textConstants';
 import { addCartItem } from '../../store/cart/cartThunk';
 import { IBookProps } from '../../lib/bookTypes';
-import BaseButton from '../BaseComponentsStyles/BaseButton';
+import BaseButton from '../BaseComponents/BaseButton';
 import CatalogBookCover from './CatalogBookCover';
 
 const CatalogBook: React.FC<IBookProps> = (props) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { AppPages } from '../../constants/textConstants';
-import BaseButton from '../BaseComponentsStyles/BaseButton';
+import BaseButton from '../BaseComponents/BaseButton';
 import { IAuthButtonProps } from '../../lib/types';
 
 const AuthButton: React.FC<IAuthButtonProps> = (props) => {

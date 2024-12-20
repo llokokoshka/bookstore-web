@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import search from '../../img/search-icon.png';
 import { useAppDispatch } from '../../hooks';
 import { setSearcheParam } from '../../store/filter/filterSlice';
-import BaseInput from '../BaseComponentsStyles/BaseInput';
+import BaseInput from '../BaseComponents/BaseInput';
 import { ISearchProps } from '../../lib/types';
 
 const Search: React.FC<ISearchProps> = (props) => {

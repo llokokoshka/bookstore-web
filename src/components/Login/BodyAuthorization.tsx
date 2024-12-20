@@ -15,8 +15,8 @@ import { AppPages } from '../../constants/textConstants';
 import { loginUser } from '../../store/auth/authThunk';
 import { IFormReg } from '../../lib/authTypes';
 import Toast from '../Toast';
-import BaseButton from '../BaseComponentsStyles/BaseButton';
-import BaseInput from '../BaseComponentsStyles/BaseInput';
+import BaseButton from '../BaseComponents/BaseButton';
+import BaseInput from '../BaseComponents/BaseInput';
 
 const AuthorizationBody: React.FC = () => {
   const dispatch = useAppDispatch();

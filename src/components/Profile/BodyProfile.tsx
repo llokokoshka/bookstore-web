@@ -26,7 +26,7 @@ import { UserType, IFormInfo, IFormPass } from '../../lib/authTypes';
 import { cleanCart } from '../../store/cart/cartSlice';
 import { cleanFav } from '../../store/favorites/favoritesSlice';
 import Toast from '../Toast';
-import BaseButton from '../BaseComponentsStyles/BaseButton';
+import BaseButton from '../BaseComponents/BaseButton';
 import ProfileInfoForm from './ProfileInfoForm';
 import ProfilePassForm from './ProfilePassForm';
 

@@ -6,7 +6,7 @@ import { useAppSelector } from '../../hooks';
 import EmptyPage from './EmtyPage';
 import { Link } from 'react-router-dom';
 import { AppPages } from '../../constants/textConstants';
-import BaseButton from '../BaseComponentsStyles/BaseButton';
+import BaseButton from '../BaseComponents/BaseButton';
 
 const CartPageBody: React.FC = () => {
   const BooksInCart = useAppSelector((state) => state.cart.cart);

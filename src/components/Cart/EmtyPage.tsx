@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import booksImg from '../../img/booksImg.png';
 import { Link } from 'react-router-dom';
 import { AppPages } from '../../constants/textConstants';
-import BaseButton from '../BaseComponentsStyles/BaseButton';
+import BaseButton from '../BaseComponents/BaseButton';
 import { IEmptyPageProps } from '../../lib/types';
 
 const EmptyPage: React.FC<IEmptyPageProps> = (props) => {

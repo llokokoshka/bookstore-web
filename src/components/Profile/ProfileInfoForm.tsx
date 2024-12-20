@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import man from '../../img/User profile.png';
 import mail from '../../img/Mail.png';
-import BaseInput from '../BaseComponentsStyles/BaseInput';
+import BaseInput from '../BaseComponents/BaseInput';
 import { IProfileInfoFormProps } from '../../lib/types';
 
 const ProfileInfoForm: React.FC<IProfileInfoFormProps> = (props) => {

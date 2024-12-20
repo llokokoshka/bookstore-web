@@ -6,8 +6,8 @@ import {
   addComment,
   getBookById,
 } from '../../store/booksEntities/booksEntitiesThunk';
-import BaseButton from '../BaseComponentsStyles/BaseButton';
-import BaseInput from '../BaseComponentsStyles/BaseInput';
+import BaseButton from '../BaseComponents/BaseButton';
+import BaseInput from '../BaseComponents/BaseInput';
 import { ICommentInputProps } from '../../lib/types';
 
 const CommentInput: React.FC<ICommentInputProps> = (props) => {

@@ -15,8 +15,8 @@ import { AppPages } from '../../constants/textConstants';
 import { regUser } from '../../store/auth/authThunk';
 import { IFormInput, IFormReg } from '../../lib/authTypes';
 import Toast from '../Toast';
-import BaseButton from '../BaseComponentsStyles/BaseButton';
-import BaseInput from '../BaseComponentsStyles/BaseInput';
+import BaseButton from '../BaseComponents/BaseButton';
+import BaseInput from '../BaseComponents/BaseInput';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();

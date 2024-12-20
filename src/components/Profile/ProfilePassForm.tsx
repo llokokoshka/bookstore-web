@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import hide from '../../img/Hide.png';
-import BaseInput from '../BaseComponentsStyles/BaseInput';
+import BaseInput from '../BaseComponents/BaseInput';
 import { IProfilePassFormProps } from '../../lib/types';
 
 const ProfilePassForm: React.FC<IProfilePassFormProps> = (props) => {

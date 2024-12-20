@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import BaseButton from '../BaseComponentsStyles/BaseButton';
+import BaseButton from '../BaseComponents/BaseButton';
 import { IBookButtonProps } from '../../lib/types';
 
 const BookButton: React.FC<IBookButtonProps> = (props) => {

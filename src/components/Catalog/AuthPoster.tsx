@@ -5,7 +5,7 @@ import fairy from '../../img/atz 1.png';
 import castle from '../../img/castle.png';
 import { AppPages } from '../../constants/textConstants';
 import { Link } from 'react-router-dom';
-import BaseButton from '../BaseComponentsStyles/BaseButton';
+import BaseButton from '../BaseComponents/BaseButton';
 
 const AuthPoster: React.FC = () => {
   return (
