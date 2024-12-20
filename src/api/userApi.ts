@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath } from '../constants/textConstants';
 import { UserType, IUserResponseData } from '../lib/authTypes';
