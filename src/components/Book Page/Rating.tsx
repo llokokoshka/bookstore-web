@@ -87,7 +87,7 @@ const Rating: React.FC<IRatingProps> = ({ bookId, isUserRate }) => {
                 </div>
               ))}
             </div>
-            <h3 className="rating__value"> {niceViewOfBookRating || '0.0'}</h3>
+            <div className="rating__value">{niceViewOfBookRating || '0.0'}</div>
           </>
         )}
       </div>
@@ -123,6 +123,7 @@ const StyledWrapper = styled.div.withConfig({
     display: flex;
     flex-direction: row;
     max-width: 396px;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
     @media screen and (max-width: 834px) {
@@ -161,8 +162,8 @@ const StyledWrapper = styled.div.withConfig({
 
   .rating__value {
     height: 24px;
-    top: 561px;
-    left: 274px;
+    /* top: 561px;
+    left: 274px; */
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
