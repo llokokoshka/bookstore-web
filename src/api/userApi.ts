@@ -1,3 +1,4 @@
+import { error } from 'console';
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath } from '../constants/textConstants';
 import { UserType, IUserResponseData } from '../lib/authTypes';
@@ -33,10 +34,14 @@ export async function updateUserPassword(data: {
   passwordNew: string;
   passwordRep: string;
 }) {
-  await axiosInstance.patch(ApiPath.user.userPass, {
-    password: data.password,
-    passwordNew: data.passwordNew,
-  });
+  try {
+    await axiosInstance.patch(ApiPath.user.userPass, {
+      password: data.password,
+      passwordNew: data.passwordNew,
+    });
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 export async function getUserApi() {
