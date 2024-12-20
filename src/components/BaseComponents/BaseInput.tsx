@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import cn from 'classnames';
+import isPropValid from '@emotion/is-prop-valid';
 
 import { BaseInputPropsType } from '../../lib/authTypes';
 
@@ -102,7 +103,11 @@ const BaseInput: React.FC<BaseInputPropsType> = (props) => {
 
 export default BaseInput;
 
-const StyledWrapper = styled.div<{
+const StyledWrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) =>
+    isPropValid(prop) &&
+    !['widthbase', 'inputheight', 'widthmedium', 'widthmin'].includes(prop),
+})<{
   height: number;
   widthbase: number;
   inputheight: number;
@@ -112,6 +117,7 @@ const StyledWrapper = styled.div<{
   display: flex;
   flex-direction: column;
   height: 100%;
+  /* ${({ widthbase }) => widthbase && ` max-width: ${widthbase}px`}; */
   max-width: ${({ widthbase }) => `${widthbase}px`};
   width: 100%;
   row-gap: 9px;

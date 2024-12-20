@@ -1,4 +1,6 @@
 import React from 'react';
+import isPropValid from '@emotion/is-prop-valid';
+
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import starImg from '../../img/Star.png';
@@ -45,7 +47,7 @@ const Rating: React.FC<IRatingProps> = ({ bookId, isUserRate }) => {
   };
 
   return (
-    <StyledWrapper isuserrate={isUserRate}>
+    <StyledWrapper isuserrate={isUserRate ? 'column' : undefined}>
       <>
         {isUserRate ? (
           <div className="total-rating">
@@ -95,7 +97,9 @@ const Rating: React.FC<IRatingProps> = ({ bookId, isUserRate }) => {
 
 export default Rating;
 
-const StyledWrapper = styled.div<{ isuserrate: boolean }>`
+const StyledWrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) => isPropValid(prop) && prop !== 'isuserrate',
+})<{ isuserrate: string | undefined }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -126,7 +130,7 @@ const StyledWrapper = styled.div<{ isuserrate: boolean }>`
     }
     @media screen and (max-width: 320px) {
       flex-direction: {
-        ${({ isuserrate }) => (isuserrate === true ? 'column' : 'row')}
+        ${({ isuserrate }) => `${isuserrate}`}
       }
       align-items: start;
       width: 135px;
