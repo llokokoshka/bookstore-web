@@ -44,7 +44,8 @@ const StyledWrapper = styled.div`
     width: 100%;
     flex-wrap: wrap;
     word-break: break-all;
-    hyphens: auto;
+    white-space: normal;
+
     @media screen and (max-width: 834px) {
       max-width: 392px;
     }
