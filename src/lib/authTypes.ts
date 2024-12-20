@@ -56,7 +56,7 @@ export interface IAuthState {
   loading: boolean;
 }
 
-export type ProfileInputPropsType = {
+export type BaseInputPropsType = {
   type: string;
   img?: string;
   label?: string;
@@ -71,5 +71,5 @@ export type ProfileInputPropsType = {
   onKeyUp?: (e?: any) => void;
   onClick?: () => void;
   isProfile?: boolean;
-  text?: string
+  text?: string;
 };

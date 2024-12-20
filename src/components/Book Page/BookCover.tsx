@@ -6,14 +6,9 @@ import { ApiPath } from '../../constants/textConstants';
 import heart from '../../img/Heart.png';
 import fullHeart from '../../img/fullHeart.png';
 import { handleFavorites } from '../../utils/favoriteUtil';
+import { IBookCoverProps } from '../../lib/types';
 
-interface Props {
-  id: number;
-  isFav: boolean;
-  img: string;
-}
-
-const BookCover: React.FC<Props> = (props) => {
+const BookCover: React.FC<IBookCoverProps> = (props) => {
   const dispatch = useAppDispatch();
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const booksInFavorites = useAppSelector(

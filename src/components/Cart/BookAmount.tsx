@@ -11,12 +11,9 @@ import {
   downAmountCartItem,
   upAmountCartItem,
 } from '../../store/cart/cartThunk';
+import { IBookAmountProps } from '../../lib/types';
 
-interface Props {
-  id: number;
-  quantity: number;
-}
-const BookAmount: React.FC<Props> = (props) => {
+const BookAmount: React.FC<IBookAmountProps> = (props) => {
   const dispatch = useAppDispatch();
 
   const handleMinusQuantity = async () => {

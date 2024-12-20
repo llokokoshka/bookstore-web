@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 import { AppPages } from '../../constants/textConstants';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
+import { IAuthButtonProps } from '../../lib/types';
 
-const AuthButton: React.FC<{ page: string }> = (props) => {
+const AuthButton: React.FC<IAuthButtonProps> = (props) => {
   return (
     <>
       {props.page === 'Login' ? (

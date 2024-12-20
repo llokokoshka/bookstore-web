@@ -1,14 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
+import { IBookButtonProps } from '../../lib/types';
 
-interface Props {
-  type: string;
-  amount: number;
-  price: number;
-}
-
-const BookButton: React.FC<Props> = (props) => {
+const BookButton: React.FC<IBookButtonProps> = (props) => {
   return (
     <StyledWrapper>
       <p>{props.type}</p>

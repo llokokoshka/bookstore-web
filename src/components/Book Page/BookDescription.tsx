@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { IBookDescriptionProps } from '../../lib/types';
 
-interface Props {
-  description: string;
-}
-
-const BookDescription: React.FC<Props> = (props) => {
+const BookDescription: React.FC<IBookDescriptionProps> = (props) => {
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
   const toggleDescription = () => {

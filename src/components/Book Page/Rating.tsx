@@ -6,11 +6,9 @@ import fullStar from '../../img/fullStar.png';
 import styled from 'styled-components';
 import { addOrUpdateRating } from '../../store/booksEntities/booksEntitiesThunk';
 import { IUserRating } from '../../lib/authTypes';
+import { IRatingProps } from '../../lib/types';
 
-const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
-  bookId,
-  isUserRate,
-}) => {
+const Rating: React.FC<IRatingProps> = ({ bookId, isUserRate }) => {
   let fullStars = 0;
   let userRateID: IUserRating | null = null;
   let userRate: number | null | undefined = null;

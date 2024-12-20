@@ -8,12 +8,9 @@ import {
 } from '../../store/booksEntities/booksEntitiesThunk';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
 import BaseInput from '../BaseComponentsStyles/BaseInput';
+import { ICommentInputProps } from '../../lib/types';
 
-interface Props {
-  id: number;
-}
-
-const CommentInput: React.FC<Props> = (props) => {
+const CommentInput: React.FC<ICommentInputProps> = (props) => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.booksEntities.loading);
 

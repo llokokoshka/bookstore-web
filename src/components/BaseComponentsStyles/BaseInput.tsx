@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import cn from 'classnames';
 
-import { ProfileInputPropsType } from '../../lib/authTypes';
+import { BaseInputPropsType } from '../../lib/authTypes';
 
-const BaseInput: React.FC<ProfileInputPropsType> = (props) => {
+const BaseInput: React.FC<BaseInputPropsType> = (props) => {
   const [inputType, setInputType] = useState('password');
   const handlerInputType = () => {
     setInputType((type) => (type === 'password' ? 'text' : 'password'));

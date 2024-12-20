@@ -1,33 +1,12 @@
 import React from 'react';
-import {
-  FieldErrors,
-  SubmitErrorHandler,
-  SubmitHandler,
-  UseFormRegister,
-} from 'react-hook-form';
 import styled from 'styled-components';
 
 import man from '../../img/User profile.png';
 import mail from '../../img/Mail.png';
 import BaseInput from '../BaseComponentsStyles/BaseInput';
-import { UserType, IFormInfo } from '../../lib/authTypes';
+import { IProfileInfoFormProps } from '../../lib/types';
 
-interface Props {
-  user: UserType | null;
-  onSubmitFormInfo: SubmitHandler<IFormInfo>;
-  handleChangeInfo: () => void;
-  changeInfo: boolean;
-  editValueName: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  editValueMail: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmitFormInfo: (
-    onValid: SubmitHandler<IFormInfo>,
-    onInvalid?: SubmitErrorHandler<IFormInfo> | undefined
-  ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
-  registerFormInfo: UseFormRegister<IFormInfo>;
-  infoErrors: FieldErrors<IFormInfo>;
-}
-
-const ProfileInfoForm: React.FC<Props> = (props) => {
+const ProfileInfoForm: React.FC<IProfileInfoFormProps> = (props) => {
   return (
     <StyledWrapper
       onSubmit={props.handleSubmitFormInfo(props.onSubmitFormInfo)}
@@ -67,11 +46,6 @@ const ProfileInfoForm: React.FC<Props> = (props) => {
 export default ProfileInfoForm;
 
 const StyledWrapper = styled.form`
-  /* @media screen and (max-width: 834px) {
-      margin-bottom: 118px;
-      margin-right: 1px;
-    } */
-
   display: flex;
   flex-direction: column;
   row-gap: 20px;

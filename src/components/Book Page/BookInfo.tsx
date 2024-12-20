@@ -3,14 +3,9 @@ import styled from 'styled-components';
 
 import BookDescription from './BookDescription';
 import BookButton from './BookButton';
-import { CoverType } from '../../lib/bookTypes';
+import { IBookInfoProps } from '../../lib/types';
 
-interface Props {
-  description: string;
-  cover: CoverType;
-}
-
-const BookInfo: React.FC<Props> = (props) => {
+const BookInfo: React.FC<IBookInfoProps> = (props) => {
   return (
     <StyledWrapper>
       <BookDescription description={props.description} />

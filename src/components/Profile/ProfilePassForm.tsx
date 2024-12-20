@@ -1,30 +1,11 @@
 import React from 'react';
-import {
-  FieldErrors,
-  SubmitErrorHandler,
-  SubmitHandler,
-  UseFormRegister,
-} from 'react-hook-form';
 import styled from 'styled-components';
 
 import hide from '../../img/Hide.png';
 import BaseInput from '../BaseComponentsStyles/BaseInput';
-import { UserType, IFormPass } from '../../lib/authTypes';
+import { IProfilePassFormProps } from '../../lib/types';
 
-interface Props {
-  user: UserType | null;
-  handleSubmitFormPass: (
-    onValid: SubmitHandler<IFormPass>,
-    onInvalid?: SubmitErrorHandler<IFormPass> | undefined
-  ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
-  onSubmitFormPass: SubmitHandler<IFormPass>;
-  handleChangePass: () => void;
-  changePass: boolean;
-  registerFormPass: UseFormRegister<IFormPass>;
-  passErrors: FieldErrors<IFormPass>;
-}
-
-const ProfilePassForm: React.FC<Props> = (props) => {
+const ProfilePassForm: React.FC<IProfilePassFormProps> = (props) => {
   return (
     <StyledWrapper
       onSubmit={props.handleSubmitFormPass(props.onSubmitFormPass)}

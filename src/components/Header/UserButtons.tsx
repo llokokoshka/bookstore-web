@@ -6,8 +6,9 @@ import profile from '../../img/User profile button.png';
 import cart from '../../img/Cart.png';
 import like from '../../img/Heart.png';
 import { AppPages } from '../../constants/textConstants';
+import { IUserButtonsProps } from '../../lib/types';
 
-const UserButtons: React.FC<{ itemsInCart: number }> = (props) => {
+const UserButtons: React.FC<IUserButtonsProps> = (props) => {
   return (
     <StyledWrapper>
       <div className="cart-button">

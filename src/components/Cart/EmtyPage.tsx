@@ -5,12 +5,9 @@ import booksImg from '../../img/booksImg.png';
 import { Link } from 'react-router-dom';
 import { AppPages } from '../../constants/textConstants';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
+import { IEmptyPageProps } from '../../lib/types';
 
-interface Props {
-  page: string;
-}
-
-const EmptyPage: React.FC<Props> = (props) => {
+const EmptyPage: React.FC<IEmptyPageProps> = (props) => {
   return (
     <StyledWrapper>
       <img src={booksImg} alt="booksiMG" className="img-size"></img>

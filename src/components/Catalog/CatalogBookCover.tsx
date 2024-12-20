@@ -7,16 +7,9 @@ import fullHeart from '../../img/fullHeart.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ApiPath, AppPages } from '../../constants/textConstants';
 import { handleFavorites } from '../../utils/favoriteUtil';
+import { ICatalogBookCoverProps } from '../../lib/types';
 
-interface Props {
-  img: string;
-  id: number;
-  isInFavorites: boolean;
-  isBestseller: boolean;
-  isNew: boolean;
-}
-
-const CatalogBookCover: React.FC<Props> = (props) => {
+const CatalogBookCover: React.FC<ICatalogBookCoverProps> = (props) => {
   const dispatch = useAppDispatch();
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
 
