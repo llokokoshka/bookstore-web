@@ -13,7 +13,7 @@ import {
   upAmountCartItem,
 } from '../../store/cart/cartThunk';
 import { IBookInCartProps } from '../../lib/bookTypes';
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const BookInCart: React.FC<IBookInCartProps> = (props) => {
   const dispatch = useAppDispatch();
@@ -51,28 +51,30 @@ const BookInCart: React.FC<IBookInCartProps> = (props) => {
         ></img>
       </Link>
       <div className="info-block">
-        <div>
-          <div className="big-title">{bookName}</div>
-          <div className="normal-title normal-title--size">
-            {bookAuthor?.text}
-          </div>
-        </div>
-        <div className="info-block__amount">
-          <div className="amount__block">
-            <div className="block__button" onClick={handleMinusQuantity}>
-              <img src={minus} alt="img" className="button__img"></img>
-            </div>
-            <div>{props.quantity}</div>
-            <div className="block__button" onClick={handlePlusQuantity}>
-              <img src={plus} alt="img" className="button__img"></img>
+        <div className="info-block__total-info">
+          <div>
+            <div className="big-title">{bookName}</div>
+            <div className="normal-title normal-title--size">
+              {bookAuthor?.text}
             </div>
           </div>
-          <img
-            src={rubbish}
-            alt="img"
-            className="amount__rubbish-img"
-            onClick={handleDeleteItem}
-          ></img>
+          <div className="info-block__amount">
+            <div className="amount__block">
+              <div className="block__button" onClick={handleMinusQuantity}>
+                <img src={minus} alt="img" className="button__img"></img>
+              </div>
+              <div>{props.quantity}</div>
+              <div className="block__button" onClick={handlePlusQuantity}>
+                <img src={plus} alt="img" className="button__img"></img>
+              </div>
+            </div>
+            <img
+              src={rubbish}
+              alt="img"
+              className="amount__rubbish-img"
+              onClick={handleDeleteItem}
+            ></img>
+          </div>
         </div>
         <div className="total-prise">$ {props.price} USD</div>
       </div>
@@ -99,12 +101,35 @@ const StyledWrapper = styled.div`
       width: 255px;
       height: 375px;
     }
+    @media screen and (max-width: 834px) {
+      width: 135px;
+      height: 202px;
+    }
   }
 
   .info-block {
     display: flex;
     flex-direction: column;
     row-gap: 50px;
+    width: 100%;
+    flex-wrap: wrap;
+    word-break: break-all;
+    hyphens: auto;
+    @media screen and (max-width: 834px) {
+      width: 532px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 135px;
+      row-gap: 48px;
+    }
+  }
+  .info-block__total-info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+    @media screen and (max-width: 320px) {
+      row-gap: 30px;
+    }
   }
 
   .block__button {
@@ -128,6 +153,9 @@ const StyledWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     column-gap: 58px;
+    @media screen and (max-width: 320px) {
+      column-gap: 24px;
+    }
   }
 
   .amount__block {
@@ -155,11 +183,20 @@ const StyledWrapper = styled.div`
     font-size: 36px;
     font-weight: 400;
     line-height: 54px;
+    @media screen and (max-width: 320px) {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 27px;
+    }
   }
 
   .normal-title--size {
     font-size: 20px;
     font-weight: 500;
     line-height: 30px;
+    @media screen and (max-width: 320px) {
+      font-size: 12px;
+      line-height: 18px;
+    }
   }
 `;

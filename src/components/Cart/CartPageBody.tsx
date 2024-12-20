@@ -37,12 +37,17 @@ const CartPageBody: React.FC = () => {
             );
           })}
           <div className="cart-info">
-            <div className="big-title">Total: {BooksInCart?.total_price}</div>
+            <div className="big-title big-title--size">
+              Total: {BooksInCart?.total_price}
+            </div>
             <div className="buttons">
               <Link to={`${AppPages.base}`}>
                 <button className="cart-button">Continue shopping</button>
               </Link>
-              <BaseButton text={`Chekout`} />
+              <BaseButton
+                text={`Chekout`}
+                buttonClassName="correct-button-size"
+              />
             </div>
           </div>
         </>
@@ -80,6 +85,10 @@ const StyledWrapper = styled.div<{ $numberItems: number }>`
     display: flex;
     flex-direction: row;
     column-gap: 20px;
+    @media screen and (max-width: 320px) {
+      flex-direction: column;
+      row-gap: 18px;
+    }
   }
 
   .cart-button {
@@ -98,6 +107,9 @@ const StyledWrapper = styled.div<{ $numberItems: number }>`
     letter-spacing: 0.75px;
     text-align: center;
     z-index: 5;
+    @media screen and (max-width: 320px) {
+      width: 290px;
+    }
   }
   .cart-button:hover {
     cursor: pointer;
@@ -110,6 +122,10 @@ const StyledWrapper = styled.div<{ $numberItems: number }>`
     align-items: start;
     justify-content: center;
     column-gap: 109px;
+  }
+  .big-title--size {
+    font-size: 24px;
+    line-height: 36px;
   }
 
   .empty-cart__info {
@@ -132,5 +148,8 @@ const StyledWrapper = styled.div<{ $numberItems: number }>`
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     width: 465px;
+  }
+  .correct-button-size {
+    width: 290px;
   }
 `;
