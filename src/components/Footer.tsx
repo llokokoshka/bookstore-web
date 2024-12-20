@@ -3,8 +3,13 @@ import styled from 'styled-components';
 
 import logo from '../img/footer-logo.png';
 import map from '../img/map.png';
+import { Link } from 'react-router-dom';
+import { AppPages } from '../constants/textConstants';
+import { useAppSelector } from '../hooks';
 
 const Footer: React.FC = () => {
+  const user = useAppSelector((state) => state.auth.user);
+
   return (
     <StyledWrapper>
       <div className="contacts">
@@ -15,10 +20,22 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className="contacts__footer-text">
-        <div>Home Page</div>
-        <div>Catalog</div>
-        <div>My Account</div>
-        <div>Cart</div>
+        <Link to={`${AppPages.base}`} className="footer-text__menu">
+          <div>Home Page</div>
+        </Link>
+        <Link to={`${AppPages.base}`} className="footer-text__menu">
+          <div>Catalog</div>
+        </Link>
+        {user && (
+          <Link to={`${AppPages.profile}`} className="footer-text__menu">
+            <div>My Account</div>
+          </Link>
+        )}
+        {user && (
+          <Link to={`${AppPages.cart}`} className="footer-text__menu">
+            <div>Cart</div>
+          </Link>
+        )}
       </div>
       <div className="contacts__footer-text">
         <div>6391 Elgin St. Celina, Delaware 10299</div>
@@ -71,6 +88,13 @@ const StyledWrapper = styled.div`
       height: auto;
     }
     @media screen and (max-width: 321px) {
+    }
+  }
+  .footer-text__menu {
+    color: ${({ theme }) => theme.colors.white};
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
     }
   }
 `;

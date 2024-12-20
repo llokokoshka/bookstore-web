@@ -13,7 +13,7 @@ interface Props {
 const EmptyPage: React.FC<Props> = (props) => {
   return (
     <StyledWrapper>
-      <img src={booksImg} alt="booksiMG"></img>
+      <img src={booksImg} alt="booksiMG" className="img-size"></img>
       <div className="empty-cart__info">
         <div className="info__text">
           <div className="big-title">Your {props.page} is empty</div>
@@ -30,11 +30,11 @@ const EmptyPage: React.FC<Props> = (props) => {
         </div>
         {props.page === 'catalog' ? (
           <Link to={AppPages.base}>
-            <BaseButton text={`Reset filters`} />
+            <BaseButton text={`Reset filters`} buttonClassName="correct-size" />
           </Link>
         ) : (
           <Link to={AppPages.base}>
-            <BaseButton text={`Go to catalog`} />
+            <BaseButton text={`Go to catalog`} buttonClassName="correct-size" />
           </Link>
         )}
       </div>
@@ -53,16 +53,46 @@ const StyledWrapper = styled.div`
   column-gap: 109px;
   height: auto;
 
+  @media screen and (max-width: 834px) {
+    padding: 100px 15px 107px 15px;
+    column-gap: 62px;
+  }
+  @media screen and (max-width: 320px) {
+    padding: 0;
+    flex-direction: column-reverse;
+    row-gap: 40px;
+  }
+
+  .img-size {
+    @media screen and (max-width: 834px) {
+      width: 350px;
+      height: 212px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 290px;
+      height: 176px;
+    }
+  }
+
   .empty-cart__info {
     display: flex;
     flex-direction: column;
     row-gap: 60px;
+    @media screen and (max-width: 834px) {
+    }
+    @media screen and (max-width: 320px) {
+      row-gap: 30px;
+    }
   }
 
   .info__text {
     display: flex;
     flex-direction: column;
     row-gap: 20px;
+    @media screen and (max-width: 834px) {
+    }
+    @media screen and (max-width: 320px) {
+    }
   }
 
   .cart__text {
@@ -73,5 +103,18 @@ const StyledWrapper = styled.div`
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     width: 465px;
+    @media screen and (max-width: 834px) {
+      width: 302px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 290px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 18px;
+    }
+  }
+
+  .correct-size {
+    width: 290px;
   }
 `;

@@ -14,7 +14,6 @@ import { useAppDispatch } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
 import { regUser } from '../../store/auth/authThunk';
 import { IFormInput, IFormReg } from '../../lib/authTypes';
-import { BaseInput } from '../BaseComponentsStyles/BaseInput';
 import Toast from '../Toast';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
 import ProfileInput from '../Input fields/ProfileInput';

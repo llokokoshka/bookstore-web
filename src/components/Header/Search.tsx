@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-import cn from 'classnames';
 
 import search from '../../img/search-icon.png';
 import { useAppDispatch } from '../../hooks';
 import { setSearcheParam } from '../../store/filter/filterSlice';
-import { BaseInput } from '../BaseComponentsStyles/BaseInput';
 import ProfileInput from '../Input fields/ProfileInput';
 
 const Search: React.FC<{
