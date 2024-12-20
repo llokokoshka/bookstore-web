@@ -153,6 +153,7 @@ const StyledWrapper = styled.div`
     }
 
     @media screen and (max-width: 320px) {
+      row-gap: 30px;
     }
   }
 `;

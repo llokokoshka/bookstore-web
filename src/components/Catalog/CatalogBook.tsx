@@ -1,27 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import heart from '../../img/Heart.png';
-import fullHeart from '../../img/fullHeart.png';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import Rating from '../Book Page/Rating';
-import { ApiPath, AppPages } from '../../constants/textConstants';
-import { handleFavorites } from '../../utils/favoriteUtil';
+import { AppPages } from '../../constants/textConstants';
 import { addCartItem } from '../../store/cart/cartThunk';
 import { IBookProps } from '../../lib/bookTypes';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
+import CatalogBookCover from './CatalogBookCover';
 
-const Book: React.FC<IBookProps> = (props) => {
+const CatalogBook: React.FC<IBookProps> = (props) => {
   const dispatch = useAppDispatch();
-  const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
-
-  const [isFav, setIsFav] = useState(props.isInFavorites);
-
-  const booksInFavorites = useAppSelector(
-    (state) => state.favorite.normalizeFavorites
-  );
-  const Favorites = useAppSelector((state) => state.favorite.favorites);
 
   const addBookInCart = () => {
     if (props.id) dispatch(addCartItem(props.id));
@@ -31,50 +21,15 @@ const Book: React.FC<IBookProps> = (props) => {
     props.price = 0;
   }
 
-  const useHandleFav = async () => {
-    const result = await handleFavorites(
-      props.id,
-      dispatch,
-      booksInFavorites,
-      Favorites,
-      isFav
-    );
-    setIsFav(result);
-  };
-
   return (
     <StyledWrapper>
-      <div className="book">
-        {isFav ? (
-          <div className="book__favorite-button" onClick={useHandleFav}>
-            <img src={fullHeart} alt="fullHeart" className="heart-size"></img>
-          </div>
-        ) : (
-          <div
-            className="book__favorite-button book__favorite-button--opacity"
-            onClick={useHandleFav}
-          >
-            <img src={heart} alt="heart" className="heart-size"></img>
-          </div>
-        )}
-        {props.isNew ? (
-          <div className="book__new" onClick={useHandleFav}>
-            <div>New</div>
-          </div>
-        ) : props.isBestseller ? (
-          <div className="book__bestseller" onClick={useHandleFav}>
-            <div>Bestseller</div>
-          </div>
-        ) : null}
-
-        <Link to={`${AppPages.getBookIdUrl(props.id)}`}>
-          <img
-            src={dirname + props.img}
-            alt="img"
-            className="book__cover"
-          ></img>
-        </Link>
-      </div>
+      <CatalogBookCover
+        id={props.id}
+        img={props.img}
+        isBestseller={props.isBestseller}
+        isInFavorites={props.isInFavorites}
+        isNew={props.isNew}
+      />
       <div className="book-info">
         <Link
           to={`${AppPages.getBookIdUrl(props.id)}`}
@@ -100,7 +55,7 @@ const Book: React.FC<IBookProps> = (props) => {
   );
 };
 
-export default Book;
+export default CatalogBook;
 
 const StyledWrapper = styled.div`
   display: flex;

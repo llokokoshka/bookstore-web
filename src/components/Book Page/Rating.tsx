@@ -47,7 +47,7 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
   };
 
   return (
-    <StyledWrapper>
+    <StyledWrapper isuserrate={isUserRate}>
       <>
         {isUserRate ? (
           <div className="total-rating">
@@ -97,7 +97,7 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
 
 export default Rating;
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ isuserrate: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -127,7 +127,9 @@ const StyledWrapper = styled.div`
       width: 255px;
     }
     @media screen and (max-width: 320px) {
-      flex-direction: column;
+      flex-direction: {
+        ${({ isuserrate }) => (isuserrate === true ? 'column' : 'row')}
+      }
       align-items: start;
       width: 135px;
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Book from '../Catalog/Book';
+import CatalogBook from '../Catalog/CatalogBook';
 import { IRecommendedProps } from '../../lib/types';
 
 const Recommendations: React.FC<IRecommendedProps> = (props) => {
@@ -23,7 +23,7 @@ const Recommendations: React.FC<IRecommendedProps> = (props) => {
   return (
     <React.Fragment key={currentBook?.id}>
       {currentBook ? (
-        <Book
+        <CatalogBook
           id={currentBook.id}
           img={currentBook.img}
           name={currentBook.name}

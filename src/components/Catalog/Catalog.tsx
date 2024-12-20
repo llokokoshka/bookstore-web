@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Book from './Book';
+import CatalogBook from './CatalogBook';
 import { ICatalogProps } from '../../lib/bookTypes';
 
 const Catalog: React.FC<ICatalogProps> = (props) => {
@@ -25,7 +25,7 @@ const Catalog: React.FC<ICatalogProps> = (props) => {
   return (
     <React.Fragment key={currentBook?.id}>
       {currentBook ? (
-        <Book
+        <CatalogBook
           key={currentBook.id}
           id={currentBook.id}
           img={currentBook.img}
