@@ -127,7 +127,7 @@ const StyledWrapper = styled.div<{
     display: flex;
     flex-direction: row;
     position: relative;
-    height: 100%;
+    /* height: 100%; */
     height: ${({ height }) => `${height}px`};
     width: 100%;
     border: 2px solid transparent;
@@ -144,6 +144,13 @@ const StyledWrapper = styled.div<{
       padding: 16px 16px;
     }
   }
+  .input__text-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 100%;
+    height: auto;
+  }
 
   .input__field {
     display: flex;
@@ -151,13 +158,15 @@ const StyledWrapper = styled.div<{
     border-radius: ${({ theme }) => theme.sizes.base_radius}px;
     align-items: center;
     height: ${({ inputheight }) => `${inputheight - 4}px`};
+    /* max-width: ${({ widthbase }) => `${widthbase}px`}; */
+
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
     letter-spacing: 0.75px;
     text-align: left;
     padding-left: 5px;
-    /* width: auto; */
+    width: auto;
     /* border: none; */
     outline: none;
 
@@ -166,23 +175,19 @@ const StyledWrapper = styled.div<{
     }
 
     @media screen and (max-width: 834px) {
+      /* max-width: ${({ widthmedium }) => `${widthmedium}px`}; */
+
       /* max-width: 392px; */
     }
 
     @media screen and (max-width: 320px) {
+      /* max-width: ${({ widthmin }) => `${widthmin}px`}; */
+
       /* max-width: 290px; */
       font-size: 12px;
       font-weight: 400;
       line-height: 28px;
     }
-  }
-
-  .input__text-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    width: 100%;
-    height: auto;
   }
 
   .input__dark-title {

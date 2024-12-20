@@ -43,6 +43,10 @@ const StyledWrapper = styled.div`
   @media screen and (max-width: 834px) {
     width: 667px;
   }
+  @media screen and (max-width: 320px) {
+    width: 290px;
+    padding: 13px 10px 10px 10px;
+  }
 
   .avatar--comment {
     position: absolute;
@@ -51,6 +55,12 @@ const StyledWrapper = styled.div`
     top: 30px;
     left: 30px;
     border-radius: 50%;
+    @media screen and (max-width: 320px) {
+      width: 35px;
+      height: 35px;
+      top: 13px;
+      left: 10px;
+    }
   }
 
   .comment {
@@ -58,12 +68,18 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     margin-left: 80px;
     row-gap: 9px;
+    @media screen and (max-width: 320px) {
+      margin-left: 58px;
+    }
   }
 
   .comment__info {
     display: flex;
     flex-direction: column;
     row-gap: 4px;
+    @media screen and (max-width: 320px) {
+      row-gap: 0px;
+    }
   }
 
   .info__name {
@@ -95,6 +111,10 @@ const StyledWrapper = styled.div`
     color: ${({ theme }) => theme.colors.dark_blue};
     @media screen and (max-width: 834px) {
       padding-right: 92px;
+    }
+    @media screen and (max-width: 320px) {
+      padding-right: 0;
+      margin-left: -50px;
     }
   }
 `;

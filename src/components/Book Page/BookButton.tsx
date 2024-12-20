@@ -45,5 +45,8 @@ const StyledWrapper = styled.div`
     @media screen and (max-width: 834px) {
       width: 188px;
     }
+    @media screen and (max-width: 320px) {
+      width: 135px;
+    }
   }
 `;

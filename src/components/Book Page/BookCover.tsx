@@ -35,14 +35,14 @@ const BookCover: React.FC<Props> = (props) => {
     <StyledWrapper>
       {props.isFav ? (
         <div className="cover__favorite-button" onClick={useHandleFav}>
-          <img src={fullHeart} alt="fullHeart"></img>
+          <img src={fullHeart} alt="fullHeart" className="heart-size"></img>
         </div>
       ) : (
         <div
           className="cover__favorite-button cover__favorite-button--opacity"
           onClick={useHandleFav}
         >
-          <img src={heart} alt="heart"></img>
+          <img src={heart} alt="heart" className="heart-size"></img>
         </div>
       )}
       <img
@@ -62,10 +62,15 @@ const StyledWrapper = styled.div`
   .cover__img {
     width: 522px;
     height: 779px;
+
     border-radius: 16px;
     @media screen and (max-width: 834px) {
       width: 391px;
       height: 584px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 135px;
+      height: 202px;
     }
   }
 
@@ -83,7 +88,26 @@ const StyledWrapper = styled.div`
     justify-content: center;
 
     @media screen and (max-width: 834px) {
+      width: 39px;
+      height: 39px;
       left: 322px;
+      top: 16px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 25px;
+      height: 25px;
+      top: 16px;
+      left: 100px;
+    }
+  }
+  .heart-size {
+    @media screen and (max-width: 834px) {
+      width: 21px;
+      height: 21px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 14px;
+      height: 14px;
     }
   }
 

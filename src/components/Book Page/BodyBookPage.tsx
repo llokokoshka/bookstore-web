@@ -6,6 +6,7 @@ import { BookType } from '../../lib/bookTypes';
 import BookCover from './BookCover';
 import CommentInput from './CommentInput';
 import BookInfo from './BookInfo';
+import BookMainInfo from './BookMainInfo';
 
 const BookPageBody: React.FC<BookType> = (props) => {
   return (
@@ -16,13 +17,14 @@ const BookPageBody: React.FC<BookType> = (props) => {
           isFav={props.isFav ? props.isFav : false}
           img={props.img}
         />
-        <BookInfo
-          id={props.id}
-          name={props.name}
-          description={props.description}
-          author={props.author.text}
-          cover={props.cover}
-        />
+        <div className="book__info">
+          <BookMainInfo
+            id={props.id}
+            author={props.author.text}
+            name={props.name}
+          />
+          <BookInfo description={props.description} cover={props.cover} />
+        </div>
       </div>
       <div>
         <div className="comments">
@@ -54,6 +56,10 @@ const StyledWrapper = styled.div`
     padding: 100px 15px 88px 15px;
     row-gap: 88px;
   }
+  @media screen and (max-width: 320px) {
+    padding: 48px 15px 60px 15px;
+    row-gap: 50px;
+  }
 
   .book {
     display: flex;
@@ -64,6 +70,12 @@ const StyledWrapper = styled.div`
     @media screen and (max-width: 834px) {
       column-gap: 21px;
     }
+  }
+
+  .book__info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
   }
 
   .comments {
