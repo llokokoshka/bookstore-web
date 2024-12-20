@@ -63,24 +63,23 @@ const StyledWrapper = styled.div`
   .poster__img {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 0px;
     width: 478px;
     height: 759px;
+    z-index: 1;
 
     @media screen and (max-width: 834px) {
-      width: 377px;
-      height: 455px;
-      top: 35px;
+      max-width: 377px;
+      height: auto;
+      top: 30px;
       rotate: -10deg;
-      /* z-index: 1; */
     }
 
     @media screen and (max-width: 320px) {
       width: 246px;
       height: auto;
       right: 0;
-      top: 0;
-      /* z-index: 1; */
+      top: 10px;
     }
   }
 
@@ -135,6 +134,7 @@ const StyledWrapper = styled.div`
     left: 108px;
     bottom: 0;
     overflow: visible;
+    z-index: 2;
 
     @media screen and (max-width: 834px) {
       width: 389px;

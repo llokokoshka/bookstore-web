@@ -49,18 +49,23 @@ const Search: React.FC<{
 export default Search;
 
 const StyledWrapper = styled.div`
-  /* position: relative;
-  width: 100%; */
+  /* position: relative;*/
+  width: 100%;
   max-width: 630px;
-
+  @media screen and (max-width: 834px) {
+    max-width: 247px;
+  }
+  @media screen and (max-width: 320px) {
+    max-width: 290px;
+  }
   .input__field--size {
+    max-width: 630px;
+    width: 100%;
     @media screen and (max-width: 834px) {
       max-width: 247px;
-      width: 100%;
     }
     @media screen and (max-width: 320px) {
       max-width: 290px;
-      width: 100%;
     }
   }
 `;

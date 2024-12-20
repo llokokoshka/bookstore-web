@@ -139,7 +139,7 @@ const StyledWrapper = styled.div<{
 
   .input__icon {
     position: absolute;
-    padding: 24px 24px;
+    padding: 20px;
     @media screen and (max-width: 320px) {
       padding: 16px 16px;
     }
