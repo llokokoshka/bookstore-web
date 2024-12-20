@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import fairy from '../../img/fairy.png';
+import fairy from '../../img/atz 1.png';
 import castle from '../../img/castle.png';
 import { AppPages } from '../../constants/textConstants';
 import { Link } from 'react-router-dom';
@@ -20,7 +20,7 @@ const AuthPoster: React.FC = () => {
                 Authorize now and discover the fabulous world of books
               </div>
             </div>
-            <Link to={AppPages.registration}>
+            <Link to={AppPages.registration} className="base-button--top">
               <BaseButton
                 buttonClassName="base-button--top"
                 text={`Log In/Sing Up`}
@@ -63,20 +63,20 @@ const StyledWrapper = styled.div`
     position: absolute;
     right: 0;
     bottom: 0;
+    width: 100%;
 
     @media screen and (max-width: 834px) {
       width: 377px;
       height: 455px;
-      z-index: 1;
+      /* z-index: 1; */
     }
 
     @media screen and (max-width: 320px) {
-      max-width: 232px;
-      max-height: 140px;
+      width: 246px;
+      height: auto;
       right: 0;
-      left: 70px;
       top: 0;
-      z-index: 1;
+      /* z-index: 1; */
     }
   }
 

@@ -14,6 +14,7 @@ import {
 import { getCart } from '../../store/cart/cartThunk';
 import { getFavorite } from '../../store/favorites/favoritesThunk';
 import { getRecommended } from '../../store/recommended/recommendedThunk';
+import AuthPoster from '../Catalog/AuthPoster';
 
 const BookPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -106,6 +107,7 @@ const BookPage: React.FC = () => {
           isFav={isInFav === undefined ? false : true}
         />
       ) : null}
+      {user === null ? <AuthPoster /> : null}
       <div className="recommended">
         <div className="big-title">Recommendations</div>
         <div className="recommended__books">
