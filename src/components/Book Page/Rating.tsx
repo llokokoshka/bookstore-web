@@ -47,7 +47,7 @@ const Rating: React.FC<IRatingProps> = ({ bookId, isUserRate }) => {
   };
 
   return (
-    <StyledWrapper isuserrate={isUserRate ? 'column' : undefined}>
+    <StyledWrapper isuserrate={isUserRate ? 'column' : 'row'}>
       <>
         {isUserRate ? (
           <div className="total-rating">
@@ -99,7 +99,7 @@ export default Rating;
 
 const StyledWrapper = styled.div.withConfig({
   shouldForwardProp: (prop) => isPropValid(prop) && prop !== 'isuserrate',
-})<{ isuserrate: string | undefined }>`
+})<{ isuserrate: 'row' | 'column' }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -129,9 +129,7 @@ const StyledWrapper = styled.div.withConfig({
       width: 255px;
     }
     @media screen and (max-width: 320px) {
-      flex-direction: {
-        ${({ isuserrate }) => `${isuserrate}`}
-      }
+      flex-direction: ${({ isuserrate }) => isuserrate};
       align-items: start;
       width: 135px;
     }

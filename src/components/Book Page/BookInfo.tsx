@@ -50,8 +50,11 @@ const StyledWrapper = styled.div`
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    column-gap: 20px;
+
     @media screen and (max-width: 834px) {
       max-width: 392px;
+      column-gap: 20px;
     }
     @media screen and (max-width: 320px) {
       max-width: 290px;
