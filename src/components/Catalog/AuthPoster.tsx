@@ -26,9 +26,9 @@ const AuthPoster: React.FC = () => {
                 text={`Log In/Sing Up`}
               />
             </Link>
+            <img src={fairy} alt="books" className="poster__img" />
           </div>
         </div>
-        <img src={fairy} alt="books" className="poster__img" />
       </div>
     </StyledWrapper>
   );
@@ -49,11 +49,12 @@ const StyledWrapper = styled.div`
     width: 100%;
     height: 400px;
     border-radius: 16px;
+    overflow: hidden;
+    flex-wrap: wrap;
     background-color: ${({ theme }) => theme.colors.light};
     @media screen and (max-width: 834px) {
       height: 400px;
     }
-
     @media screen and (max-width: 320px) {
       height: 505px;
     }
@@ -62,12 +63,15 @@ const StyledWrapper = styled.div`
   .poster__img {
     position: absolute;
     right: 0;
-    bottom: 0;
-    width: 100%;
+    top: 0;
+    width: 478px;
+    height: 759px;
 
     @media screen and (max-width: 834px) {
       width: 377px;
       height: 455px;
+      top: 35px;
+      rotate: -10deg;
       /* z-index: 1; */
     }
 
@@ -130,6 +134,7 @@ const StyledWrapper = styled.div`
     height: 462px;
     left: 108px;
     bottom: 0;
+    overflow: visible;
 
     @media screen and (max-width: 834px) {
       width: 389px;
