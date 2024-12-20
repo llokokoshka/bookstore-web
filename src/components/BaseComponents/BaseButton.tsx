@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import cn from 'classnames';
+
 import { IBaseButtonProps } from '../../lib/types';
 
 const BaseButton: React.FC<IBaseButtonProps> = (props) => {
@@ -11,7 +12,15 @@ const BaseButton: React.FC<IBaseButtonProps> = (props) => {
       onClick={props.onClick}
       style={props.style}
     >
-      {props.text}
+      {props.img ? (
+        <img
+          src={props.img}
+          alt="icon"
+          className="base-round-button__img"
+        ></img>
+      ) : (
+        props.text
+      )}
     </StyledWrapper>
   );
 };
@@ -48,5 +57,12 @@ export const StyledWrapper = styled.button`
 
   &:hover {
     cursor: pointer;
+  }
+
+  .base-round-button__img {
+    @media screen and (max-width: 320px) {
+      width: 17.88px;
+      height: 17.33px;
+    }
   }
 `;

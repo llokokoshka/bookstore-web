@@ -67,20 +67,4 @@ export default createGlobalStyle`
   .green-title:hover{
     cursor: pointer;
   }
-  
-  .base-round-button{
-    width: 48px;
-    height: 48px;
-    opacity: 0px;
-    background-color: ${({ theme }) => theme.colors.dark_blue};
-    border-radius: 50%;
-    @media screen and (max-width: 320px) {
-      width: 32.73px;
-      height: 32.73px;
-    }
-  }
-
-  .base-round-button:hover{
-    cursor: pointer;
-  }
 `;

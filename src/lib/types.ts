@@ -1,13 +1,14 @@
 import { SetURLSearchParams } from 'react-router-dom';
-import { AppDispatch } from '../store';
-import { BookType, CommentsType, CoverType, GenresType } from './bookTypes';
-import { IFormInfo, IFormPass, IUserRating, UserType } from './authTypes';
 import {
   FieldErrors,
   SubmitErrorHandler,
   SubmitHandler,
   UseFormRegister,
 } from 'react-hook-form';
+
+import { AppDispatch } from '../store';
+import { BookType, CommentsType, CoverType, GenresType } from './bookTypes';
+import { IFormInfo, IFormPass, IUserRating, UserType } from './authTypes';
 
 export interface IFavoriteProps {
   id: number;
@@ -97,6 +98,7 @@ export interface IBaseButtonProps {
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   style?: React.CSSProperties | undefined;
+  img?: string;
 }
 
 export interface IBookButtonProps {

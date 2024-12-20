@@ -167,7 +167,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
       <div className="profile">
         <div className="profile__img">
           <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
-          <label className="base-round-button base-round-button--display">
+          <label className="avatar-button">
             <input
               type="file"
               id="avatar"
@@ -263,6 +263,31 @@ const StyledWrapper = styled.div`
       max-height: 290px;
     }
   }
+
+  .avatar-button {
+    width: 48px;
+    height: 48px;
+    opacity: 0px;
+    background-color: ${({ theme }) => theme.colors.dark_blue};
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 77.7%;
+    left: 77.7%;
+    @media screen and (max-width: 320px) {
+      width: 32.73px;
+      height: 32.73px;
+      top: 83%;
+      left: 83%;
+    }
+  }
+
+  .avatar-button:hover {
+    cursor: pointer;
+  }
+
   .correct-size {
     width: 22px;
     height: auto;
@@ -291,19 +316,6 @@ const StyledWrapper = styled.div`
     @media screen and (max-width: 320px) {
       max-width: 290px;
       max-height: 290px;
-    }
-  }
-
-  .base-round-button--display {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 77.7%;
-    left: 77.7%;
-    @media screen and (max-width: 320px) {
-      top: 83%;
-      left: 83%;
     }
   }
   .pass-inputs {
