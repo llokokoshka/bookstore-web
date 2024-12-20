@@ -35,6 +35,7 @@ export default BookInfo;
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 30px;
   row-gap: 30px;
   max-width: 630px;
   width: 100%;

@@ -1,45 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import plus from '../../img/plus.png';
-import minus from '../../img/minus.png';
-import rubbish from '../../img/Delete.png';
-import { useAppDispatch } from '../../hooks';
-
 import { ApiPath, AppPages } from '../../constants/textConstants';
-import {
-  deleteCartItem,
-  downAmountCartItem,
-  upAmountCartItem,
-} from '../../store/cart/cartThunk';
 import { IBookInCartProps } from '../../lib/bookTypes';
 import { Link } from 'react-router-dom';
+import BookInfoBlock from './BookInfoBlock';
 
 const BookInCart: React.FC<IBookInCartProps> = (props) => {
-  const dispatch = useAppDispatch();
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
-  let bookImg, bookName, bookAuthor;
+  let bookImg;
   if (props.book) {
     bookImg = props.book.img;
-    bookName = props.book.name;
-    bookAuthor = props.book.author;
   }
-
-  const handleMinusQuantity = async () => {
-    if (props.quantity === 1) {
-      await dispatch(deleteCartItem(props.id));
-    } else {
-      await dispatch(downAmountCartItem(props.id));
-    }
-  };
-
-  const handlePlusQuantity = async () => {
-    await dispatch(upAmountCartItem(props.id));
-  };
-
-  const handleDeleteItem = async () => {
-    await dispatch(deleteCartItem(props.id));
-  };
 
   return (
     <StyledWrapper>
@@ -50,34 +22,12 @@ const BookInCart: React.FC<IBookInCartProps> = (props) => {
           className="book-img"
         ></img>
       </Link>
-      <div className="info-block">
-        <div className="info-block__total-info">
-          <div>
-            <div className="big-title">{bookName}</div>
-            <div className="normal-title normal-title--size">
-              {bookAuthor?.text}
-            </div>
-          </div>
-          <div className="info-block__amount">
-            <div className="amount__block">
-              <div className="block__button" onClick={handleMinusQuantity}>
-                <img src={minus} alt="img" className="button__img"></img>
-              </div>
-              <div>{props.quantity}</div>
-              <div className="block__button" onClick={handlePlusQuantity}>
-                <img src={plus} alt="img" className="button__img"></img>
-              </div>
-            </div>
-            <img
-              src={rubbish}
-              alt="img"
-              className="amount__rubbish-img"
-              onClick={handleDeleteItem}
-            ></img>
-          </div>
-        </div>
-        <div className="total-prise">$ {props.price} USD</div>
-      </div>
+      <BookInfoBlock
+        id={props.id}
+        price={props.price}
+        quantity={props.quantity}
+        book={props.book}
+      />
     </StyledWrapper>
   );
 };
@@ -104,99 +54,6 @@ const StyledWrapper = styled.div`
     @media screen and (max-width: 834px) {
       width: 135px;
       height: 202px;
-    }
-  }
-
-  .info-block {
-    display: flex;
-    flex-direction: column;
-    row-gap: 50px;
-    width: 100%;
-    flex-wrap: wrap;
-    word-break: break-all;
-    hyphens: auto;
-    @media screen and (max-width: 834px) {
-      width: 532px;
-    }
-    @media screen and (max-width: 320px) {
-      width: 135px;
-      row-gap: 48px;
-    }
-  }
-  .info-block__total-info {
-    display: flex;
-    flex-direction: column;
-    row-gap: 50px;
-    @media screen and (max-width: 320px) {
-      row-gap: 30px;
-    }
-  }
-
-  .block__button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: ${({ theme }) => theme.colors.light};
-    width: 32px;
-    height: 32px;
-    gap: 0px;
-    border-radius: 22px;
-    opacity: 0px;
-  }
-
-  .block__button:hover {
-    cursor: pointer;
-  }
-
-  .info-block__amount {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 58px;
-    @media screen and (max-width: 320px) {
-      column-gap: 24px;
-    }
-  }
-
-  .amount__block {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 14px;
-  }
-
-  .amount__rubbish-img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .amount__rubbish-img:hover {
-    cursor: pointer;
-  }
-
-  .button__img {
-    width: 8px;
-    height: auto;
-  }
-
-  .total-prise {
-    font-size: 36px;
-    font-weight: 400;
-    line-height: 54px;
-    @media screen and (max-width: 320px) {
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 27px;
-    }
-  }
-
-  .normal-title--size {
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 30px;
-    @media screen and (max-width: 320px) {
-      font-size: 12px;
-      line-height: 18px;
     }
   }
 `;

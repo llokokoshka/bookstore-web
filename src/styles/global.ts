@@ -61,6 +61,7 @@ export default createGlobalStyle`
     line-height: 21px;
     text-align: right;
     color: ${({ theme }) => theme.colors.dark_green};
+    text-decoration: underline;
   }
 
   .green-title:hover{

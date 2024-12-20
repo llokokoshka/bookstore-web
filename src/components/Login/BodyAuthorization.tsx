@@ -16,7 +16,7 @@ import { loginUser } from '../../store/auth/authThunk';
 import { IFormReg } from '../../lib/authTypes';
 import Toast from '../Toast';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
-import ProfileInput from '../Input fields/ProfileInput';
+import BaseInput from '../BaseComponentsStyles/BaseInput';
 
 const AuthorizationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -60,7 +60,7 @@ const AuthorizationBody: React.FC = () => {
         >
           <div className="info-block__text">
             <div className="big-title">Log In</div>
-            <ProfileInput
+            <BaseInput
               type="email"
               name="email"
               img={mail}
@@ -69,7 +69,7 @@ const AuthorizationBody: React.FC = () => {
               errors={errors.email?.message}
             />
             <ToastContainer />
-            <ProfileInput
+            <BaseInput
               type="password"
               name="password"
               img={hide}

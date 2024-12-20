@@ -70,7 +70,9 @@ const Rating: React.FC<{ bookId: number; isUserRate: boolean }> = ({
                 </div>
               ))}
             </div>
-            <h3 className="rating__value">{userRate || '<- Rate this book'}</h3>
+            <div className="rating__value">
+              {userRate || '<- Rate this book'}
+            </div>
           </>
         ) : (
           <>
@@ -125,6 +127,8 @@ const StyledWrapper = styled.div`
       width: 255px;
     }
     @media screen and (max-width: 320px) {
+      flex-direction: column;
+      align-items: start;
       width: 135px;
     }
   }

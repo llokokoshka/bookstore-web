@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import { ProfileInputPropsType } from '../../lib/authTypes';
 
-const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
+const BaseInput: React.FC<ProfileInputPropsType> = (props) => {
   const [inputType, setInputType] = useState('password');
   const handlerInputType = () => {
     setInputType((type) => (type === 'password' ? 'text' : 'password'));
@@ -100,7 +100,7 @@ const ProfileInput: React.FC<ProfileInputPropsType> = (props) => {
   );
 };
 
-export default ProfileInput;
+export default BaseInput;
 
 const StyledWrapper = styled.div<{
   height: number;

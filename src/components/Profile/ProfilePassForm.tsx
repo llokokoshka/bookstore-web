@@ -8,7 +8,7 @@ import {
 import styled from 'styled-components';
 
 import hide from '../../img/Hide.png';
-import ProfileInput from '../Input fields/ProfileInput';
+import BaseInput from '../BaseComponentsStyles/BaseInput';
 import { UserType, IFormPass } from '../../lib/authTypes';
 
 interface Props {
@@ -36,7 +36,7 @@ const ProfilePassForm: React.FC<Props> = (props) => {
             Change password
           </div>
         </div>
-        <ProfileInput
+        <BaseInput
           img={hide}
           label="password"
           type="password"
@@ -48,7 +48,7 @@ const ProfilePassForm: React.FC<Props> = (props) => {
         />
       </div>
       <div className="pass-inputs">
-        <ProfileInput
+        <BaseInput
           img={hide}
           label="new password"
           type="password"
@@ -58,7 +58,7 @@ const ProfilePassForm: React.FC<Props> = (props) => {
           errors={props.passErrors.passwordNew?.message}
           isProfile={true}
         />
-        <ProfileInput
+        <BaseInput
           img={hide}
           label="copy of new password"
           type="password"

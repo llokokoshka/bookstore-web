@@ -7,7 +7,7 @@ import {
   getBookById,
 } from '../../store/booksEntities/booksEntitiesThunk';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
-import ProfileInput from '../Input fields/ProfileInput';
+import BaseInput from '../BaseComponentsStyles/BaseInput';
 
 interface Props {
   id: number;
@@ -48,7 +48,7 @@ const CommentInput: React.FC<Props> = (props) => {
     <StyledWrapper>
       {user ? (
         <form onSubmit={handleAddComment} className="comment">
-          <ProfileInput
+          <BaseInput
             type="text"
             placeholder="Share a comment"
             inputClassName="comment__form"

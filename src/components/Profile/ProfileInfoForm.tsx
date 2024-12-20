@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 import man from '../../img/User profile.png';
 import mail from '../../img/Mail.png';
-import ProfileInput from '../Input fields/ProfileInput';
+import BaseInput from '../BaseComponentsStyles/BaseInput';
 import { UserType, IFormInfo } from '../../lib/authTypes';
 
 interface Props {
@@ -38,7 +38,7 @@ const ProfileInfoForm: React.FC<Props> = (props) => {
           Change information
         </div>
       </div>
-      <ProfileInput
+      <BaseInput
         img={man}
         label="full name"
         type="text"
@@ -49,7 +49,7 @@ const ProfileInfoForm: React.FC<Props> = (props) => {
         onChange={props.editValueName}
         isProfile={true}
       />
-      <ProfileInput
+      <BaseInput
         img={mail}
         label="email"
         type="email"

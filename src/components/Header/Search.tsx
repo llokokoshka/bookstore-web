@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import search from '../../img/search-icon.png';
 import { useAppDispatch } from '../../hooks';
 import { setSearcheParam } from '../../store/filter/filterSlice';
-import ProfileInput from '../Input fields/ProfileInput';
+import BaseInput from '../BaseComponentsStyles/BaseInput';
 
 const Search: React.FC<{
   className?: string;
@@ -30,7 +30,7 @@ const Search: React.FC<{
 
   return (
     <StyledWrapper className={props.className}>
-      <ProfileInput
+      <BaseInput
         img={search}
         type="text"
         placeholder="Search"

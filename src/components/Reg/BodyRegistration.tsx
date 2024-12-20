@@ -16,7 +16,7 @@ import { regUser } from '../../store/auth/authThunk';
 import { IFormInput, IFormReg } from '../../lib/authTypes';
 import Toast from '../Toast';
 import BaseButton from '../BaseComponentsStyles/BaseButton';
-import ProfileInput from '../Input fields/ProfileInput';
+import BaseInput from '../BaseComponentsStyles/BaseInput';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -65,7 +65,7 @@ const RegistrationBody: React.FC = () => {
         >
           <div className="info-block__text">
             <div className="big-title">Sign up</div>
-            <ProfileInput
+            <BaseInput
               type="email"
               img={mail}
               placeholder="Email"
@@ -74,7 +74,7 @@ const RegistrationBody: React.FC = () => {
               errors={errors.email?.message}
             />
 
-            <ProfileInput
+            <BaseInput
               type={inputType}
               img={hide}
               placeholder="Password"
@@ -84,7 +84,7 @@ const RegistrationBody: React.FC = () => {
               inputClassName='"password__btn active'
               onClick={changeInputTypeHandler}
             />
-            <ProfileInput
+            <BaseInput
               type={inputType}
               img={hide}
               placeholder="Password replay"

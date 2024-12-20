@@ -15,7 +15,7 @@ const BookButton: React.FC<Props> = (props) => {
       {props.amount > 0 ? (
         <BaseButton
           buttonClassName="base-button--width"
-          text={`${props.price} USD`}
+          text={`$ ${props.price} USD`}
         />
       ) : (
         <BaseButton

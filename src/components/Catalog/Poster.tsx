@@ -71,7 +71,7 @@ const StyledWrapper = styled.div`
       max-width: 232px;
       max-height: 140px;
       right: 0;
-      left: 70px;
+      left: 58px;
       top: 0;
     }
   }
