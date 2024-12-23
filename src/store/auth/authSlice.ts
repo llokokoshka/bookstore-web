@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { loginUser, regUser, getUser } from './authThunk';
+import {
+  loginUser,
+  regUser,
+  getUser,
+  updateUserDataThunk,
+  updateUserPasswordThunk,
+} from './authThunk';
 import { IAuthState } from '../../lib/authTypes';
 import { addOrUpdateRating } from '../booksEntities/booksEntitiesThunk';
 
@@ -79,6 +85,29 @@ const authSlice = createSlice({
         localStorage.setItem('refresh', action.payload.refresh_token);
       })
       .addCase(getUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error as string;
+      })
+      .addCase(updateUserDataThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserDataThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(updateUserDataThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error as string;
+      })
+      .addCase(updateUserPasswordThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserPasswordThunk.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(updateUserPasswordThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error as string;
       })

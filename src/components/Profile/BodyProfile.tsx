@@ -29,9 +29,14 @@ import Toast from '../Toast';
 import BaseButton from '../BaseComponents/BaseButton';
 import ProfileInfoForm from './ProfileInfoForm';
 import ProfilePassForm from './ProfilePassForm';
+import {
+  updateUserDataThunk,
+  updateUserPasswordThunk,
+} from '../../store/auth/authThunk';
+import { useAppDispatch } from '../../hooks';
 
 const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
 
   const [changeInfo, setChangeInfo] = useState(true);
@@ -107,11 +112,9 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
     email?: string;
   }) => {
     try {
-      const updUser = await updateUserData(data);
-      if (!updUser) {
-        throw new Error(ERROR_UPDATE_USER_DATA);
-      }
-      dispatch(setUser(updUser));
+      await dispatch(
+        updateUserDataThunk({ fullName: data.fullName, email: data.email })
+      ).unwrap();
       handleChangeInfo();
       Toast({ message: 'Data updated successfully' });
     } catch (err) {
@@ -126,10 +129,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
     passwordRep: string;
   }) => {
     try {
-      const areUpdate = await updateUserPassword(data);
-      if (!areUpdate) {
-        throw new Error(ERROR_UPDATE_USER_PASSWORD);
-      }
+      await dispatch(updateUserPasswordThunk(data)).unwrap();
       handleChangePass();
       Toast({ message: 'Password updated successfully' });
       resetPass();
