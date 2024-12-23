@@ -13,10 +13,19 @@ const Footer: React.FC = () => {
   return (
     <StyledWrapper>
       <div className="contacts">
-        <img src={logo} alt="logo" />
+        <Link to={`${AppPages.base}`} className="footer-text__menu">
+          <img src={logo} alt="logo" />
+        </Link>
         <div className="contacts__footer-text">
-          <div>tranthuy.nute@gmail.com</div>
-          <div>(480) 555-0103</div>
+          <a
+            href="mailto:tranthuy.nute@gmail.com&body=''?subject=book store"
+            className="correct-view"
+          >
+            tranthuy.nute@gmail.com
+          </a>
+          <a href="tel:+14805550103" className="correct-view">
+            (480) 555-0103
+          </a>
         </div>
       </div>
       <div className="contacts__footer-text">
@@ -81,6 +90,15 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     align-items: start;
     row-gap: 5px;
+  }
+
+  .correct-view {
+    text-decoration: none;
+    color: ${({ theme }) => theme.colors.light};
+  }
+  .correct-view:hover {
+    text-decoration: underline;
+    color: ${({ theme }) => theme.colors.green};
   }
   .map {
     @media screen and (max-width: 834px) {
