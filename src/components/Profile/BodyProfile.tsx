@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
@@ -15,11 +14,7 @@ import {
   ERROR_UPDATE_USER_DATA,
   ERROR_UPDATE_USER_PASSWORD,
 } from '../../constants/errorConstants';
-import {
-  saveBase64File,
-  updateUserData,
-  updateUserPassword,
-} from '../../api/userApi';
+import { saveBase64File } from '../../api/userApi';
 import { setUser, logout } from '../../store/auth/authSlice';
 import { convertFileToBase64 } from '../../utils/fileUtil';
 import { UserType, IFormInfo, IFormPass } from '../../lib/authTypes';
@@ -119,6 +114,8 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
       Toast({ message: 'Data updated successfully' });
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_DATA, err);
+      console.log(err);
+
       Toast({ message: 'Error while update data', error: err });
     }
   };

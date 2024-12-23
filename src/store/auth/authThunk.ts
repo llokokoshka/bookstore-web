@@ -7,7 +7,6 @@ import {
   updateUserPassword,
 } from '../../api/userApi';
 import { IUserResponseData, IFormReg, UserType } from '../../lib/authTypes';
-import { setUser } from './authSlice';
 
 export const loginUser = createAsyncThunk<IUserResponseData, IFormReg>(
   AppPages.login,
@@ -70,10 +69,11 @@ export const updateUserDataThunk = createAsyncThunk<
     } else {
       throw new Error('Failed to update user data');
     }
-  } catch (error: any) {
-    console.error('Error updating user data:', error);
-
-    return rejectWithValue(error.message || 'Error updating user data');
+  } catch (err: any) {
+    console.error('Error updating user data:', err);
+    return rejectWithValue(
+      err.response.data.message || 'Error updating user data'
+    );
   }
 });
 
@@ -89,9 +89,11 @@ export const updateUserPasswordThunk = createAsyncThunk<
     } else {
       throw new Error('Failed to update password');
     }
-  } catch (error: any) {
-    console.error('Error updating user password:', error);
+  } catch (err: any) {
+    console.error('Error updating user password:', err);
 
-    return rejectWithValue(error.message || 'Error updating password');
+    return rejectWithValue(
+      err.response.data.message || 'Error updating password'
+    );
   }
 });
