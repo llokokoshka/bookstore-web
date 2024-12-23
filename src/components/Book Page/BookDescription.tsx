@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import cn from 'classnames';
 
 import { IBookDescriptionProps } from '../../lib/types';
+
+const MaxLenght = 400;
 
 const BookDescription: React.FC<IBookDescriptionProps> = (props) => {
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
@@ -14,13 +17,13 @@ const BookDescription: React.FC<IBookDescriptionProps> = (props) => {
     <StyledWrapper>
       <div className="normal-title">Description</div>
       <div
-        className={`base-text base-text--size ${
-          isDescriptionExpanded ? 'expanded' : ''
-        }`}
+        className={cn('base-text base-text--size', {
+          expanded: isDescriptionExpanded,
+        })}
       >
         {props.description}
       </div>
-      {!isDescriptionExpanded && props.description.length > 400 && (
+      {!isDescriptionExpanded && props.description.length > MaxLenght && (
         <div className="description__show-more" onClick={toggleDescription}>
           ... See more
         </div>

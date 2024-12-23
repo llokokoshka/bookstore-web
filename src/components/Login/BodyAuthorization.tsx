@@ -7,9 +7,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { loginValidationSchema } from '../../schemas/loginValidationSchema';
-import man from '../../img/чел 1.png';
-import mail from '../../img/Mail.png';
-import hide from '../../img/Hide.png';
+import man from '../../assets/img/чел 1.png';
+import mail from '../../assets/img/Mail.png';
+import hide from '../../assets/img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
 import { loginUser } from '../../store/auth/authThunk';
@@ -42,7 +42,9 @@ const AuthorizationBody: React.FC = () => {
 
       if (responseData.user) {
         navigate(AppPages.profile);
-      } else navigate(AppPages.login);
+      } else {
+        navigate(AppPages.login);
+      }
       reset();
     } catch (err) {
       console.warn('Authorization error: ', err);

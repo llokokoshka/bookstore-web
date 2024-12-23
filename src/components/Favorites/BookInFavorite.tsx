@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { IFavoriteProps } from '../../lib/types';
-import rubbish from '../../img/Delete.png';
+import rubbish from '../../assets/img/Delete.png';
 import { useAppDispatch } from '../../hooks';
 import { ApiPath, AppPages } from '../../constants/textConstants';
 import { deleteFavoriteItem } from '../../store/favorites/favoritesThunk';

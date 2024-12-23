@@ -38,7 +38,7 @@ export type BookType = {
   isNew?: boolean;
   author: Author;
   bookGenres?: BookGenreType[] | [];
-  comments: CommentsType[] | [];
+  comments: CommentsType[];
   rates: IUserRating[] | [];
   totalRate?: number | null;
   cover: CoverType;

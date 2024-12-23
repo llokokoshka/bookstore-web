@@ -11,7 +11,7 @@ import { ICartState } from '../../lib/cartTypes';
 
 const initialState: ICartState = {
   cart: null,
-  normalizeCart: [],
+  booksIdsInCart: [],
   numberOfItemsInCart: 0,
   error: null,
   loading: false,
@@ -23,7 +23,7 @@ const cartSlice = createSlice({
   reducers: {
     cleanCart: (state) => {
       state.cart = null;
-      state.normalizeCart = [];
+      state.booksIdsInCart = [];
       state.numberOfItemsInCart = 0;
     },
   },
@@ -42,7 +42,7 @@ const cartSlice = createSlice({
           return item.book;
         });
 
-        if (booksInCart) state.normalizeCart = booksInCart;
+        if (booksInCart) state.booksIdsInCart = booksInCart;
       })
       .addCase(getCart.rejected, (state, action) => {
         state.loading = false;
@@ -54,10 +54,10 @@ const cartSlice = createSlice({
       })
       .addCase(addCartItem.fulfilled, (state, action) => {
         state.loading = false;
-        if (state.normalizeCart.length > 0) {
-          state.normalizeCart.push(action.payload.book);
+        if (state.booksIdsInCart.length > 0) {
+          state.booksIdsInCart.push(action.payload.book);
         } else {
-          state.normalizeCart = [action.payload.book];
+          state.booksIdsInCart = [action.payload.book];
         }
         state.cart?.cartItems.push(action.payload);
         if (
@@ -145,11 +145,11 @@ const cartSlice = createSlice({
             state.numberOfItemsInCart -= colOfItemsInCart;
           }
           if (
-            state.normalizeCart &&
-            state.normalizeCart.find((item) => item === idBook)
+            state.booksIdsInCart &&
+            state.booksIdsInCart.find((item) => item === idBook)
           ) {
-            delete state.normalizeCart[
-              state.normalizeCart.findIndex((item) => item === idBook)
+            delete state.booksIdsInCart[
+              state.booksIdsInCart.findIndex((item) => item === idBook)
             ];
           }
         } else {

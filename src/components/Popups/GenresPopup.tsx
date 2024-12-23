@@ -4,13 +4,13 @@ import { useSearchParams } from 'react-router-dom';
 import cn from 'classnames';
 
 import { useAppSelector } from '../../hooks';
-import poligon from '../../img/Polygon 4.png';
+import poligon from '../../assets/img/Polygon 4.png';
 import { GenresType } from '../../lib/bookTypes';
 
 const GenresPopup: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const AllGenres = useAppSelector((state) => state.filters.genres);
+  const AllGenres = useAppSelector((state) => state.genres.genres);
   const CheckedGenresIDs = searchParams.getAll('genre')[0];
   let arrayWithIds: number[] = [];
 

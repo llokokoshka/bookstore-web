@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import plus from '../../img/plus.png';
-import minus from '../../img/minus.png';
-import rubbish from '../../img/Delete.png';
+import plus from '../../assets/img/plus.png';
+import minus from '../../assets/img/minus.png';
+import rubbish from '../../assets/img/Delete.png';
 import { useAppDispatch } from '../../hooks';
 import {
   deleteCartItem,

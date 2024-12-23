@@ -2,23 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setSortBy } from '../../store/filter/filterSlice';
-import poligon from '../../img/Polygon 4.png';
+import poligon from '../../assets/img/Polygon 4.png';
 import { SortOptions } from '../../constants/textConstants';
 
 const SortPopup: React.FC = () => {
-  const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const sortBy = useAppSelector((state) => state.filters.sortBy);
+  const sortBy = searchParams.get('sortBy');
+
   const handleSortOption = async (sortOption: string) => {
     searchParams.set('sortBy', sortOption);
 
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
     });
-    dispatch(setSortBy(sortOption));
   };
 
   return (
@@ -30,7 +27,14 @@ const SortPopup: React.FC = () => {
           className="base-text base-text--size"
           key={option}
           onClick={() => handleSortOption(option)}
-          style={{ color: sortBy === option ? '#344966' : '#B9BAC3' }}
+          style={{
+            color:
+              !sortBy && 'Price' === option
+                ? '#344966'
+                : sortBy === option
+                ? '#344966'
+                : '#B9BAC3',
+          }}
         >
           {option}
         </div>

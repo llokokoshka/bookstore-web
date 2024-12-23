@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import booksImg from '../../img/booksImg.png';
+import booksImg from '../../assets/img/booksImg.png';
 import { AppPages } from '../../constants/textConstants';
 import BaseButton from '../BaseComponents/BaseButton';
 import { IEmptyPageProps } from '../../lib/types';

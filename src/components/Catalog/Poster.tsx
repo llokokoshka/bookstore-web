@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import poster from '../../img/poster-img.png';
-import books from '../../img/books-poster.png';
+import poster from '../../assets/img/poster-img.png';
+import books from '../../assets/img/books-poster.png';
 import BaseButton from '../BaseComponents/BaseButton';
 
 const Poster: React.FC = () => {

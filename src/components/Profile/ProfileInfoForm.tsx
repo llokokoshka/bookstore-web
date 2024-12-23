@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import man from '../../img/User profile.png';
-import mail from '../../img/Mail.png';
+import man from '../../assets/img/User profile.png';
+import mail from '../../assets/img/Mail.png';
 import BaseInput from '../BaseComponents/BaseInput';
 import { IProfileInfoFormProps } from '../../lib/types';
 

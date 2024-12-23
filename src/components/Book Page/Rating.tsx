@@ -3,8 +3,8 @@ import isPropValid from '@emotion/is-prop-valid';
 import styled from 'styled-components';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import starImg from '../../img/Star.png';
-import fullStar from '../../img/fullStar.png';
+import starImg from '../../assets/img/Star.png';
+import fullStar from '../../assets/img/fullStar.png';
 import { addOrUpdateRating } from '../../store/booksEntities/booksEntitiesThunk';
 import { IUserRating } from '../../lib/authTypes';
 import { IRatingProps } from '../../lib/types';

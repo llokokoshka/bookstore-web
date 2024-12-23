@@ -10,6 +10,7 @@ import {
   FavoriteNormalizeType,
   FavoriteItemNormalizeType,
 } from '../../lib/favoriteTypes';
+import { RootState } from '..';
 
 export const getFavorite = createAsyncThunk<FavoriteNormalizeType>(
   'favorite/getFavorite',
@@ -41,9 +42,14 @@ export const getFavorite = createAsyncThunk<FavoriteNormalizeType>(
 
 export const addFavoriteItem = createAsyncThunk<
   FavoriteItemNormalizeType,
-  number
+  number,
+  {
+    state: RootState;
+  }
 >('favorite/addItemInFavorite', async (bookId, thunkAPI) => {
   try {
+    const store = thunkAPI.getState();
+
     const data = await addFavoriteItemApi(bookId);
     thunkAPI.dispatch(addOrUpdBook([data.book]));
     const newData = {

@@ -2,21 +2,28 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import heart from '../../img/Heart.png';
-import fullHeart from '../../img/fullHeart.png';
+import heart from '../../assets/img/Heart.png';
+import fullHeart from '../../assets/img/fullHeart.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ApiPath, AppPages } from '../../constants/textConstants';
 import { handleFavorites } from '../../utils/favoriteUtil';
-import { ICatalogBookCoverProps } from '../../lib/types';
 
-const CatalogBookCover: React.FC<ICatalogBookCoverProps> = (props) => {
+export interface Props {
+  img: string;
+  id: number;
+  isInFavorites: boolean;
+  isBestseller: boolean;
+  isNew: boolean;
+}
+
+const CatalogBookCover: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
 
   const [isFav, setIsFav] = useState(props.isInFavorites);
 
   const booksInFavorites = useAppSelector(
-    (state) => state.favorite.normalizeFavorites
+    (state) => state.favorite.booksIdsInFavorites
   );
   const Favorites = useAppSelector((state) => state.favorite.favorites);
 

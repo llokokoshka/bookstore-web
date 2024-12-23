@@ -25,9 +25,9 @@ const BookPage: React.FC = () => {
   const recommendedBooks = useAppSelector(
     (state) => state.recommended.recommended
   );
-  const booksInCart = useAppSelector((state) => state.cart.normalizeCart);
+  const booksInCart = useAppSelector((state) => state.cart.booksIdsInCart);
   const booksInFavorites = useAppSelector(
-    (state) => state.favorite.normalizeFavorites
+    (state) => state.favorite.booksIdsInFavorites
   );
 
   const [currentRecommendedBooks, setCurrentRecommendedBooks] =
@@ -36,6 +36,7 @@ const BookPage: React.FC = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+    dispatch(getRecommended(bookId));
   }, [pathname]);
 
   useEffect(() => {

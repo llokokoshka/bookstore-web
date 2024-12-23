@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import search from '../../img/search-icon.png';
-import { useAppDispatch } from '../../hooks';
-import { setSearcheParam } from '../../store/filter/filterSlice';
+import search from '../../assets/img/search-icon.png';
 import BaseInput from '../BaseComponents/BaseInput';
-import { ISearchProps } from '../../lib/types';
 
-const Search: React.FC<ISearchProps> = (props) => {
-  const dispatch = useAppDispatch();
+type Props = {
+  className?: string;
+  inputClassName?: string;
+};
 
-  const [searchInput, setSearchInput] = useState('');
+const Search: React.FC<Props> = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const currentSearchText = searchParams.get('search') || '';
+  const [searchInput, setSearchInput] = useState(currentSearchText);
 
   const setSearch = () => {
     if (searchInput.length > 0) {
-      dispatch(setSearcheParam(searchInput));
       searchParams.set('search', searchInput);
     } else {
       searchParams.delete('search');
@@ -45,7 +45,6 @@ const Search: React.FC<ISearchProps> = (props) => {
 export default Search;
 
 const StyledWrapper = styled.div`
-  /* position: relative;*/
   width: 100%;
   max-width: 630px;
   @media screen and (max-width: 834px) {

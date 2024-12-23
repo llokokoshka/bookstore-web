@@ -3,9 +3,25 @@ import styled from 'styled-components';
 import cn from 'classnames';
 import isPropValid from '@emotion/is-prop-valid';
 
-import { BaseInputPropsType } from '../../lib/authTypes';
+type Props = {
+  type: string;
+  img?: string;
+  label?: string;
+  inputClassName?: string;
+  disable?: boolean;
+  register?: any;
+  name?: string;
+  errors?: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (e?: any) => void;
+  onKeyUp?: (e?: any) => void;
+  onClick?: () => void;
+  isProfile?: boolean;
+  text?: string;
+};
 
-const BaseInput: React.FC<BaseInputPropsType> = (props) => {
+const BaseInput: React.FC<Props> = (props) => {
   const [inputType, setInputType] = useState('password');
   const handlerInputType = () => {
     setInputType((type) => (type === 'password' ? 'text' : 'password'));

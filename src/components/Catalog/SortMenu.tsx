@@ -1,17 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import forward from '../../img/right arrow.png';
-import openForward from '../../img/Forward down.png';
+import forward from '../../assets/img/right arrow.png';
+import openForward from '../../assets/img/Forward down.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import GenresPopup from '../Popups/GenresPopup';
 import PricePopup from '../Popups/PricePopup';
 import SortPopup from '../Popups/SortPopup';
 import { getGenres } from '../../store/booksEntities/booksEntitiesThunk';
+import { useSearchParams } from 'react-router-dom';
 
 const SortMenu: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { genres, sortBy } = useAppSelector((state) => state.filters);
+
+  const genres = useAppSelector((state) => state.genres.genres);
+  const [searchParams] = useSearchParams();
+  const sortBy = searchParams.get('sortBy');
 
   const [isGenresOpen, setIsGenresOpen] = useState(false);
   const [isPriceOpen, setIsPriceOpen] = useState(false);
@@ -99,7 +103,7 @@ const SortMenu: React.FC = () => {
         <div className="sort-menu__button-container " ref={sortRef}>
           <div onClick={handlerSortOpen}>
             <button className="button-container__grey-button button-container__grey-button--light">
-              Sort by {sortBy.toLowerCase()}
+              Sort by {sortBy ? sortBy.toLowerCase() : 'price'}
             </button>
             {isSortOpen ? (
               <img src={openForward} alt="arrow" className="arrow" />
@@ -155,10 +159,6 @@ const StyledWrapper = styled.div`
     position: relative;
   }
 
-  .sort-menu__button-container:hover {
-    cursor: pointer;
-  }
-
   .button-container__grey-button {
     position: relative;
     width: 196px;
@@ -178,6 +178,10 @@ const StyledWrapper = styled.div`
     }
     @media screen and (max-width: 320px) {
       width: 290px;
+    }
+
+    &:hover {
+      cursor: pointer;
     }
   }
 

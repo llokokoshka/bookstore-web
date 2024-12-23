@@ -28,16 +28,15 @@ const BookPageBody: React.FC<BookType> = (props) => {
       </div>
       <div>
         <div className="comments">
-          {Array.isArray(props.comments) &&
-            props.comments?.map((comment) => (
-              <Comment
-                key={comment.id}
-                id={comment.id}
-                text={comment.text}
-                dateOfCreate={comment.dateOfCreate}
-                user={comment.user}
-              />
-            ))}
+          {props.comments?.map((comment) => (
+            <Comment
+              key={comment.id}
+              id={comment.id}
+              text={comment.text}
+              dateOfCreate={comment.dateOfCreate}
+              user={comment.user}
+            />
+          ))}
         </div>
         <CommentInput id={props.id} />
       </div>

@@ -7,9 +7,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { registrationValidationSchema } from '../../schemas/registrationValidationSchema';
-import man from '../../img/чел 1.png';
-import mail from '../../img/Mail.png';
-import hide from '../../img/Hide.png';
+import man from '../../assets/img/чел 1.png';
+import mail from '../../assets/img/Mail.png';
+import hide from '../../assets/img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
 import { regUser } from '../../store/auth/authThunk';

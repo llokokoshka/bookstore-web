@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ApiPath } from '../../constants/textConstants';
-import heart from '../../img/Heart.png';
-import fullHeart from '../../img/fullHeart.png';
+import heart from '../../assets/img/Heart.png';
+import fullHeart from '../../assets/img/fullHeart.png';
 import { handleFavorites } from '../../utils/favoriteUtil';
 import { IBookCoverProps } from '../../lib/types';
 
@@ -12,7 +12,7 @@ const BookCover: React.FC<IBookCoverProps> = (props) => {
   const dispatch = useAppDispatch();
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const booksInFavorites = useAppSelector(
-    (state) => state.favorite.normalizeFavorites
+    (state) => state.favorite.booksIdsInFavorites
   );
   const favorites = useAppSelector((state) => state.favorite.favorites);
 

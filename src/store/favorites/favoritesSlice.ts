@@ -9,7 +9,7 @@ import { IFavoriteState } from '../../lib/favoriteTypes';
 
 const initialState: IFavoriteState = {
   favorites: null,
-  normalizeFavorites: [],
+  booksIdsInFavorites: [],
   error: null,
   loading: false,
 };
@@ -20,7 +20,7 @@ const favoritesSlice = createSlice({
   reducers: {
     cleanFav: (state) => {
       state.favorites = null;
-      state.normalizeFavorites = [];
+      state.booksIdsInFavorites = [];
     },
   },
   extraReducers: (builder) => {
@@ -36,7 +36,7 @@ const favoritesSlice = createSlice({
           return item.book;
         });
 
-        if (booksInFav) state.normalizeFavorites = booksInFav;
+        if (booksInFav) state.booksIdsInFavorites = booksInFav;
       })
       .addCase(getFavorite.rejected, (state, action) => {
         state.loading = false;
@@ -48,10 +48,10 @@ const favoritesSlice = createSlice({
       })
       .addCase(addFavoriteItem.fulfilled, (state, action) => {
         state.loading = false;
-        if (state.normalizeFavorites.length > 0) {
-          state.normalizeFavorites.push(action.payload.book);
+        if (state.booksIdsInFavorites.length > 0) {
+          state.booksIdsInFavorites.push(action.payload.book);
         } else {
-          state.normalizeFavorites = [action.payload.book];
+          state.booksIdsInFavorites = [action.payload.book];
         }
         state.favorites?.favoritesItems.push(action.payload);
       })
@@ -79,11 +79,11 @@ const favoritesSlice = createSlice({
               return item.id !== action.payload;
             });
           if (
-            state.normalizeFavorites &&
-            state.normalizeFavorites.find((item) => item === idFavorite)
+            state.booksIdsInFavorites &&
+            state.booksIdsInFavorites.find((item) => item === idFavorite)
           ) {
-            delete state.normalizeFavorites[
-              state.normalizeFavorites.findIndex((item) => item === idFavorite)
+            delete state.booksIdsInFavorites[
+              state.booksIdsInFavorites.findIndex((item) => item === idFavorite)
             ];
           }
         } else {

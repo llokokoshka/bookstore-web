@@ -8,30 +8,24 @@ import Poster from './Poster';
 import SortMenu from './SortMenu';
 import AuthPoster from './AuthPoster';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setPage } from '../../store/filter/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
-import Catalog from './Catalog';
+import BookInCatalog from './BookInCatalog';
 import Navigate from './Navigate';
-import { getFavorite } from '../../store/favorites/favoritesThunk';
 import EmptyPage from '../Cart/EmtyPage';
 
-const MainPageBody = () => {
+const MainPageBody: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const books = useAppSelector((state) => state.booksEntities.books);
-  const booksInCart = useAppSelector((state) => state.cart.normalizeCart);
-  const booksInFavorites = useAppSelector(
-    (state) => state.favorite.normalizeFavorites
-  );
   const catalog = useAppSelector((state) => state.catalog.books);
+  const page = useAppSelector((state) => state.catalog.meta?.page);
+  const colPages = useAppSelector((state) => state.catalog.meta?.pageCount);
   const hasNextPage = useAppSelector(
     (state) => state.catalog.meta?.hasNextPage
   );
   const hasPrevPage = useAppSelector(
     (state) => state.catalog.meta?.hasPreviousPage
   );
-  const page = useAppSelector((state) => state.catalog.meta?.page);
-  const colPages = useAppSelector((state) => state.catalog.meta?.pageCount);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -40,28 +34,17 @@ const MainPageBody = () => {
   }, []);
 
   useEffect(() => {
-    if (user && booksInFavorites.length === 0) {
-      try {
-        dispatch(getFavorite());
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    // eslint-disable-next-line
-  }, [user, dispatch]);
-
-  useEffect(() => {
     setQueryParams({
       dispatch: dispatch,
       searchParams: searchParams,
       setSearchParams: setSearchParams,
     });
+
     // eslint-disable-next-line
   }, [dispatch, page, searchParams]);
 
-  const handlePagePrev = () => {
+  const handlePrevPage = () => {
     if (hasPrevPage && page) {
-      dispatch(setPage(page - 1));
       searchParams.set('page', (page - 1).toString());
 
       setSearchParams({
@@ -71,9 +54,8 @@ const MainPageBody = () => {
     }
   };
 
-  const handlePageNext = () => {
+  const handleNextPage = () => {
     if (hasNextPage && page) {
-      dispatch(setPage(page + 1));
       searchParams.set('page', (page + 1).toString());
 
       setSearchParams({
@@ -92,15 +74,7 @@ const MainPageBody = () => {
         <div className="catalog">
           {!(catalog?.length === 0) ? (
             catalog?.map((id) => {
-              return (
-                <Catalog
-                  key={id}
-                  id={id}
-                  booksInCart={booksInCart}
-                  booksInFavorites={booksInFavorites}
-                  books={books}
-                />
-              );
+              return <BookInCatalog key={id} book={books[id]} />;
             })
           ) : (
             <EmptyPage page="catalog" />
@@ -108,11 +82,11 @@ const MainPageBody = () => {
         </div>
         <Navigate
           hasPrevPage={hasPrevPage}
-          handlePagePrev={handlePagePrev}
+          handlePagePrev={handlePrevPage}
           page={page}
           colPages={colPages}
           hasNextPage={hasNextPage}
-          handlePageNext={handlePageNext}
+          handlePageNext={handleNextPage}
         />
         {user === null ? <AuthPoster /> : null}
       </div>

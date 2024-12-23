@@ -2,12 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import cn from 'classnames';
 
-import { IBaseButtonProps } from '../../lib/types';
+type Props = {
+  buttonClassName?: string;
+  text?: string;
+  type?: 'button' | 'submit' | 'reset';
+  onClick?: () => void;
+  style?: React.CSSProperties | undefined;
+  img?: string;
+};
 
-const BaseButton: React.FC<IBaseButtonProps> = (props) => {
+const BaseButton: React.FC<Props> = (props) => {
   return (
     <StyledWrapper
-      className={cn('', props.buttonClassName)}
+      className={cn(props.buttonClassName)}
       type={props.type}
       onClick={props.onClick}
       style={props.style}

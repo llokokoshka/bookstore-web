@@ -1,33 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import logo from '../../img/logo.png';
+import logo from '../../assets/img/logo.png';
 import UserButtons from './UserButtons';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
 import Search from './Search';
-import { deleteAllParams } from '../../store/filter/filterSlice';
 import AuthButton from './AuthButton';
-import { getCart } from '../../store/cart/cartThunk';
 
 const Header: React.FC<{ page: string }> = (props) => {
-  const dispatch = useAppDispatch();
   const itemsInCart = useAppSelector((state) => state.cart.numberOfItemsInCart);
   const user = useAppSelector((state) => state.auth.user);
-  useEffect(() => {
-    if (!itemsInCart) {
-      dispatch(getCart());
-    }
-  }, [itemsInCart]);
-  const cleanFiltersStore = () => {
-    dispatch(deleteAllParams());
-  };
 
   return (
     <StyledWrapper>
       <Link to={AppPages.base}>
-        <img src={logo} alt="logo" id="logo" onClick={cleanFiltersStore} />
+        <img src={logo} alt="logo" id="logo" />
       </Link>
       <div className="base-text" id="pageName">
         {props.page}

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import camera from '../../img/Camera.png';
+import camera from '../../assets/img/Camera.png';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
 import { ApiPath, DEFAULT_PASSWORD_STARS } from '../../constants/textConstants';

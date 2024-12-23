@@ -3,15 +3,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ReactSlider from 'react-slider';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setMaxPrice, setMinPrice } from '../../store/filter/filterSlice';
-import poligon from '../../img/Polygon 4.png';
+import poligon from '../../assets/img/Polygon 4.png';
 
 const PricePopup: React.FC = () => {
-  const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  let minPrice = useAppSelector((state) => state.filters.minPrice) || 0;
-  let maxPrice = useAppSelector((state) => state.filters.maxPrice) || 100;
+
+  const minPrice = Number(searchParams.get('minPrice')) || 0;
+  const maxPrice = Number(searchParams.get('maxPrice')) || 100;
+
   const [value, setValue] = useState<number[]>([minPrice, maxPrice]);
 
   const handleChange = async (newValue: number[]) => {
@@ -19,22 +18,21 @@ const PricePopup: React.FC = () => {
       return;
     }
     setValue(newValue);
-    dispatch(setMinPrice(newValue[0]));
-    dispatch(setMaxPrice(newValue[1]));
 
     searchParams.set('minPrice', newValue[0].toString());
     searchParams.set('maxPrice', newValue[1].toString());
 
-    setSearchParams({
-      ...Object.fromEntries(searchParams.entries()),
-    });
-
     if (newValue[0] === 0) {
       searchParams.delete('minPrice');
     }
+
     if (newValue[1] === 100) {
       searchParams.delete('maxPrice');
     }
+
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+    });
   };
 
   return (

@@ -10,7 +10,7 @@ import {
 } from '../../api/bookApi';
 import { RatingThunkType, AddCommentThunkType } from '../../lib/types';
 import { addOrUpdBook } from './booksEntitiesSlice';
-import { setGenres } from '../filter/filterSlice';
+import { setGenres } from '../filter/genresState';
 import { IUserRating } from '../../lib/authTypes';
 import { BookType, GenresType, CommentsType } from '../../lib/bookTypes';
 

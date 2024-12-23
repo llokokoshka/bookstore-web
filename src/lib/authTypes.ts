@@ -55,21 +55,3 @@ export interface IAuthState {
   error: string | null;
   loading: boolean;
 }
-
-export type BaseInputPropsType = {
-  type: string;
-  img?: string;
-  label?: string;
-  inputClassName?: string;
-  disable?: boolean;
-  register?: any;
-  name?: string;
-  errors?: string;
-  placeholder?: string;
-  value?: string;
-  onChange?: (e?: any) => void;
-  onKeyUp?: (e?: any) => void;
-  onClick?: () => void;
-  isProfile?: boolean;
-  text?: string;
-};

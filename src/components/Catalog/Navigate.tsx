@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import rightArr from '../../img/navigate-right-forward.png';
-import leftArr from '../../img/left arrow.png';
-import emtyRow from '../../img/Ellipse.png';
-import fullRow from '../../img/Ellipse full.png';
+import rightArr from '../../assets/img/navigate-right-forward.png';
+import leftArr from '../../assets/img/left arrow.png';
+import emtyRow from '../../assets/img/Ellipse.png';
+import fullRow from '../../assets/img/Ellipse full.png';
 import { INavigateProps } from '../../lib/bookTypes';
 
 const Navigate: React.FC<INavigateProps> = (props) => {

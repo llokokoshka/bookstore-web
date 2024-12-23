@@ -16,13 +16,7 @@ export interface IFavoriteProps {
 }
 
 export interface IFilterState {
-  page: number;
   genres: GenresType[];
-  checkedGenresId: number[];
-  minPrice: number;
-  maxPrice: number;
-  sortBy: string;
-  search: string;
 }
 
 export interface ICommentsState {
@@ -92,15 +86,6 @@ export interface IQueryParams {
   search?: string;
 }
 
-export interface IBaseButtonProps {
-  buttonClassName?: string;
-  text?: string;
-  type?: 'button' | 'submit' | 'reset';
-  onClick?: () => void;
-  style?: React.CSSProperties | undefined;
-  img?: string;
-}
-
 export interface IBookButtonProps {
   type: string;
   amount: number;
@@ -146,14 +131,6 @@ export interface IEmptyPageProps {
   page: string;
 }
 
-export interface ICatalogBookCoverProps {
-  img: string;
-  id: number;
-  isInFavorites: boolean;
-  isBestseller: boolean;
-  isNew: boolean;
-}
-
 export interface IAuthButtonProps {
   page: string;
 }
@@ -161,11 +138,6 @@ export interface IAuthButtonProps {
 export interface IRoundButtonsProps {
   img: string;
   url: string;
-}
-
-export interface ISearchProps {
-  className?: string;
-  inputClassName?: string;
 }
 
 export interface IUserButtonsProps {

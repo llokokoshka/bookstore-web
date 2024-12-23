@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import RoundButtons from './RoundButton';
-import profile from '../../img/User profile button.png';
-import cart from '../../img/Cart.png';
-import like from '../../img/Heart.png';
+import profile from '../../assets/img/User profile button.png';
+import cart from '../../assets/img/Cart.png';
+import like from '../../assets/img/Heart.png';
 import { AppPages } from '../../constants/textConstants';
 import { IUserButtonsProps } from '../../lib/types';
 

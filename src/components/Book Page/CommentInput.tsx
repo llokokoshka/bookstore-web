@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  addComment,
-  getBookById,
-} from '../../store/booksEntities/booksEntitiesThunk';
+import { addComment } from '../../store/booksEntities/booksEntitiesThunk';
 import BaseButton from '../BaseComponents/BaseButton';
 import BaseInput from '../BaseComponents/BaseInput';
 import { ICommentInputProps } from '../../lib/types';
@@ -13,10 +10,9 @@ import { ICommentInputProps } from '../../lib/types';
 const CommentInput: React.FC<ICommentInputProps> = (props) => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.booksEntities.loading);
+  const user = useAppSelector((state) => state.auth.user);
 
   const [inputValue, setInputValue] = useState<string>('');
-
-  const user = useAppSelector((state) => state.auth.user);
 
   const handleAddComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +25,6 @@ const CommentInput: React.FC<ICommentInputProps> = (props) => {
             user: user,
           })
         ).unwrap();
-        await dispatch(getBookById(props.id)).unwrap();
         setInputValue('');
       } catch (err) {
         console.error(err);

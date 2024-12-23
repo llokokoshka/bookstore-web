@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import fairy from '../../img/atz 1.png';
-import castle from '../../img/castle.png';
+import fairy from '../../assets/img/atz 1.png';
+import castle from '../../assets/img/castle.png';
 import { AppPages } from '../../constants/textConstants';
 import BaseButton from '../BaseComponents/BaseButton';
 
