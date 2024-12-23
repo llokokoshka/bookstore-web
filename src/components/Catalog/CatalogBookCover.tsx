@@ -102,6 +102,10 @@ const StyledWrapper = styled.div`
       top: 16px;
       left: 19px;
     }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .heart-size {
@@ -113,10 +117,6 @@ const StyledWrapper = styled.div`
       width: 14px;
       height: 14px;
     }
-  }
-
-  .book_favorite-button:hover {
-    cursor: pointer;
   }
 
   .book__cover {
@@ -136,9 +136,9 @@ const StyledWrapper = styled.div`
 
   .book__favorite-button--opacity {
     opacity: 50%;
-  }
-  .book__favorite-button--opacity:hover {
-    opacity: 100%;
+    &:hover {
+      opacity: 100%;
+    }
   }
 
   .book__new {
