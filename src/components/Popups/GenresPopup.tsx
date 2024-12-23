@@ -3,42 +3,35 @@ import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 import cn from 'classnames';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import poligon from '../../img/Polygon 4.png';
-import {
-  deleteCheckedGenres,
-  setCheckedGenres,
-} from '../../store/filter/filterSlice';
 import { GenresType } from '../../lib/bookTypes';
 
 const GenresPopup: React.FC = () => {
-  const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const AllGenres = useAppSelector((state) => state.filters.genres);
-  const CheckedGenresIDs = useAppSelector(
-    (state) => state.filters.checkedGenresId
-  );
+  const CheckedGenresIDs = searchParams.getAll('genre')[0];
+  let arrayWithIds: number[] = [];
+
+  if (CheckedGenresIDs) {
+    arrayWithIds = CheckedGenresIDs.split(',').map(Number);
+  }
 
   const handleGenreSelect = async (genre: GenresType) => {
-    const findGenre = CheckedGenresIDs.find((id) => id === genre.id);
+    const findGenre = arrayWithIds.find((id) => id === genre.id);
 
     if (!findGenre) {
-      dispatch(setCheckedGenres(genre.id));
-      const genres = searchParams.getAll('genre');
-
-      if (!genres.includes(genre.id.toString())) {
-        genres.push(genre.id.toString());
+      if (!arrayWithIds.includes(genre.id)) {
+        arrayWithIds.push(genre.id);
       }
-      searchParams.set('genre', genres.join(','));
+      searchParams.set('genre', arrayWithIds.join(','));
 
       setSearchParams({
         ...Object.fromEntries(searchParams.entries()),
       });
     } else {
-      dispatch(deleteCheckedGenres(genre.id));
-      const hasGenres = searchParams.getAll('genre')[0].split(',').map(Number);
-      const genres = hasGenres.filter((g) => g !== genre.id);
+      const genres = arrayWithIds.filter((g) => g !== genre.id);
 
       if (genres.length === 0) {
         searchParams.delete('genre');
@@ -60,10 +53,10 @@ const GenresPopup: React.FC = () => {
         <div key={genre.id} className="genre">
           <input
             className={cn('genre__checkbox', {
-              hippen: CheckedGenresIDs.includes(genre.id),
+              hippen: arrayWithIds.includes(genre.id),
             })}
             type="checkbox"
-            checked={CheckedGenresIDs.includes(genre.id)}
+            checked={arrayWithIds.includes(genre.id)}
             onChange={() => handleGenreSelect(genre)}
           />
           <label className="base-text">{genre.name}</label>
