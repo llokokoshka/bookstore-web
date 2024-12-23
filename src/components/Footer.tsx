@@ -113,6 +113,8 @@ const StyledWrapper = styled.div`
     text-decoration: none;
     &:hover {
       cursor: pointer;
+      text-decoration: underline;
+      color: ${({ theme }) => theme.colors.green};
     }
   }
 `;

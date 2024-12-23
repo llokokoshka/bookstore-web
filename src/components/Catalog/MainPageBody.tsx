@@ -12,7 +12,6 @@ import { setPage } from '../../store/filter/filterSlice';
 import { setQueryParams } from '../../utils/urlUtil';
 import Catalog from './Catalog';
 import Navigate from './Navigate';
-import { getCart } from '../../store/cart/cartThunk';
 import { getFavorite } from '../../store/favorites/favoritesThunk';
 import EmptyPage from '../Cart/EmtyPage';
 
@@ -41,13 +40,6 @@ const MainPageBody = () => {
   }, []);
 
   useEffect(() => {
-    if (user && booksInCart.length === 0) {
-      try {
-        dispatch(getCart());
-      } catch (err) {
-        console.error(err);
-      }
-    }
     if (user && booksInFavorites.length === 0) {
       try {
         dispatch(getFavorite());

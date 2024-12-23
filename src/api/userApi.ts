@@ -4,7 +4,10 @@ import { UserType, IUserResponseData } from '../lib/authTypes';
 import { CartType, CartItemType } from '../lib/cartTypes';
 import { FavoriteType, FavoriteItemType } from '../lib/favoriteTypes';
 
-export async function saveBase64File(base64Data: string, fileType: string) {
+export async function saveBase64File(
+  base64Data: string,
+  fileType: string
+): Promise<string> {
   const response = await axiosInstance.post(
     ApiPath.files,
     { base64Data, fileType },
@@ -20,12 +23,16 @@ export async function saveBase64File(base64Data: string, fileType: string) {
 export async function updateUserData(data: {
   fullName?: string;
   email?: string;
-}): Promise<UserType> {
-  const updUser = await axiosInstance.patch(ApiPath.user.me, {
-    fullName: data?.fullName,
-    email: data?.email,
-  });
-  return updUser.data;
+}) {
+  try {
+    const updUser = await axiosInstance.patch<UserType>(ApiPath.user.me, {
+      fullName: data?.fullName,
+      email: data?.email,
+    });
+    return updUser.data;
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 export async function updateUserPassword(data: {
@@ -34,10 +41,11 @@ export async function updateUserPassword(data: {
   passwordRep: string;
 }) {
   try {
-    await axiosInstance.patch(ApiPath.user.userPass, {
+    const updUser = await axiosInstance.patch(ApiPath.user.userPass, {
       password: data.password,
       passwordNew: data.passwordNew,
     });
+    return updUser;
   } catch (err) {
     console.error(err);
   }

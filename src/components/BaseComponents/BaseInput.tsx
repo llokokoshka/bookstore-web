@@ -88,14 +88,20 @@ const BaseInput: React.FC<BaseInputPropsType> = (props) => {
         </div>
       </div>
 
-      {errors && <div className="error-message">{errors}</div>}
+      {errors && (
+        <div className="error-message " style={styleParams}>
+          {errors}
+        </div>
+      )}
       {!errors &&
         !props.isProfile &&
         name !== 'search' &&
         name !== 'comment' &&
-        name !== 'passwordRep' && <div>Enter your {name}</div>}
+        name !== 'passwordRep' && (
+          <div style={styleParams}>Enter your {name}</div>
+        )}
       {!errors && !props.isProfile && name === 'passwordRep' && (
-        <div>Repeat your password without errors</div>
+        <div style={styleParams}>Repeat your password without errors</div>
       )}
     </StyledWrapper>
   );

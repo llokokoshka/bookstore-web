@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,12 +9,17 @@ import { AppPages } from '../../constants/textConstants';
 import Search from './Search';
 import { deleteAllParams } from '../../store/filter/filterSlice';
 import AuthButton from './AuthButton';
+import { getCart } from '../../store/cart/cartThunk';
 
 const Header: React.FC<{ page: string }> = (props) => {
   const dispatch = useAppDispatch();
   const itemsInCart = useAppSelector((state) => state.cart.numberOfItemsInCart);
   const user = useAppSelector((state) => state.auth.user);
-
+  useEffect(() => {
+    if (!itemsInCart) {
+      dispatch(getCart());
+    }
+  }, [itemsInCart]);
   const cleanFiltersStore = () => {
     dispatch(deleteAllParams());
   };

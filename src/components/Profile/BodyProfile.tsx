@@ -78,11 +78,11 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   const handleUpdateAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      console.log(file);
       try {
         const base64 = await convertFileToBase64(file);
         const data = await saveBase64File(base64, 'avatar');
         dispatch(setUser({ avatar: data }));
+        Toast({ message: 'Avatar was updated!' });
       } catch (err) {
         console.error(ERROR_AVATAR_UPLOAD, err);
         Toast({ message: 'Upload error', error: err });
@@ -108,7 +108,11 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
   }) => {
     try {
       const updUser = await updateUserData(data);
+      if (!updUser) {
+        throw new Error(ERROR_UPDATE_USER_DATA);
+      }
       dispatch(setUser(updUser));
+      handleChangeInfo();
       Toast({ message: 'Data updated successfully' });
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_DATA, err);
@@ -122,7 +126,11 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
     passwordRep: string;
   }) => {
     try {
-      updateUserPassword(data);
+      const areUpdate = await updateUserPassword(data);
+      if (!areUpdate) {
+        throw new Error(ERROR_UPDATE_USER_PASSWORD);
+      }
+      handleChangePass();
       Toast({ message: 'Password updated successfully' });
       resetPass();
     } catch (err) {
