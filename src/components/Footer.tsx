@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import logo from '../img/footer-logo.png';
 import map from '../img/map.png';
-import { Link } from 'react-router-dom';
 import { AppPages } from '../constants/textConstants';
 import { useAppSelector } from '../hooks';
 

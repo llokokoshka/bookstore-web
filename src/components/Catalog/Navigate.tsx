@@ -1,10 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import rightArr from '../../img/navigate-right-forward.png';
 import leftArr from '../../img/left arrow.png';
 import emtyRow from '../../img/Ellipse.png';
 import fullRow from '../../img/Ellipse full.png';
-import styled from 'styled-components';
 import { INavigateProps } from '../../lib/bookTypes';
 
 const Navigate: React.FC<INavigateProps> = (props) => {

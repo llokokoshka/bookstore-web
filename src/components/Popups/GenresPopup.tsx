@@ -5,7 +5,6 @@ import cn from 'classnames';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import poligon from '../../img/Polygon 4.png';
-
 import {
   deleteCheckedGenres,
   setCheckedGenres,

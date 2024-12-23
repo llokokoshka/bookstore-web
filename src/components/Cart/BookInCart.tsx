@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { ApiPath, AppPages } from '../../constants/textConstants';
 import { IBookInCartProps } from '../../lib/bookTypes';
-import { Link } from 'react-router-dom';
 import BookInfoBlock from './BookInfoBlock';
 
 const BookInCart: React.FC<IBookInCartProps> = (props) => {

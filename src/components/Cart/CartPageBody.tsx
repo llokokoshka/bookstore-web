@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import BookInCart from './BookInCart';
 import { useAppSelector } from '../../hooks';
 import EmptyPage from './EmtyPage';
-import { Link } from 'react-router-dom';
 import { AppPages } from '../../constants/textConstants';
 import BaseButton from '../BaseComponents/BaseButton';
 

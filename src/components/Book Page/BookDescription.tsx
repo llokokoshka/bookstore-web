@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
 import { IBookDescriptionProps } from '../../lib/types';
 
 const BookDescription: React.FC<IBookDescriptionProps> = (props) => {
