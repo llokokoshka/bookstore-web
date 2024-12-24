@@ -1,21 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
+import cn from 'classnames';
 
 import rightArr from '../../assets/img/navigate-right-forward.png';
 import leftArr from '../../assets/img/left arrow.png';
-import emtyRow from '../../assets/img/Ellipse.png';
-import fullRow from '../../assets/img/Ellipse full.png';
 
 type Props = {
-  hasPrevPage: boolean | undefined;
+  hasPrevPage: boolean;
   handlePagePrev: () => void;
-  page: number | undefined;
-  colPages: number | undefined;
-  hasNextPage: boolean | undefined;
+  page: number;
+  colPages: number;
+  hasNextPage: boolean;
   handlePageNext: () => void;
 };
 
 const Navigate: React.FC<Props> = (props) => {
+  const allPages = props.colPages;
+  const numberOfDots = Math.min(allPages, 3);
+  const dotsArr: number[] = Array(numberOfDots).fill(1);
+
   return (
     <StyledWrapper>
       {props.hasPrevPage ? (
@@ -26,41 +29,17 @@ const Navigate: React.FC<Props> = (props) => {
         <div className="arrow"></div>
       )}
       <div className="dots">
-        {props.colPages === 1 ? (
-          <img src={fullRow} alt="dot" />
-        ) : props.colPages === 2 && props.page === 1 ? (
-          <>
-            <img src={fullRow} alt="dot" />
-            <img src={emtyRow} alt="dot" />
-          </>
-        ) : props.colPages === 2 && props.page === 2 ? (
-          <>
-            <img src={emtyRow} alt="dot" />
-            <img src={fullRow} alt="dot" />
-          </>
-        ) : props.colPages &&
-          (props.colPages === 3 || props.colPages > 3) &&
-          props.page === 1 ? (
-          <>
-            <img src={fullRow} alt="dot" />
-            <img src={emtyRow} alt="dot" />
-            <img src={emtyRow} alt="dot" />
-          </>
-        ) : props.colPages &&
-          (props.colPages === 3 || props.colPages > 3) &&
-          !props.hasNextPage ? (
-          <>
-            <img src={emtyRow} alt="dot" />
-            <img src={emtyRow} alt="dot" />
-            <img src={fullRow} alt="dot" />
-          </>
-        ) : props.colPages && (props.colPages === 3 || props.colPages > 3) ? (
-          <>
-            <img src={emtyRow} alt="dot" />
-            <img src={fullRow} alt="dot" />
-            <img src={emtyRow} alt="dot" />
-          </>
-        ) : null}
+        {dotsArr.map((_, id) => (
+          <div
+            key={id}
+            className={cn('dot', {
+              fill:
+                (props.hasPrevPage && props.hasNextPage && id === 1) ||
+                (!props.hasNextPage && id === 2) ||
+                (!props.hasPrevPage && id === 0),
+            })}
+          ></div>
+        ))}
       </div>
       {props.hasNextPage ? (
         <div className="arrow" onClick={props.handlePageNext}>
@@ -99,5 +78,16 @@ const StyledWrapper = styled.div`
     align-items: center;
     justify-content: center;
     column-gap: 30px;
+  }
+  .dot {
+    width: 13.33px;
+    height: 13.33px;
+    top: 3.33px;
+    left: 3.33px;
+    border: 2px solid ${({ theme }) => theme.colors.dark};
+    border-radius: 50%;
+  }
+  .fill {
+    background-color: ${({ theme }) => theme.colors.dark};
   }
 `;

@@ -23,7 +23,7 @@ const CartPageBody: React.FC = () => {
       {BooksInCart?.cartItems.length !== 0 ? (
         <>
           {BooksInCart?.cartItems?.map((item) => {
-            const Book = item.book in books ? books[item.book] : undefined;
+            const Book = books[item.book];
             return (
               <div className="cart-item" key={item.id}>
                 <BookInCart

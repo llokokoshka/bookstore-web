@@ -23,7 +23,7 @@ const AuthPoster: React.FC = () => {
             <Link to={AppPages.registration} className="base-button--top">
               <BaseButton
                 buttonClassName="base-button--top"
-                text={`Log In/Sing Up`}
+                text="Log In/Sing Up"
               />
             </Link>
             <img src={fairy} alt="books" className="poster__img" />

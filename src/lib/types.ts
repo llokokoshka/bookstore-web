@@ -85,18 +85,6 @@ export type QueryParamsType = {
   search?: string | null;
 };
 
-export interface IQueryParams {
-  dispatch: AppDispatch;
-  searchParams: URLSearchParams;
-  setSearchParams: SetURLSearchParams;
-  pageNum?: string;
-  genres?: string[] | number[];
-  sortByOption?: string;
-  minPriceParam?: string;
-  maxPriceParam?: string;
-  search?: string;
-}
-
 type Author = {
   id: number;
   text: string;
@@ -156,19 +144,19 @@ type MetaType = {
 
 export interface ICatalogState {
   books: number[] | null;
-  meta: MetaType | null;
+  meta: MetaType;
   error: string | null;
   loading: boolean;
 }
 
 export interface ICatalogFromServer {
   data: BookType[] | null;
-  meta: MetaType | null;
+  meta: MetaType;
 }
 
 export interface ICatalog {
   data: number[] | null;
-  meta: MetaType | null;
+  meta: MetaType;
 }
 
 export interface ICatalogProps {

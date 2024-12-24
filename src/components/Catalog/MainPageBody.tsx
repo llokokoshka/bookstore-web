@@ -8,18 +8,20 @@ import Poster from './Poster';
 import SortMenu from './SortMenu';
 import AuthPoster from './AuthPoster';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setQueryParams } from '../../utils/urlUtil';
+import { getSearchParamsObj } from '../../utils/urlUtil';
 import BookInCatalog from './BookInCatalog';
 import Navigate from './Navigate';
 import EmptyPage from '../Cart/EmtyPage';
+import { getCatalog } from '../../store/catalog/catalogThunk';
+import { ERROR_GET_BOOKS_DATA } from '../../constants/errorConstants';
 
 const MainPageBody: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const books = useAppSelector((state) => state.booksEntities.books);
   const catalog = useAppSelector((state) => state.catalog.books);
-  const page = useAppSelector((state) => state.catalog.meta?.page);
-  const colPages = useAppSelector((state) => state.catalog.meta?.pageCount);
+  const page = useAppSelector((state) => state.catalog.meta.page);
+  const colPages = useAppSelector((state) => state.catalog.meta.pageCount);
   const hasNextPage = useAppSelector(
     (state) => state.catalog.meta?.hasNextPage
   );
@@ -34,12 +36,26 @@ const MainPageBody: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setQueryParams({
-      dispatch: dispatch,
+    const updatedParams = getSearchParamsObj({
       searchParams: searchParams,
-      setSearchParams: setSearchParams,
     });
 
+    setSearchParams(updatedParams, { replace: true });
+
+    try {
+      dispatch(
+        getCatalog({
+          pageNum: updatedParams?.page || '1',
+          genres: updatedParams.genre || null,
+          minPrice: updatedParams?.minPrice || null,
+          maxPrice: updatedParams?.maxPrice || null,
+          sortBy: updatedParams?.sortBy || null,
+          search: updatedParams?.search || null,
+        })
+      );
+    } catch (error) {
+      console.error(ERROR_GET_BOOKS_DATA, error);
+    }
     // eslint-disable-next-line
   }, [dispatch, page, searchParams]);
 
@@ -81,11 +97,11 @@ const MainPageBody: React.FC = () => {
           )}
         </div>
         <Navigate
-          hasPrevPage={hasPrevPage}
+          hasPrevPage={hasPrevPage ? true : false}
           handlePagePrev={handlePrevPage}
           page={page}
           colPages={colPages}
-          hasNextPage={hasNextPage}
+          hasNextPage={hasNextPage ? true : false}
           handlePageNext={handleNextPage}
         />
         {user === null ? <AuthPoster /> : null}
