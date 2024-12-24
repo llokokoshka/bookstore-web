@@ -36,9 +36,7 @@ const RatingStars: React.FC<Props> = (props) => {
         ))}
       </div>
       <div className="rating__value">
-        {props.niceViewOfBookRating
-          ? props.niceViewOfBookRating
-          : props.userRate}
+        {props.niceViewOfBookRating || props.userRate}
       </div>
     </StyledWrapper>
   );

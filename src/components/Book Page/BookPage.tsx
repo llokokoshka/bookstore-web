@@ -91,7 +91,7 @@ const BookPage: React.FC = () => {
         comments={book.comments}
         isFav={isInFavorites}
       />
-      {user === null ? <AuthPoster /> : null}
+      {user === null && <AuthPoster />}
       <div className="recommended">
         <div className="big-title">Recommendations</div>
         <div className="recommended__books">

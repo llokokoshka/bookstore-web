@@ -49,7 +49,7 @@ const Rating: React.FC<Props> = (props) => {
         {props.isBookPage && (
           <div className="total-rating">
             <img src={fullStar} alt="star" className="star"></img>
-            <h3 className="rating__value"> {niceViewOfBookRating || '0.0'}</h3>
+            <h3 className="rating__value"> {niceViewOfBookRating}</h3>
           </div>
         )}
       </>
@@ -64,9 +64,7 @@ const Rating: React.FC<Props> = (props) => {
           bookId={props.bookId}
           isBookPage={false}
           userRate={fullStars ? fullStars : '0.0'}
-          niceViewOfBookRating={
-            niceViewOfBookRating ? niceViewOfBookRating : '0.0'
-          }
+          niceViewOfBookRating={niceViewOfBookRating}
         />
       )}
     </StyledWrapper>

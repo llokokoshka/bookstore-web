@@ -104,7 +104,7 @@ const MainPageBody: React.FC = () => {
           hasNextPage={hasNextPage ? true : false}
           handlePageNext={handleNextPage}
         />
-        {user === null ? <AuthPoster /> : null}
+        {user === null && <AuthPoster />}
       </div>
       <Footer />
     </StyledWrapper>

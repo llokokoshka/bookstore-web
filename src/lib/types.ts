@@ -1,6 +1,3 @@
-import { SetURLSearchParams } from 'react-router-dom';
-
-import { AppDispatch } from '../store';
 import { IFormReg } from '../store/auth/authTypes';
 
 export interface IUserRating {

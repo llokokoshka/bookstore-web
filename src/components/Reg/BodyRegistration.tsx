@@ -97,7 +97,7 @@ const RegistrationBody: React.FC = () => {
             />
             <ToastContainer />
           </div>
-          <BaseButton type="submit" text={`Sign up`} />
+          <BaseButton type="submit" text="Sign up" />
         </form>
         <img src={man} alt="man" className="container__img" />
       </div>

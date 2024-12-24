@@ -19,7 +19,7 @@ const Poster: React.FC = () => {
               </div>
             </div>
             <BaseButton
-              text={`Choose a book`}
+              text="Choose a book"
               buttonClassName="correct-button-size"
             />
           </div>

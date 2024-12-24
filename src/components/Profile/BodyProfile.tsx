@@ -217,7 +217,7 @@ const ProfileBody: React.FC<Props> = (props) => {
             display:
               changeInfo === false || changePass === false ? 'block' : 'none',
           }}
-          text={`Confirm`}
+          text="Confirm"
         />
       </div>
       <ToastContainer />

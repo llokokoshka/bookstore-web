@@ -8,6 +8,7 @@ const Comment: React.FC<CommentsType> = (props) => {
   const commentDate = new Date(props.dateOfCreate);
   const timediff = currentDate.getTime() - commentDate.getTime();
   const daysAgo = Math.floor(timediff / (1000 * 3800 * 24));
+
   return (
     <StyledWrapper>
       <img

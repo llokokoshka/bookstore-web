@@ -43,12 +43,13 @@ const CatalogBookCover: React.FC<Props> = (props) => {
         <div className="book__new">
           <div>New</div>
         </div>
-      ) : props.isBestseller ? (
-        <div className="book__bestseller">
-          <div>Bestseller</div>
-        </div>
-      ) : null}
-
+      ) : (
+        props.isBestseller && (
+          <div className="book__bestseller">
+            <div>Bestseller</div>
+          </div>
+        )
+      )}
       <Link to={`${AppPages.getBookIdUrl(props.id)}`}>
         <img src={props.img} alt="img" className="book__cover"></img>
       </Link>
