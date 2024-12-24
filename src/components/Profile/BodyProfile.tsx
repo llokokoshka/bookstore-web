@@ -1,44 +1,49 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import man from '../../img/User profile.png';
-import mail from '../../img/Mail.png';
-import hide from '../../img/Hide.png';
-import camera from '../../img/Camera.png';
-import { IFormPass, IFormInfo } from '../../lib/types';
+import camera from '../../assets/img/Camera.png';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
-import ProfileInput from '../Input fields/ProfileInput';
-import { useAppSelector } from '../../hooks';
 import { DEFAULT_PASSWORD_STARS } from '../../constants/textConstants';
 import {
   ERROR_AVATAR_UPLOAD,
   ERROR_UPDATE_USER_DATA,
   ERROR_UPDATE_USER_PASSWORD,
 } from '../../constants/errorConstants';
+import { setUser, logout } from '../../store/auth/authSlice';
+import { convertFileToBase64 } from '../../utils/fileUtil';
+import { cleanCart } from '../../store/cart/cartSlice';
+import { cleanFav } from '../../store/favorites/favoritesSlice';
+import Toast from '../Toast';
+import BaseButton from '../BaseComponents/BaseButton';
+import ProfileInfoForm from './ProfileInfoForm';
+import ProfilePassForm from './ProfilePassForm';
 import {
-  SaveFile,
-  UpdateUserData,
-  UpdateUserPassword,
-} from '../../api/userApi';
+  saveFileThunk,
+  updateUserDataThunk,
+  updateUserPasswordThunk,
+} from '../../store/auth/authThunk';
+import { useAppDispatch } from '../../hooks';
+import { IFormInfo, IFormPass, UserType } from '../../lib/types';
 
-const ProfileBody: React.FC = () => {
-  const dispatch = useDispatch();
+type Props = { user: UserType | null };
+
+const ProfileBody: React.FC<Props> = (props) => {
+  const dispatch = useAppDispatch();
+
   const [changeInfo, setChangeInfo] = useState(true);
   const [changePass, setChangePass] = useState(true);
-
-  const user = useAppSelector((state) => state.auth.user);
-
-  const dirname = `${process.env.REACT_APP_BASE_URL}/uploads/`;
+  const { user } = props;
 
   const {
     register: registerFormInfo,
     handleSubmit: handleSubmitFormInfo,
-    reset: resetInfo,
     formState: { errors: infoErrors },
+    setValue: setValueInfo,
   } = useForm<IFormInfo>({
     mode: 'onChange',
     resolver: yupResolver(profileValidationSchema),
@@ -73,26 +78,45 @@ const ProfileBody: React.FC = () => {
 
   const handleUpdateAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const formData = new FormData();
-      formData.append('avatar', e.target.files[0]);
+      const file = e.target.files[0];
       try {
-        SaveFile(formData, dispatch);
+        const base64 = await convertFileToBase64(file);
+        dispatch(saveFileThunk({ base64Data: base64, fileType: 'avatar' }));
+        Toast({ message: 'Avatar was updated!' });
       } catch (err) {
         console.error(ERROR_AVATAR_UPLOAD, err);
+        Toast({ message: 'Upload error', error: err });
         return err;
       }
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      if (user.fullName) {
+        setValueInfo('fullName', user.fullName);
+      }
+      if (user.email) {
+        setValueInfo('email', user.email);
+      }
+    }
+  }, [user, setValueInfo]);
 
   const onSubmitFormInfo: SubmitHandler<IFormInfo> = async (data: {
     fullName?: string;
     email?: string;
   }) => {
     try {
-      UpdateUserData(data, dispatch);
-      resetInfo();
+      await dispatch(
+        updateUserDataThunk({ fullName: data.fullName, email: data.email })
+      ).unwrap();
+      handleChangeInfo();
+      Toast({ message: 'Data updated successfully' });
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_DATA, err);
+      console.log(err);
+
+      Toast({ message: 'Error while update data', error: err });
     }
   };
 
@@ -102,10 +126,13 @@ const ProfileBody: React.FC = () => {
     passwordRep: string;
   }) => {
     try {
-      UpdateUserPassword(data);
+      await dispatch(updateUserPasswordThunk(data)).unwrap();
+      handleChangePass();
+      Toast({ message: 'Password updated successfully' });
       resetPass();
     } catch (err) {
       console.warn(ERROR_UPDATE_USER_PASSWORD, err);
+      Toast({ message: 'Error while update password', error: err });
     }
   };
 
@@ -120,114 +147,80 @@ const ProfileBody: React.FC = () => {
     }
   };
 
+  const exit = () => {
+    dispatch(logout());
+    dispatch(cleanCart());
+    dispatch(cleanFav());
+  };
+  const editValueName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      setUser({
+        fullName: e.target.value,
+      })
+    );
+  };
+  const editValueMail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      setUser({
+        email: e.target.value,
+      })
+    );
+  };
+
   return (
     <StyledWrapper>
-      <div className="profile-img">
-        <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
-        <label className="base-round-button lable-nice">
-          <input
-            type="file"
-            id="avatar"
-            name="avatar"
-            accept="image/png, image/jpeg, image/jpg"
-            multiple
-            style={{ display: 'none' }}
-            onChange={handleUpdateAvatar}
-          />
-          <img src={camera} alt="camera" />
-        </label>
+      <div className="profile">
+        <div className="profile__img">
+          <img src={user?.avatar} alt="img" className="avatar"></img>
+          <label className="avatar-button">
+            <input
+              type="file"
+              id="avatar"
+              name="avatar"
+              accept="image/png, image/jpeg, image/jpg"
+              multiple
+              style={{ display: 'none' }}
+              onChange={handleUpdateAvatar}
+            />
+            <img src={camera} alt="camera" className="correct-size" />
+          </label>
+        </div>
+        <BaseButton text="Logout" onClick={exit} />
       </div>
-      <div className="inputs">
-        <form
-          className="container__info-block"
-          onSubmit={handleSubmitFormInfo(onSubmitFormInfo)}
-        >
-          <div className="info">
-            <div className="info__text">
-              <div className="normal-title">Personal information</div>
-              <div className="green-title" onClick={handleChangeInfo}>
-                Change information
-              </div>
-            </div>
-            <ProfileInput
-              img={man}
-              label="full name"
-              typeP="text"
-              register={registerFormInfo}
-              name="fullName"
-              value={user?.fullName}
-              disable={changeInfo}
-              errors={infoErrors}
-            />
-            <ProfileInput
-              img={mail}
-              label="email"
-              typeP="email"
-              register={registerFormInfo}
-              name="email"
-              value={user?.email}
-              disable={changeInfo}
-              errors={infoErrors}
-            />
-          </div>
-        </form>
-        <form
-          className="info"
-          onSubmit={handleSubmitFormPass(onSubmitFormPass)}
-        >
-          <div className="info">
-            <div className="info__text">
-              <div className="normal-title">Password</div>
-              <div className="green-title" onClick={handleChangePass}>
-                Change password
-              </div>
-            </div>
-            <ProfileInput
-              img={hide}
-              label="password"
-              typeP="password"
-              register={registerFormPass}
-              name="password"
-              value="******************"
-              disable={changePass}
-              errors={passErrors}
-            />
-          </div>
-          <div className="pass-inputs">
-            <ProfileInput
-              img={hide}
-              label="new password"
-              typeP="password"
-              register={registerFormPass}
-              name="passwordNew"
-              value=""
-              disable={changePass}
-              errors={passErrors}
-            />
-            <ProfileInput
-              img={hide}
-              label="copy of new password"
-              typeP="password"
-              register={registerFormPass}
-              name="passwordRep"
-              value=""
-              disable={changePass}
-              errors={passErrors}
-            />
-          </div>
-        </form>
-        <button
-          className="base-button view"
+
+      <div className="container">
+        <ProfileInfoForm
+          user={props.user}
+          changeInfo={changeInfo}
+          editValueMail={editValueMail}
+          editValueName={editValueName}
+          handleChangeInfo={handleChangeInfo}
+          onSubmitFormInfo={onSubmitFormInfo}
+          handleSubmitFormInfo={handleSubmitFormInfo}
+          infoErrors={infoErrors}
+          registerFormInfo={registerFormInfo}
+        />
+        <ProfilePassForm
+          changePass={changePass}
+          handleChangePass={handleChangePass}
+          onSubmitFormPass={onSubmitFormPass}
+          user={props.user}
+          handleSubmitFormPass={handleSubmitFormPass}
+          passErrors={passErrors}
+          registerFormPass={registerFormPass}
+        />
+        <BaseButton
+          buttonClassName="view"
           type="button"
+          onClick={handleSubmit}
           style={{
             display:
               changeInfo === false || changePass === false ? 'block' : 'none',
           }}
-          onClick={handleSubmit}
-        >
-          Confirm
-        </button>
+          text="Confirm"
+        />
       </div>
+      <ToastContainer />
     </StyledWrapper>
   );
 };
@@ -235,17 +228,30 @@ const ProfileBody: React.FC = () => {
 export default ProfileBody;
 
 const StyledWrapper = styled.div`
-  padding: ${({ theme }) => theme.padding.header};
+  padding: 60px 0px 110px 80px;
   display: flex;
   flex-direction: row;
   align-items: start;
   column-gap: 128px;
   width: 100%;
+  flex: 1;
+  @media screen and (max-width: 834px) {
+    padding: 95px 15px;
+    column-gap: 20px;
+  }
   @media screen and (max-width: 320px) {
     flex-direction: column;
+    padding: 50px 15px 40px 15px;
   }
 
-  .profile-img {
+  .profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    row-gap: 16px;
+  }
+
+  .profile__img {
     position: relative;
     max-width: 305px;
     height: auto;
@@ -263,24 +269,43 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .info {
+  .avatar-button {
+    width: 48px;
+    height: 48px;
+    opacity: 0px;
+    background-color: ${({ theme }) => theme.colors.dark_blue};
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 77.7%;
+    left: 77.7%;
+    @media screen and (max-width: 320px) {
+      width: 32.73px;
+      height: 32.73px;
+      top: 83%;
+      left: 83%;
+    }
   }
 
-  .info__text {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: space-between;
+  .avatar-button:hover {
+    cursor: pointer;
   }
 
-  .inputs {
+  .correct-size {
+    width: 22px;
+    height: auto;
+  }
+
+  .container {
     display: flex;
     flex-direction: column;
     row-gap: 40px;
+    width: 100%;
+    @media screen and (max-width: 320px) {
+      padding-top: 20px;
+    }
   }
 
   .avatar {
@@ -297,15 +322,6 @@ const StyledWrapper = styled.div`
       max-width: 290px;
       max-height: 290px;
     }
-  }
-
-  .lable-nice {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 77.7%;
-    left: 77.7%;
   }
   .pass-inputs {
     display: flex;

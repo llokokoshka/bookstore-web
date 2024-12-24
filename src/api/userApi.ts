@@ -1,47 +1,118 @@
-import { Dispatch, UnknownAction } from '@reduxjs/toolkit';
 import { axiosInstance } from '../axiosDefaul';
-import { setUser } from '../store/authSlice';
+import { ApiPath } from '../constants/textConstants';
+import { FavoriteType } from '../store/favorites/favoriteTypes';
+import { IUserResponseData } from '../store/auth/authTypes';
+import { CartType, CartItemType } from '../store/cart/cartTypes';
+import { UserType } from '../lib/types';
 
-export async function SaveFile(
-  formData: FormData,
-  dispatch: Dispatch<UnknownAction>
-) {
-  const response = await axiosInstance.post('/files', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Autorization: `Bearer ${localStorage.getItem('access')}`,
-    },
-  });
-  const uploadedFile = response.data.data.filename;
-  dispatch(setUser({ avatar: uploadedFile }));
-}
-
-export async function UpdateUserData(
-  data: {
-    fullName?: string;
-    email?: string;
-  },
-  dispatch: Dispatch<UnknownAction>
-) {
-  const updUser = await axiosInstance.patch('/user/me', {
-    fullName: data?.fullName,
-    email: data?.email,
-  });
-  dispatch(
-    setUser({
-      fullName: updUser.data?.fullName,
-      email: updUser.data?.email,
-    })
+export async function saveBase64File(
+  base64Data: string,
+  fileType: string
+): Promise<string> {
+  const response = await axiosInstance.post(
+    ApiPath.files,
+    { base64Data, fileType },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access')}`,
+      },
+    }
   );
+  return response.data.data.filename;
 }
 
-export async function UpdateUserPassword(data: {
+export async function updateUserData(data: {
+  fullName?: string;
+  email?: string;
+}) {
+  try {
+    const updUser = await axiosInstance.patch<UserType>(ApiPath.user.me, {
+      fullName: data?.fullName,
+      email: data?.email,
+    });
+    return updUser.data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function updateUserPassword(data: {
   password: string;
   passwordNew: string;
   passwordRep: string;
 }) {
-  await axiosInstance.patch('/user/pass', {
-    password: data.password,
-    passwordNew: data.passwordNew,
-  });
+  try {
+    const updUser = await axiosInstance.patch(ApiPath.user.userPass, {
+      password: data.password,
+      passwordNew: data.passwordNew,
+    });
+    return updUser;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function getUserApi() {
+  const response = await axiosInstance.get<IUserResponseData>(ApiPath.user.me);
+  return response.data;
+}
+
+export async function getCartApi() {
+  const response = await axiosInstance.get<CartType>(
+    ApiPath.user.cart.allItems
+  );
+  return response.data;
+}
+
+export async function addCartItemApi(bookId: number) {
+  const response = await axiosInstance.post<CartItemType>(
+    ApiPath.user.cart.item,
+    {
+      bookId,
+    }
+  );
+
+  return response.data;
+}
+
+export async function changeAmountItemInCartApi(
+  ItemId: number,
+  action: boolean
+) {
+  const response = await axiosInstance.patch<CartItemType>(
+    ApiPath.user.cart.getItemWithIdUrl(ItemId),
+    { action }
+  );
+  return response.data;
+}
+
+export async function deteleItemInCartApi(ItemId: number) {
+  const response = await axiosInstance.delete(
+    ApiPath.user.cart.getItemWithIdUrl(ItemId)
+  );
+  return response.data;
+}
+
+export async function getFavoriteApi() {
+  const response = await axiosInstance.get<FavoriteType>(
+    ApiPath.user.favorites.allFavorites
+  );
+  return response.data;
+}
+
+export async function addFavoriteItemApi(bookId: number) {
+  const response = await axiosInstance.post<FavoriteType>(
+    ApiPath.user.favorites.item,
+    {
+      bookId,
+    }
+  );
+  return response.data;
+}
+
+export async function deleteFavoriteItemApi(bookId: number) {
+  const response = await axiosInstance.delete<FavoriteType>(
+    ApiPath.user.favorites.getItemWithIdUrl(bookId)
+  );
+  return response.data;
 }

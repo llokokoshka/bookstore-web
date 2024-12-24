@@ -2,33 +2,34 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import logo from '../../img/logo.png';
-import search from '../../img/search-icon.png';
-import AuthButtons from './AuthButtons';
+import logo from '../../assets/img/logo.png';
+import UserButtons from './UserButtons';
 import { useAppSelector } from '../../hooks';
+import { AppPages } from '../../constants/textConstants';
+import Search from './Search';
+import AuthButton from './AuthButton';
 
-const Header: React.FC = () => {
+type Props = {
+  page: string;
+};
+
+const Header: React.FC<Props> = (props) => {
+  const itemsInCart = useAppSelector((state) => state.cart.numberOfItemsInCart);
   const user = useAppSelector((state) => state.auth.user);
+
   return (
     <StyledWrapper>
-      <img src={logo} alt="logo" />
-      <div className="header">
-        <div className="base-text">Catalog</div>
-        <div className="input">
-          <img src={search} alt="search" className="input__icon" />
-          <input
-            type="text"
-            placeholder="Search"
-            className="input__field"
-          ></input>
-        </div>
+      <Link to={AppPages.base}>
+        <img src={logo} alt="logo" id="logo" />
+      </Link>
+      <div className="base-text" id="pageName">
+        {props.page}
       </div>
-      {user !== null ? (
-        <AuthButtons />
+      <Search className="header-search" />
+      {user ? (
+        <UserButtons itemsInCart={itemsInCart} />
       ) : (
-        <Link className="todo-body__div-button" to={`/sign-in`}>
-          <button className="base-button">Log in/Sign Up</button>
-        </Link>
+        <AuthButton page={props.page} />
       )}
     </StyledWrapper>
   );
@@ -40,18 +41,42 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  column-gap: 127px;
+  flex-wrap: nowrap;
   align-items: center;
   width: 100%;
-  padding: ${({ theme }) => theme.padding.header};
+  padding: ${({ theme }) => theme.padding.base};
   position: relative;
+
+  @media screen and (max-width: 834px) {
+    padding: 20px 15px;
+  }
+  @media screen and (max-width: 320px) {
+    flex-wrap: wrap;
+    padding: 20px 15px;
+  }
+  #logo {
+    @media screen and (max-width: 320px) {
+      width: 62px;
+      height: 31px;
+    }
+  }
+  .header-search {
+    @media screen and (max-width: 320px) {
+      order: 2;
+      flex: 1 0 100%;
+      margin-top: 10px;
+    }
+  }
 
   .header {
     display: flex;
     flex-direction: row;
     width: 739px;
     align-items: center;
-    /* justify-content: space-between; */
     column-gap: 43px;
+
+    @media screen and (max-width: 320px) {
+      width: 290px;
+    }
   }
 `;

@@ -1,12 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getUserApi, loginUser, regUser } from './thunk';
-import { AuthState } from '../lib/types';
+import {
+  loginUser,
+  regUser,
+  getUser,
+  updateUserDataThunk,
+  updateUserPasswordThunk,
+} from './authThunk';
+import { addOrUpdateRating } from '../booksEntities/booksEntitiesThunk';
+import { IAuthState } from './authTypes';
 
-const initialState: AuthState = {
+const initialState: IAuthState = {
   user: null,
   error: null,
-  loading: true,
+  loading: false,
 };
 
 const authSlice = createSlice({
@@ -27,9 +34,6 @@ const authSlice = createSlice({
       if (state.user) {
         if (action.payload.avatar) {
           state.user.avatar = action.payload.avatar;
-        }
-        if (action.payload.password) {
-          state.user.password = action.payload.password;
         }
         if (action.payload.fullName) {
           state.user.fullName = action.payload.fullName;
@@ -54,7 +58,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
       .addCase(regUser.pending, (state) => {
         state.loading = true;
@@ -68,21 +72,50 @@ const authSlice = createSlice({
       })
       .addCase(regUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
       })
-      .addCase(getUserApi.pending, (state) => {
+      .addCase(getUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getUserApi.fulfilled, (state, action) => {
+      .addCase(getUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
         localStorage.setItem('access', action.payload.access_token);
         localStorage.setItem('refresh', action.payload.refresh_token);
       })
-      .addCase(getUserApi.rejected, (state, action) => {
+      .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error as string;
+      })
+      .addCase(updateUserDataThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserDataThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(updateUserDataThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error as string;
+      })
+      .addCase(updateUserPasswordThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserPasswordThunk.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(updateUserPasswordThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error as string;
+      })
+      .addCase(addOrUpdateRating.fulfilled, (state, action) => {
+        const bookId = action.payload.bookId;
+        if (bookId && state.user) {
+          state.user.rating[bookId] = action.payload.rating;
+        }
       });
   },
 });

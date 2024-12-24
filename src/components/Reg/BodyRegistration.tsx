@@ -3,14 +3,21 @@ import styled from 'styled-components';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { registrationValidationSchema } from '../../schemas/registrationValidationSchema';
-import { regUser } from '../../store/thunk';
-import man from '../../img/чел 1.png';
-import mail from '../../img/Mail.png';
-import hide from '../../img/Hide.png';
+import man from '../../assets/img/чел 1.png';
+import mail from '../../assets/img/Mail.png';
+import hide from '../../assets/img/Hide.png';
 import { useAppDispatch } from '../../hooks';
-import { IFormReg, IFormInput } from '../../lib/types';
+import { AppPages } from '../../constants/textConstants';
+import { regUser } from '../../store/auth/authThunk';
+import Toast from '../Toast';
+import BaseButton from '../BaseComponents/BaseButton';
+import BaseInput from '../BaseComponents/BaseInput';
+import { IFormReg } from '../../store/auth/authTypes';
+import { IFormInput } from '../../lib/types';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,15 +43,16 @@ const RegistrationBody: React.FC = () => {
     password: string;
   }) => {
     try {
-      const user = await dispatch(
+      const responseData = await dispatch(
         regUser({ email: data.email, password: data.password })
-      );
-      if (user.payload) {
-        navigate('/profile');
+      ).unwrap();
+      if (responseData.user) {
+        navigate(AppPages.profile);
       }
       reset();
     } catch (err) {
-      console.warn('При регистрации возникла ошибка: ', err);
+      console.error('Registration error: ', err);
+      Toast({ message: 'Registration error', error: err });
     }
   };
 
@@ -58,75 +66,40 @@ const RegistrationBody: React.FC = () => {
         >
           <div className="info-block__text">
             <div className="big-title">Sign up</div>
-            <div className="input">
-              <img src={mail} alt="Email" className="input__icon" />
-              <input
-                type="email"
-                id="email"
-                placeholder="Email"
-                className="input__field"
-                {...register('email')}
-              />
-            </div>
-            {errors.email?.type === 'required' && (
-              <div className="error">Email - обязательное поле.</div>
-            )}
-            {errors.email && (
-              <div className="error">{errors.email.message}</div>
-            )}
-            {!errors.email && <div>Enter your email</div>}
-            <div className="input">
-              <div
-                className="password__btn active"
-                onClick={changeInputTypeHandler}
-              >
-                <img src={hide} alt="Password" className="input__icon" />
-              </div>
-              <input
-                type={inputType}
-                placeholder="Password"
-                className="input__field"
-                autoComplete="false"
-                {...register('password')}
-              ></input>
-            </div>
-            {errors.password?.type === 'required' && (
-              <div className="error">Password - обязательное поле.</div>
-            )}
-            {errors.password && (
-              <div className="error">{errors.password.message}</div>
-            )}
-            {!errors.password && <div>Enter your password</div>}
-            <div className="input">
-              <div
-                className="password__btn active"
-                onClick={changeInputTypeHandler}
-              >
-                <img src={hide} alt="Password" className="input__icon" />
-              </div>
-              <input
-                type={inputType}
-                placeholder="Password replay"
-                className="input__field"
-                autoComplete="false"
-                {...register('passwordRep')}
-              ></input>
-            </div>
-            {errors.passwordRep?.type === 'required' && (
-              <div className="error">Password - обязательное поле.</div>
-            )}
-            {errors.passwordRep && (
-              <div className="error">{errors.passwordRep.message}</div>
-            )}
-            {!errors.passwordRep && (
-              <div>Repeat your password without errors</div>
-            )}
+            <BaseInput
+              type="email"
+              img={mail}
+              placeholder="Email"
+              name="email"
+              register={register}
+              errors={errors.email?.message}
+            />
+
+            <BaseInput
+              type={inputType}
+              img={hide}
+              placeholder="Password"
+              name="password"
+              register={register}
+              errors={errors.password?.message}
+              inputClassName='"password__btn active'
+              onClick={changeInputTypeHandler}
+            />
+            <BaseInput
+              type={inputType}
+              img={hide}
+              placeholder="Password replay"
+              name="passwordRep"
+              register={register}
+              errors={errors.passwordRep?.message}
+              inputClassName='"password__btn active'
+              onClick={changeInputTypeHandler}
+            />
+            <ToastContainer />
           </div>
-          <button className="base-button" type="submit">
-            Sign up
-          </button>
+          <BaseButton type="submit" text="Sign up" />
         </form>
-        <img src={man} alt="man" />
+        <img src={man} alt="man" className="container__img" />
       </div>
     </StyledWrapper>
   );
@@ -135,22 +108,13 @@ const RegistrationBody: React.FC = () => {
 export default RegistrationBody;
 
 const StyledWrapper = styled.div`
-  padding: ${({ theme }) => theme.padding.header};
-
-  .poster {
-    display: flex;
-    width: 100%;
-    position: relative;
+  padding: ${({ theme }) => theme.padding.base};
+  @media screen and (max-width: 834px) {
+    padding: 95px 15px;
   }
-
-  .poster__img {
-    position: absolute;
-    bottom: 0;
+  @media screen and (max-width: 320px) {
+    padding: 30px 15px;
   }
-  .password_btn:hover {
-    cursor: pointer;
-  }
-
   .poster__container {
     display: flex;
     flex-direction: row;
@@ -158,7 +122,21 @@ const StyledWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     position: relative;
-    padding: 0 108px 0 98px;
+    @media screen and (max-width: 320px) {
+      flex-direction: column;
+      row-gap: 60px;
+    }
+  }
+
+  .container__img {
+    @media screen and (max-width: 834px) {
+      width: 390px;
+      height: 333px;
+    }
+    @media screen and (max-width: 320px) {
+      width: 290px;
+      height: 247px;
+    }
   }
 
   .container__info-block {
@@ -166,11 +144,16 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     align-items: start;
     row-gap: 50px;
+    max-width: 413px;
+    width: 100%;
   }
+
   .info-block__text {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+    max-width: 413px;
+    width: 100%;
   }
   .error {
     color: #ff0000;

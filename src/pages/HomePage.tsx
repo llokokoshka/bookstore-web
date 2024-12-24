@@ -12,27 +12,14 @@ export default function HomePage() {
 }
 
 const PageWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.white};
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: normal;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: 100vh;
+  background-color: ${({ theme }) => theme.colors.white};
 
-  .title {
-    display: flex;
-    justify-content: center;
-
-    margin-top: 40px;
-    font-size: 120px;
-    width: 100%;
-
-    @media screen and (max-width: 390px) {
-      font-size: 80px;
-    }
-  }
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: normal;
 `;
