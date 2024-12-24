@@ -6,7 +6,8 @@ import {
   getBookRating,
   getBookById,
 } from './booksEntitiesThunk';
-import { IBookState, BookType, CommentsType } from '../../lib/bookTypes';
+import { IBookState } from './bookTypes';
+import { BookType, CommentsType } from '../../lib/types';
 
 const initialState: IBookState = {
   books: {},
@@ -61,9 +62,11 @@ const bookEntititesSlice = createSlice({
       .addCase(addComment.fulfilled, (state, action) => {
         const bookId = action.payload.bookId;
         if (bookId && state.books[bookId]) {
-          const index = state.books[bookId].comments.findIndex((comment) => {
-            return comment.id === action.meta.requestId;
-          });
+          const index: number = state.books[bookId].comments.findIndex(
+            (comment: CommentsType) => {
+              return comment.id === action.meta.requestId;
+            }
+          );
           if (index) {
             state.books[bookId].comments[index] = action.payload;
           }
@@ -72,7 +75,7 @@ const bookEntititesSlice = createSlice({
       .addCase(addComment.rejected, (state, action) => {
         state.loading = false;
         state.books[action.meta.arg.bookId].comments.filter(
-          (comment) => comment.id !== action.meta.requestId
+          (comment: CommentsType) => comment.id !== action.meta.requestId
         );
         state.error = action.error.message;
       })

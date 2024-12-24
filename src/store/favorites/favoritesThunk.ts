@@ -5,7 +5,7 @@ import {
   addFavoriteItemApi,
   deleteFavoriteItemApi,
 } from '../../api/userApi';
-import { FavoriteType } from '../../lib/favoriteTypes';
+import { FavoriteType } from './favoriteTypes';
 import { RootState } from '..';
 import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
 

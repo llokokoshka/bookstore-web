@@ -6,12 +6,16 @@ import {
   deteleItemInCartApi,
 } from '../../api/userApi';
 import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
-import { CartNormalizeType, CartItemNormalizeType } from '../../lib/cartTypes';
+import {
+  CartNormalizeType,
+  CartItemNormalizeType,
+  CartType,
+} from './cartTypes';
 
 export const getCart = createAsyncThunk<CartNormalizeType>(
   'cart/getCart',
   async (_, thunkAPI) => {
-    const data = await getCartApi();
+    const data: CartType = await getCartApi();
 
     const booksInCart = data.cartItems.map((item) => {
       return item.book;

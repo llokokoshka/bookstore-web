@@ -13,10 +13,11 @@ import hide from '../../assets/img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
 import { regUser } from '../../store/auth/authThunk';
-import { IFormInput, IFormReg } from '../../lib/authTypes';
 import Toast from '../Toast';
 import BaseButton from '../BaseComponents/BaseButton';
 import BaseInput from '../BaseComponents/BaseInput';
+import { IFormReg } from '../../store/auth/authTypes';
+import { IFormInput } from '../../lib/types';
 
 const RegistrationBody: React.FC = () => {
   const dispatch = useAppDispatch();

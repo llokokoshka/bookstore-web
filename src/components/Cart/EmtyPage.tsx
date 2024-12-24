@@ -5,9 +5,12 @@ import { Link } from 'react-router-dom';
 import booksImg from '../../assets/img/booksImg.png';
 import { AppPages } from '../../constants/textConstants';
 import BaseButton from '../BaseComponents/BaseButton';
-import { IEmptyPageProps } from '../../lib/types';
 
-const EmptyPage: React.FC<IEmptyPageProps> = (props) => {
+type Props = {
+  page: string;
+};
+
+const EmptyPage: React.FC<Props> = (props) => {
   return (
     <StyledWrapper>
       <img src={booksImg} alt="booksiMG" className="img-size"></img>
@@ -27,11 +30,11 @@ const EmptyPage: React.FC<IEmptyPageProps> = (props) => {
         </div>
         {props.page === 'catalog' ? (
           <Link to={AppPages.base}>
-            <BaseButton text={`Reset filters`} buttonClassName="correct-size" />
+            <BaseButton text="Reset filters" buttonClassName="correct-size" />
           </Link>
         ) : (
           <Link to={AppPages.base}>
-            <BaseButton text={`Go to catalog`} buttonClassName="correct-size" />
+            <BaseButton text="Go to catalog" buttonClassName="correct-size" />
           </Link>
         )}
       </div>

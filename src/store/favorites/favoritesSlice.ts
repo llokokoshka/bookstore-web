@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { getFavorite, toggleFavorite } from './favoritesThunk';
-import { FavoriteType, IFavoriteState } from '../../lib/favoriteTypes';
+import { FavoriteType, IFavoriteState } from './favoriteTypes';
 
 const initialState: IFavoriteState = {
   favoriteId: null,

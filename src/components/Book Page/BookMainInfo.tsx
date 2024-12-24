@@ -2,9 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Rating from './Rating';
-import { IBookMainInfoProps } from '../../lib/types';
 
-const BookMainInfo: React.FC<IBookMainInfoProps> = (props) => {
+type Props = {
+  id: number;
+  name: string;
+  author: string;
+};
+const BookMainInfo: React.FC<Props> = (props) => {
   return (
     <StyledWrapper>
       <div className="main-info">

@@ -1,12 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
+import {
+  SubmitHandler,
+  SubmitErrorHandler,
+  UseFormRegister,
+  FieldErrors,
+} from 'react-hook-form';
 
 import man from '../../assets/img/User profile.png';
 import mail from '../../assets/img/Mail.png';
 import BaseInput from '../BaseComponents/BaseInput';
-import { IProfileInfoFormProps } from '../../lib/types';
+import { UserType, IFormInfo } from '../../lib/types';
 
-const ProfileInfoForm: React.FC<IProfileInfoFormProps> = (props) => {
+type Props = {
+  user: UserType | null;
+  onSubmitFormInfo: SubmitHandler<IFormInfo>;
+  handleChangeInfo: () => void;
+  changeInfo: boolean;
+  editValueName: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  editValueMail: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmitFormInfo: (
+    onValid: SubmitHandler<IFormInfo>,
+    onInvalid?: SubmitErrorHandler<IFormInfo> | undefined
+  ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
+  registerFormInfo: UseFormRegister<IFormInfo>;
+  infoErrors: FieldErrors<IFormInfo>;
+};
+
+const ProfileInfoForm: React.FC<Props> = (props) => {
   return (
     <StyledWrapper
       onSubmit={props.handleSubmitFormInfo(props.onSubmitFormInfo)}

@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Comment from './Comment';
-import { BookType } from '../../lib/bookTypes';
 import BookCover from './BookCover';
 import CommentInput from './CommentInput';
 import BookInfo from './BookInfo';
 import BookMainInfo from './BookMainInfo';
+import { BookType } from '../../lib/types';
 
 const BookPageBody: React.FC<BookType> = (props) => {
   return (

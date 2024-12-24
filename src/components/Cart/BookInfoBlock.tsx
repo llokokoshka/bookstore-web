@@ -1,10 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { IBookInCartProps } from '../../lib/bookTypes';
 import BookAmount from './BookAmount';
+import { BookType } from '../../lib/types';
 
-const BookInfoBlock: React.FC<IBookInCartProps> = (props) => {
+type Props = {
+  id: number;
+  price: number;
+  quantity: number;
+  book?: BookType;
+};
+
+const BookInfoBlock: React.FC<Props> = (props) => {
   let bookName, bookAuthor;
   if (props.book) {
     bookName = props.book.name;

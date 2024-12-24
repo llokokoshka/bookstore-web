@@ -6,7 +6,8 @@ import {
   updateUserData,
   updateUserPassword,
 } from '../../api/userApi';
-import { IUserResponseData, IFormReg, UserType } from '../../lib/authTypes';
+import { IFormReg, IUserResponseData } from './authTypes';
+import { UserType } from '../../lib/types';
 
 export const loginUser = createAsyncThunk<IUserResponseData, IFormReg>(
   AppPages.login,

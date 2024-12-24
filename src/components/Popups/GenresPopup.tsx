@@ -5,7 +5,7 @@ import cn from 'classnames';
 
 import { useAppSelector } from '../../hooks';
 import poligon from '../../assets/img/Polygon 4.png';
-import { GenresType } from '../../lib/bookTypes';
+import { GenresType } from '../../lib/types';
 
 const GenresPopup: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();

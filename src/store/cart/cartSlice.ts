@@ -7,7 +7,7 @@ import {
   downAmountCartItem,
   deleteCartItem,
 } from './cartThunk';
-import { ICartState } from '../../lib/cartTypes';
+import { ICartState } from './cartTypes';
 
 const initialState: ICartState = {
   cart: null,

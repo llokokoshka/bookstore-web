@@ -5,9 +5,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addComment } from '../../store/booksEntities/booksEntitiesThunk';
 import BaseButton from '../BaseComponents/BaseButton';
 import BaseInput from '../BaseComponents/BaseInput';
-import { ICommentInputProps } from '../../lib/types';
 
-const CommentInput: React.FC<ICommentInputProps> = (props) => {
+type Props = {
+  id: number;
+};
+
+const CommentInput: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.booksEntities.loading);
   const user = useAppSelector((state) => state.auth.user);
@@ -51,7 +54,7 @@ const CommentInput: React.FC<ICommentInputProps> = (props) => {
           <BaseButton
             buttonClassName="base-button--width"
             type="submit"
-            text={loading ? `loading...` : `Post a comment`}
+            text={loading ? 'loading...' : 'Post a comment'}
           />
         </form>
       ) : null}

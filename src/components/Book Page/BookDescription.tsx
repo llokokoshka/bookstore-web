@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import cn from 'classnames';
 
-import { IBookDescriptionProps } from '../../lib/types';
-
 const MaxLenght = 400;
 
-const BookDescription: React.FC<IBookDescriptionProps> = (props) => {
+type Props = {
+  description: string;
+};
+
+const BookDescription: React.FC<Props> = (props) => {
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
   const toggleDescription = () => {
@@ -25,7 +27,7 @@ const BookDescription: React.FC<IBookDescriptionProps> = (props) => {
       </div>
       {!isDescriptionExpanded && props.description.length > MaxLenght && (
         <div className="description__show-more" onClick={toggleDescription}>
-          ... See more
+          ...See more
         </div>
       )}
       {isDescriptionExpanded && (

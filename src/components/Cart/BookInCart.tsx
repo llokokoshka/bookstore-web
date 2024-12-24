@@ -3,10 +3,17 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { ApiPath, AppPages } from '../../constants/textConstants';
-import { IBookInCartProps } from '../../lib/bookTypes';
 import BookInfoBlock from './BookInfoBlock';
+import { BookType } from '../../lib/types';
 
-const BookInCart: React.FC<IBookInCartProps> = (props) => {
+type Props = {
+  id: number;
+  price: number;
+  quantity: number;
+  book?: BookType;
+};
+
+const BookInCart: React.FC<Props> = (props) => {
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   let bookImg;
   if (props.book) {

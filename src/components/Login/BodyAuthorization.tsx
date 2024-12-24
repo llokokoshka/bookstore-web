@@ -13,10 +13,10 @@ import hide from '../../assets/img/Hide.png';
 import { useAppDispatch } from '../../hooks';
 import { AppPages } from '../../constants/textConstants';
 import { loginUser } from '../../store/auth/authThunk';
-import { IFormReg } from '../../lib/authTypes';
 import Toast from '../Toast';
 import BaseButton from '../BaseComponents/BaseButton';
 import BaseInput from '../BaseComponents/BaseInput';
+import { IFormReg } from '../../store/auth/authTypes';
 
 const AuthorizationBody: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -80,7 +80,7 @@ const AuthorizationBody: React.FC = () => {
               errors={errors.password?.message}
             />
           </div>
-          <BaseButton text={`Log in`} type="submit" />
+          <BaseButton text="Log in" type="submit" />
         </form>
         <img src={man} alt="man" className="container__img" />
       </div>

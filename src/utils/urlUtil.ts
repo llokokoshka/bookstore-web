@@ -51,8 +51,10 @@ export const setQueryParams = async (props: IQueryParams) => {
 
   if (props.search) {
     updatedParams.search = props.search;
+    updatedParams.page = '1';
   } else if (search) {
     updatedParams.search = search;
+    updatedParams.page = '1';
   }
 
   props.setSearchParams(updatedParams, { replace: true });

@@ -90,7 +90,7 @@ const BookPage: React.FC = () => {
     // eslint-disable-next-line
   }, [bookId, dispatch, comments, recommendedBooks]);
 
-  const isInFav = booksInFavorites.find((id) => id === book?.id);
+  const isInFav = booksInFavorites.find((id) => id === book?.id) ? true : false;
   return (
     <StyledWrapper>
       <Header page="Book" />
@@ -105,7 +105,7 @@ const BookPage: React.FC = () => {
           cover={book.cover}
           rates={book.rates}
           comments={book.comments}
-          isFav={isInFav === undefined ? false : true}
+          isFav={isInFav}
         />
       ) : null}
       {user === null ? <AuthPoster /> : null}

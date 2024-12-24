@@ -2,10 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { IRoundButtonsProps } from '../../lib/types';
 import BaseButton from '../BaseComponents/BaseButton';
 
-const RoundButtons: React.FC<IRoundButtonsProps> = (props) => {
+type Props = {
+  img: string;
+  url: string;
+};
+
+const RoundButtons: React.FC<Props> = (props) => {
   return (
     <StyledWrapper>
       <Link className="todo-body__div-button" to={props.url}>

@@ -9,7 +9,11 @@ import { AppPages } from '../../constants/textConstants';
 import Search from './Search';
 import AuthButton from './AuthButton';
 
-const Header: React.FC<{ page: string }> = (props) => {
+type Props = {
+  page: string;
+};
+
+const Header: React.FC<Props> = (props) => {
   const itemsInCart = useAppSelector((state) => state.cart.numberOfItemsInCart);
   const user = useAppSelector((state) => state.auth.user);
 

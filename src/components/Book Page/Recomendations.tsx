@@ -1,9 +1,16 @@
 import React from 'react';
 
 import CatalogBook from '../Catalog/CatalogBook';
-import { IRecommendedProps } from '../../lib/types';
+import { BookType } from '../../lib/types';
 
-const Recommendations: React.FC<IRecommendedProps> = (props) => {
+type Props = {
+  id: number;
+  booksInCart: number[];
+  booksInFavorites: number[];
+  books: Record<number, BookType>;
+};
+
+const Recommendations: React.FC<Props> = (props) => {
   const idBook = props.id;
   let inCart = false;
   let inFavorites = false;

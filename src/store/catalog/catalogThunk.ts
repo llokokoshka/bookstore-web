@@ -1,8 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getCatalogApi, getRatingApi } from '../../api/bookApi';
-import { QueryParamsType } from '../../lib/types';
+import { ICatalog, QueryParamsType } from '../../lib/types';
 import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
-import { ICatalog } from '../../lib/bookTypes';
 
 export const getCatalog = createAsyncThunk<ICatalog, QueryParamsType>(
   `getCatalog`,

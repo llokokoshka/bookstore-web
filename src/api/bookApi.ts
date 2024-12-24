@@ -1,13 +1,15 @@
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath } from '../constants/textConstants';
-import { IUserRating } from '../lib/authTypes';
+
 import {
   BookType,
   CommentsType,
   GenresType,
   ICatalogFromServer,
-} from '../lib/bookTypes';
-import { IRecommendedThunk, RatingThunkType } from '../lib/types';
+  IRecommendedThunk,
+  IUserRating,
+} from '../lib/types';
+import { RatingThunkType } from '../store/booksEntities/bookTypes';
 
 export async function getBookRatingApi(bookId: number) {
   const response = await axiosInstance.get<RatingThunkType>(

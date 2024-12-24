@@ -2,9 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 import BaseButton from '../BaseComponents/BaseButton';
-import { IBookButtonProps } from '../../lib/types';
 
-const BookButton: React.FC<IBookButtonProps> = (props) => {
+type Props = {
+  type: string;
+  amount: number;
+  price: number;
+};
+
+const BookButton: React.FC<Props> = (props) => {
   return (
     <StyledWrapper>
       <p>{props.type}</p>
@@ -16,7 +21,7 @@ const BookButton: React.FC<IBookButtonProps> = (props) => {
       ) : (
         <BaseButton
           buttonClassName="base-button--width base-button--opacity"
-          text={`Not available`}
+          text="Not available"
         />
       )}
     </StyledWrapper>

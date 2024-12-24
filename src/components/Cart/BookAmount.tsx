@@ -10,9 +10,13 @@ import {
   downAmountCartItem,
   upAmountCartItem,
 } from '../../store/cart/cartThunk';
-import { IBookAmountProps } from '../../lib/types';
 
-const BookAmount: React.FC<IBookAmountProps> = (props) => {
+type Props = {
+  id: number;
+  quantity: number;
+};
+
+const BookAmount: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
 
   const handleMinusQuantity = async () => {

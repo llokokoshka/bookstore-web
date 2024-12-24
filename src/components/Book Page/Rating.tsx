@@ -6,10 +6,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import starImg from '../../assets/img/Star.png';
 import fullStar from '../../assets/img/fullStar.png';
 import { addOrUpdateRating } from '../../store/booksEntities/booksEntitiesThunk';
-import { IUserRating } from '../../lib/authTypes';
-import { IRatingProps } from '../../lib/types';
+import { IUserRating } from '../../lib/types';
 
-const Rating: React.FC<IRatingProps> = ({ bookId, isUserRate }) => {
+type Props = {
+  bookId: number;
+  isUserRate: boolean;
+};
+
+const Rating: React.FC<Props> = ({ bookId, isUserRate }) => {
   let fullStars = 0;
   let userRateID: IUserRating | null = null;
   let userRate: number | null | undefined = null;

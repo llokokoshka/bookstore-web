@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { ApiPath } from '../../constants/textConstants';
-import { CommentsType } from '../../lib/bookTypes';
+import { CommentsType } from '../../lib/types';
 
 const Comment: React.FC<CommentsType> = (props) => {
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;

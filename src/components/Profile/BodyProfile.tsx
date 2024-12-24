@@ -17,7 +17,6 @@ import {
 import { saveBase64File } from '../../api/userApi';
 import { setUser, logout } from '../../store/auth/authSlice';
 import { convertFileToBase64 } from '../../utils/fileUtil';
-import { UserType, IFormInfo, IFormPass } from '../../lib/authTypes';
 import { cleanCart } from '../../store/cart/cartSlice';
 import { cleanFav } from '../../store/favorites/favoritesSlice';
 import Toast from '../Toast';
@@ -29,8 +28,11 @@ import {
   updateUserPasswordThunk,
 } from '../../store/auth/authThunk';
 import { useAppDispatch } from '../../hooks';
+import { IFormInfo, IFormPass, UserType } from '../../lib/types';
 
-const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
+type Props = { user: UserType | null };
+
+const ProfileBody: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
 
@@ -185,7 +187,7 @@ const ProfileBody: React.FC<{ user: UserType | null }> = (props) => {
             <img src={camera} alt="camera" className="correct-size" />
           </label>
         </div>
-        <BaseButton text={`Logout`} onClick={exit} />
+        <BaseButton text="Logout" onClick={exit} />
       </div>
 
       <div className="container">

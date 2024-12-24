@@ -1,10 +1,10 @@
 import React from 'react';
 
 import CatalogBook from './CatalogBook';
-import { BookType } from '../../lib/bookTypes';
 import { useAppSelector } from '../../hooks';
 import { cartSelectors } from '../../store/cart/selectors';
 import { favoriteSelectors } from '../../store/favorites/selectors';
+import { BookType } from '../../lib/types';
 
 type Props = {
   book: BookType;

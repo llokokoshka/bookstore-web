@@ -1,4 +1,4 @@
-import { BookType } from './bookTypes';
+import { BookType } from '../../lib/types';
 
 export type FavoriteType = {
   id: number;

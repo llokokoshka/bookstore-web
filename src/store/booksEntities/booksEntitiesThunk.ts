@@ -8,11 +8,16 @@ import {
   getAllCommentsApi,
   getAvarageRatingApi,
 } from '../../api/bookApi';
-import { RatingThunkType, AddCommentThunkType } from '../../lib/types';
 import { addOrUpdBook } from './booksEntitiesSlice';
 import { setGenres } from '../filter/genresState';
-import { IUserRating } from '../../lib/authTypes';
-import { BookType, GenresType, CommentsType } from '../../lib/bookTypes';
+
+import { RatingThunkType, AddCommentThunkType } from './bookTypes';
+import {
+  BookType,
+  GenresType,
+  CommentsType,
+  IUserRating,
+} from '../../lib/types';
 
 export const getBookRating = createAsyncThunk<RatingThunkType, number>(
   'books/fetchBookRating',

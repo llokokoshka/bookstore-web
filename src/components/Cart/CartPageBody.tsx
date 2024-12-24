@@ -45,7 +45,7 @@ const CartPageBody: React.FC = () => {
                 <button className="cart-button">Continue shopping</button>
               </Link>
               <BaseButton
-                text={`Chekout`}
+                text="Chekout"
                 buttonClassName="correct-button-size"
               />
             </div>

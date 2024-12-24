@@ -6,7 +6,7 @@ import rubbish from '../../assets/img/Delete.png';
 import { useAppDispatch } from '../../hooks';
 import { ApiPath, AppPages } from '../../constants/textConstants';
 import { toggleFavorite } from '../../store/favorites/favoritesThunk';
-import { BookType } from '../../lib/bookTypes';
+import { BookType } from '../../lib/types';
 
 type Props = {
   id: number;

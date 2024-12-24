@@ -7,8 +7,8 @@ import {
   updateUserDataThunk,
   updateUserPasswordThunk,
 } from './authThunk';
-import { IAuthState } from '../../lib/authTypes';
 import { addOrUpdateRating } from '../booksEntities/booksEntitiesThunk';
+import { IAuthState } from './authTypes';
 
 const initialState: IAuthState = {
   user: null,

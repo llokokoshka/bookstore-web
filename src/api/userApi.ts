@@ -1,8 +1,9 @@
 import { axiosInstance } from '../axiosDefaul';
 import { ApiPath } from '../constants/textConstants';
-import { UserType, IUserResponseData } from '../lib/authTypes';
-import { CartType, CartItemType } from '../lib/cartTypes';
-import { FavoriteType } from '../lib/favoriteTypes';
+import { FavoriteType } from '../store/favorites/favoriteTypes';
+import { IUserResponseData } from '../store/auth/authTypes';
+import { CartType, CartItemType } from '../store/cart/cartTypes';
+import { UserType } from '../lib/types';
 
 export async function saveBase64File(
   base64Data: string,

@@ -1,14 +1,48 @@
 import { SetURLSearchParams } from 'react-router-dom';
-import {
-  FieldErrors,
-  SubmitErrorHandler,
-  SubmitHandler,
-  UseFormRegister,
-} from 'react-hook-form';
 
 import { AppDispatch } from '../store';
-import { BookType, CommentsType, CoverType, GenresType } from './bookTypes';
-import { IFormInfo, IFormPass, IUserRating, UserType } from './authTypes';
+import { IFormReg } from '../store/auth/authTypes';
+
+export interface IUserRating {
+  id: number;
+  value: number;
+}
+
+export type UserType = {
+  id?: number;
+  fullName?: string;
+  email?: string;
+  password?: string;
+  passwordNew?: string;
+  avatar?: string;
+  rating: Record<number, IUserRating>;
+};
+
+export type PartialUserType = {
+  id: number;
+  fullName: string;
+  avatar: string;
+  email?: string;
+};
+
+export interface IUserRatingWithTotalRate extends IUserRating {
+  avarageRating: number;
+}
+
+export interface IFormInput extends IFormReg {
+  passwordRep: string;
+}
+
+export interface IFormInfo {
+  fullName: string;
+  email: string;
+}
+
+export interface IFormPass {
+  password: string;
+  passwordNew: string;
+  passwordRep: string;
+}
 
 export interface IFilterState {
   genres: GenresType[];
@@ -20,28 +54,10 @@ export interface ICommentsState {
   error: string | null;
 }
 
-export type AddCommentThunkType = {
-  text: string;
-  bookId: number;
-  user: UserType;
-};
-
 export type RatingResThunkType = {
   rateId: number;
   value: IUserRating;
 };
-
-export type RatingThunkType = {
-  bookId: number;
-  rate: number;
-};
-
-export interface IRecommendedProps {
-  id: number;
-  booksInCart: number[];
-  booksInFavorites: number[];
-  books: Record<number, BookType>;
-}
 
 export interface IRecommendedThunk {
   newArrayWithBookIds: number[];
@@ -81,82 +97,89 @@ export interface IQueryParams {
   search?: string;
 }
 
-export interface IBookButtonProps {
-  type: string;
-  amount: number;
-  price: number;
-}
+type Author = {
+  id: number;
+  text: string;
+};
 
-export interface IBookDescriptionProps {
-  description: string;
-}
+export type BookGenreType = { id: number };
 
-export interface IBookInfoProps {
-  description: string;
-  cover: CoverType;
-}
-
-export interface IBookMainInfoProps {
+export type GenresType = {
   id: number;
   name: string;
-  author: string;
-}
+};
 
-export interface ICommentInputProps {
+export type CommentsType = {
+  id: number | string;
+  text: string;
+  dateOfCreate: Date;
+  user: UserType;
+  bookId?: number;
+};
+
+export type CoverType = {
   id: number;
-}
+  paperback_price: number;
+  paperback_amount: number;
+  hardcover_price: number;
+  hardcover_amount: number;
+};
 
-export interface IRatingProps {
-  bookId: number;
-  isUserRate: boolean;
-}
-
-export interface IBookAmountProps {
+export type BookType = {
   id: number;
-  quantity: number;
-}
-
-export interface IEmptyPageProps {
-  page: string;
-}
-
-export interface IAuthButtonProps {
-  page: string;
-}
-
-export interface IRoundButtonsProps {
+  name: string;
   img: string;
-  url: string;
+  description: string;
+  quantity?: number;
+  isBestseller?: boolean;
+  isNew?: boolean;
+  author: Author;
+  bookGenres?: BookGenreType[] | [];
+  comments: CommentsType[];
+  rates: IUserRating[] | [];
+  totalRate?: number | null;
+  cover: CoverType;
+  isFav?: boolean;
+};
+
+export interface RatingBook extends IUserRating {
+  book: BookType;
 }
 
-export interface IUserButtonsProps {
-  itemsInCart: number;
+type MetaType = {
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  itemCount: number;
+  page: number;
+  pageCount: number;
+};
+
+export interface ICatalogState {
+  books: number[] | null;
+  meta: MetaType | null;
+  error: string | null;
+  loading: boolean;
 }
 
-export interface IProfileInfoFormProps {
-  user: UserType | null;
-  onSubmitFormInfo: SubmitHandler<IFormInfo>;
-  handleChangeInfo: () => void;
-  changeInfo: boolean;
-  editValueName: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  editValueMail: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmitFormInfo: (
-    onValid: SubmitHandler<IFormInfo>,
-    onInvalid?: SubmitErrorHandler<IFormInfo> | undefined
-  ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
-  registerFormInfo: UseFormRegister<IFormInfo>;
-  infoErrors: FieldErrors<IFormInfo>;
+export interface ICatalogFromServer {
+  data: BookType[] | null;
+  meta: MetaType | null;
 }
 
-export interface IProfilePassFormProps {
-  user: UserType | null;
-  handleSubmitFormPass: (
-    onValid: SubmitHandler<IFormPass>,
-    onInvalid?: SubmitErrorHandler<IFormPass> | undefined
-  ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
-  onSubmitFormPass: SubmitHandler<IFormPass>;
-  handleChangePass: () => void;
-  changePass: boolean;
-  registerFormPass: UseFormRegister<IFormPass>;
-  passErrors: FieldErrors<IFormPass>;
+export interface ICatalog {
+  data: number[] | null;
+  meta: MetaType | null;
+}
+
+export interface ICatalogProps {
+  id: number;
+  booksInCart: number[];
+  booksInFavorites: number[];
+  books: Record<number, BookType>;
+}
+
+export interface IBookItemState {
+  book: BookType | null;
+  error: string | null;
+  loading: boolean;
 }

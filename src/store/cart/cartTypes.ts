@@ -1,4 +1,4 @@
-import { BookType } from './bookTypes';
+import { BookType } from '../../lib/types';
 
 export type CartItemType = {
   id: number;
@@ -6,18 +6,16 @@ export type CartItemType = {
   quantity: number;
   book: BookType;
 };
-
+export type CartType = {
+  id: number;
+  total_price: number;
+  cartItems: CartItemType[];
+};
 export type CartItemNormalizeType = {
   id: number;
   total_price: number;
   quantity: number;
   book: number;
-};
-
-export type CartType = {
-  id: number;
-  total_price: number;
-  cartItems: CartItemType[];
 };
 
 export type CartNormalizeType = {

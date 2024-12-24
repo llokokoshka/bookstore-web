@@ -5,9 +5,17 @@ import rightArr from '../../assets/img/navigate-right-forward.png';
 import leftArr from '../../assets/img/left arrow.png';
 import emtyRow from '../../assets/img/Ellipse.png';
 import fullRow from '../../assets/img/Ellipse full.png';
-import { INavigateProps } from '../../lib/bookTypes';
 
-const Navigate: React.FC<INavigateProps> = (props) => {
+type Props = {
+  hasPrevPage: boolean | undefined;
+  handlePagePrev: () => void;
+  page: number | undefined;
+  colPages: number | undefined;
+  hasNextPage: boolean | undefined;
+  handlePageNext: () => void;
+};
+
+const Navigate: React.FC<Props> = (props) => {
   return (
     <StyledWrapper>
       {props.hasPrevPage ? (
