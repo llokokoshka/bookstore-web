@@ -1,14 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import {
-  getFavorite,
-  addFavoriteItem,
-  deleteFavoriteItem,
-} from './favoritesThunk';
-import { IFavoriteState } from '../../lib/favoriteTypes';
+import { getFavorite, toggleFavorite } from './favoritesThunk';
+import { FavoriteType, IFavoriteState } from '../../lib/favoriteTypes';
 
 const initialState: IFavoriteState = {
-  favorites: null,
+  favoriteId: null,
   booksIdsInFavorites: [],
   error: null,
   loading: false,
@@ -19,7 +15,7 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     cleanFav: (state) => {
-      state.favorites = null;
+      state.favoriteId = null;
       state.booksIdsInFavorites = [];
     },
   },
@@ -29,70 +25,34 @@ const favoritesSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(getFavorite.fulfilled, (state, action) => {
-        state.loading = false;
-        state.favorites = action.payload;
-        const booksInFav = state.favorites?.favoritesItems.map((item) => {
-          return item.book;
-        });
-
-        if (booksInFav) state.booksIdsInFavorites = booksInFav;
-      })
+      .addCase(
+        getFavorite.fulfilled,
+        (state, action: PayloadAction<FavoriteType>) => {
+          state.loading = false;
+          state.favoriteId = action.payload.id;
+          state.booksIdsInFavorites = action.payload.booksIdsInFavorites;
+        }
+      )
       .addCase(getFavorite.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error as string;
       })
-      .addCase(addFavoriteItem.pending, (state) => {
+      .addCase(toggleFavorite.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(addFavoriteItem.fulfilled, (state, action) => {
-        state.loading = false;
-        if (state.booksIdsInFavorites.length > 0) {
-          state.booksIdsInFavorites.push(action.payload.book);
-        } else {
-          state.booksIdsInFavorites = [action.payload.book];
+      .addCase(
+        toggleFavorite.fulfilled,
+        (state, action: PayloadAction<FavoriteType>) => {
+          state.loading = false;
+          state.favoriteId = action.payload.id;
+          state.booksIdsInFavorites = action.payload.booksIdsInFavorites;
         }
-        state.favorites?.favoritesItems.push(action.payload);
-      })
-      .addCase(addFavoriteItem.rejected, (state, action) => {
+      )
+      .addCase(toggleFavorite.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error as string;
-      })
-      .addCase(deleteFavoriteItem.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(deleteFavoriteItem.fulfilled, (state, action) => {
-        state.loading = false;
-        const itemIndex = state.favorites?.favoritesItems.findIndex(
-          (item) => item.id === action.payload
-        );
-        if (
-          itemIndex !== -1 &&
-          state.favorites &&
-          (itemIndex || itemIndex === 0)
-        ) {
-          const idFavorite = state.favorites.favoritesItems[itemIndex].book;
-          state.favorites.favoritesItems =
-            state.favorites.favoritesItems.filter((item) => {
-              return item.id !== action.payload;
-            });
-          if (
-            state.booksIdsInFavorites &&
-            state.booksIdsInFavorites.find((item) => item === idFavorite)
-          ) {
-            delete state.booksIdsInFavorites[
-              state.booksIdsInFavorites.findIndex((item) => item === idFavorite)
-            ];
-          }
-        } else {
-          console.error('Item not found in favorite:', action.payload);
-        }
-      })
-      .addCase(deleteFavoriteItem.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error as string;
+        console.log(action);
       });
   },
 });

@@ -5,7 +5,7 @@ const getIsInFavorite = createSelector(
   (store: RootState) => store.favorite.booksIdsInFavorites,
   (store: RootState, id: number) => id,
   (favoriteIdsList, id) => {
-    return favoriteIdsList.includes(id);
+    return favoriteIdsList?.includes(id);
   }
 );
 

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import heart from '../../assets/img/Heart.png';
 import fullHeart from '../../assets/img/fullHeart.png';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { ApiPath, AppPages } from '../../constants/textConstants';
-import { handleFavorites } from '../../utils/favoriteUtil';
+import { toggleFavorite } from '../../store/favorites/favoritesThunk';
 
 export interface Props {
   img: string;
@@ -20,44 +20,32 @@ const CatalogBookCover: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
 
-  const [isFav, setIsFav] = useState(props.isInFavorites);
-
-  const booksInFavorites = useAppSelector(
-    (state) => state.favorite.booksIdsInFavorites
-  );
-  const Favorites = useAppSelector((state) => state.favorite.favorites);
-
-  const useHandleFav = async () => {
-    const result = await handleFavorites(
-      props.id,
-      dispatch,
-      booksInFavorites,
-      Favorites,
-      isFav
+  const toggleFav = async () => {
+    await dispatch(
+      toggleFavorite({ bookId: props.id, isInFavorites: props.isInFavorites })
     );
-    setIsFav(result);
   };
 
   return (
     <StyledWrapper>
-      {isFav ? (
-        <div className="book__favorite-button" onClick={useHandleFav}>
+      {props.isInFavorites ? (
+        <div className="book__favorite-button" onClick={toggleFav}>
           <img src={fullHeart} alt="fullHeart" className="heart-size"></img>
         </div>
       ) : (
         <div
           className="book__favorite-button book__favorite-button--opacity"
-          onClick={useHandleFav}
+          onClick={toggleFav}
         >
           <img src={heart} alt="heart" className="heart-size"></img>
         </div>
       )}
       {props.isNew ? (
-        <div className="book__new" onClick={useHandleFav}>
+        <div className="book__new">
           <div>New</div>
         </div>
       ) : props.isBestseller ? (
-        <div className="book__bestseller" onClick={useHandleFav}>
+        <div className="book__bestseller">
           <div>Bestseller</div>
         </div>
       ) : null}

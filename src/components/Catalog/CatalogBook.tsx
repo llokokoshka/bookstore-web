@@ -1,19 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Rating from '../Book Page/Rating';
 import { AppPages } from '../../constants/textConstants';
 import { addCartItem } from '../../store/cart/cartThunk';
-import { IBookProps } from '../../lib/bookTypes';
 import BaseButton from '../BaseComponents/BaseButton';
 import CatalogBookCover from './CatalogBookCover';
 
-const CatalogBook: React.FC<IBookProps> = (props) => {
+type Props = {
+  img: string;
+  id: number;
+  name: string;
+  author: string;
+  price: number | undefined;
+  isInCart: boolean;
+  isInFavorites: boolean;
+  isBestseller: boolean;
+  isNew: boolean;
+};
+const CatalogBook: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+  const navigate = useNavigate();
 
   const addBookInCart = () => {
+    if (!user) {
+      navigate(`${AppPages.login}`);
+    }
     if (props.id) dispatch(addCartItem(props.id));
   };
 

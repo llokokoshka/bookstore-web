@@ -2,40 +2,43 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { ApiPath } from '../../constants/textConstants';
+import { ApiPath, AppPages } from '../../constants/textConstants';
 import heart from '../../assets/img/Heart.png';
 import fullHeart from '../../assets/img/fullHeart.png';
-import { handleFavorites } from '../../utils/favoriteUtil';
-import { IBookCoverProps } from '../../lib/types';
+import { useNavigate } from 'react-router-dom';
+import { toggleFavorite } from '../../store/favorites/favoritesThunk';
 
-const BookCover: React.FC<IBookCoverProps> = (props) => {
+type Props = {
+  id: number;
+  isFav: boolean;
+  img: string;
+};
+
+const BookCover: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
-  const booksInFavorites = useAppSelector(
-    (state) => state.favorite.booksIdsInFavorites
-  );
-  const favorites = useAppSelector((state) => state.favorite.favorites);
+  const user = useAppSelector((state) => state.auth.user);
 
-  const useHandleFav = async () => {
-    await handleFavorites(
-      props.id,
-      dispatch,
-      booksInFavorites,
-      favorites,
-      props.isFav || false
+  const toggleFav = async () => {
+    if (!user) {
+      navigate(`${AppPages.login}`);
+    }
+    await dispatch(
+      toggleFavorite({ bookId: props.id, isInFavorites: props.isFav })
     );
   };
 
   return (
     <StyledWrapper>
       {props.isFav ? (
-        <div className="cover__favorite-button" onClick={useHandleFav}>
+        <div className="cover__favorite-button" onClick={toggleFav}>
           <img src={fullHeart} alt="fullHeart" className="heart-size"></img>
         </div>
       ) : (
         <div
           className="cover__favorite-button cover__favorite-button--opacity"
-          onClick={useHandleFav}
+          onClick={toggleFav}
         >
           <img src={heart} alt="heart" className="heart-size"></img>
         </div>

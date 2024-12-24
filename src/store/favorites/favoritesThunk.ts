@@ -5,68 +5,36 @@ import {
   addFavoriteItemApi,
   deleteFavoriteItemApi,
 } from '../../api/userApi';
-import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
-import {
-  FavoriteNormalizeType,
-  FavoriteItemNormalizeType,
-} from '../../lib/favoriteTypes';
+import { FavoriteType } from '../../lib/favoriteTypes';
 import { RootState } from '..';
+import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
 
-export const getFavorite = createAsyncThunk<FavoriteNormalizeType>(
+export const getFavorite = createAsyncThunk<FavoriteType>(
   'favorite/getFavorite',
-  async (_, thunkAPI) => {
+  async (_, { dispatch }) => {
     const data = await getFavoriteApi();
-    const booksInFav = data.favoritesItems.map((item) => {
-      return item.book;
-    });
-
-    thunkAPI.dispatch(addOrUpdBook(booksInFav));
-
-    const arrayWithFavItems = data.favoritesItems;
-
-    const newArrWithBookIds = arrayWithFavItems
-      ? arrayWithFavItems.map((item) => {
-          const bookId = item.book.id;
-          return { ...item, book: bookId };
-        })
-      : null;
-
-    const newData = {
-      ...data,
-      favoritesItems: newArrWithBookIds ? newArrWithBookIds : [],
-    };
-
-    return newData;
+    dispatch(addOrUpdBook(data.favoriteBooks));
+    return data;
   }
 );
 
-export const addFavoriteItem = createAsyncThunk<
-  FavoriteItemNormalizeType,
-  number,
+export const toggleFavorite = createAsyncThunk<
+  FavoriteType,
+  { bookId: number; isInFavorites: boolean },
   {
     state: RootState;
   }
->('favorite/addItemInFavorite', async (bookId, thunkAPI) => {
-  try {
-    const store = thunkAPI.getState();
-
-    const data = await addFavoriteItemApi(bookId);
-    thunkAPI.dispatch(addOrUpdBook([data.book]));
-    const newData = {
-      ...data,
-      book: data.book.id,
-    };
-    return newData;
-  } catch (err: any) {
-    return thunkAPI.rejectWithValue(err.response.data.message);
-  }
-});
-
-export const deleteFavoriteItem = createAsyncThunk(
-  'favorite/deleteItemFromFavorite',
-  async (ItemId: number, thunkAPI) => {
+>(
+  'favorite/toffleItemInFavorite',
+  async ({ bookId, isInFavorites }, thunkAPI) => {
     try {
-      const data = await deleteFavoriteItemApi(ItemId);
+      if (isInFavorites) {
+        const data = await deleteFavoriteItemApi(bookId);
+        return data;
+      }
+      const data = await addFavoriteItemApi(bookId);
+      thunkAPI.dispatch(addOrUpdBook(data.favoriteBooks));
+
       return data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err.response.data.message);

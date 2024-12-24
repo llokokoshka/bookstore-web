@@ -2,13 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { IFavoriteProps } from '../../lib/types';
 import rubbish from '../../assets/img/Delete.png';
 import { useAppDispatch } from '../../hooks';
 import { ApiPath, AppPages } from '../../constants/textConstants';
-import { deleteFavoriteItem } from '../../store/favorites/favoritesThunk';
+import { toggleFavorite } from '../../store/favorites/favoritesThunk';
+import { BookType } from '../../lib/bookTypes';
 
-const BookInFavorite: React.FC<IFavoriteProps> = (props) => {
+type Props = {
+  id: number;
+  book: BookType | undefined;
+};
+const BookInFavorite: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   let bookImg, bookName, bookAuthor;
@@ -20,7 +24,11 @@ const BookInFavorite: React.FC<IFavoriteProps> = (props) => {
   }
 
   const handleDeleteItem = async () => {
-    await dispatch(deleteFavoriteItem(props.id));
+    if (props.book) {
+      await dispatch(
+        toggleFavorite({ bookId: props.book.id, isInFavorites: true })
+      );
+    }
   };
 
   return (

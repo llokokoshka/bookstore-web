@@ -9,7 +9,9 @@ import { getFavorite } from '../../store/favorites/favoritesThunk';
 
 const FavoritePage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const Favorites = useAppSelector((state) => state.favorite.favorites);
+  const Favorites = useAppSelector(
+    (state) => state.favorite.booksIdsInFavorites
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);

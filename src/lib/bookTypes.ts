@@ -49,18 +49,6 @@ export interface RatingBook extends IUserRating {
   book: BookType;
 }
 
-export interface IBookProps {
-  img: string;
-  id: number;
-  name: string;
-  author: string;
-  price: number | undefined;
-  isInCart: boolean;
-  isInFavorites: boolean;
-  isBestseller: boolean;
-  isNew: boolean;
-}
-
 export interface IBookInCartProps {
   id: number;
   price: number;

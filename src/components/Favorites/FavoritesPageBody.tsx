@@ -6,24 +6,22 @@ import BookInFavorite from './BookInFavorite';
 import EmptyPage from '../Cart/EmtyPage';
 
 const FavoritePageBody: React.FC = () => {
-  const Favorites = useAppSelector((state) => state.favorite.favorites);
+  const Favorites = useAppSelector(
+    (state) => state.favorite.booksIdsInFavorites
+  );
   const books = useAppSelector((state) => state.booksEntities.books);
 
   return (
     <StyledWrapper
-      $numberItems={
-        Favorites?.favoritesItems && Favorites.favoritesItems.length !== 0
-          ? Favorites?.favoritesItems.length
-          : 0
-      }
+      $numberItems={Favorites && Favorites.length !== 0 ? Favorites.length : 0}
     >
-      {Favorites?.favoritesItems.length !== 0 ? (
+      {Favorites.length !== 0 ? (
         <>
-          {Favorites?.favoritesItems?.map((item) => {
-            const Book = item.book in books ? books[item.book] : undefined;
+          {Favorites.map((item) => {
+            const Book = item in books ? books[item] : undefined;
             return (
-              <div className="cart-item" key={item.id}>
-                <BookInFavorite key={item.id} id={item.id} book={Book} />
+              <div className="cart-item" key={item}>
+                <BookInFavorite key={item} id={item} book={Book} />
               </div>
             );
           })}

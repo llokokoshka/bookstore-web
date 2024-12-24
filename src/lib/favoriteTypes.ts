@@ -1,27 +1,13 @@
 import { BookType } from './bookTypes';
 
-export type FavoriteItemType = {
-  id: number;
-  book: BookType;
-};
-
-export type FavoriteItemNormalizeType = {
-  id: number;
-  book: number;
-};
-
 export type FavoriteType = {
   id: number;
-  favoritesItems: FavoriteItemType[];
-};
-
-export type FavoriteNormalizeType = {
-  id: number;
-  favoritesItems: FavoriteItemNormalizeType[];
+  booksIdsInFavorites: number[];
+  favoriteBooks: BookType[];
 };
 
 export interface IFavoriteState {
-  favorites: FavoriteNormalizeType | null;
+  favoriteId: number | null;
   booksIdsInFavorites: number[];
   loading: boolean;
   error: string | null;

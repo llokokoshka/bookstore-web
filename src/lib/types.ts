@@ -10,11 +10,6 @@ import { AppDispatch } from '../store';
 import { BookType, CommentsType, CoverType, GenresType } from './bookTypes';
 import { IFormInfo, IFormPass, IUserRating, UserType } from './authTypes';
 
-export interface IFavoriteProps {
-  id: number;
-  book: BookType | undefined;
-}
-
 export interface IFilterState {
   genres: GenresType[];
 }
@@ -90,12 +85,6 @@ export interface IBookButtonProps {
   type: string;
   amount: number;
   price: number;
-}
-
-export interface IBookCoverProps {
-  id: number;
-  isFav: boolean;
-  img: string;
 }
 
 export interface IBookDescriptionProps {

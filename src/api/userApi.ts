@@ -2,7 +2,7 @@ import { axiosInstance } from '../axiosDefaul';
 import { ApiPath } from '../constants/textConstants';
 import { UserType, IUserResponseData } from '../lib/authTypes';
 import { CartType, CartItemType } from '../lib/cartTypes';
-import { FavoriteType, FavoriteItemType } from '../lib/favoriteTypes';
+import { FavoriteType } from '../lib/favoriteTypes';
 
 export async function saveBase64File(
   base64Data: string,
@@ -96,24 +96,22 @@ export async function getFavoriteApi() {
   const response = await axiosInstance.get<FavoriteType>(
     ApiPath.user.favorites.allFavorites
   );
-
   return response.data;
 }
 
 export async function addFavoriteItemApi(bookId: number) {
-  const response = await axiosInstance.post<FavoriteItemType>(
+  const response = await axiosInstance.post<FavoriteType>(
     ApiPath.user.favorites.item,
     {
       bookId,
     }
   );
-
   return response.data;
 }
 
-export async function deleteFavoriteItemApi(ItemId: number) {
-  const response = await axiosInstance.delete(
-    ApiPath.user.favorites.getItemWithIdUrl(ItemId)
+export async function deleteFavoriteItemApi(bookId: number) {
+  const response = await axiosInstance.delete<FavoriteType>(
+    ApiPath.user.favorites.getItemWithIdUrl(bookId)
   );
   return response.data;
 }
