@@ -41,7 +41,7 @@ const CommentInput: React.FC<Props> = (props) => {
 
   return (
     <StyledWrapper>
-      {user ? (
+      {user && (
         <form onSubmit={handleAddComment} className="comment">
           <BaseInput
             type="text"
@@ -57,7 +57,7 @@ const CommentInput: React.FC<Props> = (props) => {
             text={loading ? 'loading...' : 'Post a comment'}
           />
         </form>
-      ) : null}
+      )}
     </StyledWrapper>
   );
 };

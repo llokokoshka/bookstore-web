@@ -7,7 +7,7 @@ type Props = {
   text?: string;
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
-  style?: React.CSSProperties | undefined;
+  style?: React.CSSProperties;
   img?: string;
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { ApiPath, AppPages } from '../../constants/textConstants';
+import { AppPages } from '../../constants/textConstants';
 import heart from '../../assets/img/Heart.png';
 import fullHeart from '../../assets/img/fullHeart.png';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,6 @@ type Props = {
 const BookCover: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   const user = useAppSelector((state) => state.auth.user);
 
   const toggleFav = async () => {
@@ -43,11 +42,7 @@ const BookCover: React.FC<Props> = (props) => {
           <img src={heart} alt="heart" className="heart-size"></img>
         </div>
       )}
-      <img
-        src={dirnameBookImg + props.img}
-        alt="img"
-        className="cover__img"
-      ></img>
+      <img src={props.img} alt="img" className="cover__img"></img>
     </StyledWrapper>
   );
 };

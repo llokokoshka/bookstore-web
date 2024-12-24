@@ -90,7 +90,7 @@ export interface IQueryParams {
   searchParams: URLSearchParams;
   setSearchParams: SetURLSearchParams;
   pageNum?: string;
-  genres?: string[] | number[] | undefined;
+  genres?: string[] | number[];
   sortByOption?: string;
   minPriceParam?: string;
   maxPriceParam?: string;
@@ -134,9 +134,9 @@ export type BookType = {
   isBestseller?: boolean;
   isNew?: boolean;
   author: Author;
-  bookGenres?: BookGenreType[] | [];
+  bookGenres?: BookGenreType[];
   comments: CommentsType[];
-  rates: IUserRating[] | [];
+  rates: IUserRating[];
   totalRate?: number | null;
   cover: CoverType;
   isFav?: boolean;

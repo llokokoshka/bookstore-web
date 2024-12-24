@@ -8,13 +8,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import camera from '../../assets/img/Camera.png';
 import { profileValidationSchema } from '../../schemas/profileValidationSchema';
 import { editPassValidationSchema } from '../../schemas/editPassValidationSchemf';
-import { ApiPath, DEFAULT_PASSWORD_STARS } from '../../constants/textConstants';
+import { DEFAULT_PASSWORD_STARS } from '../../constants/textConstants';
 import {
   ERROR_AVATAR_UPLOAD,
   ERROR_UPDATE_USER_DATA,
   ERROR_UPDATE_USER_PASSWORD,
 } from '../../constants/errorConstants';
-import { saveBase64File } from '../../api/userApi';
 import { setUser, logout } from '../../store/auth/authSlice';
 import { convertFileToBase64 } from '../../utils/fileUtil';
 import { cleanCart } from '../../store/cart/cartSlice';
@@ -24,6 +23,7 @@ import BaseButton from '../BaseComponents/BaseButton';
 import ProfileInfoForm from './ProfileInfoForm';
 import ProfilePassForm from './ProfilePassForm';
 import {
+  saveFileThunk,
   updateUserDataThunk,
   updateUserPasswordThunk,
 } from '../../store/auth/authThunk';
@@ -34,7 +34,6 @@ type Props = { user: UserType | null };
 
 const ProfileBody: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
-  const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
 
   const [changeInfo, setChangeInfo] = useState(true);
   const [changePass, setChangePass] = useState(true);
@@ -82,8 +81,7 @@ const ProfileBody: React.FC<Props> = (props) => {
       const file = e.target.files[0];
       try {
         const base64 = await convertFileToBase64(file);
-        const data = await saveBase64File(base64, 'avatar');
-        dispatch(setUser({ avatar: data }));
+        dispatch(saveFileThunk({ base64Data: base64, fileType: 'avatar' }));
         Toast({ message: 'Avatar was updated!' });
       } catch (err) {
         console.error(ERROR_AVATAR_UPLOAD, err);
@@ -173,7 +171,7 @@ const ProfileBody: React.FC<Props> = (props) => {
     <StyledWrapper>
       <div className="profile">
         <div className="profile__img">
-          <img src={dirname + user?.avatar} alt="img" className="avatar"></img>
+          <img src={user?.avatar} alt="img" className="avatar"></img>
           <label className="avatar-button">
             <input
               type="file"

@@ -15,7 +15,7 @@ const BookMainInfo: React.FC<Props> = (props) => {
         <div className="big-title">{props.name}</div>
         <div className="normal-title">{props.author}</div>
       </div>
-      {props.id ? <Rating bookId={props.id} isUserRate={true} /> : null}
+      {props.id ? <Rating bookId={props.id} isBookPage={true} /> : null}
     </StyledWrapper>
   );
 };

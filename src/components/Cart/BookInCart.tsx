@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { ApiPath, AppPages } from '../../constants/textConstants';
+import { AppPages } from '../../constants/textConstants';
 import BookInfoBlock from './BookInfoBlock';
 import { BookType } from '../../lib/types';
 
@@ -14,7 +14,6 @@ type Props = {
 };
 
 const BookInCart: React.FC<Props> = (props) => {
-  const dirnameBookImg = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
   let bookImg;
   if (props.book) {
     bookImg = props.book.img;
@@ -23,11 +22,7 @@ const BookInCart: React.FC<Props> = (props) => {
   return (
     <StyledWrapper>
       <Link to={props.book ? `${AppPages.getBookIdUrl(props.book.id)}` : ''}>
-        <img
-          src={dirnameBookImg + bookImg}
-          alt="img"
-          className="book-img"
-        ></img>
+        <img src={bookImg} alt="img" className="book-img"></img>
       </Link>
       <BookInfoBlock
         id={props.id}

@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { ApiPath } from '../../constants/textConstants';
 import { CommentsType } from '../../lib/types';
 
 const Comment: React.FC<CommentsType> = (props) => {
-  const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.avatarImg}`;
   const currentDate = new Date();
   const commentDate = new Date(props.dateOfCreate);
   const timediff = currentDate.getTime() - commentDate.getTime();
@@ -13,7 +11,7 @@ const Comment: React.FC<CommentsType> = (props) => {
   return (
     <StyledWrapper>
       <img
-        src={dirname + props.user?.avatar}
+        src={props.user?.avatar}
         alt="img"
         className="avatar avatar--comment"
       ></img>

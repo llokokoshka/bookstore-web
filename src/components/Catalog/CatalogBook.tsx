@@ -54,7 +54,7 @@ const CatalogBook: React.FC<Props> = (props) => {
           <div className="text__base">{props.author}</div>
           <div></div>
         </Link>
-        {props.id ? <Rating bookId={props.id} isUserRate={false} /> : null}
+        {props.id ? <Rating bookId={props.id} isBookPage={false} /> : null}
       </div>
 
       {props.isInCart ? (

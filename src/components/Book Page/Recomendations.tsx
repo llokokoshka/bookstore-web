@@ -2,54 +2,49 @@ import React from 'react';
 
 import CatalogBook from '../Catalog/CatalogBook';
 import { BookType } from '../../lib/types';
+import { useAppSelector } from '../../hooks';
+import { cartSelectors } from '../../store/cart/selectors';
+import { favoriteSelectors } from '../../store/favorites/selectors';
 
 type Props = {
-  id: number;
-  booksInCart: number[];
-  booksInFavorites: number[];
-  books: Record<number, BookType>;
+  book: BookType;
 };
 
 const Recommendations: React.FC<Props> = (props) => {
-  const idBook = props.id;
-  let inCart = false;
-  let inFavorites = false;
+  const currentBook = props.book;
 
-  if (props.booksInCart && props.booksInCart.find((book) => book === idBook)) {
-    inCart = true;
-  }
+  const isInCart = useAppSelector((state) =>
+    cartSelectors.getIsInCart(state, currentBook.id)
+  );
 
-  if (
-    props.booksInFavorites &&
-    props.booksInFavorites.find((book) => book === idBook)
-  ) {
-    inFavorites = true;
-  }
+  const isInFavorites = useAppSelector((state) =>
+    favoriteSelectors.getIsInFavorite(state, currentBook.id)
+  );
 
-  const currentBook = idBook in props.books ? props.books[idBook] : null;
+  const bookPrice =
+    currentBook.cover?.hardcover_amount &&
+    currentBook.cover?.hardcover_amount > 0
+      ? currentBook.cover?.hardcover_price
+      : currentBook.cover?.paperback_price;
+
+  const isBestseller = currentBook.isBestseller
+    ? currentBook.isBestseller
+    : false;
+
+  const isNew = currentBook.isNew ? currentBook.isNew : false;
+
   return (
-    <React.Fragment key={currentBook?.id}>
-      {currentBook ? (
-        <CatalogBook
-          id={currentBook.id}
-          img={currentBook.img}
-          name={currentBook.name}
-          author={currentBook.author.text}
-          price={
-            currentBook.cover?.hardcover_amount &&
-            currentBook.cover?.hardcover_amount > 0
-              ? currentBook.cover?.hardcover_price
-              : currentBook.cover?.paperback_price
-          }
-          isInCart={inCart}
-          isInFavorites={inFavorites}
-          isBestseller={
-            currentBook.isBestseller ? currentBook.isBestseller : false
-          }
-          isNew={currentBook.isNew ? currentBook.isNew : false}
-        />
-      ) : null}
-    </React.Fragment>
+    <CatalogBook
+      id={currentBook.id}
+      img={currentBook.img}
+      name={currentBook.name}
+      author={currentBook.author.text}
+      price={bookPrice}
+      isInCart={isInCart}
+      isInFavorites={isInFavorites}
+      isBestseller={isBestseller}
+      isNew={isNew}
+    />
   );
 };
 

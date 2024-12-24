@@ -3,11 +3,13 @@ import { loginUserApi, regUserApi } from '../../api/authApi';
 import { AppPages } from '../../constants/textConstants';
 import {
   getUserApi,
+  saveBase64File,
   updateUserData,
   updateUserPassword,
 } from '../../api/userApi';
 import { IFormReg, IUserResponseData } from './authTypes';
 import { UserType } from '../../lib/types';
+import { setUser } from './authSlice';
 
 export const loginUser = createAsyncThunk<IUserResponseData, IFormReg>(
   AppPages.login,
@@ -95,6 +97,30 @@ export const updateUserPasswordThunk = createAsyncThunk<
 
     return rejectWithValue(
       err.response.data.message || 'Error updating password'
+    );
+  }
+});
+
+export const saveFileThunk = createAsyncThunk<
+  string,
+  { base64Data: string; fileType: string }
+>('user/updateUserAvatar', async (data, { rejectWithValue, dispatch }) => {
+  try {
+    const response = await saveBase64File(data.base64Data, data.fileType);
+
+    if (response) {
+      dispatch(
+        setUser({ avatar: `http://localhost:4000/uploads/avatars/${response}` })
+      );
+      return 'Avatar updated successfully';
+    } else {
+      throw new Error('Failed to load avatar');
+    }
+  } catch (err: any) {
+    console.error('Error updating user avatar:', err);
+
+    return rejectWithValue(
+      err.response.data.message || 'Error updating avatar'
     );
   }
 });

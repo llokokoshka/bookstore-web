@@ -11,54 +11,36 @@ import {
   getBookById,
   getComments,
 } from '../../store/booksEntities/booksEntitiesThunk';
-import { getCart } from '../../store/cart/cartThunk';
-import { getFavorite } from '../../store/favorites/favoritesThunk';
 import { getRecommended } from '../../store/recommended/recommendedThunk';
 import AuthPoster from '../Catalog/AuthPoster';
+import { favoriteSelectors } from '../../store/favorites/selectors';
 
 const BookPage: React.FC = () => {
   const dispatch = useAppDispatch();
+
   let { id } = useParams();
   const bookId = Number(id);
+
   const user = useAppSelector((state) => state.auth.user);
   const books = useAppSelector((state) => state.booksEntities.books);
+
   const recommendedBooks = useAppSelector(
     (state) => state.recommended.recommended
-  );
-  const booksInCart = useAppSelector((state) => state.cart.booksIdsInCart);
-  const booksInFavorites = useAppSelector(
-    (state) => state.favorite.booksIdsInFavorites
   );
 
   const [currentRecommendedBooks, setCurrentRecommendedBooks] =
     useState<number[]>(recommendedBooks);
 
   const { pathname } = useLocation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(getRecommended(bookId));
+    // eslint-disable-next-line
   }, [pathname]);
 
-  useEffect(() => {
-    if (user && booksInCart.length === 0) {
-      try {
-        dispatch(getCart());
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    if (user && booksInFavorites.length === 0) {
-      try {
-        dispatch(getFavorite());
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    // eslint-disable-next-line
-  }, [user, dispatch]);
-
-  const book = bookId in books ? books[bookId] : null;
-  const comments = book?.comments;
+  const book = books[bookId];
+  const comments = book.comments;
 
   useEffect(() => {
     if (!book || !books) {
@@ -90,38 +72,31 @@ const BookPage: React.FC = () => {
     // eslint-disable-next-line
   }, [bookId, dispatch, comments, recommendedBooks]);
 
-  const isInFav = booksInFavorites.find((id) => id === book?.id) ? true : false;
+  const isInFavorites = useAppSelector((state) =>
+    favoriteSelectors.getIsInFavorite(state, bookId)
+  );
+
   return (
     <StyledWrapper>
       <Header page="Book" />
-      {book ? (
-        <BookPageBody
-          key={bookId}
-          id={bookId}
-          img={book.img}
-          name={book.name}
-          author={book.author}
-          description={book.description}
-          cover={book.cover}
-          rates={book.rates}
-          comments={book.comments}
-          isFav={isInFav}
-        />
-      ) : null}
+      <BookPageBody
+        key={bookId}
+        id={bookId}
+        img={book.img}
+        name={book.name}
+        author={book.author}
+        description={book.description}
+        cover={book.cover}
+        rates={book.rates}
+        comments={book.comments}
+        isFav={isInFavorites}
+      />
       {user === null ? <AuthPoster /> : null}
       <div className="recommended">
         <div className="big-title">Recommendations</div>
         <div className="recommended__books">
           {currentRecommendedBooks?.map((idBook) => {
-            return (
-              <Recommendations
-                key={idBook}
-                id={idBook}
-                booksInCart={booksInCart}
-                booksInFavorites={booksInFavorites}
-                books={books}
-              />
-            );
+            return <Recommendations key={idBook} book={books[idBook]} />;
           })}
         </div>
       </div>

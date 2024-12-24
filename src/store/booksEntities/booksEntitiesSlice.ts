@@ -60,6 +60,8 @@ const bookEntititesSlice = createSlice({
         }
       })
       .addCase(addComment.fulfilled, (state, action) => {
+        state.loading = false;
+
         const bookId = action.payload.bookId;
         if (bookId && state.books[bookId]) {
           const index: number = state.books[bookId].comments.findIndex(

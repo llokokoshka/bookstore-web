@@ -2,30 +2,29 @@ import React from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from 'styled-components';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import starImg from '../../assets/img/Star.png';
 import fullStar from '../../assets/img/fullStar.png';
-import { addOrUpdateRating } from '../../store/booksEntities/booksEntitiesThunk';
 import { IUserRating } from '../../lib/types';
+import RatingStars from './RatingStars';
+import { useAppSelector } from '../../hooks';
 
 type Props = {
   bookId: number;
-  isUserRate: boolean;
+  isBookPage: boolean;
 };
 
-const Rating: React.FC<Props> = ({ bookId, isUserRate }) => {
+const Rating: React.FC<Props> = (props) => {
   let fullStars = 0;
+  let niceViewOfBookRating = `0.0`;
+
   let userRateID: IUserRating | null = null;
   let userRate: number | null | undefined = null;
 
-  const dispatch = useAppDispatch();
-
-  const book = useAppSelector((state) =>
-    state.booksEntities.books[bookId] ? state.booksEntities.books[bookId] : null
+  const book = useAppSelector(
+    (state) => state.booksEntities.books[props.bookId]
   );
+  const userRates = useAppSelector((state) => state.auth.user?.rating);
 
-  const bookRating = book?.totalRate;
-  let niceViewOfBookRating = `0.0`;
+  const bookRating = book.totalRate;
 
   if (bookRating) {
     fullStars = Math.round(bookRating);
@@ -37,63 +36,39 @@ const Rating: React.FC<Props> = ({ bookId, isUserRate }) => {
     niceViewOfBookRating = `${bookRating}`;
   }
 
-  const userRates = useAppSelector((state) => state.auth.user?.rating);
   if (userRates) {
-    userRateID = userRates[bookId];
+    userRateID = userRates[props.bookId];
   }
   if (userRateID) {
     userRate = userRateID.value;
   }
 
-  const handleRating = async (rate: number) => {
-    await dispatch(addOrUpdateRating({ bookId, rate }));
-  };
-
   return (
-    <StyledWrapper isuserrate={isUserRate ? 'column' : 'row'}>
+    <StyledWrapper isuserrate={props.isBookPage ? 'column' : 'row'}>
       <>
-        {isUserRate ? (
+        {props.isBookPage && (
           <div className="total-rating">
             <img src={fullStar} alt="star" className="star"></img>
             <h3 className="rating__value"> {niceViewOfBookRating || '0.0'}</h3>
           </div>
-        ) : null}
-      </>
-      <div className="rating">
-        {isUserRate ? (
-          <>
-            <div className="rating__stars">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <div key={star} onClick={() => handleRating(star)}>
-                  {userRate && star <= userRate ? (
-                    <img src={fullStar} alt="fullStar" className="star" />
-                  ) : (
-                    <img src={starImg} alt="star" className="star" />
-                  )}
-                </div>
-              ))}
-            </div>
-            <div className="rating__value">
-              {userRate || '<- Rate this book'}
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="rating__stars">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <div key={star} onClick={() => handleRating(star)}>
-                  {fullStars && star <= fullStars ? (
-                    <img src={fullStar} alt="fullStar" className="star" />
-                  ) : (
-                    <img src={starImg} alt="star" className="star" />
-                  )}
-                </div>
-              ))}
-            </div>
-            <div className="rating__value">{niceViewOfBookRating || '0.0'}</div>
-          </>
         )}
-      </div>
+      </>
+      {props.isBookPage ? (
+        <RatingStars
+          bookId={props.bookId}
+          isBookPage={true}
+          userRate={userRate ? userRate : '<- Rate this book'}
+        />
+      ) : (
+        <RatingStars
+          bookId={props.bookId}
+          isBookPage={false}
+          userRate={fullStars ? fullStars : '0.0'}
+          niceViewOfBookRating={
+            niceViewOfBookRating ? niceViewOfBookRating : '0.0'
+          }
+        />
+      )}
     </StyledWrapper>
   );
 };
@@ -165,8 +140,6 @@ const StyledWrapper = styled.div.withConfig({
 
   .rating__value {
     height: 24px;
-    /* top: 561px;
-    left: 274px; */
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;

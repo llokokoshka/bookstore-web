@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import heart from '../../assets/img/Heart.png';
 import fullHeart from '../../assets/img/fullHeart.png';
 import { useAppDispatch } from '../../hooks';
-import { ApiPath, AppPages } from '../../constants/textConstants';
+import { AppPages } from '../../constants/textConstants';
 import { toggleFavorite } from '../../store/favorites/favoritesThunk';
 
 export interface Props {
@@ -18,7 +18,6 @@ export interface Props {
 
 const CatalogBookCover: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
-  const dirname = `${process.env.REACT_APP_BASE_URL}${ApiPath.booksImg}`;
 
   const toggleFav = async () => {
     await dispatch(
@@ -51,7 +50,7 @@ const CatalogBookCover: React.FC<Props> = (props) => {
       ) : null}
 
       <Link to={`${AppPages.getBookIdUrl(props.id)}`}>
-        <img src={dirname + props.img} alt="img" className="book__cover"></img>
+        <img src={props.img} alt="img" className="book__cover"></img>
       </Link>
     </StyledWrapper>
   );
