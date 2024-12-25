@@ -34,7 +34,7 @@ export default Poster;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.base};
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     padding: ${({ theme }) => theme.padding.base_tablet};
   }
 
@@ -46,11 +46,11 @@ const StyledWrapper = styled.div`
     border-radius: 16px;
     background-color: ${({ theme }) => theme.colors.light};
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       height: 289px;
     }
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       height: auto;
     }
   }
@@ -63,11 +63,11 @@ const StyledWrapper = styled.div`
     width: 100%;
     height: 100%;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       max-width: 361px;
       max-height: 218px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       max-width: 232px;
       max-height: 140px;
       right: 0;
@@ -84,12 +84,12 @@ const StyledWrapper = styled.div`
     width: 100%;
     padding: 0 108px 0 98px;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       align-items: end;
       padding-left: 40px;
       padding-right: 0;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       flex-direction: column;
       padding-left: 20px;
       align-items: start;
@@ -103,11 +103,11 @@ const StyledWrapper = styled.div`
     width: 100%;
     row-gap: 50px;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       margin-bottom: 56px;
     }
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       max-width: 230px;
       padding-top: 20px;
       row-gap: 20px;
@@ -121,18 +121,18 @@ const StyledWrapper = styled.div`
   }
 
   .container-img {
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 328px;
       height: auto;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 253px;
       height: auto;
     }
   }
 
   .correct-button-size {
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 200px;
     }
   }

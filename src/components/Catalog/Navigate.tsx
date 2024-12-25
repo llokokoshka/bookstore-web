@@ -63,7 +63,7 @@ const StyledWrapper = styled.div`
   margin-top: 54px;
   column-gap: 50px;
 
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     margin-bottom: 60px;
     margin-top: 60px;
   }

@@ -53,22 +53,22 @@ const StyledWrapper = styled.div`
   column-gap: 109px;
   height: auto;
 
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     padding: 100px 15px 107px 15px;
     column-gap: 62px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     padding: 0;
     flex-direction: column-reverse;
     row-gap: 40px;
   }
 
   .img-size {
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 350px;
       height: 212px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 290px;
       height: 176px;
     }
@@ -78,9 +78,9 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 60px;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       row-gap: 30px;
     }
   }
@@ -89,9 +89,9 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
     }
   }
 
@@ -103,10 +103,10 @@ const StyledWrapper = styled.div`
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     width: 465px;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 302px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 290px;
       font-size: 12px;
       font-weight: 500;

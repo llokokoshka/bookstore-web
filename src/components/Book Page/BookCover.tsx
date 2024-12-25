@@ -22,6 +22,7 @@ const BookCover: React.FC<Props> = (props) => {
   const toggleFav = async () => {
     if (!user) {
       navigate(`${AppPages.login}`);
+      return;
     }
     await dispatch(
       toggleFavorite({ bookId: props.id, isInFavorites: props.isFav })
@@ -57,11 +58,11 @@ const StyledWrapper = styled.div`
     height: 779px;
 
     border-radius: 16px;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 391px;
       height: 584px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 135px;
       height: 202px;
     }
@@ -80,13 +81,13 @@ const StyledWrapper = styled.div`
     align-items: center;
     justify-content: center;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 39px;
       height: 39px;
       left: 322px;
       top: 16px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 25px;
       height: 25px;
       top: 16px;
@@ -94,11 +95,11 @@ const StyledWrapper = styled.div`
     }
   }
   .heart-size {
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 21px;
       height: 21px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 14px;
       height: 14px;
     }

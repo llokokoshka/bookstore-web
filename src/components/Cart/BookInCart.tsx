@@ -41,7 +41,7 @@ const StyledWrapper = styled.div`
   flex-direction: row;
   column-gap: 20px;
   padding: 40px 0px;
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     column-gap: 17px;
   }
 
@@ -49,11 +49,11 @@ const StyledWrapper = styled.div`
     width: 197px;
     height: 289px;
     border-radius: 16px;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 255px;
       height: 375px;
     }
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 135px;
       height: 202px;
     }

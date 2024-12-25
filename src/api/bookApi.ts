@@ -10,6 +10,7 @@ import {
   IUserRating,
 } from '../lib/types';
 import { RatingThunkType } from '../store/booksEntities/bookTypes';
+import { Data } from '../store/recommended/recommendedThunk';
 
 export async function getBookRatingApi(bookId: number) {
   const response = await axiosInstance.get<RatingThunkType>(
@@ -74,10 +75,10 @@ export async function getAvarageRatingApi(bookId: number) {
   return response.data.rate;
 }
 
-export async function getRecommendedApi(bookId: number) {
-  const response = await axiosInstance.get<IRecommendedThunk>(
-    ApiPath.getRecommendedWithIdUrl(bookId)
-  );
+export async function getRecommendedApi(data: Data) {
+  const path =
+    ApiPath.getRecommendedWithIdUrl(data.bookId) + `/${data.numberOfRecBooks}`;
+  const response = await axiosInstance.get<IRecommendedThunk>(path);
   return response.data;
 }
 

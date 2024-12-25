@@ -39,7 +39,7 @@ export default AuthPoster;
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.base};
 
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     padding: ${({ theme }) => theme.padding.base_tablet};
   }
 
@@ -52,10 +52,10 @@ const StyledWrapper = styled.div`
     overflow: hidden;
     flex-wrap: wrap;
     background-color: ${({ theme }) => theme.colors.light};
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       height: 400px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       height: 505px;
     }
   }
@@ -68,14 +68,14 @@ const StyledWrapper = styled.div`
     height: 759px;
     z-index: 1;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       max-width: 377px;
       height: auto;
       top: 30px;
       rotate: -10deg;
     }
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 246px;
       height: auto;
       right: 0;
@@ -91,12 +91,12 @@ const StyledWrapper = styled.div`
     width: 100%;
     padding: 0 108px 0 757px;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       padding-left: 411px;
       padding-right: 0;
       align-items: end;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       flex-direction: column;
       padding-left: 20px;
       align-items: start;
@@ -109,12 +109,12 @@ const StyledWrapper = styled.div`
     align-items: start;
     row-gap: 50px;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       margin-bottom: 118px;
       margin-right: 1px;
     }
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       max-width: 230px;
       padding-top: 20px;
       row-gap: 20px;
@@ -136,12 +136,12 @@ const StyledWrapper = styled.div`
     overflow: visible;
     z-index: 2;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 389px;
       height: auto;
       left: 1px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 253px;
       height: auto;
       bottom: 0;

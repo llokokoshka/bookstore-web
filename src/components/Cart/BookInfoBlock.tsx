@@ -44,10 +44,10 @@ const StyledWrapper = styled.div`
   flex-wrap: wrap;
   word-break: break-all;
   hyphens: auto;
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     width: 532px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     width: 135px;
     row-gap: 48px;
   }
@@ -56,7 +56,7 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 50px;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       row-gap: 30px;
     }
   }
@@ -65,7 +65,7 @@ const StyledWrapper = styled.div`
     font-size: 36px;
     font-weight: 400;
     line-height: 54px;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       font-size: 18px;
       font-weight: 500;
       line-height: 27px;
@@ -76,7 +76,7 @@ const StyledWrapper = styled.div`
     font-size: 20px;
     font-weight: 500;
     line-height: 30px;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       font-size: 12px;
       line-height: 18px;
     }

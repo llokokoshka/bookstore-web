@@ -37,7 +37,7 @@ export default FavoritePageBody;
 
 const StyledWrapper = styled.div<{ $numberItems: number }>`
   padding: ${({ theme }) => theme.padding.base};
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     padding: 20px 15px 110px 15px;
   }
 

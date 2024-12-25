@@ -43,10 +43,10 @@ const StyledWrapper = styled.div`
     opacity: 100%;
   }
   .base-button--width {
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 188px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 135px;
     }
   }

@@ -127,7 +127,6 @@ export default BaseInput;
 
 const StyledWrapper = styled.div.withConfig({
   shouldForwardProp: (prop) =>
-    isPropValid(prop) &&
     !['widthbase', 'inputheight', 'widthmedium', 'widthmin'].includes(prop),
 })<{
   height: number;
@@ -143,11 +142,11 @@ const StyledWrapper = styled.div.withConfig({
   max-width: ${({ widthbase }) => `${widthbase}px`};
   width: 100%;
   row-gap: 9px;
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     max-width: ${({ widthmedium }) => `${widthmedium}px`};
   }
 
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     max-width: ${({ widthmin }) => `${widthmin}px`};
   }
 
@@ -168,7 +167,7 @@ const StyledWrapper = styled.div.withConfig({
   .input__icon {
     position: absolute;
     padding: 20px;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       padding: 16px 16px;
     }
   }
@@ -202,16 +201,7 @@ const StyledWrapper = styled.div.withConfig({
       padding-left: 64px;
     }
 
-    @media screen and (max-width: 834px) {
-      /* max-width: ${({ widthmedium }) => `${widthmedium}px`}; */
-
-      /* max-width: 392px; */
-    }
-
-    @media screen and (max-width: 320px) {
-      /* max-width: ${({ widthmin }) => `${widthmin}px`}; */
-
-      /* max-width: 290px; */
+    ${({ theme }) => theme.media.mobile} {
       font-size: 12px;
       font-weight: 400;
       line-height: 28px;
@@ -233,12 +223,10 @@ const StyledWrapper = styled.div.withConfig({
     height: ${({ height }) => `${height}px`};
     display: flex;
     flex-direction: row;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       max-width: ${({ widthmedium }) => `${widthmedium}px`};
-
-      /* max-width: 529px; */
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       max-width: ${({ widthmin }) => `${widthmin}px`};
 
       width: auto;

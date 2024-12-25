@@ -40,10 +40,10 @@ const StyledWrapper = styled.div`
   max-width: 630px;
   width: 100%;
   height: auto;
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     max-width: 392px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     width: 290px;
     margin-left: -155px;
   }
@@ -57,11 +57,11 @@ const StyledWrapper = styled.div`
     align-items: center;
     column-gap: 20px;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       max-width: 392px;
       column-gap: 20px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       max-width: 290px;
       column-gap: 20px;
     }

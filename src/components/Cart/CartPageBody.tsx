@@ -63,7 +63,7 @@ export default CartPageBody;
 const StyledWrapper = styled.div<{ $numberItems: number }>`
   padding: ${({ theme }) => theme.padding.base};
 
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     padding: 20px 15px 110px 15px;
   }
 
@@ -85,7 +85,7 @@ const StyledWrapper = styled.div<{ $numberItems: number }>`
     display: flex;
     flex-direction: row;
     column-gap: 20px;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       flex-direction: column;
       row-gap: 18px;
     }
@@ -107,7 +107,7 @@ const StyledWrapper = styled.div<{ $numberItems: number }>`
     letter-spacing: 0.75px;
     text-align: center;
     z-index: 5;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 290px;
     }
   }

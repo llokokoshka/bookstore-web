@@ -66,7 +66,7 @@ export default CommentInput;
 
 const StyledWrapper = styled.div`
   margin-top: 60px;
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     margin-top: 40px;
   }
 

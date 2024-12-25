@@ -4,11 +4,16 @@ import { getRecommendedApi } from '../../api/bookApi';
 import { IRecommendedThunk } from '../../lib/types';
 import { addOrUpdBook } from '../booksEntities/booksEntitiesSlice';
 
-export const getRecommended = createAsyncThunk<IRecommendedThunk, number>(
+export type Data = {
+  bookId: number;
+  numberOfRecBooks: number;
+};
+
+export const getRecommended = createAsyncThunk<IRecommendedThunk, Data>(
   'books/recommended',
-  async (bookId, thunkAPI) => {
+  async ({ bookId, numberOfRecBooks }, thunkAPI) => {
     try {
-      const data = await getRecommendedApi(bookId);
+      const data = await getRecommendedApi({ bookId, numberOfRecBooks });
       thunkAPI.dispatch(addOrUpdBook(data.books));
       return data;
     } catch (err: any) {

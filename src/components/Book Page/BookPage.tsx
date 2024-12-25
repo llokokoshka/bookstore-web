@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -28,19 +28,17 @@ const BookPage: React.FC = () => {
     (state) => state.recommended.recommended
   );
 
-  const [currentRecommendedBooks, setCurrentRecommendedBooks] =
-    useState<number[]>(recommendedBooks);
-
   const { pathname } = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(getRecommended(bookId));
+    dispatch(getRecommended({ bookId, numberOfRecBooks: 4 }));
+
     // eslint-disable-next-line
   }, [pathname]);
 
   const book = books[bookId];
-  const comments = book.comments;
+  const comments = book?.comments;
 
   useEffect(() => {
     if (!book || !books) {
@@ -49,28 +47,9 @@ const BookPage: React.FC = () => {
     if (book && !comments) {
       dispatch(getComments(bookId));
     }
-    if (recommendedBooks.length < 4) {
-      dispatch(getRecommended(bookId));
-      for (let idRec of recommendedBooks) {
-        if (!(idRec in books)) {
-          dispatch(getBookById(idRec));
-        }
-      }
-    }
 
-    let newData: number[] = [...recommendedBooks];
-
-    const width = window.outerWidth;
-    if (width > 320 && width < 835) {
-      newData.pop();
-    } else if (width <= 320) {
-      newData.pop();
-      newData.pop();
-    }
-
-    setCurrentRecommendedBooks(newData);
     // eslint-disable-next-line
-  }, [bookId, dispatch, comments, recommendedBooks]);
+  }, [bookId, dispatch, comments]);
 
   const isInFavorites = useAppSelector((state) =>
     favoriteSelectors.getIsInFavorite(state, bookId)
@@ -79,23 +58,25 @@ const BookPage: React.FC = () => {
   return (
     <StyledWrapper>
       <Header page="Book" />
-      <BookPageBody
-        key={bookId}
-        id={bookId}
-        img={book.img}
-        name={book.name}
-        author={book.author}
-        description={book.description}
-        cover={book.cover}
-        rates={book.rates}
-        comments={book.comments}
-        isFav={isInFavorites}
-      />
+      {book && (
+        <BookPageBody
+          key={bookId}
+          id={bookId}
+          img={book.img}
+          name={book.name}
+          author={book.author}
+          description={book.description}
+          cover={book.cover}
+          rates={book.rates}
+          comments={book.comments}
+          isFav={isInFavorites}
+        />
+      )}
       {user === null && <AuthPoster />}
       <div className="recommended">
         <div className="big-title">Recommendations</div>
         <div className="recommended__books">
-          {currentRecommendedBooks?.map((idBook) => {
+          {recommendedBooks?.map((idBook) => {
             return <Recommendations key={idBook} book={books[idBook]} />;
           })}
         </div>
@@ -118,7 +99,7 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     padding: ${({ theme }) => theme.padding.base};
     row-gap: 50px;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       padding: 0 15px 100px 15px;
     }
   }

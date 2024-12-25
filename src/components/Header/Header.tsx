@@ -47,21 +47,21 @@ const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.base};
   position: relative;
 
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     padding: 20px 15px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     flex-wrap: wrap;
     padding: 20px 15px;
   }
   #logo {
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 62px;
       height: 31px;
     }
   }
   .header-search {
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       order: 2;
       flex: 1 0 100%;
       margin-top: 10px;
@@ -75,7 +75,7 @@ const StyledWrapper = styled.div`
     align-items: center;
     column-gap: 43px;
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 290px;
     }
   }

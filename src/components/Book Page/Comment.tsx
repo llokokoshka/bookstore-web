@@ -39,10 +39,10 @@ const StyledWrapper = styled.div`
   position: relative;
   padding: 30px 30px 25px 30px;
 
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     width: 667px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     width: 290px;
     padding: 13px 10px 10px 10px;
   }
@@ -54,7 +54,7 @@ const StyledWrapper = styled.div`
     top: 30px;
     left: 30px;
     border-radius: 50%;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 35px;
       height: 35px;
       top: 13px;
@@ -67,7 +67,7 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     margin-left: 80px;
     row-gap: 9px;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       margin-left: 58px;
     }
   }
@@ -76,7 +76,7 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 4px;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       row-gap: 0px;
     }
   }
@@ -108,10 +108,10 @@ const StyledWrapper = styled.div`
     letter-spacing: 0.75px;
     text-align: left;
     color: ${({ theme }) => theme.colors.dark_blue};
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       padding-right: 92px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       padding-right: 0;
       margin-left: -50px;
     }

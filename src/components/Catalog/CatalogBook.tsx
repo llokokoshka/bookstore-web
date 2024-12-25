@@ -80,13 +80,13 @@ const StyledWrapper = styled.div`
   height: 663px;
   row-gap: 30px;
 
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     flex-basis: 254px;
     width: 254px;
     height: 573px;
     column-gap: 21px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     flex-basis: 135px;
     width: 135px;
     height: 333px;
@@ -98,11 +98,11 @@ const StyledWrapper = styled.div`
     width: 100%;
     height: auto;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       max-width: 254px;
     }
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       max-width: 135px;
     }
   }
@@ -120,13 +120,13 @@ const StyledWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.dark_blue};
     z-index: 5;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 39px;
       height: 39px;
       top: 16px;
       left: 16px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 25px;
       height: 25px;
       top: 16px;
@@ -135,11 +135,11 @@ const StyledWrapper = styled.div`
   }
 
   .heart-size {
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 21px;
       height: 21px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 14px;
       height: 14px;
     }
@@ -154,11 +154,11 @@ const StyledWrapper = styled.div`
     height: 448px;
     border-radius: 16px;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 254px;
       height: 372px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 135px;
       height: 192px;
     }
@@ -170,10 +170,10 @@ const StyledWrapper = styled.div`
     width: 299px;
     row-gap: 20px;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 254px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 135px;
     }
   }
@@ -192,12 +192,12 @@ const StyledWrapper = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       font-size: 16px;
       line-height: 24px;
     }
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       font-size: 14px;
       line-height: 21px;
     }
@@ -214,12 +214,12 @@ const StyledWrapper = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       font-size: 16px;
       line-height: 24px;
     }
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       font-size: 14px;
       line-height: 21px;
     }
@@ -251,10 +251,10 @@ const StyledWrapper = styled.div`
     text-align: center;
     z-index: 5;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 254px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 135px;
       font-size: 14px;
       line-height: 28px;
@@ -272,11 +272,11 @@ const StyledWrapper = styled.div`
     top: 615px;
     border-radius: 16px;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 254px;
     }
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 135px;
     }
   }
@@ -302,11 +302,11 @@ const StyledWrapper = styled.div`
     color: #344966;
     z-index: 7;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       top: 320px;
     }
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       top: 153px;
       width: 113px;
       left: 12px;
@@ -334,10 +334,10 @@ const StyledWrapper = styled.div`
     color: white;
     z-index: 7;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       top: 320px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 113px;
       top: 153px;
       left: 12px;

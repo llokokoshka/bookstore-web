@@ -38,4 +38,8 @@ export interface IbaseTheme {
     header: number;
     modal: number;
   };
+  media: {
+    tablet: string;
+    mobile: string;
+  };
 }
