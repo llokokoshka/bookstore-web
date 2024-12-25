@@ -32,14 +32,14 @@ const StyledWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.dark_blue};
     border-radius: 50%;
     padding: 0;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 32.73px;
       height: 32.73px;
     }
   }
 
   .base-round-button__img {
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 17.88px;
       height: 17.33px;
     }

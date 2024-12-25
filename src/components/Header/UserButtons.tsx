@@ -32,7 +32,7 @@ const StyledWrapper = styled.div`
   max-width: 198px;
   width: 100%;
   justify-content: space-between;
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     max-width: 135px;
   }
 
@@ -56,7 +56,7 @@ const StyledWrapper = styled.div`
     line-height: 18px;
     text-align: left;
     color: ${({ theme }) => theme.colors.dark_blue};
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 15.81px;
       height: 15.33px;
       top: -4px;

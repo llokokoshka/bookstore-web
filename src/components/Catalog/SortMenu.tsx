@@ -128,7 +128,7 @@ const StyledWrapper = styled.div`
   width: 100%;
   padding: ${({ theme }) => theme.padding.base};
 
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     flex-direction: column;
     justify-content: start;
     align-items: start;
@@ -136,7 +136,7 @@ const StyledWrapper = styled.div`
     row-gap: 20px;
   }
 
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     max-width: 290px;
   }
 
@@ -145,10 +145,10 @@ const StyledWrapper = styled.div`
     flex-direction: row;
     column-gap: 20px;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
     }
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       flex-direction: column;
       row-gap: 20px;
     }
@@ -173,10 +173,10 @@ const StyledWrapper = styled.div`
     letter-spacing: 0.75px;
     color: ${({ theme }) => theme.colors.dark_blue};
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 255px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 290px;
     }
 

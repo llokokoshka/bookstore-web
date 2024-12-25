@@ -63,7 +63,7 @@ const StyledWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   column-gap: 58px;
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     column-gap: 24px;
   }
 

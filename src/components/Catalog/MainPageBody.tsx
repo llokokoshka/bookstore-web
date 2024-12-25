@@ -129,12 +129,12 @@ const StyledWrapper = styled.div`
     column-gap: 20px;
     row-gap: 80px;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       padding: 0px 15px;
       row-gap: 30px;
     }
 
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       row-gap: 30px;
     }
   }

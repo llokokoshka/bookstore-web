@@ -61,7 +61,7 @@ const StyledWrapper = styled.div`
   justify-content: space-between;
   padding: 40px 0px;
 
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     flex-direction: column;
   }
 
@@ -74,11 +74,11 @@ const StyledWrapper = styled.div`
   .favorite__book-img {
     width: 197px;
     height: 289px;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 255px;
       height: 375px;
     }
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 135px;
       height: 202px;
     }
@@ -91,10 +91,10 @@ const StyledWrapper = styled.div`
     flex-wrap: wrap;
     word-break: break-all;
     hyphens: auto;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 532px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 135px;
     }
   }
@@ -102,7 +102,7 @@ const StyledWrapper = styled.div`
     margin-top: 30px;
     width: 30px;
     height: 30px;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 20px;
       height: 20px;
       margin-top: 5px;
@@ -116,7 +116,7 @@ const StyledWrapper = styled.div`
     font-size: 20px;
     font-weight: 500;
     line-height: 30px;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       font-size: 12px;
       line-height: 18px;
     }

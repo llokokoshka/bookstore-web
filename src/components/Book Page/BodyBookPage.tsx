@@ -12,11 +12,7 @@ const BookPageBody: React.FC<BookType> = (props) => {
   return (
     <StyledWrapper>
       <div className="book">
-        <BookCover
-          id={props.id}
-          isFav={props.isFav ? props.isFav : false}
-          img={props.img}
-        />
+        <BookCover id={props.id} isFav={!!props.isFav} img={props.img} />
         <div className="book__info">
           <BookMainInfo
             id={props.id}
@@ -26,6 +22,7 @@ const BookPageBody: React.FC<BookType> = (props) => {
           <BookInfo description={props.description} cover={props.cover} />
         </div>
       </div>
+
       <div>
         <div className="comments">
           {props.comments?.map((comment) => (
@@ -51,11 +48,11 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 110px;
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     padding: 100px 15px 88px 15px;
     row-gap: 88px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     padding: 48px 15px 60px 15px;
     row-gap: 50px;
   }
@@ -66,7 +63,7 @@ const StyledWrapper = styled.div`
     column-gap: 128px;
     height: auto;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       column-gap: 21px;
     }
   }

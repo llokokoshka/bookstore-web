@@ -29,10 +29,11 @@ const StyledWrapper = styled.div`
   max-width: 630px;
   width: 100%;
   height: auto;
-  @media screen and (max-width: 834px) {
+
+  ${({ theme }) => theme.media.tablet} {
     max-width: 392px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     max-width: 135px;
   }
 
@@ -45,10 +46,10 @@ const StyledWrapper = styled.div`
     word-break: break-all;
     white-space: normal;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       max-width: 392px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       max-width: 135px;
     }
   }

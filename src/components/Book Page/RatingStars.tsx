@@ -53,10 +53,10 @@ const StyledWrapper = styled.div.withConfig({
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     width: 255px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     flex-direction: ${({ isuserrate }) => isuserrate};
     align-items: start;
     width: 135px;
@@ -65,21 +65,21 @@ const StyledWrapper = styled.div.withConfig({
     display: flex;
     flex-direction: row;
     column-gap: 30px;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       column-gap: 24px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       column-gap: 7px;
     }
   }
   .star {
     width: 26px;
     height: 26px;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 20px;
       height: 20px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 15px;
       height: 15px;
     }
@@ -87,14 +87,12 @@ const StyledWrapper = styled.div.withConfig({
 
   .rating__value {
     height: 24px;
-    /* top: 561px;
-    left: 274px; */
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
     text-align: left;
     color: ${({ theme }) => theme.colors.dark_grey};
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       font-size: 13px;
       line-height: 19.5px;
     }

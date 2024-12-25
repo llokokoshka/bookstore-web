@@ -51,11 +51,11 @@ export const StyledWrapper = styled.button`
   text-align: center;
   z-index: 5;
 
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     width: 231px;
     height: 44px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     width: 135px;
     padding: 0;
     font-size: 14px;
@@ -67,7 +67,7 @@ export const StyledWrapper = styled.button`
   }
 
   .base-round-button__img {
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 17.88px;
       height: 17.33px;
     }

@@ -1,5 +1,9 @@
 import { IbaseTheme } from './IbaseTheme';
 
+const getMediaQueryByMax = (w: number) => {
+  return `@media screen and (max-width: ${w}px)`;
+};
+
 export const baseTheme: IbaseTheme = {
   colors: {
     white: '#ffffff',
@@ -39,5 +43,10 @@ export const baseTheme: IbaseTheme = {
   order: {
     header: 50,
     modal: 50,
+  },
+
+  media: {
+    tablet: getMediaQueryByMax(1289),
+    mobile: getMediaQueryByMax(789),
   },
 };

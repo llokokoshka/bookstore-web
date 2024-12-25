@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import cn from 'classnames';
 
-const MaxLenght = 400;
+const MAX_LENGTH = 400;
 
 type Props = {
   description: string;
@@ -25,7 +25,7 @@ const BookDescription: React.FC<Props> = (props) => {
       >
         {props.description}
       </div>
-      {!isDescriptionExpanded && props.description.length > MaxLenght && (
+      {!isDescriptionExpanded && props.description.length > MAX_LENGTH && (
         <div className="description__show-more" onClick={toggleDescription}>
           ...See more
         </div>
@@ -58,7 +58,7 @@ const StyledWrapper = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       max-height: 294px;
     }
   }
