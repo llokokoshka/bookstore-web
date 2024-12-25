@@ -92,10 +92,10 @@ export default AuthorizationBody;
 
 const StyledWrapper = styled.div`
   padding: ${({ theme }) => theme.padding.base};
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     padding: 95px 15px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     padding: 30px 15px;
   }
   .poster__container {
@@ -105,7 +105,7 @@ const StyledWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     position: relative;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       flex-direction: column;
       row-gap: 60px;
     }
@@ -113,11 +113,11 @@ const StyledWrapper = styled.div`
     /* padding: 0 108px 0 98px; */
   }
   .container__img {
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 390px;
       height: 333px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 290px;
       height: 247px;
     }

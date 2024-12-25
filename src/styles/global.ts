@@ -14,12 +14,12 @@ export default createGlobalStyle`
     font-weight: 700;
     line-height: 60px;
     text-align: left;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       font-size: 32px;
       font-weight: 700;
       line-height: 48px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       font-size: 18px;
       font-weight: 700;
       line-height: 27px;
@@ -31,12 +31,12 @@ export default createGlobalStyle`
     font-weight: 400;
     line-height: 30px;
     text-align: left;
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       font-size: 16px;
       font-weight: 400;
       line-height: 24px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       font-size: 14px;
       font-weight: 500;
       line-height: 21px;
@@ -48,7 +48,7 @@ export default createGlobalStyle`
     font-weight: 500;
     line-height: 24px;
     text-align: left;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       font-size: 14px;
       font-weight: 500;
       line-height: 21px;

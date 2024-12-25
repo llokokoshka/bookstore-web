@@ -46,7 +46,7 @@ export const baseTheme: IbaseTheme = {
   },
 
   media: {
-    tablet: getMediaQueryByMax(1289),
+    tablet: getMediaQueryByMax(1279),
     mobile: getMediaQueryByMax(789),
   },
 };

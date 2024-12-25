@@ -80,7 +80,7 @@ const StyledWrapper = styled.div`
   top: 74px;
   row-gap: 10px;
   z-index: 10;
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     width: 290px;
     z-index: 12;
   }

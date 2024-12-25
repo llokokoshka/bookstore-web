@@ -93,7 +93,7 @@ const StyledWrapper = styled.div`
     border-radius: 16px;
     opacity: 0px;
     z-index: 6;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 290px;
       padding: 40px 10px;
       z-index: 12;
@@ -138,7 +138,7 @@ const StyledWrapper = styled.div`
     align-items: center;
     padding-top: 37px;
     width: 379px;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 270px;
     }
   }

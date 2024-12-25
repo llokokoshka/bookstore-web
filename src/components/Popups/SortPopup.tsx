@@ -56,7 +56,7 @@ const StyledWrapper = styled.div`
   border-radius: 16px;
   opacity: 0px;
   z-index: 6;
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     width: 290px;
   }
 
@@ -71,7 +71,5 @@ const StyledWrapper = styled.div`
     line-height: 28px;
     letter-spacing: 0.75px;
     text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
   }
 `;

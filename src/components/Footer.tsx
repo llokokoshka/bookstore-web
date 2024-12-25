@@ -68,10 +68,10 @@ const StyledWrapper = styled.div`
   color: ${({ theme }) => theme.colors.light};
   padding: ${({ theme }) => theme.padding.footer};
 
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     padding: 73px 15px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     flex-direction: column;
     align-items: start;
     padding-bottom: 30px;
@@ -101,11 +101,11 @@ const StyledWrapper = styled.div`
     color: ${({ theme }) => theme.colors.green};
   }
   .map {
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       width: 290px;
       height: auto;
     }
-    @media screen and (max-width: 321px) {
+    ${({ theme }) => theme.media.mobile} {
     }
   }
   .footer-text__menu {

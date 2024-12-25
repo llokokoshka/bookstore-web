@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -27,21 +27,31 @@ const BookPage: React.FC = () => {
   const recommendedBooks = useAppSelector(
     (state) => state.recommended.recommended
   );
+  const [currentRecommendedeBooks, setCurrentRecommendedeBooks] =
+    useState<number[]>(recommendedBooks);
 
   const { pathname } = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(getRecommended({ bookId, numberOfRecBooks: 4 }));
-
     // eslint-disable-next-line
   }, [pathname]);
 
   const book = books[bookId];
   const comments = book?.comments;
+  // const width = window.outerWidth;
+
+  // useEffect(() => {
+  //   if (width < 790) {
+  //     const newRec = [currentRecommendedeBooks[0], currentRecommendedeBooks[1]];
+  //     setCurrentRecommendedeBooks(newRec);
+  //   } else if (width < 1280) {
+  //   }
+  // }, [width]);
 
   useEffect(() => {
-    if (!book || !books) {
+    if (!book) {
       dispatch(getBookById(bookId));
     }
     if (book && !comments) {
@@ -76,7 +86,7 @@ const BookPage: React.FC = () => {
       <div className="recommended">
         <div className="big-title">Recommendations</div>
         <div className="recommended__books">
-          {recommendedBooks?.map((idBook) => {
+          {currentRecommendedeBooks?.map((idBook) => {
             return <Recommendations key={idBook} book={books[idBook]} />;
           })}
         </div>

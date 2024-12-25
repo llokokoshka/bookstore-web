@@ -235,11 +235,11 @@ const StyledWrapper = styled.div`
   column-gap: 128px;
   width: 100%;
   flex: 1;
-  @media screen and (max-width: 834px) {
+  ${({ theme }) => theme.media.tablet} {
     padding: 95px 15px;
     column-gap: 20px;
   }
-  @media screen and (max-width: 320px) {
+  ${({ theme }) => theme.media.mobile} {
     flex-direction: column;
     padding: 50px 15px 40px 15px;
   }
@@ -259,11 +259,11 @@ const StyledWrapper = styled.div`
     border-radius: 16px;
     background-color: ${({ theme }) => theme.colors.light};
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       max-width: 255px;
       max-height: 255px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       max-width: 290px;
       max-height: 290px;
     }
@@ -281,7 +281,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     top: 77.7%;
     left: 77.7%;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       width: 32.73px;
       height: 32.73px;
       top: 83%;
@@ -303,7 +303,7 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     row-gap: 40px;
     width: 100%;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       padding-top: 20px;
     }
   }
@@ -314,11 +314,11 @@ const StyledWrapper = styled.div`
     object-fit: contain;
     border-radius: 16px;
 
-    @media screen and (max-width: 834px) {
+    ${({ theme }) => theme.media.tablet} {
       max-width: 255px;
       max-height: 255px;
     }
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       max-width: 290px;
       max-height: 290px;
     }

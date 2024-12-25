@@ -29,7 +29,6 @@ const BookInfo: React.FC<Props> = (props) => {
     </StyledWrapper>
   );
 };
-
 export default BookInfo;
 
 const StyledWrapper = styled.div`

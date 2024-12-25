@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import cn from 'classnames';
-import isPropValid from '@emotion/is-prop-valid';
 
 type Props = {
   type: string;
@@ -65,7 +64,8 @@ const BaseInput: React.FC<Props> = (props) => {
 
   const widthbase = name === 'comment' ? 738 : name === 'search' ? 630 : 630;
   const widthmedium = name === 'comment' ? 738 : name === 'search' ? 247 : 529;
-  const widthmin = name === 'comment' ? 289 : name === 'search' ? 290 : 290;
+  const widthmin =
+    name === 'comment' ? '289px' : name === 'search' ? 'none' : 'none';
 
   return (
     <StyledWrapper
@@ -133,7 +133,7 @@ const StyledWrapper = styled.div.withConfig({
   widthbase: number;
   inputheight: number;
   widthmedium: number;
-  widthmin: number;
+  widthmin: string;
 }>`
   display: flex;
   flex-direction: column;
@@ -147,7 +147,7 @@ const StyledWrapper = styled.div.withConfig({
   }
 
   ${({ theme }) => theme.media.mobile} {
-    max-width: ${({ widthmin }) => `${widthmin}px`};
+    max-width: ${({ widthmin }) => widthmin};
   }
 
   .input {
@@ -227,7 +227,7 @@ const StyledWrapper = styled.div.withConfig({
       max-width: ${({ widthmedium }) => `${widthmedium}px`};
     }
     ${({ theme }) => theme.media.mobile} {
-      max-width: ${({ widthmin }) => `${widthmin}px`};
+      max-width: ${({ widthmin }) => widthmin};
 
       width: auto;
     }

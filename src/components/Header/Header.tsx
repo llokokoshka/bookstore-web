@@ -22,14 +22,17 @@ const Header: React.FC<Props> = (props) => {
       <Link to={AppPages.base}>
         <img src={logo} alt="logo" id="logo" />
       </Link>
-      <div className="base-text" id="pageName">
+      <div className="base-text base-text--order" id="pageName">
         {props.page}
       </div>
       <Search className="header-search" />
       {user ? (
-        <UserButtons itemsInCart={itemsInCart} />
+        <UserButtons
+          itemsInCart={itemsInCart}
+          buttonsClassName="user-buttons--order"
+        />
       ) : (
-        <AuthButton page={props.page} />
+        <AuthButton page={props.page} buttonsClassName="user-buttons--order" />
       )}
     </StyledWrapper>
   );
@@ -38,10 +41,9 @@ const Header: React.FC<Props> = (props) => {
 export default Header;
 
 const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-areas: 'logo pageName search buttons';
+  grid-template-columns: repeat(4, 1fr);
   align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.padding.base};
@@ -51,32 +53,37 @@ const StyledWrapper = styled.div`
     padding: 20px 15px;
   }
   ${({ theme }) => theme.media.mobile} {
-    flex-wrap: wrap;
-    padding: 20px 15px;
+    grid-template-areas:
+      'logo pageName  buttons'
+      'search search search';
+    grid-template-columns: repeat(3, 1fr);
   }
   #logo {
+    grid-area: logo;
     ${({ theme }) => theme.media.mobile} {
       width: 62px;
       height: 31px;
     }
   }
   .header-search {
+    grid-area: search;
+    max-width: 630px;
+
     ${({ theme }) => theme.media.mobile} {
-      order: 2;
-      flex: 1 0 100%;
+      grid-column: 1 / span 3;
       margin-top: 10px;
+      max-width: none;
     }
   }
-
-  .header {
-    display: flex;
-    flex-direction: row;
-    width: 739px;
-    align-items: center;
-    column-gap: 43px;
+  .base-text--order {
+    grid-area: pageName;
+    ${({ theme }) => theme.media.mobile} {
+    }
+  }
+  .user-buttons--order {
+    grid-area: buttons;
 
     ${({ theme }) => theme.media.mobile} {
-      width: 290px;
     }
   }
 `;

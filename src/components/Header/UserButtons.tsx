@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import cn from 'classnames';
 
 import RoundButtons from './RoundButton';
 import profile from '../../assets/img/User profile button.png';
@@ -9,11 +10,12 @@ import { AppPages } from '../../constants/textConstants';
 
 type Props = {
   itemsInCart: number;
+  buttonsClassName?: string;
 };
 
 const UserButtons: React.FC<Props> = (props) => {
   return (
-    <StyledWrapper>
+    <StyledWrapper className={cn(props.buttonsClassName)}>
       <div className="cart-button">
         <div className="cart-button__item">{props.itemsInCart}</div>
         <RoundButtons url={AppPages.cart} img={cart} />

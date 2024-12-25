@@ -78,7 +78,7 @@ const StyledWrapper = styled.form`
     flex-direction: row;
     align-items: baseline;
     justify-content: space-between;
-    @media screen and (max-width: 320px) {
+    ${({ theme }) => theme.media.mobile} {
       flex-direction: column;
     }
   }
