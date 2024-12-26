@@ -9,7 +9,6 @@ const Poster: React.FC = () => {
   return (
     <StyledWrapper>
       <div className="poster">
-        <img src={books} alt="books" className="poster__img" />
         <div className="poster__container">
           <div className="container__info-block">
             <div className="info-block__text">
@@ -38,6 +37,12 @@ const StyledWrapper = styled.div`
     padding: ${({ theme }) => theme.padding.base_tablet};
   }
 
+  ${({ theme }) => theme.media.mobile} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .poster {
     display: flex;
     position: relative;
@@ -55,27 +60,6 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .poster__img {
-    position: absolute;
-    bottom: 0;
-    max-width: 406px;
-    max-height: 400px;
-    width: 100%;
-    height: 100%;
-
-    ${({ theme }) => theme.media.tablet} {
-      max-width: 361px;
-      max-height: 218px;
-    }
-    ${({ theme }) => theme.media.mobile} {
-      max-width: 232px;
-      max-height: 140px;
-      right: 0;
-      left: 58px;
-      top: 0;
-    }
-  }
-
   .poster__container {
     display: flex;
     flex-direction: row;
@@ -83,16 +67,23 @@ const StyledWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     padding: 0 108px 0 98px;
+    background-image: url(${books});
+    background-repeat: no-repeat;
+    background-position: 0 135px;
 
     ${({ theme }) => theme.media.tablet} {
       align-items: end;
       padding-left: 40px;
       padding-right: 0;
+      background-position: 0 78px;
+      background-size: 361px 218px;
     }
     ${({ theme }) => theme.media.mobile} {
       flex-direction: column;
       padding-left: 20px;
-      align-items: start;
+      align-items: center;
+      background-position: calc(62%) 17px;
+      background-size: 232px 140px;
     }
   }
 

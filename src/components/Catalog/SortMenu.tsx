@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import forward from '../../assets/img/right arrow.png';
-import openForward from '../../assets/img/Forward down.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import GenresPopup from '../Popups/GenresPopup';
-import PricePopup from '../Popups/PricePopup';
-import SortPopup from '../Popups/SortPopup';
 import { getGenres } from '../../store/booksEntities/booksEntitiesThunk';
 import { useSearchParams } from 'react-router-dom';
+import SortButton from './SortButton';
 
 const SortMenu: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -78,41 +74,27 @@ const SortMenu: React.FC = () => {
     <StyledWrapper>
       <p className="big-title">Catalog</p>
       <div className="sort-menu">
-        <div className="sort-menu__button-container" ref={genreRef}>
-          <div onClick={handlerGenresOpen}>
-            <button className="button-container__grey-button">Genre</button>
-            {isGenresOpen ? (
-              <img src={openForward} alt="arrow" className="arrow" />
-            ) : (
-              <img src={forward} alt="arrow" className="arrow" />
-            )}
-          </div>
-          {isGenresOpen && <GenresPopup />}
-        </div>
-        <div className="sort-menu__button-container" ref={priceRef}>
-          <div onClick={handlerPriceOpen}>
-            <button className="button-container__grey-button">Price</button>
-            {isPriceOpen ? (
-              <img src={openForward} alt="arrow" className="arrow" />
-            ) : (
-              <img src={forward} alt="arrow" className="arrow" />
-            )}
-          </div>
-          {isPriceOpen && <PricePopup />}
-        </div>
-        <div className="sort-menu__button-container " ref={sortRef}>
-          <div onClick={handlerSortOpen}>
-            <button className="button-container__grey-button button-container__grey-button--light">
-              Sort by {sortBy ? sortBy.toLowerCase() : 'price'}
-            </button>
-            {isSortOpen ? (
-              <img src={openForward} alt="arrow" className="arrow" />
-            ) : (
-              <img src={forward} alt="arrow" className="arrow" />
-            )}
-          </div>
-          {isSortOpen && <SortPopup />}
-        </div>
+        <SortButton
+          fieldRef={genreRef}
+          handlerSomethingOpen={handlerGenresOpen}
+          isOpen={isGenresOpen}
+          text="Genre"
+          typeOfPopup="genre"
+        />
+        <SortButton
+          fieldRef={priceRef}
+          handlerSomethingOpen={handlerPriceOpen}
+          isOpen={isPriceOpen}
+          text="Price"
+          typeOfPopup="price"
+        />
+        <SortButton
+          fieldRef={sortRef}
+          handlerSomethingOpen={handlerSortOpen}
+          isOpen={isSortOpen}
+          text={`Sort by ${sortBy ? sortBy.toLowerCase() : 'price'}`}
+          typeOfPopup="sort"
+        />
       </div>
     </StyledWrapper>
   );
