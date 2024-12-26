@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 import BookInCart from './BookInCart';
 import { useAppSelector } from '../../hooks';
 import EmptyPage from './EmtyPage';
-import { AppPages } from '../../constants/textConstants';
-import BaseButton from '../BaseComponents/BaseButton';
+import CartInfoBlock from './CartInfoBlock';
 
 const CartPageBody: React.FC = () => {
   const BooksInCart = useAppSelector((state) => state.cart.cart);
@@ -36,20 +34,7 @@ const CartPageBody: React.FC = () => {
               </div>
             );
           })}
-          <div className="cart-info">
-            <div className="big-title big-title--size">
-              Total: {BooksInCart?.total_price}
-            </div>
-            <div className="buttons">
-              <Link to={`${AppPages.base}`}>
-                <button className="cart-button">Continue shopping</button>
-              </Link>
-              <BaseButton
-                text="Chekout"
-                buttonClassName="correct-button-size"
-              />
-            </div>
-          </div>
+          <CartInfoBlock totalPrice={BooksInCart?.total_price} />
         </>
       ) : (
         <EmptyPage page="cart" />

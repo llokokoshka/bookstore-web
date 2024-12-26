@@ -49,6 +49,7 @@ const favoritesSlice = createSlice({
           state.loading = false;
           state.favoriteId = action.payload.id;
           state.booksIdsInFavorites = action.payload.booksIdsInFavorites;
+          state.numberOfItemsInFavorite = action.payload.favoriteBooks.length;
         }
       )
       .addCase(toggleFavorite.rejected, (state, action) => {
