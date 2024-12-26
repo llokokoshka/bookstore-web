@@ -12,13 +12,17 @@ const BookPageBody: React.FC<BookType> = (props) => {
   return (
     <StyledWrapper>
       <div className="book">
-        <BookCover id={props.id} isFav={!!props.isFav} img={props.img} />
-        <div className="book__info">
+        <div className="area-cover">
+          <BookCover id={props.id} isFav={!!props.isFav} img={props.img} />
+        </div>
+        <div className="area-main-info">
           <BookMainInfo
             id={props.id}
             author={props.author.text}
             name={props.name}
           />
+        </div>
+        <div className="area-info">
           <BookInfo description={props.description} cover={props.cover} />
         </div>
       </div>
@@ -58,20 +62,33 @@ const StyledWrapper = styled.div`
   }
 
   .book {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-areas:
+      'cover mainInfo'
+      'cover decription';
+    grid-template-columns: 1fr 2fr;
     column-gap: 128px;
     height: auto;
 
     ${({ theme }) => theme.media.tablet} {
       column-gap: 21px;
     }
-  }
 
-  .book__info {
-    display: flex;
-    flex-direction: column;
-    row-gap: 30px;
+    ${({ theme }) => theme.media.mobile} {
+      grid-template-areas:
+        'cover mainInfo'
+        'decription decription';
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .area-cover {
+    grid-area: cover;
+  }
+  .area-main-info {
+    grid-area: mainInfo;
+  }
+  .area-info {
+    grid-area: decription;
   }
 
   .comments {

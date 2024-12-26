@@ -101,5 +101,8 @@ const StyledWrapper = styled.div`
 
   .button-body__grey-button--light {
     background-color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: break-spaces;
   }
 `;

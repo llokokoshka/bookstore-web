@@ -45,6 +45,7 @@ const StyledWrapper = styled.div`
   .base-button--width {
     ${({ theme }) => theme.media.tablet} {
       width: 188px;
+      height: auto;
     }
     ${({ theme }) => theme.media.mobile} {
       width: 135px;

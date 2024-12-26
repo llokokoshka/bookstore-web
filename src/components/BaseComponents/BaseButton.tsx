@@ -57,6 +57,8 @@ export const StyledWrapper = styled.button`
   }
   ${({ theme }) => theme.media.mobile} {
     width: 135px;
+    max-height: 44px;
+
     padding: 0;
     font-size: 14px;
     line-height: 28px;
