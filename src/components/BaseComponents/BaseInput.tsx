@@ -62,8 +62,10 @@ const BaseInput: React.FC<Props> = (props) => {
       ? 64
       : 24;
 
-  const widthbase = name === 'comment' ? 738 : name === 'search' ? 630 : 630;
-  const widthmedium = name === 'comment' ? 738 : name === 'search' ? 247 : 529;
+  const widthbase =
+    name === 'comment' ? '738px' : name === 'search' ? 'none' : '630px';
+  const widthmedium =
+    name === 'comment' ? '738px' : name === 'search' ? 'none' : '529px';
   const widthmin =
     name === 'comment' ? '289px' : name === 'search' ? 'none' : 'none';
 
@@ -130,20 +132,20 @@ const StyledWrapper = styled.div.withConfig({
     !['widthbase', 'inputheight', 'widthmedium', 'widthmin'].includes(prop),
 })<{
   height: number;
-  widthbase: number;
+  widthbase: string;
   inputheight: number;
-  widthmedium: number;
+  widthmedium: string;
   widthmin: string;
 }>`
   display: flex;
   flex-direction: column;
   height: 100%;
   /* ${({ widthbase }) => widthbase && ` max-width: ${widthbase}px`}; */
-  max-width: ${({ widthbase }) => `${widthbase}px`};
+  max-width: ${({ widthbase }) => widthbase};
   width: 100%;
   row-gap: 9px;
   ${({ theme }) => theme.media.tablet} {
-    max-width: ${({ widthmedium }) => `${widthmedium}px`};
+    max-width: ${({ widthmedium }) => widthmedium};
   }
 
   ${({ theme }) => theme.media.mobile} {
@@ -218,13 +220,13 @@ const StyledWrapper = styled.div.withConfig({
   }
 
   .--size {
-    max-width: ${({ widthbase }) => `${widthbase}px`};
+    max-width: ${({ widthbase }) => widthbase};
     width: 100%;
     height: ${({ height }) => `${height}px`};
     display: flex;
     flex-direction: row;
     ${({ theme }) => theme.media.tablet} {
-      max-width: ${({ widthmedium }) => `${widthmedium}px`};
+      max-width: ${({ widthmedium }) => widthmedium};
     }
     ${({ theme }) => theme.media.mobile} {
       max-width: ${({ widthmin }) => widthmin};

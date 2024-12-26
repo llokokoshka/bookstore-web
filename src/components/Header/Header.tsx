@@ -43,7 +43,7 @@ export default Header;
 const StyledWrapper = styled.div`
   display: grid;
   grid-template-areas: 'logo pageName search buttons';
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr 1fr 4fr 2fr;
   align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.padding.base};
@@ -56,7 +56,7 @@ const StyledWrapper = styled.div`
     grid-template-areas:
       'logo pageName  buttons'
       'search search search';
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr 2fr;
   }
   #logo {
     grid-area: logo;
@@ -67,7 +67,7 @@ const StyledWrapper = styled.div`
   }
   .header-search {
     grid-area: search;
-    max-width: 630px;
+    width: 100%;
 
     ${({ theme }) => theme.media.mobile} {
       grid-column: 1 / span 3;
@@ -77,13 +77,17 @@ const StyledWrapper = styled.div`
   }
   .base-text--order {
     grid-area: pageName;
+    text-align: center;
     ${({ theme }) => theme.media.mobile} {
+      /* text-align: start; */
     }
   }
   .user-buttons--order {
     grid-area: buttons;
+    justify-self: end;
 
     ${({ theme }) => theme.media.mobile} {
+      justify-self: end;
     }
   }
 `;

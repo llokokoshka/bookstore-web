@@ -46,21 +46,8 @@ export default Search;
 
 const StyledWrapper = styled.div`
   width: 100%;
-  max-width: 630px;
-  ${({ theme }) => theme.media.tablet} {
-    max-width: 247px;
-  }
-  ${({ theme }) => theme.media.mobile} {
-    max-width: 290px;
-  }
+
   .input__field--size {
-    max-width: 630px;
     width: 100%;
-    ${({ theme }) => theme.media.tablet} {
-      max-width: 247px;
-    }
-    ${({ theme }) => theme.media.mobile} {
-      max-width: 290px;
-    }
   }
 `;
