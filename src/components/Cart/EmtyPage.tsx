@@ -60,6 +60,7 @@ const StyledWrapper = styled.div`
   ${({ theme }) => theme.media.mobile} {
     padding: 0;
     flex-direction: column-reverse;
+    align-items: center;
     row-gap: 40px;
   }
 
@@ -78,9 +79,10 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 60px;
-    ${({ theme }) => theme.media.tablet} {
-    }
+
     ${({ theme }) => theme.media.mobile} {
+      width: 100%;
+      align-items: center;
       row-gap: 30px;
     }
   }
@@ -89,10 +91,6 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-    ${({ theme }) => theme.media.tablet} {
-    }
-    ${({ theme }) => theme.media.mobile} {
-    }
   }
 
   .cart__text {
@@ -100,14 +98,11 @@ const StyledWrapper = styled.div`
     font-weight: 400;
     line-height: 36px;
     text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-    width: 465px;
+    width: 100%;
+    max-width: 465px;
     ${({ theme }) => theme.media.tablet} {
-      width: 302px;
     }
     ${({ theme }) => theme.media.mobile} {
-      width: 290px;
       font-size: 12px;
       font-weight: 500;
       line-height: 18px;

@@ -16,6 +16,9 @@ type Props = {
 const Header: React.FC<Props> = (props) => {
   const itemsInCart = useAppSelector((state) => state.cart.numberOfItemsInCart);
   const user = useAppSelector((state) => state.auth.user);
+  const itemsInFav = useAppSelector(
+    (state) => state.favorite.numberOfItemsInFavorite
+  );
 
   return (
     <StyledWrapper>
@@ -29,6 +32,7 @@ const Header: React.FC<Props> = (props) => {
       {user ? (
         <UserButtons
           itemsInCart={itemsInCart}
+          itemsInFav={itemsInFav}
           buttonsClassName="user-buttons--order"
         />
       ) : (

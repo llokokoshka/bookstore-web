@@ -80,6 +80,7 @@ const StyledWrapper = styled.div`
   top: 74px;
   row-gap: 10px;
   z-index: 10;
+  box-shadow: 5px 5px 15px ${({ theme }) => theme.colors.dark_blue};
   ${({ theme }) => theme.media.mobile} {
     width: 290px;
     z-index: 12;

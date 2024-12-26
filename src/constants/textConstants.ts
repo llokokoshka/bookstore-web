@@ -61,7 +61,7 @@ export const ApiPath = {
   searched: `books/search`,
 } as const;
 
-export const SortOptions = [
+export const SORT_OPTIONS = [
   'Price',
   'Name',
   'Author name',

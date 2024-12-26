@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 
 import poligon from '../../assets/img/Polygon 4.png';
-import { SortOptions } from '../../constants/textConstants';
+import { SORT_OPTIONS } from '../../constants/textConstants';
 
 const SortPopup: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,7 +22,7 @@ const SortPopup: React.FC = () => {
     <StyledWrapper>
       <img src={poligon} alt="aa" className="poligon" />
 
-      {SortOptions.map((option) => (
+      {SORT_OPTIONS.map((option) => (
         <div
           className="base-text base-text--size"
           key={option}
@@ -55,6 +55,8 @@ const StyledWrapper = styled.div`
   gap: 12px;
   border-radius: 16px;
   opacity: 0px;
+  box-shadow: 5px 5px 15px ${({ theme }) => theme.colors.dark_blue};
+
   z-index: 6;
   ${({ theme }) => theme.media.mobile} {
     width: 290px;

@@ -90,6 +90,7 @@ const StyledWrapper = styled.div`
   .recommended__books {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    column-gap: 20px;
   }
 `;

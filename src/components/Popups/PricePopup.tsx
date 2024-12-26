@@ -82,7 +82,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     left: 11px;
     top: -11px;
-    z-index: 6;
+    z-index: 7;
   }
   .main-block {
     position: absolute;
@@ -92,6 +92,8 @@ const StyledWrapper = styled.div`
     padding: 40px 18px;
     border-radius: 16px;
     opacity: 0px;
+    box-shadow: 5px 5px 15px ${({ theme }) => theme.colors.dark_blue};
+
     z-index: 6;
     ${({ theme }) => theme.media.mobile} {
       width: 290px;

@@ -36,7 +36,11 @@ const cartSlice = createSlice({
       .addCase(getCart.fulfilled, (state, action) => {
         state.loading = false;
         state.cart = action.payload;
-        state.numberOfItemsInCart = action.payload.cartItems.length;
+        const numberOfItemsInCart = action.payload.cartItems.reduce(
+          (accumulator, currentValue) => accumulator + currentValue.quantity,
+          0
+        );
+        state.numberOfItemsInCart = numberOfItemsInCart;
 
         const booksInCart = state.cart?.cartItems.map((item) => {
           return item.book;

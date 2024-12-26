@@ -10,6 +10,7 @@ import { AppPages } from '../../constants/textConstants';
 
 type Props = {
   itemsInCart: number;
+  itemsInFav: number;
   buttonsClassName?: string;
 };
 
@@ -20,7 +21,10 @@ const UserButtons: React.FC<Props> = (props) => {
         <div className="cart-button__item">{props.itemsInCart}</div>
         <RoundButtons url={AppPages.cart} img={cart} />
       </div>
-      <RoundButtons url={AppPages.favorite} img={like} />
+      <div className="cart-button">
+        <div className="cart-button__item">{props.itemsInFav}</div>
+        <RoundButtons url={AppPages.favorite} img={like} />
+      </div>
       <RoundButtons url={AppPages.profile} img={profile} />
     </StyledWrapper>
   );

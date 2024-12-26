@@ -9,6 +9,7 @@ export type FavoriteType = {
 export interface IFavoriteState {
   favoriteId: number | null;
   booksIdsInFavorites: number[];
+  numberOfItemsInFavorite: number;
   loading: boolean;
   error: string | null;
 }

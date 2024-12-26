@@ -26,25 +26,27 @@ const SortButton: React.FC<Props> = (props) => {
     );
 
   return (
-    <StyledWrapper>
-      <div className="sort-menu__button-container " ref={props.fieldRef}>
-        <div onClick={props.handlerSomethingOpen}>
-          <button
-            className={cn('button-container__grey-button', {
-              'button-container__grey-button--light':
-                props.typeOfPopup === 'sort',
-            })}
-          >
-            {props.text}
-          </button>
-          {props.isOpen ? (
-            <img src={openForward} alt="arrow" className="arrow" />
-          ) : (
-            <img src={forward} alt="arrow" className="arrow" />
-          )}
-        </div>
-        {props.isOpen && popup}
+    <StyledWrapper ref={props.fieldRef}>
+      <div
+        onClick={props.handlerSomethingOpen}
+        className={cn('button-body', {
+          'button-body--light': props.typeOfPopup === 'sort',
+        })}
+      >
+        <button
+          className={cn('button-body__grey-button', {
+            'button-body__grey-button--light': props.typeOfPopup === 'sort',
+          })}
+        >
+          {props.text}
+        </button>
+        {props.isOpen ? (
+          <img src={openForward} alt="arrow" className="arrow" />
+        ) : (
+          <img src={forward} alt="arrow" className="arrow" />
+        )}
       </div>
+      {props.isOpen && popup}
     </StyledWrapper>
   );
 };
@@ -52,17 +54,24 @@ const SortButton: React.FC<Props> = (props) => {
 export default SortButton;
 
 const StyledWrapper = styled.div`
-  .sort-menu__button-container {
-    display: flex;
-    position: relative;
+  display: flex;
+  position: relative;
+  width: 100%;
+
+  .button-body {
+    background-color: ${({ theme }) => theme.colors.light};
+    border-radius: 16px;
+    width: 100%;
+  }
+  .button-body--light {
+    background-color: white;
   }
 
-  .button-container__grey-button {
+  .button-body__grey-button {
     position: relative;
     width: 196px;
     height: 48px;
     padding: 10px 8px 10px 15px;
-    background-color: ${({ theme }) => theme.colors.light};
     border-radius: 16px;
     text-align: start;
     font-size: 18px;
@@ -72,10 +81,10 @@ const StyledWrapper = styled.div`
     color: ${({ theme }) => theme.colors.dark_blue};
 
     ${({ theme }) => theme.media.tablet} {
-      width: 255px;
+      width: auto;
     }
     ${({ theme }) => theme.media.mobile} {
-      width: 290px;
+      width: auto;
     }
 
     &:hover {
@@ -90,7 +99,7 @@ const StyledWrapper = styled.div`
     z-index: 10;
   }
 
-  .button-container__grey-button--light {
+  .button-body__grey-button--light {
     background-color: white;
   }
 `;

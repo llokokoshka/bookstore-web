@@ -48,7 +48,7 @@ const StyledWrapper = styled.div`
     width: 532px;
   }
   ${({ theme }) => theme.media.mobile} {
-    width: 135px;
+    /* width: 135px; */
     row-gap: 48px;
   }
 

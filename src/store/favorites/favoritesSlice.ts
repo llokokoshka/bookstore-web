@@ -6,6 +6,7 @@ import { FavoriteType, IFavoriteState } from './favoriteTypes';
 const initialState: IFavoriteState = {
   favoriteId: null,
   booksIdsInFavorites: [],
+  numberOfItemsInFavorite: 0,
   error: null,
   loading: false,
 };
@@ -30,6 +31,7 @@ const favoritesSlice = createSlice({
         (state, action: PayloadAction<FavoriteType>) => {
           state.loading = false;
           state.favoriteId = action.payload.id;
+          state.numberOfItemsInFavorite = action.payload.favoriteBooks.length;
           state.booksIdsInFavorites = action.payload.booksIdsInFavorites;
         }
       )

@@ -58,7 +58,7 @@ const SortMenu: React.FC = () => {
     };
   }, [isSortOpen, isPriceOpen, isGenresOpen]);
 
-  const handlerGenresOpen = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handlerGenresOpen = () => {
     setIsGenresOpen(!isGenresOpen);
   };
 
@@ -119,7 +119,6 @@ const StyledWrapper = styled.div`
   }
 
   ${({ theme }) => theme.media.mobile} {
-    max-width: 290px;
   }
 
   .sort-menu {
@@ -128,53 +127,13 @@ const StyledWrapper = styled.div`
     column-gap: 20px;
 
     ${({ theme }) => theme.media.tablet} {
+      width: 100%;
     }
 
     ${({ theme }) => theme.media.mobile} {
       flex-direction: column;
       row-gap: 20px;
+      width: 100%;
     }
-  }
-
-  .sort-menu__button-container {
-    display: flex;
-    position: relative;
-  }
-
-  .button-container__grey-button {
-    position: relative;
-    width: 196px;
-    height: 48px;
-    padding: 10px 8px 10px 15px;
-    background-color: ${({ theme }) => theme.colors.light};
-    border-radius: 16px;
-    text-align: start;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 28px;
-    letter-spacing: 0.75px;
-    color: ${({ theme }) => theme.colors.dark_blue};
-
-    ${({ theme }) => theme.media.tablet} {
-      width: 255px;
-    }
-    ${({ theme }) => theme.media.mobile} {
-      width: 290px;
-    }
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  .arrow {
-    position: absolute;
-    padding: 12px 30px 12px 0px;
-    right: -24px;
-    z-index: 10;
-  }
-
-  .button-container__grey-button--light {
-    background-color: white;
   }
 `;

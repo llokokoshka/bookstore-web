@@ -41,7 +41,7 @@ const BookAmount: React.FC<Props> = (props) => {
         <div className="block__button" onClick={handleMinusQuantity}>
           <img src={minus} alt="img" className="button__img"></img>
         </div>
-        <div>{props.quantity}</div>
+        <div className="correct-size">{props.quantity}</div>
         <div className="block__button" onClick={handlePlusQuantity}>
           <img src={plus} alt="img" className="button__img"></img>
         </div>
@@ -63,6 +63,7 @@ const StyledWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   column-gap: 58px;
+  width: 100%;
   ${({ theme }) => theme.media.mobile} {
     column-gap: 24px;
   }
