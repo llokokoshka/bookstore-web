@@ -18,6 +18,7 @@ import {
   CommentsType,
   IUserRating,
 } from '../../lib/types';
+import { socket } from '../../socket';
 
 export const getBookRating = createAsyncThunk<RatingThunkType, number>(
   'books/fetchBookRating',
@@ -58,6 +59,7 @@ export const addComment = createAsyncThunk<CommentsType, AddCommentThunkType>(
   async ({ text, bookId, user }, thunkAPI) => {
     try {
       const data = await addCommentApi(bookId, text);
+      // socket.emit('addComment', { bookId, comment: text });
 
       return data;
     } catch (err: any) {

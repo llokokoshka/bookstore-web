@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import Comment from './Comment';
@@ -7,8 +7,23 @@ import CommentInput from './CommentInput';
 import BookInfo from './BookInfo';
 import BookMainInfo from './BookMainInfo';
 import { BookType } from '../../lib/types';
+import { socket } from '../../socket';
 
 const BookPageBody: React.FC<BookType> = (props) => {
+  const bookId = props.id;
+
+  useEffect(() => {
+    socket.emit('joinRoom', { bookId });
+
+    socket.on('newComment', (data) => {
+      console.log('here', data);
+    });
+
+    return () => {
+      socket.off('newComment');
+    };
+  }, [bookId]);
+
   return (
     <StyledWrapper>
       <div className="book">
@@ -39,7 +54,7 @@ const BookPageBody: React.FC<BookType> = (props) => {
             />
           ))}
         </div>
-        <CommentInput id={props.id} />
+        <CommentInput id={props.id} comments={props.comments} />
       </div>
     </StyledWrapper>
   );
