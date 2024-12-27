@@ -94,34 +94,6 @@ const StyledWrapper = styled.div.withConfig({
     column-gap: 13px;
   }
 
-  .rating {
-    display: flex;
-    flex-direction: row;
-    max-width: 396px;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    ${({ theme }) => theme.media.tablet} {
-      width: 255px;
-    }
-    ${({ theme }) => theme.media.mobile} {
-      flex-direction: ${({ isuserrate }) => isuserrate};
-      align-items: start;
-      width: 135px;
-    }
-  }
-  .rating__stars {
-    display: flex;
-    flex-direction: row;
-    column-gap: 30px;
-    ${({ theme }) => theme.media.tablet} {
-      column-gap: 24px;
-    }
-    ${({ theme }) => theme.media.mobile} {
-      column-gap: 7px;
-    }
-  }
-
   .star {
     width: 26px;
     height: 26px;

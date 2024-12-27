@@ -62,6 +62,9 @@ const StyledWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.light};
     border-radius: 16px;
     width: 100%;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .button-body--light {
     background-color: white;

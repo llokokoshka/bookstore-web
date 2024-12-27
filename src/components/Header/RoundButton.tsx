@@ -35,6 +35,7 @@ const StyledWrapper = styled.div`
     ${({ theme }) => theme.media.mobile} {
       width: 32.73px;
       height: 32.73px;
+      min-height: 32.73px;
     }
   }
 

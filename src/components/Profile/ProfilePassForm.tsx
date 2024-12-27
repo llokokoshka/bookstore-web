@@ -81,6 +81,9 @@ const StyledWrapper = styled.form`
   row-gap: 20px;
   max-width: 630px;
   width: 100%;
+  ${({ theme }) => theme.media.mobile} {
+    max-width: none;
+  }
 
   .info {
     display: flex;

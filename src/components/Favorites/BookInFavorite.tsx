@@ -37,10 +37,13 @@ const BookInFavorite: React.FC<Props> = (props) => {
           <img src={bookImg} alt="img" className="favorite__book-img"></img>
         </Link>
         <div className="favorite__info-block">
-          <div className="big-title">{bookName}</div>
-          <div className="normal-title normal-title--size">
-            {bookAuthor?.text}
+          <div>
+            <div className="big-title">{bookName}</div>
+            <div className="normal-title normal-title--size">
+              {bookAuthor?.text}
+            </div>
           </div>
+          <div className="description">{props.book?.description}</div>
         </div>
       </div>
       <img
@@ -62,7 +65,7 @@ const StyledWrapper = styled.div`
   padding: 40px 0px;
 
   ${({ theme }) => theme.media.mobile} {
-    flex-direction: column;
+    /* flex-direction: column; */
   }
 
   .favorite {
@@ -84,6 +87,14 @@ const StyledWrapper = styled.div`
     }
   }
 
+  .description {
+    max-height: 150px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+  }
+
   .favorite__info-block {
     display: flex;
     flex-direction: column;
@@ -91,11 +102,12 @@ const StyledWrapper = styled.div`
     flex-wrap: wrap;
     word-break: break-all;
     hyphens: auto;
+    row-gap: 20px;
     ${({ theme }) => theme.media.tablet} {
-      width: 532px;
+      max-width: 532px;
     }
     ${({ theme }) => theme.media.mobile} {
-      width: 135px;
+      max-width: none;
     }
   }
   .rubbish-img {
@@ -106,7 +118,6 @@ const StyledWrapper = styled.div`
       width: 20px;
       height: 20px;
       margin-top: 5px;
-      margin-left: 260px;
     }
   }
   .rubbish-img:hover {

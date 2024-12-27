@@ -93,7 +93,9 @@ const cartSlice = createSlice({
           state.cart.cartItems[itemIndex].total_price =
             action.payload.total_price;
           state.cart.total_price += addPrice;
-          state.numberOfItemsInCart += 1;
+          if (action.meta.arg.quantity < action.payload.quantity) {
+            state.numberOfItemsInCart += 1;
+          }
         } else {
           console.error('Item not found in cart:', action.payload.id);
         }

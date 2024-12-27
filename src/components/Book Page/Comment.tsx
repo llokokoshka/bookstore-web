@@ -43,7 +43,7 @@ const StyledWrapper = styled.div`
     width: 667px;
   }
   ${({ theme }) => theme.media.mobile} {
-    width: 290px;
+    width: 100%;
     padding: 13px 10px 10px 10px;
   }
 
@@ -108,12 +108,17 @@ const StyledWrapper = styled.div`
     letter-spacing: 0.75px;
     text-align: left;
     color: ${({ theme }) => theme.colors.dark_blue};
+
     ${({ theme }) => theme.media.tablet} {
       padding-right: 92px;
     }
+
     ${({ theme }) => theme.media.mobile} {
       padding-right: 0;
       margin-left: -50px;
+      flex-wrap: wrap;
+      word-break: break-all;
+      white-space: normal;
     }
   }
 `;

@@ -82,7 +82,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     left: 11px;
     top: -11px;
-    z-index: 7;
+    z-index: 15;
   }
   .main-block {
     position: absolute;
@@ -94,7 +94,8 @@ const StyledWrapper = styled.div`
     opacity: 0px;
     box-shadow: 5px 5px 15px ${({ theme }) => theme.colors.dark_blue};
 
-    z-index: 6;
+    z-index: 15;
+
     ${({ theme }) => theme.media.mobile} {
       width: 290px;
       padding: 40px 10px;
@@ -114,6 +115,9 @@ const StyledWrapper = styled.div`
     border-radius: 40px;
     border: ${({ theme }) => theme.border.green};
     opacity: 0px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .track {

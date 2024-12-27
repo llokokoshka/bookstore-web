@@ -43,8 +43,8 @@ const StyledWrapper = styled.div`
     max-width: 392px;
   }
   ${({ theme }) => theme.media.mobile} {
-    width: 290px;
-    margin-left: -155px;
+    width: 100%;
+    max-width: none;
   }
 
   .info-block__buttons {

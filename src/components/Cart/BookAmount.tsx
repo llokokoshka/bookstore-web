@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import plus from '../../assets/img/plus.png';
 import minus from '../../assets/img/minus.png';
 import rubbish from '../../assets/img/Delete.png';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   deleteCartItem,
   downAmountCartItem,
@@ -28,7 +28,9 @@ const BookAmount: React.FC<Props> = (props) => {
   };
 
   const handlePlusQuantity = async () => {
-    await dispatch(upAmountCartItem(props.id));
+    const isAdd = await dispatch(
+      upAmountCartItem({ ItemId: props.id, quantity: props.quantity })
+    );
   };
 
   const handleDeleteItem = async () => {

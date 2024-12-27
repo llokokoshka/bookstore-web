@@ -62,9 +62,10 @@ const StyledWrapper = styled.div`
       width: 391px;
       height: 584px;
     }
+
     ${({ theme }) => theme.media.mobile} {
-      width: 135px;
-      height: 202px;
+      width: 100%;
+      height: auto;
     }
   }
 
@@ -75,7 +76,7 @@ const StyledWrapper = styled.div`
     width: 59px;
     height: 59px;
     top: 30px;
-    left: 433px;
+    left: 30px;
     z-index: 5;
     display: flex;
     align-items: center;
@@ -84,14 +85,14 @@ const StyledWrapper = styled.div`
     ${({ theme }) => theme.media.tablet} {
       width: 39px;
       height: 39px;
-      left: 322px;
+      left: 16px;
       top: 16px;
     }
     ${({ theme }) => theme.media.mobile} {
       width: 25px;
       height: 25px;
       top: 16px;
-      left: 100px;
+      left: 16px;
     }
   }
   .heart-size {

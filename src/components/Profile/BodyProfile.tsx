@@ -254,8 +254,9 @@ const StyledWrapper = styled.div`
   .profile__img {
     position: relative;
     max-width: 305px;
-    height: auto;
-    width: 100%;
+    height: 305px;
+    width: 305px;
+    object-fit: cover;
     border-radius: 16px;
     background-color: ${({ theme }) => theme.colors.light};
 
@@ -311,7 +312,9 @@ const StyledWrapper = styled.div`
   .avatar {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    /* object-fit: contain; */
+    object-fit: cover;
+
     border-radius: 16px;
 
     ${({ theme }) => theme.media.tablet} {

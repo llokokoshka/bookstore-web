@@ -51,6 +51,9 @@ const StyledWrapper = styled.div`
     max-height: 264px;
     width: 100%;
     height: 100%;
+    ${({ theme }) => theme.media.mobile} {
+      max-width: none;
+    }
   }
 
   .base-text {

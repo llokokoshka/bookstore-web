@@ -59,7 +59,8 @@ const StyledWrapper = styled.div.withConfig({
   ${({ theme }) => theme.media.mobile} {
     flex-direction: ${({ isuserrate }) => isuserrate};
     align-items: start;
-    width: 135px;
+    width: 100%;
+    max-width: none;
   }
   .rating__stars {
     display: flex;

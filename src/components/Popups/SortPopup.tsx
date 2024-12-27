@@ -57,7 +57,7 @@ const StyledWrapper = styled.div`
   opacity: 0px;
   box-shadow: 5px 5px 15px ${({ theme }) => theme.colors.dark_blue};
 
-  z-index: 6;
+  z-index: 15;
   ${({ theme }) => theme.media.mobile} {
     width: 290px;
   }
@@ -73,5 +73,9 @@ const StyledWrapper = styled.div`
     line-height: 28px;
     letter-spacing: 0.75px;
     text-align: left;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;

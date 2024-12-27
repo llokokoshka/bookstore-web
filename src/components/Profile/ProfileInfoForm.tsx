@@ -73,6 +73,10 @@ const StyledWrapper = styled.form`
   max-width: 630px;
   width: 100%;
 
+  ${({ theme }) => theme.media.mobile} {
+    max-width: none;
+  }
+
   .info__text {
     display: flex;
     flex-direction: row;

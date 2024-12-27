@@ -48,7 +48,7 @@ const bookEntititesSlice = createSlice({
         const newComment: CommentsType = {
           id: action.meta.requestId,
           text: text,
-          dateOfCreate: new Date(),
+          dateOfCreate: new Date().toISOString(),
           user: user,
         };
 

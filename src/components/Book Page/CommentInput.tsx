@@ -74,12 +74,18 @@ const StyledWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.light};
     padding-left: 20px;
     border-radius: 16px;
+    ${({ theme }) => theme.media.mobile} {
+      width: 100%;
+    }
   }
 
   .comment {
     display: flex;
     flex-direction: column;
     row-gap: 30px;
+    ${({ theme }) => theme.media.mobile} {
+      width: 100%;
+    }
   }
 
   .base-button--width {

@@ -59,6 +59,7 @@ const StyledWrapper = styled.div`
   ${({ theme }) => theme.media.mobile} {
     padding: 48px 15px 60px 15px;
     row-gap: 50px;
+    width: 100%;
   }
 
   .book {
@@ -90,10 +91,12 @@ const StyledWrapper = styled.div`
   .area-info {
     grid-area: decription;
   }
-
   .comments {
     display: flex;
     flex-direction: column-reverse;
     row-gap: 10px;
+    ${({ theme }) => theme.media.mobile} {
+      width: 100%;
+    }
   }
 `;

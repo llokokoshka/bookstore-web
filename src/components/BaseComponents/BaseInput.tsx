@@ -65,9 +65,9 @@ const BaseInput: React.FC<Props> = (props) => {
   const widthbase =
     name === 'comment' ? '738px' : name === 'search' ? 'none' : '630px';
   const widthmedium =
-    name === 'comment' ? '738px' : name === 'search' ? 'none' : '529px';
+    name === 'comment' ? '738px' : name === 'search' ? 'none' : 'none';
   const widthmin =
-    name === 'comment' ? '289px' : name === 'search' ? 'none' : 'none';
+    name === 'comment' ? 'none' : name === 'search' ? 'none' : 'none';
 
   return (
     <StyledWrapper

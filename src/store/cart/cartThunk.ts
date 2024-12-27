@@ -10,6 +10,7 @@ import {
   CartNormalizeType,
   CartItemNormalizeType,
   CartType,
+  CartItemType,
 } from './cartTypes';
 
 export const getCart = createAsyncThunk<CartNormalizeType>(
@@ -54,22 +55,23 @@ export const addCartItem = createAsyncThunk<CartItemNormalizeType, number>(
   }
 );
 
-export const upAmountCartItem = createAsyncThunk<CartItemNormalizeType, number>(
-  'cart/upAmountCartItem',
-  async (ItemId, thunkAPI) => {
-    try {
-      const action = true;
-      const data = await changeAmountItemInCartApi(ItemId, action);
-      const newData = {
-        ...data,
-        book: data.book.id,
-      };
-      return newData;
-    } catch (err: any) {
-      return thunkAPI.rejectWithValue(err.response.data.message);
-    }
+export const upAmountCartItem = createAsyncThunk<
+  CartItemNormalizeType,
+  { ItemId: number; quantity: number },
+  { rejectValue: string }
+>('cart/upAmountCartItem', async ({ ItemId, quantity }, thunkAPI) => {
+  try {
+    const action = true;
+    const data = await changeAmountItemInCartApi(ItemId, action);
+    const newData: CartItemNormalizeType = {
+      ...data,
+      book: data.book.id,
+    };
+    return newData;
+  } catch (err: any) {
+    return thunkAPI.rejectWithValue(err.response.data.message);
   }
-);
+});
 
 export const downAmountCartItem = createAsyncThunk<
   CartItemNormalizeType,

@@ -79,18 +79,18 @@ const StyledWrapper = styled.div`
   height: auto;
   top: 74px;
   row-gap: 10px;
-  z-index: 10;
+  z-index: 15;
   box-shadow: 5px 5px 15px ${({ theme }) => theme.colors.dark_blue};
   ${({ theme }) => theme.media.mobile} {
     width: 290px;
-    z-index: 12;
+    z-index: 15;
   }
 
   .poligon {
     position: absolute;
     left: 11px;
     top: -11px;
-    z-index: 6;
+    z-index: 15;
   }
   .genre {
     display: flex;

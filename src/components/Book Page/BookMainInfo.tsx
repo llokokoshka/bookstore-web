@@ -34,7 +34,7 @@ const StyledWrapper = styled.div`
     max-width: 392px;
   }
   ${({ theme }) => theme.media.mobile} {
-    max-width: 135px;
+    max-width: none;
   }
 
   .main-info {
@@ -50,7 +50,7 @@ const StyledWrapper = styled.div`
       max-width: 392px;
     }
     ${({ theme }) => theme.media.mobile} {
-      max-width: 135px;
+      max-width: none;
     }
   }
 `;

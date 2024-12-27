@@ -23,7 +23,7 @@ const BaseButton: React.FC<Props> = (props) => {
         <img
           src={props.img}
           alt="icon"
-          className="base-round-button__img"
+          className={cn('base-round-button__img')}
         ></img>
       ) : (
         props.text
@@ -37,6 +37,7 @@ export default BaseButton;
 export const StyledWrapper = styled.button`
   width: 231px;
   height: 44px;
+  min-height: 38px;
   top: 8px;
   left: 1056px;
   padding: ${({ theme }) => theme.padding.button};

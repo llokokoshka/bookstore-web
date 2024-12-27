@@ -97,7 +97,7 @@ export type GenresType = {
 export type CommentsType = {
   id: number | string;
   text: string;
-  dateOfCreate: Date;
+  dateOfCreate: Date | string;
   user: UserType;
   bookId?: number;
 };
