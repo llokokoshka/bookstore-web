@@ -31,6 +31,14 @@ const bookEntititesSlice = createSlice({
         state.books[key] = { ...state.books[key], ...normalizedBooks[key] };
       }
     },
+    updateComments(
+      state,
+      action: PayloadAction<{ comments: CommentsType[]; bookId: number }>
+    ) {
+      if (state.books[action.payload.bookId]) {
+        state.books[action.payload.bookId].comments = action.payload.comments;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -113,6 +121,6 @@ const bookEntititesSlice = createSlice({
   },
 });
 
-export const { addOrUpdBook } = bookEntititesSlice.actions;
+export const { addOrUpdBook, updateComments } = bookEntititesSlice.actions;
 
 export default bookEntititesSlice.reducer;

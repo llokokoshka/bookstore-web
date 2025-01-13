@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -6,7 +6,6 @@ import { addComment } from '../../store/booksEntities/booksEntitiesThunk';
 import BaseButton from '../BaseComponents/BaseButton';
 import BaseInput from '../BaseComponents/BaseInput';
 import { CommentsType } from '../../lib/types';
-import { socket } from '../../socket';
 
 type Props = {
   id: number;
@@ -24,7 +23,6 @@ const CommentInput: React.FC<Props> = (props) => {
     setInputValue(e.target?.value);
   };
 
-  const bookId = props.id;
   const handleAddComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputValue.trim() && user) {
@@ -36,7 +34,6 @@ const CommentInput: React.FC<Props> = (props) => {
             user: user,
           })
         ).unwrap();
-        socket.emit('addComment', { bookId, comment: inputValue });
         setInputValue('');
       } catch (err) {
         console.error(err);

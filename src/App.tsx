@@ -8,12 +8,14 @@ import GlobalStyles from './styles/global';
 import { baseTheme } from './styles/theme';
 import router from './routes/routes';
 import CheckUserAuth from './components/CheckUserAuth';
+import InitialSocket from './components/InitialSocket';
 
 export default function App() {
   return (
     <ThemeProvider theme={baseTheme}>
       <Provider store={store}>
         <GlobalStyles />
+        <InitialSocket />
         <CheckUserAuth>
           <RouterProvider router={router} />
         </CheckUserAuth>

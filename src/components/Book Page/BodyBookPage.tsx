@@ -8,21 +8,22 @@ import BookInfo from './BookInfo';
 import BookMainInfo from './BookMainInfo';
 import { BookType } from '../../lib/types';
 import { socket } from '../../socket';
+import { useAppDispatch } from '../../hooks';
+import { updateComments } from '../../store/booksEntities/booksEntitiesSlice';
 
 const BookPageBody: React.FC<BookType> = (props) => {
   const bookId = props.id;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    socket.emit('joinRoom', { bookId });
-
     socket.on('newComment', (data) => {
-      console.log('here', data);
+      dispatch(updateComments({ comments: data, bookId }));
     });
 
     return () => {
       socket.off('newComment');
     };
-  }, [bookId]);
+  }, []);
 
   return (
     <StyledWrapper>
