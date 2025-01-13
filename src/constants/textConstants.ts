@@ -68,3 +68,7 @@ export const SORT_OPTIONS = [
   'Rating',
   'Date of issue',
 ];
+
+export enum SocketMessagesENUM {
+  newComment = 'newComment',
+}

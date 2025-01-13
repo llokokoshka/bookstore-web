@@ -10,20 +10,21 @@ import { BookType } from '../../lib/types';
 import { socket } from '../../socket';
 import { useAppDispatch } from '../../hooks';
 import { updateComments } from '../../store/booksEntities/booksEntitiesSlice';
+import { SocketMessagesENUM } from '../../constants/textConstants';
 
 const BookPageBody: React.FC<BookType> = (props) => {
   const bookId = props.id;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    socket.on('newComment', (data) => {
+    socket.on(SocketMessagesENUM.newComment, (data) => {
       dispatch(updateComments({ comments: data, bookId }));
     });
 
     return () => {
-      socket.off('newComment');
+      socket.off(SocketMessagesENUM.newComment);
     };
-  }, []);
+  }, [bookId, dispatch]);
 
   return (
     <StyledWrapper>
